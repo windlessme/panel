@@ -8,6 +8,7 @@ on:
       # copy of this workflow, so naming either here would look like coverage
       # while doing nothing.
       - 'main'
+      - 'i18n'
   pull_request:
 jobs:
   tests:
