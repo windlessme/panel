@@ -1,5 +1,6 @@
 /// <reference types="vite/client" />
 import '@/app.css'
+import '@/lib/i18n.ts'
 import { ThemeProvider } from '@/providers/theme-provider.tsx'
 import '@fontsource/geist-sans/400.css'
 import '@fontsource/geist-sans/500.css'
