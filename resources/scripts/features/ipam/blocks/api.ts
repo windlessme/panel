@@ -13,6 +13,7 @@ import { useParams } from '@tanstack/react-router'
 import { z } from 'zod'
 
 import { type DataResponse, type PaginatedResponse, apiFetch } from '@/lib/api'
+import { t } from '@/lib/i18n.ts'
 import { queryClient } from '@/lib/query-client.ts'
 import { rawDataToAddressBlock } from '@/lib/transformers/address-block.ts'
 
@@ -53,7 +54,7 @@ export const addressBlockSchema = z
             if (!ipv4Regex.test(data.baseIp)) {
                 ctx.addIssue({
                     code: z.ZodIssueCode.custom,
-                    message: 'Base IP must be a valid IPv4 address',
+                    message: t('Base IP must be a valid IPv4 address'),
                     path: ['baseIp'],
                 })
             }
@@ -62,7 +63,7 @@ export const addressBlockSchema = z
             if (data.gateway.length > 0 && !ipv4Regex.test(data.gateway)) {
                 ctx.addIssue({
                     code: z.ZodIssueCode.custom,
-                    message: 'Gateway must be a valid IPv4 address',
+                    message: t('Gateway must be a valid IPv4 address'),
                     path: ['gateway'],
                 })
             }
@@ -71,7 +72,7 @@ export const addressBlockSchema = z
             if (!ipv6Regex.test(data.baseIp)) {
                 ctx.addIssue({
                     code: z.ZodIssueCode.custom,
-                    message: 'Base IP must be a valid IPv6 address',
+                    message: t('Base IP must be a valid IPv6 address'),
                     path: ['baseIp'],
                 })
             }
@@ -80,7 +81,7 @@ export const addressBlockSchema = z
             if (data.gateway.length > 0 && !ipv6Regex.test(data.gateway)) {
                 ctx.addIssue({
                     code: z.ZodIssueCode.custom,
-                    message: 'Gateway must be a valid IPv6 address',
+                    message: t('Gateway must be a valid IPv6 address'),
                     path: ['gateway'],
                 })
             }
@@ -94,7 +95,10 @@ export const addressBlockSchema = z
         if (data.prefixLengthFrom > maxPrefix) {
             ctx.addIssue({
                 code: z.ZodIssueCode.custom,
-                message: `Source prefix length cannot exceed ${maxPrefix} for ${data.version}`,
+                message: t(
+                    'Source prefix length cannot exceed {{maxPrefix}} for {{version}}',
+                    { maxPrefix, version: data.version }
+                ),
                 path: ['prefixLengthFrom'],
             })
         }
@@ -102,7 +106,10 @@ export const addressBlockSchema = z
         if (data.prefixLengthTo > maxPrefix) {
             ctx.addIssue({
                 code: z.ZodIssueCode.custom,
-                message: `Output prefix length cannot exceed ${maxPrefix} for ${data.version}`,
+                message: t(
+                    'Output prefix length cannot exceed {{maxPrefix}} for {{version}}',
+                    { maxPrefix, version: data.version }
+                ),
                 path: ['prefixLengthTo'],
             })
         }
@@ -110,8 +117,9 @@ export const addressBlockSchema = z
         if (data.prefixLengthTo < data.prefixLengthFrom) {
             ctx.addIssue({
                 code: z.ZodIssueCode.custom,
-                message:
-                    'Output prefix length must be at least the source prefix length',
+                message: t(
+                    'Output prefix length must be at least the source prefix length'
+                ),
                 path: ['prefixLengthTo'],
             })
         }

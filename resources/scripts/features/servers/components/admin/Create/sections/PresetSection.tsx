@@ -9,6 +9,8 @@ import { Link } from '@tanstack/react-router'
 import { useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 
+import { t } from '@/lib/i18n.ts'
+
 import { buttonVariants } from '@/components/ui/Button'
 import {
     Card,
@@ -48,7 +50,10 @@ const PresetSection = () => {
         applyPresetSettings(preset.settings, setValue)
         setApplied(uuid)
 
-        toast.add({ title: `Applied ${preset.name}`, type: 'success' })
+        toast.add({
+            title: t('Applied {{name}}', { name: preset.name }),
+            type: 'success',
+        })
     }
 
     const items = (presets ?? []).map(preset => ({
@@ -67,10 +72,11 @@ const PresetSection = () => {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Preset</CardTitle>
+                <CardTitle>{t('Preset')}</CardTitle>
                 <CardDescription>
-                    Fill this form from a saved configuration. Identity — name,
-                    hostname, VM ID, owner — is never part of one.
+                    {t(
+                        'Fill this form from a saved configuration. Identity — name, hostname, VM ID, owner — is never part of one.'
+                    )}
                 </CardDescription>
                 <CardAction>
                     <SavePresetDialog />
@@ -83,7 +89,9 @@ const PresetSection = () => {
                     <Skeleton className={'h-8 w-full max-w-sm'} />
                 ) : items.length === 0 ? (
                     <p className={'text-muted-foreground text-sm'}>
-                        No presets yet. Fill this form in and save it as one.
+                        {t(
+                            'No presets yet. Fill this form in and save it as one.'
+                        )}
                     </p>
                 ) : (
                     <Select
@@ -98,7 +106,7 @@ const PresetSection = () => {
                                 'h-auto! w-full max-w-sm text-left *:data-[slot=select-value]:line-clamp-none!'
                             }
                         >
-                            <SelectValue placeholder={'Select a preset'} />
+                            <SelectValue placeholder={t('Select a preset')} />
                         </SelectTrigger>
                         <SelectContent>
                             {items.map(item => (
@@ -117,7 +125,8 @@ const PresetSection = () => {
                         size: 'sm',
                     })}
                 >
-                    Manage presets <IconExternalLink className={'size-4'} />
+                    {t('Manage presets')}{' '}
+                    <IconExternalLink className={'size-4'} />
                 </Link>
             </CardContent>
         </Card>

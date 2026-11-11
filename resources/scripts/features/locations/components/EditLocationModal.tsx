@@ -11,6 +11,8 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { Form, FormButton } from '@/components/ui/Form'
 import { InputForm } from '@/components/ui/Forms'
@@ -70,11 +72,11 @@ const EditLocationModal = ({ mutate }: Props) => {
                 }
             }, false)
 
-            toast.add({ title: 'Location updated', type: 'success' })
+            toast.add({ title: t('Location updated'), type: 'success' })
 
             close()
         } catch (e) {
-            toast.add({ title: 'Failed to save changes', type: 'error' })
+            toast.add({ title: t('Failed to save changes'), type: 'error' })
             throw e
         }
     }
@@ -84,7 +86,9 @@ const EditLocationModal = ({ mutate }: Props) => {
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        Editing {location?.shortCode}
+                        {t('Editing {{shortCode}}', {
+                            shortCode: location?.shortCode,
+                        })}
                     </ResponsiveDialogTitle>
                 </ResponsiveDialogHeader>
                 <Form {...form}>
@@ -92,11 +96,11 @@ const EditLocationModal = ({ mutate }: Props) => {
                         <ResponsiveDialogBody className={'space-y-2'}>
                             <InputForm
                                 name={'shortCode'}
-                                label={'Short Code'}
+                                label={t('Short Code')}
                             />
                             <InputForm
                                 name={'description'}
-                                label={'Description'}
+                                label={t('Description')}
                             />
                         </ResponsiveDialogBody>
                         <ResponsiveDialogFooter className={'mt-4'}>
@@ -107,7 +111,7 @@ const EditLocationModal = ({ mutate }: Props) => {
                                     </Button>
                                 }
                             />
-                            <FormButton>Save</FormButton>
+                            <FormButton>{t('Save')}</FormButton>
                         </ResponsiveDialogFooter>
                     </form>
                 </Form>

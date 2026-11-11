@@ -19,6 +19,8 @@ import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { Card, CardContent, CardFooter } from '@/components/ui/Card'
 import {
@@ -66,7 +68,7 @@ const ProfileCard = () => {
         mutationFn: updateProfile,
         onSuccess: async updated => {
             await mutate(() => updated)
-            toast.add({ title: 'Profile updated', type: 'success' })
+            toast.add({ title: t('Profile updated'), type: 'success' })
         },
     })
 
@@ -76,20 +78,26 @@ const ProfileCard = () => {
         onSuccess: async updated => {
             await mutate(() => updated)
             setCropping(null)
-            toast.add({ title: 'Picture updated', type: 'success' })
+            toast.add({ title: t('Picture updated'), type: 'success' })
         },
         onError: () =>
-            toast.add({ title: 'Failed to upload the picture', type: 'error' }),
+            toast.add({
+                title: t('Failed to upload the picture'),
+                type: 'error',
+            }),
     })
 
     const { mutateAsync: remove, isPending: removing } = useMutation({
         mutationFn: removeAvatar,
         onSuccess: async updated => {
             await mutate(() => updated)
-            toast.add({ title: 'Picture removed', type: 'success' })
+            toast.add({ title: t('Picture removed'), type: 'success' })
         },
         onError: () =>
-            toast.add({ title: 'Failed to remove the picture', type: 'error' }),
+            toast.add({
+                title: t('Failed to remove the picture'),
+                type: 'error',
+            }),
     })
 
     const choose = (file?: File) => {
@@ -98,7 +106,10 @@ const ProfileCard = () => {
         // Checked here as well as on the server so a photo that is never going
         // to be accepted doesn't have to upload first to find out.
         if (file.size > AVATAR_MAX_BYTES) {
-            toast.add({ title: 'Pictures must be under 10 MB', type: 'error' })
+            toast.add({
+                title: t('Pictures must be under 10 MB'),
+                type: 'error',
+            })
 
             return
         }
@@ -127,10 +138,12 @@ const ProfileCard = () => {
                             <FieldGroup>
                                 <Field orientation={'responsive'}>
                                     <FieldContent>
-                                        <FieldTitle>Picture</FieldTitle>
+                                        <FieldTitle>{t('Picture')}</FieldTitle>
                                         <FieldDescription>
                                             {canChangeAvatar
-                                                ? 'Shown beside your name. Cropped square and stored at 512px.'
+                                                ? t(
+                                                      'Shown beside your name. Cropped square and stored at 512px.'
+                                                  )
                                                 : MANAGED_NOTE}
                                         </FieldDescription>
                                     </FieldContent>
@@ -173,7 +186,7 @@ const ProfileCard = () => {
                                                         input.current?.click()
                                                     }
                                                 >
-                                                    Upload
+                                                    {t('Upload')}
                                                 </Button>
                                                 {user?.avatarUrl ? (
                                                     <Button
@@ -190,7 +203,7 @@ const ProfileCard = () => {
                                                             )
                                                         }
                                                     >
-                                                        Remove
+                                                        {t('Remove')}
                                                     </Button>
                                                 ) : null}
                                             </>
@@ -205,12 +218,14 @@ const ProfileCard = () => {
                                     card unable to say what it is called. */}
                                 <InputForm
                                     name={'name'}
-                                    label={'Display name'}
+                                    label={t('Display name')}
                                     orientation={'responsive'}
                                     disabled={!canChangeName}
                                     description={
                                         canChangeName
-                                            ? 'Shown wherever your account appears.'
+                                            ? t(
+                                                  'Shown wherever your account appears.'
+                                              )
                                             : MANAGED_NOTE
                                     }
                                 />
@@ -224,7 +239,7 @@ const ProfileCard = () => {
                                     a confirmed identity. */}
                                 <Field orientation={'responsive'}>
                                     <FieldContent>
-                                        <FieldTitle>Email</FieldTitle>
+                                        <FieldTitle>{t('Email')}</FieldTitle>
                                         <FieldDescription>
                                             {canChangeEmail
                                                 ? user?.email
@@ -258,7 +273,7 @@ const ProfileCard = () => {
                         {canChangeName && (
                             <CardFooter className={'justify-end'}>
                                 <FormButton disabled={!form.formState.isDirty}>
-                                    Save changes
+                                    {t('Save changes')}
                                 </FormButton>
                             </CardFooter>
                         )}

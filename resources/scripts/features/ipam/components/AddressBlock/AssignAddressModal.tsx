@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
 import { queryClient } from '@/lib/query-client.ts'
 
 import { Alert, AlertDescription } from '@/components/ui/Alert'
@@ -41,8 +42,8 @@ import { toast } from '@/components/ui/Toast'
 const CHOICES = 50
 
 const schema = z.object({
-    addressId: z.string().min(1, 'Pick an address to assign.'),
-    serverId: z.string().min(1, 'Pick a server to assign it to.'),
+    addressId: z.string().min(1, t('Pick an address to assign.')),
+    serverId: z.string().min(1, t('Pick a server to assign it to.')),
 })
 
 interface Props {
@@ -121,10 +122,13 @@ const AssignAddressModal = ({ block, mutate }: Props) => {
 
             form.reset({ addressId: '', serverId: '' })
             setOpen(false)
-            toast.add({ title: 'Address assigned', type: 'success' })
+            toast.add({ title: t('Address assigned'), type: 'success' })
         } catch (e) {
             handleFormErrors(e, form.setError)
-            toast.add({ title: 'Failed to assign the address', type: 'error' })
+            toast.add({
+                title: t('Failed to assign the address'),
+                type: 'error',
+            })
 
             throw e
         }
@@ -153,10 +157,10 @@ const AssignAddressModal = ({ block, mutate }: Props) => {
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        Assign an address
+                        {t('Assign an address')}
                     </ResponsiveDialogTitle>
                     <ResponsiveDialogDescription>
-                        Hand an address from this block to a server.
+                        {t('Hand an address from this block to a server.')}
                     </ResponsiveDialogDescription>
                 </ResponsiveDialogHeader>
                 <Form {...form}>
@@ -164,12 +168,12 @@ const AssignAddressModal = ({ block, mutate }: Props) => {
                         <ResponsiveDialogBody className={'flex flex-col gap-4'}>
                             {isLoading ? (
                                 <p className={'text-muted-foreground text-sm'}>
-                                    Looking for a free address…
+                                    {t('Looking for a free address…')}
                                 </p>
                             ) : next ? (
                                 <Alert>
                                     <AlertDescription>
-                                        Next free in this block is{' '}
+                                        {t('Next free in this block is')}
                                         <span className={'font-mono'}>
                                             {next.ip}
                                         </span>
@@ -179,9 +183,9 @@ const AssignAddressModal = ({ block, mutate }: Props) => {
                             ) : (
                                 <Alert variant={'destructive'}>
                                     <AlertDescription>
-                                        This block has no free addresses. Free
-                                        one, or generate more if the block is
-                                        not fully generated.
+                                        {t(
+                                            'This block has no free addresses. Free one, or generate more if the block is not fully generated.'
+                                        )}
                                     </AlertDescription>
                                 </Alert>
                             )}
@@ -195,10 +199,10 @@ const AssignAddressModal = ({ block, mutate }: Props) => {
                                     />
                                     <SelectForm
                                         name={'addressId'}
-                                        label={'Address'}
-                                        description={
+                                        label={t('Address')}
+                                        description={t(
                                             'Defaults to the next free address in the block.'
-                                        }
+                                        )}
                                         items={choices.map(address => ({
                                             value: String(address.id),
                                             label: address.ip,
@@ -215,7 +219,9 @@ const AssignAddressModal = ({ block, mutate }: Props) => {
                                     </Button>
                                 }
                             />
-                            <FormButton disabled={!next}>Assign</FormButton>
+                            <FormButton disabled={!next}>
+                                {t('Assign')}
+                            </FormButton>
                         </ResponsiveDialogFooter>
                     </form>
                 </Form>

@@ -20,6 +20,8 @@ import '@xterm/xterm/css/xterm.css'
 import { AxiosError } from 'axios'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button, buttonVariants } from '@/components/ui/Button'
 import Spinner from '@/components/ui/Spinner.tsx'
 import { toast } from '@/components/ui/Toast'
@@ -78,10 +80,10 @@ const closeCodes: Record<number, string> = {
  * as if the key were physically down.
  */
 const modifierKeys = [
-    { label: 'Ctrl', keysym: 0xffe3, code: 'ControlLeft' },
-    { label: 'Alt', keysym: 0xffe9, code: 'AltLeft' },
-    { label: 'Shift', keysym: 0xffe1, code: 'ShiftLeft' },
-    { label: 'Super', keysym: 0xffeb, code: 'MetaLeft' },
+    { label: t('Ctrl'), keysym: 0xffe3, code: 'ControlLeft' },
+    { label: t('Alt'), keysym: 0xffe9, code: 'AltLeft' },
+    { label: t('Shift'), keysym: 0xffe1, code: 'ShiftLeft' },
+    { label: t('Super'), keysym: 0xffeb, code: 'MetaLeft' },
 ] as const
 
 /**
@@ -127,8 +129,8 @@ const typeText = async (
 
 /** Sent as a full press and release, with whatever modifiers are held. */
 const tapKeys = [
-    { label: 'Esc', keysym: 0xff1b, code: 'Escape' },
-    { label: 'Tab', keysym: 0xff09, code: 'Tab' },
+    { label: t('Esc'), keysym: 0xff1b, code: 'Escape' },
+    { label: t('Tab'), keysym: 0xff09, code: 'Tab' },
     ...Array.from({ length: 12 }, (_, index) => ({
         label: `F${index + 1}`,
         keysym: 0xffbe + index,
@@ -205,7 +207,9 @@ const ConsoleView = ({
     // Held when the guest copies something but the browser refuses to write to
     // the clipboard without a gesture, so a button can finish the job.
     const [guestClipboard, setGuestClipboard] = useState('')
-    const { copy } = useClipboard({ successMessage: 'Copied from the server' })
+    const { copy } = useClipboard({
+        successMessage: t('Copied from the server'),
+    })
     // Reaches the node, so it is only asked once this console has actually
     // failed — a working console has already proven the answer.
     const { data: displayStatus } = useDisplayConsole(
@@ -221,7 +225,10 @@ const ConsoleView = ({
         mutationFn: () => enableDisplayConsole(serverUuid),
         onSuccess: status => refreshDisplay(() => status),
         onError: () =>
-            toast.add({ title: 'Could not change the display', type: 'error' }),
+            toast.add({
+                title: t('Could not change the display'),
+                type: 'error',
+            }),
     })
     useEffect(() => {
         let disposed = false
@@ -253,7 +260,10 @@ const ConsoleView = ({
                 session.url.startsWith('ws:')
             ) {
                 fail({
-                    message: `The panel is served over HTTPS, so this browser will not open an insecure console connection to ${host}. Give this Anchor an https:// public URL.`,
+                    message: t(
+                        'The panel is served over HTTPS, so this browser will not open an insecure console connection to {{host}}. Give this Anchor an https:// public URL.',
+                        { host }
+                    ),
                 })
 
                 return
@@ -304,14 +314,23 @@ const ConsoleView = ({
                 // over its own path and cannot vouch for that one, so probe it
                 // from here and say which half is actually broken.
                 fail({
-                    message: `The browser could not open a console connection to ${host}.`,
+                    message: t(
+                        'The browser could not open a console connection to {{host}}.',
+                        { host }
+                    ),
                     code: closure?.code,
                 })
                 void reachable(session.url).then(answered =>
                     fail({
                         message: answered
-                            ? `${host} answered this browser but refused the console session. The panel and the agent may no longer share a secret, or the session may have expired before it was used.`
-                            : `${host} could not be reached from this browser. The agent has to be reachable from here, not only from the panel, with a certificate this browser already trusts.`,
+                            ? t(
+                                  '{{host}} answered this browser but refused the console session. The panel and the agent may no longer share a secret, or the session may have expired before it was used.',
+                                  { host }
+                              )
+                            : t(
+                                  '{{host}} could not be reached from this browser. The agent has to be reachable from here, not only from the panel, with a certificate this browser already trusts.',
+                                  { host }
+                              ),
                         code: closure?.code,
                     })
                 )
@@ -363,7 +382,7 @@ const ConsoleView = ({
                     fail({
                         message:
                             closure?.reason ||
-                            'The display console disconnected.',
+                            t('The display console disconnected.'),
                         code: closure?.code,
                         keepOutput: true,
                     })
@@ -425,7 +444,9 @@ const ConsoleView = ({
                     fail({
                         message:
                             event.reason.trim() ||
-                            'The console ended without saying why. Its last output is below.',
+                            t(
+                                'The console ended without saying why. Its last output is below.'
+                            ),
                         code: event.code,
                         keepOutput: true,
                     })
@@ -499,10 +520,10 @@ const ConsoleView = ({
             const text = await navigator.clipboard.readText()
             if (text) return text
 
-            toast.add({ title: 'Your clipboard is empty', type: 'error' })
+            toast.add({ title: t('Your clipboard is empty'), type: 'error' })
         } catch {
             toast.add({
-                title: 'This browser would not share the clipboard',
+                title: t('This browser would not share the clipboard'),
                 type: 'error',
             })
         }
@@ -532,7 +553,10 @@ const ConsoleView = ({
 
         if (text.length > typingLimit)
             toast.add({
-                title: `Only the first ${typingLimit} characters will be typed`,
+                title: t(
+                    'Only the first {{typingLimit}} characters will be typed',
+                    { typingLimit }
+                ),
                 type: 'error',
             })
 
@@ -571,7 +595,7 @@ const ConsoleView = ({
             onClick={() => setAttempt(value => value + 1)}
         >
             <IconRefresh />
-            Try again
+            {t('Try again')}
         </Button>
     )
 
@@ -588,7 +612,10 @@ const ConsoleView = ({
             <p className='text-sm text-zinc-300'>
                 {displayStatus.restartRequired
                     ? `${server?.name ?? 'This server'} has a display from its next boot onwards. Restart it to use this console.`
-                    : `This server's display is set to ${displayStatus.display}, so there is no screen to show. Giving it one takes a restart, and leaves the serial console as it is.`}
+                    : t(
+                          "This server's display is set to {{display}}, so there is no screen to show. Giving it one takes a restart, and leaves the serial console as it is.",
+                          { display: displayStatus.display }
+                      )}
             </p>
             {!displayStatus.restartRequired && (
                 <Button
@@ -598,7 +625,7 @@ const ConsoleView = ({
                     onClick={() => enableDisplay()}
                     icon={<IconDeviceDesktop />}
                 >
-                    Enable display output
+                    {t('Enable display output')}
                 </Button>
             )}
         </div>
@@ -609,7 +636,7 @@ const ConsoleView = ({
     // making the user guess from a shrug.
     const closeNote = failure?.code !== undefined && (
         <p className='font-mono text-xs text-zinc-500'>
-            Close code {failure.code}
+            {t('Close code {{code}}', { code: failure.code })}
             {closeCodes[failure.code] ? ` — ${closeCodes[failure.code]}` : ''}
         </p>
     )
@@ -621,8 +648,8 @@ const ConsoleView = ({
                     <ToolButton
                         label={
                             keysOpen
-                                ? 'Hide keyboard keys'
-                                : 'Keys the browser intercepts'
+                                ? t('Hide keyboard keys')
+                                : t('Keys the browser intercepts')
                         }
                         active={keysOpen || held.length > 0}
                         onClick={() => setKeysOpen(open => !open)}
@@ -631,7 +658,9 @@ const ConsoleView = ({
                     </ToolButton>
                     <ToolButton
                         label={
-                            fitDisplay ? 'Show at actual size' : 'Scale to fit'
+                            fitDisplay
+                                ? t('Show at actual size')
+                                : t('Scale to fit')
                         }
                         onClick={() => setFitDisplay(fit => !fit)}
                     >
@@ -640,13 +669,13 @@ const ConsoleView = ({
                 </>
             )}
             <ToolButton
-                label='Reconnect'
+                label={t('Reconnect')}
                 onClick={() => setAttempt(value => value + 1)}
             >
                 <IconRefresh />
             </ToolButton>
             <ToolButton
-                label='Fullscreen'
+                label={t('Fullscreen')}
                 onClick={() => document.documentElement.requestFullscreen()}
             >
                 <IconArrowsMaximize />
@@ -666,7 +695,7 @@ const ConsoleView = ({
                 <Link
                     to='/servers/$serverUuid'
                     params={{ serverUuid }}
-                    aria-label='Back to server'
+                    aria-label={t('Back to server')}
                     className={buttonVariants({
                         variant: 'ghost',
                         size: 'icon',
@@ -678,10 +707,10 @@ const ConsoleView = ({
                 </Link>
                 <div className='min-w-0 flex-1'>
                     <p className='truncate text-sm font-medium'>
-                        {server?.name ?? 'Console'}
+                        {server?.name ?? t('Console')}
                     </p>
                     <p className='text-xs text-zinc-400'>
-                        {type === 'novnc' ? 'Display' : 'Terminal'}
+                        {type === 'novnc' ? t('Display') : t('Terminal')}
                     </p>
                 </div>
                 {tools}
@@ -703,27 +732,37 @@ const ConsoleView = ({
                             {key.label}
                         </KeyButton>
                     ))}
-                    <KeyButton onClick={sendCtrlAltDel}>Ctrl+Alt+Del</KeyButton>
+                    <KeyButton onClick={sendCtrlAltDel}>
+                        {t('Ctrl+Alt+Del')}
+                    </KeyButton>
                     <span className='mx-1 h-5 w-px bg-white/10' />
                     <KeyButton
                         onClick={pasteClipboard}
-                        title='Send your clipboard to the guest. Needs a clipboard agent running inside it.'
+                        title={t(
+                            'Send your clipboard to the guest. Needs a clipboard agent running inside it.'
+                        )}
                     >
-                        Paste
+                        {t('Paste')}
                     </KeyButton>
                     <KeyButton
                         onClick={typeClipboard}
                         disabled={typing !== null}
-                        title='Replay your clipboard as keystrokes. Works on installers and BIOS screens, but follows the guest keyboard layout.'
+                        title={t(
+                            'Replay your clipboard as keystrokes. Works on installers and BIOS screens, but follows the guest keyboard layout.'
+                        )}
                     >
-                        {typing === null ? 'Type' : `Typing ${typing}`}
+                        {typing === null
+                            ? t('Type')
+                            : t('Typing {{typing}}', { typing })}
                     </KeyButton>
                     {guestClipboard !== '' && (
                         <KeyButton
                             onClick={() => copy(guestClipboard)}
-                            title='The guest copied something; put it on your clipboard.'
+                            title={t(
+                                'The guest copied something; put it on your clipboard.'
+                            )}
                         >
-                            Copy from guest
+                            {t('Copy from guest')}
                         </KeyButton>
                     )}
                 </div>
@@ -748,8 +787,8 @@ const ConsoleView = ({
                             <div className='flex max-w-md flex-col items-center gap-3 text-center'>
                                 <p className='text-sm font-medium text-zinc-100'>
                                     {type === 'novnc'
-                                        ? 'Display console unavailable'
-                                        : 'Serial console unavailable'}
+                                        ? t('Display console unavailable')
+                                        : t('Serial console unavailable')}
                                 </p>
                                 <p className='text-sm text-zinc-400'>
                                     {failure.message}

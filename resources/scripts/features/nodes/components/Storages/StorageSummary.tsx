@@ -6,6 +6,8 @@ import { Storage } from '@/features/nodes/types.ts'
 import { cn } from '@/utils'
 import { IconHelpCircle } from '@tabler/icons-react'
 
+import { t } from '@/lib/i18n.ts'
+
 import {
     Tooltip,
     TooltipContent,
@@ -69,7 +71,9 @@ const StorageSummary = ({
                             <Tooltip>
                                 <TooltipTrigger
                                     className='text-muted-foreground/70 hover:text-foreground inline-flex cursor-help transition-colors'
-                                    aria-label={`What ${label} means`}
+                                    aria-label={t('What {{label}} means', {
+                                        label,
+                                    })}
                                 >
                                     <IconHelpCircle className='size-3.5' />
                                 </TooltipTrigger>

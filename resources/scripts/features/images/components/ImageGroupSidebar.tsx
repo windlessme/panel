@@ -6,6 +6,8 @@ import { useModal } from '@/hooks/create-modal-store.ts'
 import { IconDisc, IconPlus } from '@tabler/icons-react'
 import { useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import {
@@ -57,7 +59,8 @@ const ImageGroupSidebar = () => {
                                     onClick={() => setIsCreating(true)}
                                     disabled={isCreating}
                                 >
-                                    <IconPlus className={'size-4'} /> New image
+                                    <IconPlus className={'size-4'} />{' '}
+                                    {t('New image')}
                                 </Button>
                             </div>
                         )}
@@ -81,10 +84,10 @@ const ImageGroupSidebar = () => {
                                 <Card className={'py-6'}>
                                     <SimpleEmptyState
                                         icon={IconDisc}
-                                        title={'No images'}
-                                        description={
+                                        title={t('No images')}
+                                        description={t(
                                             'Add an image to make it available from this group.'
-                                        }
+                                        )}
                                         action={
                                             <Button
                                                 onClick={() =>

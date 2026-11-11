@@ -1,5 +1,7 @@
 import { Storage } from '@/features/nodes/types.ts'
 
+import { t } from '@/lib/i18n.ts'
+
 import type { Segment } from '@/components/ui/Progress'
 
 /**
@@ -90,12 +92,12 @@ export const storageCapacity = (storage: Storage): StorageCapacityView => {
             known: true,
             segments: [
                 {
-                    label: 'Used',
+                    label: t('Used'),
                     value: pct(used, total),
                     color: solidColor(storage),
                 },
                 {
-                    label: 'Reserved (headroom)',
+                    label: t('Reserved (headroom)'),
                     value: pct(reserved, total),
                     color: RESERVE_COLOR,
                 },
@@ -108,22 +110,22 @@ export const storageCapacity = (storage: Storage): StorageCapacityView => {
         known: true,
         segments: [
             {
-                label: 'Server disks',
+                label: t('Server disks'),
                 value: pct(storage.usages.server, total),
                 color: 'var(--storage-servers)',
             },
             {
-                label: 'Backups',
+                label: t('Backups'),
                 value: pct(storage.usages.backup, total),
                 color: 'var(--storage-backups)',
             },
             {
-                label: 'Untracked',
+                label: t('Untracked'),
                 value: pct(storage.untracked ?? 0, total),
                 color: 'var(--storage-untracked)',
             },
             {
-                label: 'Reserved (headroom)',
+                label: t('Reserved (headroom)'),
                 value: pct(reserved, total),
                 color: RESERVE_COLOR,
             },
@@ -143,21 +145,21 @@ export const storageCapacity = (storage: Storage): StorageCapacityView => {
  * Convoy has never heard of, and `foo` is more use than nothing.
  */
 const BACKEND_LABELS: Record<string, string> = {
-    dir: 'Directory',
-    btrfs: 'Btrfs',
+    dir: t('Directory'),
+    btrfs: t('Btrfs'),
     lvm: 'LVM',
     lvmthin: 'LVM-thin',
     zfspool: 'ZFS',
-    zfs: 'ZFS over iSCSI',
+    zfs: t('ZFS over iSCSI'),
     nfs: 'NFS',
     cifs: 'SMB/CIFS',
-    glusterfs: 'GlusterFS',
+    glusterfs: t('GlusterFS'),
     iscsi: 'iSCSI',
-    iscsidirect: 'iSCSI (direct)',
-    cephfs: 'CephFS',
-    rbd: 'Ceph RBD',
-    pbs: 'Proxmox Backup Server',
-    esxi: 'ESXi',
+    iscsidirect: t('iSCSI (direct)'),
+    cephfs: t('CephFS'),
+    rbd: t('Ceph RBD'),
+    pbs: t('Proxmox Backup Server'),
+    esxi: t('ESXi'),
 }
 
 /**
@@ -168,22 +170,31 @@ const BACKEND_LABELS: Record<string, string> = {
  * to this node or shared across the cluster, and what it is allowed to hold.
  */
 const BACKEND_HINTS: Record<string, string> = {
-    dir: 'Local to this node. Stores everything as files, so it can hold any content type.',
-    btrfs: 'Local to this node. File-based, with cheap snapshots.',
-    lvm: 'Local block storage. Disk images only — no ISOs or backups.',
-    lvmthin:
-        'Local block storage. Allocates on write, so guests can be promised more than the pool holds.',
-    zfspool: 'Local to this node. Allocates on write, with cheap snapshots.',
-    zfs: 'Block storage from another machine over iSCSI.',
-    nfs: 'A network share. Every node that mounts it sees the same files.',
-    cifs: 'A network share over SMB. Every node that mounts it sees the same files.',
-    glusterfs: 'A clustered filesystem, shared across nodes.',
-    iscsi: 'Raw LUNs from a SAN. Disk images only.',
-    iscsidirect: 'Raw LUNs from a SAN, used without LVM on top.',
-    cephfs: 'Ceph filesystem, shared across the cluster. Holds ISOs and backups too.',
-    rbd: 'Ceph block storage, shared across the cluster. Disk images only.',
-    pbs: 'A Proxmox Backup Server. Backups only, deduplicated — it stores far less than the backups add up to.',
-    esxi: 'An ESXi datastore, for importing existing VMs.',
+    dir: t(
+        'Local to this node. Stores everything as files, so it can hold any content type.'
+    ),
+    btrfs: t('Local to this node. File-based, with cheap snapshots.'),
+    lvm: t('Local block storage. Disk images only — no ISOs or backups.'),
+    lvmthin: t(
+        'Local block storage. Allocates on write, so guests can be promised more than the pool holds.'
+    ),
+    zfspool: t('Local to this node. Allocates on write, with cheap snapshots.'),
+    zfs: t('Block storage from another machine over iSCSI.'),
+    nfs: t('A network share. Every node that mounts it sees the same files.'),
+    cifs: t(
+        'A network share over SMB. Every node that mounts it sees the same files.'
+    ),
+    glusterfs: t('A clustered filesystem, shared across nodes.'),
+    iscsi: t('Raw LUNs from a SAN. Disk images only.'),
+    iscsidirect: t('Raw LUNs from a SAN, used without LVM on top.'),
+    cephfs: t(
+        'Ceph filesystem, shared across the cluster. Holds ISOs and backups too.'
+    ),
+    rbd: t('Ceph block storage, shared across the cluster. Disk images only.'),
+    pbs: t(
+        'A Proxmox Backup Server. Backups only, deduplicated — it stores far less than the backups add up to.'
+    ),
+    esxi: t('An ESXi datastore, for importing existing VMs.'),
 }
 
 export const backendHint = (type: string | null): string | null =>

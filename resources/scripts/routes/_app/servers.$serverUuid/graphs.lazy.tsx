@@ -3,13 +3,15 @@ import TimeRangeSelector from '@/features/servers/components/client/Graphs/TimeR
 import useTimeRange from '@/features/servers/hooks/use-time-range.ts'
 import { createLazyFileRoute } from '@tanstack/react-router'
 
+import { t } from '@/lib/i18n.ts'
+
 import { PageToolbar } from '@/components/ui/PageToolbar'
 import { Heading } from '@/components/ui/Typography'
 
 export const Route = createLazyFileRoute('/_app/servers/$serverUuid/graphs')({
     component: ServerGraphs,
     // @ts-ignore
-    meta: () => [{ title: 'Graphs' }],
+    meta: () => [{ title: t('Graphs') }],
 })
 
 function ServerGraphs() {
@@ -30,7 +32,7 @@ function ServerGraphs() {
                 here: the panel's rail already carries live CPU and memory, and
                 showing the same two figures twice, a few hundred pixels apart,
                 only invites the reader to check whether they agree. */}
-            <Heading>Resource usage</Heading>
+            <Heading>{t('Resource usage')}</Heading>
             <PageToolbar>
                 <TimeRangeSelector from={from} setFrom={setFrom} />
             </PageToolbar>

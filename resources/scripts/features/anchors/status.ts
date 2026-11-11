@@ -1,5 +1,7 @@
 import { formatDistanceToNowStrict } from 'date-fns'
 
+import { t } from '@/lib/i18n.ts'
+
 export type AnchorTone = 'online' | 'waiting' | 'down'
 
 export interface AnchorStatus {
@@ -45,27 +47,31 @@ const anchorStatus = (anchor: AnchorLike): AnchorStatus => {
 
     switch (anchor.compatibility) {
         case 'compatible':
-            return { tone: 'online', label: 'Online', detail: lastSeen }
+            return { tone: 'online', label: t('Online'), detail: lastSeen }
         case 'offline':
-            return { tone: 'down', label: 'Unreachable', detail: lastSeen }
+            return { tone: 'down', label: t('Unreachable'), detail: lastSeen }
         // The version numbers that explain this live under the Protocol marker
         // (AnchorProtocol), where they are one hover away instead of asking
         // every reader to compare two ranges in passing.
         case 'incompatible':
-            return { tone: 'down', label: 'Version mismatch', detail: lastSeen }
+            return {
+                tone: 'down',
+                label: t('Version mismatch'),
+                detail: lastSeen,
+            }
         case 'unenrolled':
             return {
                 tone: 'waiting',
-                label: 'Waiting for install',
-                detail: 'No agent has enrolled on this host yet',
+                label: t('Waiting for install'),
+                detail: t('No agent has enrolled on this host yet'),
             }
         default:
             // Null: a node with no agent installed. The v4 shape, and not a
             // fault -- everything except the console works without one.
             return {
                 tone: 'waiting',
-                label: 'No agent',
-                detail: 'Console and template installs are unavailable',
+                label: t('No agent'),
+                detail: t('Console and template installs are unavailable'),
             }
     }
 }

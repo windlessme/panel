@@ -18,6 +18,8 @@ import {
 import { useMutation } from '@tanstack/react-query'
 import { ReactNode } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     Card,
@@ -31,7 +33,9 @@ import { toast } from '@/components/ui/Toast'
 
 /** One row of provenance: where a number in the left column came from. */
 const Fact = ({ label, children }: { label: string; children: ReactNode }) => (
-    <div className={'grid grid-cols-[7.5rem_minmax(0,1fr)] items-baseline gap-3'}>
+    <div
+        className={'grid grid-cols-[7.5rem_minmax(0,1fr)] items-baseline gap-3'}
+    >
         <dt className={'text-muted-foreground text-xs'}>{label}</dt>
         <dd className={'text-sm break-words tabular-nums'}>{children}</dd>
     </div>
@@ -66,7 +70,7 @@ const UpdateStatusCard = () => {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Panel version</CardTitle>
+                <CardTitle>{t('Panel version')}</CardTitle>
             </CardHeader>
 
             <CardContent
@@ -120,7 +124,7 @@ const UpdateStatusCard = () => {
                                 target={'_blank'}
                                 rel={'noreferrer'}
                             >
-                                Release notes
+                                {t('Release notes')}
                                 <IconExternalLink className={'size-4'} />
                             </a>
                         </Button>
@@ -131,17 +135,17 @@ const UpdateStatusCard = () => {
                     {/* Redundant when the number beside it is the same one. */}
                     {status.latestVersion &&
                         status.latestVersion !== status.currentVersion && (
-                            <Fact label={'Latest release'}>
+                            <Fact label={t('Latest release')}>
                                 {releaseLine(status)}
                             </Fact>
                         )}
-                    <Fact label={'Channel'}>Stable</Fact>
-                    <Fact label={'Source'}>
+                    <Fact label={t('Channel')}>{t('Stable')}</Fact>
+                    <Fact label={t('Source')}>
                         <span className={'font-mono text-xs'}>
                             {status.repository}
                         </span>
                     </Fact>
-                    <Fact label={'Last checked'}>{lastChecked(status)}</Fact>
+                    <Fact label={t('Last checked')}>{lastChecked(status)}</Fact>
                 </dl>
             </CardContent>
 
@@ -153,7 +157,7 @@ const UpdateStatusCard = () => {
                     disabled={isPending}
                     icon={<IconRefresh className={'size-4'} />}
                 >
-                    Check now
+                    {t('Check now')}
                 </Button>
             </CardFooter>
         </Card>

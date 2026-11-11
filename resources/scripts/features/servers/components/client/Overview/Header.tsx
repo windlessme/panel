@@ -2,13 +2,15 @@ import Toolbar from '@/features/servers/components/client/Overview/Toolbar.tsx'
 import { useServer } from '@/features/servers/detail/api.ts'
 import useClipboard from '@/hooks/use-clipboard.ts'
 
+import { t } from '@/lib/i18n.ts'
+
 import { PageToolbar } from '@/components/ui/PageToolbar'
 import { Heading } from '@/components/ui/Typography'
 
 const Header = () => {
     const { data: server } = useServer()
     const { copy } = useClipboard({
-        successMessage: 'Copied hostname to clipboard',
+        successMessage: t('Copied hostname to clipboard'),
     })
 
     const copyHostname = () => copy(server!.hostname)
@@ -24,7 +26,9 @@ const Header = () => {
                     className={
                         'text-muted-foreground inline-block max-w-full truncate text-sm sm:mt-2 sm:text-base'
                     }
-                    aria-label={`Click to copy hostname: ${server?.hostname}`}
+                    aria-label={t('Click to copy hostname: {{hostname}}', {
+                        hostname: server?.hostname,
+                    })}
                 >
                     {server?.hostname}
                 </button>

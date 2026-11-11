@@ -12,6 +12,8 @@ import { IconApi } from '@tabler/icons-react'
 import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     Card,
@@ -41,20 +43,21 @@ const ApiKeysCard = () => {
         mutationFn: (apiKey: ApiKeyType) => deleteApiKey(apiKey.id),
         onSuccess: (_, apiKey) => {
             mutate(keys => keys?.filter(k => k.id !== apiKey.id))
-            toast.add({ title: 'API token revoked', type: 'success' })
+            toast.add({ title: t('API token revoked'), type: 'success' })
         },
         onError: () =>
-            toast.add({ title: 'Failed to revoke token', type: 'error' }),
+            toast.add({ title: t('Failed to revoke token'), type: 'error' }),
     })
 
     return (
         <>
             <Card className={'flex flex-col'}>
                 <CardHeader>
-                    <CardTitle>API Tokens</CardTitle>
+                    <CardTitle>{t('API Tokens')}</CardTitle>
                     <CardDescription>
-                        Personal access tokens that authenticate to the API on
-                        your behalf.
+                        {t(
+                            'Personal access tokens that authenticate to the API on your behalf.'
+                        )}
                     </CardDescription>
                     {keys && keys.length > 0 && (
                         <CardAction>
@@ -62,7 +65,7 @@ const ApiKeysCard = () => {
                                 variant={'outline'}
                                 onClick={() => setCreateOpen(true)}
                             >
-                                Create token
+                                {t('Create token')}
                             </Button>
                         </CardAction>
                     )}
@@ -79,7 +82,7 @@ const ApiKeysCard = () => {
                         <Skeleton className={'h-40 w-full'} />
                     ) : keys.length > 0 ? (
                         <OverflowItemGroup
-                            title={'API Tokens'}
+                            title={t('API Tokens')}
                             rows={keys.map(key => (
                                 <ApiKey
                                     key={key.id}
@@ -91,10 +94,10 @@ const ApiKeysCard = () => {
                     ) : (
                         <SimpleEmptyState
                             icon={IconApi}
-                            title={'No API tokens'}
-                            description={
+                            title={t('No API tokens')}
+                            description={t(
                                 'You haven’t created any API tokens yet.'
-                            }
+                            )}
                             action={
                                 <Button onClick={() => setCreateOpen(true)}>
                                     Create token
@@ -115,11 +118,11 @@ const ApiKeysCard = () => {
             <ConfirmWithAuthDialog
                 subject={keyToRevoke}
                 onClose={() => setKeyToRevoke(null)}
-                title={'Revoke API token'}
+                title={t('Revoke API token')}
                 description={apiKey =>
                     `Any application using “${apiKey.name}” will immediately lose access. This cannot be undone.`
                 }
-                confirmText={'Revoke'}
+                confirmText={t('Revoke')}
                 onConfirm={revoke}
             />
         </>

@@ -3,6 +3,7 @@ import { queryOptions, useQuery } from '@tanstack/react-query'
 import byteSize from 'byte-size'
 
 import { type DataResponse, apiFetch } from '@/lib/api'
+import { t } from '@/lib/i18n.ts'
 
 // Live filesystem usage comes from the shared `useServerResources` hook (detail/api.ts) — no
 // duplicate reader here.
@@ -61,7 +62,7 @@ export const deviceKind = (device: StorageDevice): DeviceKind => {
 }
 
 export const deviceKindLabels: Record<DeviceKind, string> = {
-    disk: 'Disk',
+    disk: t('Disk'),
     cdrom: 'CD-ROM',
     cloudinit: 'Cloud-init',
 }

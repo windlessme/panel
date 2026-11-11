@@ -2,6 +2,8 @@ import { versionLabels } from '@/features/servers/networking/address-labels.ts'
 import { Address, AddressVersion } from '@/types/address.ts'
 import { IconWifiOff } from '@tabler/icons-react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Badge } from '@/components/ui/Badge'
 import { CardTable, CardTableColumn } from '@/components/ui/CardTable'
 import CopyValue from '@/components/ui/CopyValue.tsx'
@@ -39,7 +41,7 @@ const Value = ({ label, value }: { label: string; value: string | null }) =>
     value ? (
         <CopyValue label={label} value={value} />
     ) : (
-        <span aria-label={'None'}>&mdash;</span>
+        <span aria-label={t('None')}>{t('&mdash;')}</span>
     )
 
 interface Props {
@@ -70,11 +72,11 @@ const AddressRows = ({ addresses }: Props) => {
     const columns: CardTableColumn<Address>[] = [
         {
             key: 'address',
-            header: 'Address',
+            header: t('Address'),
             className: 'whitespace-nowrap',
             cell: address => (
                 <CopyValue
-                    label={'Address'}
+                    label={t('Address')}
                     value={`${address.ip}/${address.prefixLength}`}
                     className={
                         'text-foreground font-medium tracking-tight tabular-nums'
@@ -91,7 +93,7 @@ const AddressRows = ({ addresses }: Props) => {
             ? [
                   {
                       key: 'version',
-                      header: 'Type',
+                      header: t('Type'),
                       cell: (address: Address) => (
                           <Badge variant={'secondary'}>
                               {versionLabels[address.version]}
@@ -104,11 +106,11 @@ const AddressRows = ({ addresses }: Props) => {
             ? [
                   {
                       key: 'gateway',
-                      header: 'Gateway',
+                      header: t('Gateway'),
                       className:
                           'text-muted-foreground text-xs whitespace-nowrap',
                       cell: (address: Address) => (
-                          <Value label={'Gateway'} value={address.gateway} />
+                          <Value label={t('Gateway')} value={address.gateway} />
                       ),
                   },
               ]
@@ -117,12 +119,12 @@ const AddressRows = ({ addresses }: Props) => {
             ? [
                   {
                       key: 'mac',
-                      header: 'MAC address',
+                      header: t('MAC address'),
                       className:
                           'text-muted-foreground text-xs whitespace-nowrap',
                       cell: (address: Address) => (
                           <Value
-                              label={'MAC address'}
+                              label={t('MAC address')}
                               value={address.macAddress}
                           />
                       ),
@@ -132,8 +134,8 @@ const AddressRows = ({ addresses }: Props) => {
     ]
 
     const shared = [
-        sharedGateway && { label: 'Gateway', value: sharedGateway },
-        sharedMac && { label: 'MAC address', value: sharedMac },
+        sharedGateway && { label: t('Gateway'), value: sharedGateway },
+        sharedMac && { label: t('MAC address'), value: sharedMac },
     ].filter(Boolean) as { label: string; value: string }[]
 
     const footer =
@@ -158,7 +160,10 @@ const AddressRows = ({ addresses }: Props) => {
                 </dl>
                 {hidden > 0 && (
                     <p className={'tabular-nums'}>
-                        {shown.length} of {addresses.length}
+                        {t('{{length}} of {{length2}}', {
+                            length: shown.length,
+                            length2: addresses.length,
+                        })}
                     </p>
                 )}
             </>
@@ -166,7 +171,7 @@ const AddressRows = ({ addresses }: Props) => {
 
     return (
         <CardTable
-            caption={'IP addresses allocated to this server'}
+            caption={t('IP addresses allocated to this server')}
             rows={shown}
             rowKey={address => address.id}
             columns={columns}

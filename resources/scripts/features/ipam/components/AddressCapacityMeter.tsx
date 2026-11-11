@@ -5,6 +5,8 @@ import {
 import { AddressCapacity } from '@/types/address-capacity.ts'
 import { cn } from '@/utils'
 
+import { t } from '@/lib/i18n.ts'
+
 import { SegmentedProgressBar } from '@/components/ui/Progress'
 
 interface Props {
@@ -49,7 +51,9 @@ const AddressCapacityMeter = ({
             <SegmentedProgressBar
                 segments={view.segments}
                 className={size === 'md' ? 'h-2' : 'h-1.5'}
-                aria-label={`${view.percent!.toFixed(0)}% of usable addresses are in use`}
+                aria-label={t('{{toFixed}}% of usable addresses are in use', {
+                    toFixed: view.percent!.toFixed(0),
+                })}
             />
             {subline && (
                 /* Each fact is its own non-breaking span, so a narrow column wraps between them
@@ -63,16 +67,22 @@ const AddressCapacityMeter = ({
                         {view.percent!.toFixed(1)}%
                     </span>
                     <span className={'whitespace-nowrap'}>
-                        · {view.free.toLocaleString()} free
+                        {t('· {{value}} free', {
+                            value: view.free.toLocaleString(),
+                        })}
                     </span>
                     {view.ungenerated > 0 && (
                         <span className={'whitespace-nowrap'}>
-                            · {view.ungenerated.toLocaleString()} not generated
+                            {t('· {{value}} not generated', {
+                                value: view.ungenerated.toLocaleString(),
+                            })}
                         </span>
                     )}
                     {view.sparseBlockCount > 0 && (
                         <span className={'whitespace-nowrap'}>
-                            · {view.sparseBlockCount} on demand
+                            {t('· {{sparseBlockCount}} on demand', {
+                                sparseBlockCount: view.sparseBlockCount,
+                            })}
                         </span>
                     )}
                 </p>

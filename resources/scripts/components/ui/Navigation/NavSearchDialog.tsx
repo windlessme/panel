@@ -22,6 +22,8 @@ import { useQuery } from '@tanstack/react-query'
 import { useLocation, useRouter } from '@tanstack/react-router'
 import { useMemo, useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import {
     CommandDialog,
     CommandEmpty,
@@ -58,11 +60,11 @@ interface Props {
 
 const clientGroups: NavGroup[] = [
     {
-        label: 'Client',
+        label: t('Client'),
         items: [
             {
                 icon: IconServer,
-                label: 'Servers',
+                label: t('Servers'),
                 path: '/',
                 activeOptions: { exact: true },
             },
@@ -72,32 +74,32 @@ const clientGroups: NavGroup[] = [
 
 const adminGroups: NavGroup[] = [
     {
-        label: 'Admin',
+        label: t('Admin'),
         items: [
             {
                 icon: IconHome,
-                label: 'Dashboard',
+                label: t('Dashboard'),
                 path: '/admin',
                 activeOptions: { exact: true },
             },
             {
                 icon: IconMapPin,
-                label: 'Locations',
+                label: t('Locations'),
                 path: '/admin/locations',
             },
             {
                 icon: IconServer,
-                label: 'Nodes',
+                label: t('Nodes'),
                 path: '/admin/nodes',
             },
             {
                 icon: IconTransform,
-                label: 'Anchors',
+                label: t('Anchors'),
                 path: '/admin/anchors',
             },
             {
                 icon: IconServer,
-                label: 'Servers',
+                label: t('Servers'),
                 path: '/admin/servers',
             },
             {
@@ -107,12 +109,12 @@ const adminGroups: NavGroup[] = [
             },
             {
                 icon: IconBoxMargin,
-                label: 'Images',
+                label: t('Images'),
                 path: '/admin/images',
             },
             {
                 icon: IconKey,
-                label: 'API Tokens',
+                label: t('API Tokens'),
                 path: '/admin/tokens',
             },
         ],
@@ -219,7 +221,7 @@ const NavSearchDialog = ({ nav, open, onOpenChange }: Props) => {
             ...(currentItems.length > 0
                 ? [
                       {
-                          label: nav.context?.title ?? 'Current View',
+                          label: nav.context?.title ?? t('Current View'),
                           items: uniqueItems(currentItems).map(item =>
                               routeToEntry(item, 'current')
                           ),
@@ -229,14 +231,16 @@ const NavSearchDialog = ({ nav, open, onOpenChange }: Props) => {
             ...(nav.back
                 ? [
                       {
-                          label: 'Context',
+                          label: t('Context'),
                           items: [
                               {
                                   id: `back:${nav.back.to}`,
                                   icon: IconChevronLeft,
-                                  label: `Back to ${nav.back.label}`,
+                                  label: t('Back to {{label}}', {
+                                      label: nav.back.label,
+                                  }),
                                   path: nav.back.to,
-                                  detail: 'Return to the parent view',
+                                  detail: t('Return to the parent view'),
                                   keywords: ['back', 'parent'],
                               },
                           ],
@@ -244,7 +248,7 @@ const NavSearchDialog = ({ nav, open, onOpenChange }: Props) => {
                   ]
                 : []),
             ...secondaryGroups.map((group, index) => ({
-                label: group.label ?? 'Navigation',
+                label: group.label ?? t('Navigation'),
                 items: uniqueItems(group.items).map(item =>
                     routeToEntry(item, `global-${index}`)
                 ),
@@ -257,25 +261,25 @@ const NavSearchDialog = ({ nav, open, onOpenChange }: Props) => {
                       {
                           id: 'action:create-server',
                           icon: IconPlus,
-                          label: 'Create server',
+                          label: t('Create server'),
                           path: '/admin/servers/create',
-                          detail: 'Admin action',
+                          detail: t('Admin action'),
                           keywords: ['add', 'new', 'provision'],
                       },
                       {
                           id: 'action:create-node',
                           icon: IconPlus,
-                          label: 'Create node',
+                          label: t('Create node'),
                           path: '/admin/nodes/create',
-                          detail: 'Admin action',
+                          detail: t('Admin action'),
                           keywords: ['add', 'new', 'infrastructure'],
                       },
                       {
                           id: 'action:switch-admin',
                           icon: IconHome,
-                          label: 'Switch to Admin Console',
+                          label: t('Switch to Admin Console'),
                           path: '/admin',
-                          detail: 'Workspace',
+                          detail: t('Workspace'),
                           keywords: ['workspace', 'console'],
                       },
                   ]
@@ -283,17 +287,17 @@ const NavSearchDialog = ({ nav, open, onOpenChange }: Props) => {
             {
                 id: 'action:switch-client',
                 icon: IconServer,
-                label: 'Switch to Client Area',
+                label: t('Switch to Client Area'),
                 path: '/',
-                detail: 'Workspace',
+                detail: t('Workspace'),
                 keywords: ['workspace', 'servers'],
             },
             {
                 id: 'action:profile',
                 icon: IconUser,
-                label: 'Edit your profile',
+                label: t('Edit your profile'),
                 path: '/account',
-                detail: 'Account',
+                detail: t('Account'),
                 keywords: [
                     'account',
                     'profile',
@@ -306,9 +310,9 @@ const NavSearchDialog = ({ nav, open, onOpenChange }: Props) => {
             {
                 id: 'action:security',
                 icon: IconLock,
-                label: 'Manage account security',
+                label: t('Manage account security'),
                 path: '/account/security',
-                detail: 'Account',
+                detail: t('Account'),
                 keywords: ['account', 'passkeys', 'sessions', 'tokens'],
             },
         ].filter(item => item.path !== pathname)
@@ -316,7 +320,7 @@ const NavSearchDialog = ({ nav, open, onOpenChange }: Props) => {
         return [
             ...routeGroups,
             ...(actionItems.length > 0
-                ? [{ label: 'Actions', items: uniqueEntries(actionItems) }]
+                ? [{ label: t('Actions'), items: uniqueEntries(actionItems) }]
                 : []),
         ].filter(group => group.items.length > 0)
     }, [nav.back, nav.context?.title, nav.groups, pathname, user?.rootAdmin])
@@ -330,7 +334,7 @@ const NavSearchDialog = ({ nav, open, onOpenChange }: Props) => {
 
         if (clientServers.data?.items.length) {
             result.push({
-                label: 'My Servers',
+                label: t('My Servers'),
                 items: clientServers.data.items.map(server => ({
                     id: `client-server:${server.uuid}`,
                     icon: IconServer,
@@ -349,7 +353,7 @@ const NavSearchDialog = ({ nav, open, onOpenChange }: Props) => {
 
         if (adminServers.data?.items.length) {
             result.push({
-                label: 'Admin Servers',
+                label: t('Admin Servers'),
                 items: adminServers.data.items.map(server => ({
                     id: `admin-server:${server.id}`,
                     icon: IconServer,
@@ -368,7 +372,7 @@ const NavSearchDialog = ({ nav, open, onOpenChange }: Props) => {
 
         if (nodes.data?.items.length) {
             result.push({
-                label: 'Nodes',
+                label: t('Nodes'),
                 items: nodes.data.items.map(node => ({
                     id: `node:${node.id}`,
                     icon: IconServer,
@@ -413,14 +417,16 @@ const NavSearchDialog = ({ nav, open, onOpenChange }: Props) => {
             <CommandInput
                 value={search}
                 onValueChange={setSearch}
-                placeholder='Search navigation, servers, nodes...'
+                placeholder={t('Search navigation, servers, nodes...')}
             />
             <CommandList className='max-h-[420px]'>
-                <CommandEmpty>No commands or entities found.</CommandEmpty>
+                <CommandEmpty>
+                    {t('No commands or entities found.')}
+                </CommandEmpty>
                 {[...entityGroups, ...groups].map((group, index) => (
                     <CommandGroup
                         key={group.label ?? `group-${index}`}
-                        heading={group.label ?? 'Navigation'}
+                        heading={group.label ?? t('Navigation')}
                     >
                         {group.items.map(item => (
                             <CommandItem
@@ -450,10 +456,10 @@ const NavSearchDialog = ({ nav, open, onOpenChange }: Props) => {
                     </CommandGroup>
                 ))}
                 {isSearchingEntities ? (
-                    <CommandGroup heading='Search'>
+                    <CommandGroup heading={t('Search')}>
                         <CommandItem disabled value='searching entities'>
                             <IconSearch className='h-4 w-4' />
-                            <span>Searching entities...</span>
+                            <span>{t('Searching entities...')}</span>
                         </CommandItem>
                     </CommandGroup>
                 ) : null}

@@ -16,6 +16,8 @@ import { useState } from 'react'
 import { useForm, useFormContext } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { Form, FormButton } from '@/components/ui/Form'
 import { InputForm } from '@/components/ui/Forms'
@@ -67,13 +69,13 @@ const SavePresetDialog = () => {
 
             await mutate(presets => [...(presets ?? []), preset], false)
 
-            toast.add({ title: 'Preset saved', type: 'success' })
+            toast.add({ title: t('Preset saved'), type: 'success' })
 
             form.reset()
             setOpen(false)
         } catch (e) {
             handleFormErrors(e, form.setError)
-            toast.add({ title: 'Failed to save preset', type: 'error' })
+            toast.add({ title: t('Failed to save preset'), type: 'error' })
             console.error(e)
         }
     }
@@ -90,25 +92,29 @@ const SavePresetDialog = () => {
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        Save as preset
+                        {t('Save as preset')}
                     </ResponsiveDialogTitle>
                     <ResponsiveDialogDescription>
-                        Everything except the name, hostname, VM ID, owner and
-                        password is remembered.
+                        {t(
+                            'Everything except the name, hostname, VM ID, owner and password is remembered.'
+                        )}
                     </ResponsiveDialogDescription>
                 </ResponsiveDialogHeader>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(submit)}>
                         <ResponsiveDialogBody className={'space-y-3'}>
-                            <InputForm name={'name'} label={'Name'} />
+                            <InputForm name={'name'} label={t('Name')} />
                             <InputForm
                                 name={'description'}
-                                label={'Description'}
-                                description={'Optional.'}
+                                label={t('Description')}
+                                description={t('Optional.')}
                             />
                             {settings && (
                                 <p className={'text-muted-foreground text-xs'}>
-                                    Saving: {describePresetSettings(settings)}
+                                    {t('Saving: {{describePresetSettings}}', {
+                                        describePresetSettings:
+                                            describePresetSettings(settings),
+                                    })}
                                 </p>
                             )}
                         </ResponsiveDialogBody>
@@ -120,7 +126,7 @@ const SavePresetDialog = () => {
                                     </Button>
                                 }
                             />
-                            <FormButton>Save preset</FormButton>
+                            <FormButton>{t('Save preset')}</FormButton>
                         </ResponsiveDialogFooter>
                     </form>
                 </Form>

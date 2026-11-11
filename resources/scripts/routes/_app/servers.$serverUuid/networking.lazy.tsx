@@ -2,6 +2,8 @@ import AddressesCard from '@/features/servers/networking/components/AddressesCar
 import NameserversCard from '@/features/servers/networking/components/NameserversCard.tsx'
 import { createLazyFileRoute } from '@tanstack/react-router'
 
+import { t } from '@/lib/i18n.ts'
+
 import Heading from '@/components/ui/Typography/Heading.tsx'
 
 export const Route = createLazyFileRoute(
@@ -9,7 +11,7 @@ export const Route = createLazyFileRoute(
 )({
     component: ServerNetworking,
     // @ts-ignore
-    meta: () => [{ title: 'Networking' }],
+    meta: () => [{ title: t('Networking') }],
 })
 
 function ServerNetworking() {
@@ -17,7 +19,7 @@ function ServerNetworking() {
 
     return (
         <>
-            <Heading>Networking</Heading>
+            <Heading>{t('Networking')}</Heading>
             {/* Two real columns, neither one spanning. The old grid put the
                 addresses card across both and the nameservers underneath, so
                 every extra IP pushed the form down the page; now that the card

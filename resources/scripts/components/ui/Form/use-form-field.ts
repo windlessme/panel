@@ -1,10 +1,11 @@
 import { useContext } from 'react'
 import { useFormContext } from 'react-hook-form'
 
+import { t } from '@/lib/i18n.ts'
+
 import { FormFieldContext } from '@/components/ui/Form/form-field-provider.tsx'
 
 import { FormItemContext } from './form-item-provider'
-
 
 const useFormField = () => {
     const fieldContext = useContext(FormFieldContext)
@@ -22,9 +23,9 @@ const useFormField = () => {
     return {
         id,
         name: fieldContext.name,
-        formItemId: `${id}-form-item`,
-        formDescriptionId: `${id}-form-item-description`,
-        formMessageId: `${id}-form-item-message`,
+        formItemId: t('{{id}}-form-item', { id }),
+        formDescriptionId: t('{{id}}-form-item-description', { id }),
+        formMessageId: t('{{id}}-form-item-message', { id }),
         ...fieldState,
     }
 }

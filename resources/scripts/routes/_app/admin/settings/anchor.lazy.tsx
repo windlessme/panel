@@ -14,6 +14,8 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import {
     Card,
     CardContent,
@@ -50,7 +52,7 @@ function AnchorSettingsPage() {
         mutationFn: updateAnchorSettings,
         onSuccess: async updated => {
             await mutateSettings(() => updated)
-            toast.add({ title: 'Anchor settings updated', type: 'success' })
+            toast.add({ title: t('Anchor settings updated'), type: 'success' })
         },
     })
 
@@ -60,7 +62,7 @@ function AnchorSettingsPage() {
         } catch (e) {
             handleFormErrors(e, form.setError)
             toast.add({
-                title: 'Failed to update Anchor settings',
+                title: t('Failed to update Anchor settings'),
                 type: 'error',
             })
             console.error(e)
@@ -70,7 +72,7 @@ function AnchorSettingsPage() {
     if (isLoading) {
         return (
             <>
-                <Heading>Anchor</Heading>
+                <Heading>{t('Anchor')}</Heading>
                 <Skeleton className={'h-64'} />
             </>
         )
@@ -78,21 +80,22 @@ function AnchorSettingsPage() {
 
     return (
         <div className={'@container space-y-4'}>
-            <Heading>Anchor</Heading>
+            <Heading>{t('Anchor')}</Heading>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(submit)}>
                     <Card>
                         <CardHeader>
-                            <CardTitle>Panel URL</CardTitle>
+                            <CardTitle>{t('Panel URL')}</CardTitle>
                             <CardDescription>
-                                Where Anchors reach this panel. Leave blank to
-                                use the panel's own address.
+                                {t(
+                                    "Where Anchors reach this panel. Leave blank to use the panel's own address."
+                                )}
                             </CardDescription>
                         </CardHeader>
                         <CardContent>
                             <InputForm
                                 name={'panelUrl'}
-                                label={'Panel URL'}
+                                label={t('Panel URL')}
                                 placeholder={'https://panel.example.com'}
                             />
                         </CardContent>
@@ -100,7 +103,8 @@ function AnchorSettingsPage() {
 
                     <div className={'mt-4 flex justify-end'}>
                         <FormButton className={'flex'}>
-                            Save changes <IconCheck className={'size-4'} />
+                            {t('Save changes')}{' '}
+                            <IconCheck className={'size-4'} />
                         </FormButton>
                     </div>
                 </form>

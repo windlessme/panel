@@ -1,12 +1,11 @@
-import {
-    getImageGroup,
-    getImageGroups,
-} from '@/features/images/api.ts'
+import { getImageGroup, getImageGroups } from '@/features/images/api.ts'
 import { ImageGroup } from '@/types/image'
 import { cn } from '@/utils'
 import { IconCheck, IconFolder } from '@tabler/icons-react'
 import { useQuery } from '@tanstack/react-query'
 import { useController } from 'react-hook-form'
+
+import { t } from '@/lib/i18n.ts'
 
 import { ResourceComboboxForm } from '@/components/ui/Forms'
 import Skeleton from '@/components/ui/Skeleton'
@@ -76,8 +75,8 @@ const ImageGroupPicker = () => {
                     <IconFolder className={'ml-auto size-4 opacity-50'} />
                 </>
             )}
-            label={'Operating system'}
-            searchPlaceholder={'Search image groups...'}
+            label={t('Operating system')}
+            searchPlaceholder={t('Search image groups...')}
         />
     )
 }

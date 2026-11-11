@@ -12,6 +12,8 @@ import useClipboard from '@/hooks/use-clipboard.ts'
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import AuthDialog from '@/components/ui/Dialog/AuthDialog.tsx'
 import { CollectionErrorState } from '@/components/ui/EmptyStates'
@@ -45,7 +47,7 @@ const RecoveryCodesMainDialog = () => {
     const { data: hasCodes } = useHasRecoveryCodes()
     const openModal = useOpenModal(useRecoveryCodesModalStore)
     const { copy } = useClipboard({
-        successMessage: 'Copied recovery codes to clipboard',
+        successMessage: t('Copied recovery codes to clipboard'),
     })
 
     // Two gates, both required: the endpoint is behind
@@ -85,11 +87,12 @@ const RecoveryCodesMainDialog = () => {
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        Recovery codes
+                        {t('Recovery codes')}
                     </ResponsiveDialogTitle>
                     <ResponsiveDialogDescription>
-                        Each code signs you in once if you lose access to your
-                        authenticator or passkeys. Store them somewhere safe.
+                        {t(
+                            'Each code signs you in once if you lose access to your authenticator or passkeys. Store them somewhere safe.'
+                        )}
                     </ResponsiveDialogDescription>
                 </ResponsiveDialogHeader>
 
@@ -112,13 +115,13 @@ const RecoveryCodesMainDialog = () => {
                         disabled={!codes}
                         onClick={() => codes && copy(codes.join('\n'))}
                     >
-                        Copy codes
+                        {t('Copy codes')}
                     </Button>
                     <Button
                         variant={'outline'}
                         onClick={() => openModal('reset')}
                     >
-                        Reset codes
+                        {t('Reset codes')}
                     </Button>
                 </ResponsiveDialogFooter>
 

@@ -8,6 +8,7 @@ import { IconArrowRight, IconServer } from '@tabler/icons-react'
 import { Link, createLazyFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
 import { queryClient } from '@/lib/query-client.ts'
 
 import { buttonVariants } from '@/components/ui/Button'
@@ -46,7 +47,7 @@ function EnrollNodePage() {
     return (
         <div className={'mx-auto w-full max-w-3xl'}>
             <FormToolbar
-                title={'Enroll a node'}
+                title={t('Enroll a node')}
                 actions={
                     <Link
                         to={'/admin/nodes'}
@@ -60,8 +61,10 @@ function EnrollNodePage() {
             <div className={'space-y-4 pt-4'}>
                 <Card>
                     <CardHeader>
-                        <CardTitle>Install command</CardTitle>
-                        <StatLabel>Run as root on the Proxmox host.</StatLabel>
+                        <CardTitle>{t('Install command')}</CardTitle>
+                        <StatLabel>
+                            {t('Run as root on the Proxmox host.')}
+                        </StatLabel>
                     </CardHeader>
                     <EnrollmentPanel
                         subject={issuedAt}
@@ -110,7 +113,7 @@ function EnrollNodePage() {
                                     variant: 'default',
                                 })}
                             >
-                                Review and approve{' '}
+                                {t('Review and approve')}
                                 <IconArrowRight className={'size-4'} />
                             </Link>
                         </CardContent>

@@ -1,6 +1,8 @@
 import TestConnectionButton from '@/features/nodes/components/TestConnectionButton.tsx'
 import { ReactNode } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     Card,
@@ -26,7 +28,7 @@ const HintPopover = ({ children }: { children: ReactNode }) => (
                 type={'button'}
                 className={'h-auto px-0 py-0 text-xs'}
             >
-                What's this?
+                {t("What's this?")}
             </Button>
         </PopoverTrigger>
         <PopoverContent>{children}</PopoverContent>
@@ -50,11 +52,15 @@ const ConnectionSection = ({ mode, nodeId }: Props) => {
     return (
         <Card className={'@container'}>
             <CardHeader>
-                <CardTitle>Connection</CardTitle>
+                <CardTitle>{t('Connection')}</CardTitle>
                 <CardDescription>
                     {isEdit
-                        ? 'The Proxmox API endpoint and token Convoy authenticates with. Leave the token fields blank to keep the stored token.'
-                        : 'The Proxmox API endpoint and the token Convoy authenticates with.'}
+                        ? t(
+                              'The Proxmox API endpoint and token Convoy authenticates with. Leave the token fields blank to keep the stored token.'
+                          )
+                        : t(
+                              'The Proxmox API endpoint and the token Convoy authenticates with.'
+                          )}
                 </CardDescription>
             </CardHeader>
             <CardContent className={'space-y-4'}>
@@ -70,14 +76,18 @@ const ConnectionSection = ({ mode, nodeId }: Props) => {
                         label={'FQDN'}
                         placeholder={'advinservers.com'}
                     />
-                    <InputForm name={'port'} label={'Port'} type={'number'} />
+                    <InputForm
+                        name={'port'}
+                        label={t('Port')}
+                        type={'number'}
+                    />
                     {/* Shortened from "Proxmox Node Name": in a three-column row
                         the full label collides with the hint trigger sharing its
                         line. The card's description already establishes Proxmox,
                         and the hint spells the field out in full. */}
                     <InputForm
                         name={'name'}
-                        label={'Node Name'}
+                        label={t('Node Name')}
                         labelAction={
                             <HintPopover>
                                 <p className={'text-sm'}>
@@ -100,9 +110,9 @@ const ConnectionSection = ({ mode, nodeId }: Props) => {
                 <div className={'grid grid-cols-1 gap-3 @lg:grid-cols-2'}>
                     <InputForm
                         name={'tokenId'}
-                        label={'Token ID'}
+                        label={t('Token ID')}
                         autoComplete={'off'}
-                        placeholder={isEdit ? 'Unchanged' : undefined}
+                        placeholder={isEdit ? t('Unchanged') : undefined}
                         labelAction={
                             <HintPopover>
                                 <p className={'text-sm'}>
@@ -119,10 +129,10 @@ const ConnectionSection = ({ mode, nodeId }: Props) => {
                     />
                     <InputForm
                         name={'tokenSecret'}
-                        label={'Token Secret'}
+                        label={t('Token Secret')}
                         type={'password'}
                         autoComplete={'off'}
-                        placeholder={isEdit ? 'Unchanged' : undefined}
+                        placeholder={isEdit ? t('Unchanged') : undefined}
                     />
                 </div>
 
@@ -137,26 +147,28 @@ const ConnectionSection = ({ mode, nodeId }: Props) => {
                         <>
                             <SwitchForm
                                 name={'rootPrivileges'}
-                                label={'Token has root privileges'}
-                                description={
+                                label={t('Token has root privileges')}
+                                description={t(
                                     'Convoy needs a token with root privileges to manage this node.'
-                                }
+                                )}
                                 formItemProps={{ className: 'py-3' }}
                             />
                             <SwitchForm
                                 name={'privilegeSeparationDisabled'}
-                                label={'Privilege separation disabled'}
-                                description={
+                                label={t('Privilege separation disabled')}
+                                description={t(
                                     'Required for the token to inherit root privileges.'
-                                }
+                                )}
                                 formItemProps={{ className: 'py-3' }}
                             />
                         </>
                     )}
                     <SwitchForm
                         name={'verifyTls'}
-                        label={'Verify TLS certificate'}
-                        description={'Only disable on a trusted private path.'}
+                        label={t('Verify TLS certificate')}
+                        description={t(
+                            'Only disable on a trusted private path.'
+                        )}
                         formItemProps={{ className: 'py-3' }}
                     />
                 </Card>

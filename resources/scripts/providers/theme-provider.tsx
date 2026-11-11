@@ -1,5 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 type Theme = 'dark' | 'light' | 'system'
 
 type ThemeProviderProps = {
@@ -68,7 +70,7 @@ export const useTheme = () => {
     const context = useContext(ThemeProviderContext)
 
     if (context === undefined)
-        throw new Error('useTheme must be used within a ThemeProvider')
+        throw new Error(t('useTheme must be used within a ThemeProvider'))
 
     return context
 }

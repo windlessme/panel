@@ -1,6 +1,7 @@
 import type { StorageConsumer } from '@/features/nodes/storages/api.ts'
 import byteSize from 'byte-size'
 
+import { t } from '@/lib/i18n.ts'
 import { TablerIcon } from '@/lib/tabler.ts'
 
 import { Button } from '@/components/ui/Button'
@@ -70,7 +71,7 @@ const StorageConsumerTable = ({
                     {ownerLabel && (
                         <TableHead className={'w-56'}>{ownerLabel}</TableHead>
                     )}
-                    <TableHead className={'w-28'}>Size</TableHead>
+                    <TableHead className={'w-28'}>{t('Size')}</TableHead>
                     <TableHead className={'w-28 pr-4'} />
                 </TableRow>
             </TableHeader>
@@ -109,13 +110,13 @@ const StorageConsumerTable = ({
                                         variant={'destructiveOutline'}
                                         onClick={() => onDelete(row)}
                                     >
-                                        Delete
+                                        {t('Delete')}
                                     </Button>
                                 ) : (
                                     // Saying why beats a disabled button with no
                                     // explanation attached to it.
                                     <StatLabel className={'text-xs'}>
-                                        Locked
+                                        {t('Locked')}
                                     </StatLabel>
                                 ))}
                         </TableCell>

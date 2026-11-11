@@ -7,6 +7,8 @@ import { oauthErrorMessage } from '@/features/auth/oauth.ts'
 import { createLazyFileRoute } from '@tanstack/react-router'
 import { useEffect } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { toast } from '@/components/ui/Toast'
 import { Heading } from '@/components/ui/Typography'
 
@@ -21,7 +23,7 @@ const Security = () => {
         if (oauthError) {
             toast.add({ title: oauthErrorMessage(oauthError), type: 'error' })
         } else if (oauthLinked) {
-            toast.add({ title: 'Provider connected', type: 'success' })
+            toast.add({ title: t('Provider connected'), type: 'success' })
         }
 
         // Strip the one-shot params so a refresh doesn't re-toast.
@@ -31,7 +33,7 @@ const Security = () => {
 
     return (
         <>
-            <Heading>Security</Heading>
+            <Heading>{t('Security')}</Heading>
             <div className={'grid grid-cols-1 gap-5 @3xl:grid-cols-2'}>
                 <KeychainCard />
                 <AuthenticationCard />

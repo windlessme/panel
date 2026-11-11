@@ -12,6 +12,8 @@ import type { Server } from '@/types/server'
 import { cn } from '@/utils'
 import { formatDistanceToNowStrict } from 'date-fns'
 
+import { t } from '@/lib/i18n.ts'
+
 import Skeleton from '@/components/ui/Skeleton.tsx'
 
 interface Props {
@@ -110,9 +112,13 @@ const MetricRail = ({
                 {!live && sampledAt && (
                     <span
                         className='text-muted-foreground ml-auto text-[11px] tabular-nums'
-                        title={`Last recorded ${sampledAt.toLocaleString()}`}
+                        title={t('Last recorded {{value}}', {
+                            value: sampledAt.toLocaleString(),
+                        })}
                     >
-                        {compactAge(sampledAt)} ago
+                        {t('{{compactAge}} ago', {
+                            compactAge: compactAge(sampledAt),
+                        })}
                     </span>
                 )}
             </div>
@@ -158,7 +164,7 @@ const MetricRail = ({
                                 />
                             ) : unavailable ? (
                                 <span className='text-muted-foreground ml-auto text-sm font-semibold'>
-                                    &mdash;
+                                    {t('&mdash;')}
                                 </span>
                             ) : (
                                 /* `h-5` is the text-sm line box this stands
@@ -179,9 +185,9 @@ const MetricRail = ({
                     ) : unavailable ? (
                         <span
                             className='text-muted-foreground text-xl font-semibold tracking-tight'
-                            title='No reading available'
+                            title={t('No reading available')}
                         >
-                            &mdash;
+                            {t('&mdash;')}
                         </span>
                     ) : (
                         /* `h-7` is the line box of the figure it stands in

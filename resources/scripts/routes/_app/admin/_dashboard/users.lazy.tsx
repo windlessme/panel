@@ -1,5 +1,5 @@
 import { useUser as useCurrentUser } from '@/features/auth/api.ts'
-import { userQueries, useUsers } from '@/features/users/api.ts'
+import { useUsers, userQueries } from '@/features/users/api.ts'
 import UserFormDialog from '@/features/users/components/UserFormDialog.tsx'
 import useUserDeletion from '@/features/users/hooks/use-user-deletion.ts'
 import useDataTable from '@/hooks/use-data-table.ts'
@@ -11,6 +11,7 @@ import { ColumnDef } from '@tanstack/react-table'
 import { format } from 'date-fns'
 import { useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
 import { queryClient } from '@/lib/query-client.ts'
 
 import { Badge } from '@/components/ui/Badge.tsx'
@@ -34,9 +35,9 @@ const countOf = (count: number, noun: string) =>
 
 const RoleBadge = ({ user }: { user: AdminUser }) =>
     user.rootAdmin ? (
-        <Badge variant={'secondary'}>Administrator</Badge>
+        <Badge variant={'secondary'}>{t('Administrator')}</Badge>
     ) : (
-        <Badge variant={'outline'}>User</Badge>
+        <Badge variant={'outline'}>{t('User')}</Badge>
     )
 
 const UsersIndex = () => {
@@ -58,16 +59,18 @@ const UsersIndex = () => {
     const renderActions = (user: AdminUser) => (
         <>
             <DropdownMenuItem asChild>
-                <Link to={`/admin/users/${user.id}` as string}>Open</Link>
+                <Link to={`/admin/users/${user.id}` as string}>
+                    {t('Open')}
+                </Link>
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => setEditing(user)}>
-                Edit
+                {t('Edit')}
             </DropdownMenuItem>
             <DropdownMenuItem
                 variant={'destructive'}
                 onClick={() => confirmAndDelete(user)}
             >
-                Delete
+                {t('Delete')}
             </DropdownMenuItem>
         </>
     )
@@ -78,7 +81,7 @@ const UsersIndex = () => {
             enableHiding: false,
             enableSorting: true,
             header: ({ column }) => (
-                <DataTableColumnHeader column={column} title={'Name'} />
+                <DataTableColumnHeader column={column} title={t('Name')} />
             ),
             meta: { skeletonWidth: '8rem' },
             cell: ({ cell }) => (
@@ -94,7 +97,7 @@ const UsersIndex = () => {
             accessorKey: 'email',
             enableSorting: true,
             header: ({ column }) => (
-                <DataTableColumnHeader column={column} title={'Email'} />
+                <DataTableColumnHeader column={column} title={t('Email')} />
             ),
             meta: { skeletonWidth: '12rem' },
         },
@@ -103,7 +106,7 @@ const UsersIndex = () => {
             accessorKey: 'rootAdmin',
             enableSorting: true,
             header: ({ column }) => (
-                <DataTableColumnHeader column={column} title={'Role'} />
+                <DataTableColumnHeader column={column} title={t('Role')} />
             ),
             meta: { skeletonWidth: '6rem' },
             cell: ({ row }) => <RoleBadge user={row.original} />,
@@ -113,7 +116,7 @@ const UsersIndex = () => {
             accessorKey: 'serversCount',
             enableSorting: true,
             header: ({ column }) => (
-                <DataTableColumnHeader column={column} title={'Servers'} />
+                <DataTableColumnHeader column={column} title={t('Servers')} />
             ),
             meta: { skeletonWidth: '2rem' },
             cell: ({ cell }) => cell.getValue<number>() ?? 0,
@@ -123,7 +126,7 @@ const UsersIndex = () => {
             accessorKey: 'createdAt',
             enableSorting: true,
             header: ({ column }) => (
-                <DataTableColumnHeader column={column} title={'Created'} />
+                <DataTableColumnHeader column={column} title={t('Created')} />
             ),
             meta: { skeletonWidth: '6rem' },
             cell: ({ cell }) => {
@@ -144,13 +147,13 @@ const UsersIndex = () => {
     const addButton = (
         <Button onClick={() => setEditing('new')}>
             <IconPlus className={'size-4'} />
-            Add user
+            {t('Add user')}
         </Button>
     )
 
     return (
         <>
-            <Heading>Users</Heading>
+            <Heading>{t('Users')}</Heading>
             <DataTable
                 paginated
                 searchable
@@ -177,9 +180,7 @@ const UsersIndex = () => {
                     return (
                         <Item variant={'muted'} size={'sm'}>
                             <ItemContent className={'min-w-0'}>
-                                <ItemTitle
-                                    className={'w-full min-w-0 gap-2'}
-                                >
+                                <ItemTitle className={'w-full min-w-0 gap-2'}>
                                     <Link
                                         className={'truncate'}
                                         to={`/admin/users/${user.id}` as string}

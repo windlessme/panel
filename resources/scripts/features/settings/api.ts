@@ -11,6 +11,7 @@ import { queryOptions, useQuery } from '@tanstack/react-query'
 import { z } from 'zod'
 
 import { type DataResponse, apiFetch } from '@/lib/api'
+import { t } from '@/lib/i18n.ts'
 
 export type BandwidthSettings = App.Data.Admin.Settings.BandwidthSettingsData
 
@@ -190,7 +191,7 @@ export const mailSettingsSchema = z
             ctx.addIssue({
                 code: 'custom',
                 path: ['fromAddress'],
-                message: 'Enter the address mail should be sent from.',
+                message: t('Enter the address mail should be sent from.'),
             })
         }
 
@@ -198,7 +199,7 @@ export const mailSettingsSchema = z
             ctx.addIssue({
                 code: 'custom',
                 path: ['fromName'],
-                message: 'Enter the name mail should be sent from.',
+                message: t('Enter the name mail should be sent from.'),
             })
         }
     })

@@ -5,6 +5,7 @@ import { z } from 'zod'
 
 import { type DataResponse, apiFetch } from '@/lib/api'
 import axios from '@/lib/axios'
+import { t } from '@/lib/i18n.ts'
 
 export interface ISO {
     uuid: string
@@ -32,7 +33,7 @@ export const isoSchema = z
             .string()
             .min(1)
             .max(191)
-            .endsWith('.iso', 'The file name must end in .iso'),
+            .endsWith('.iso', t('The file name must end in .iso')),
         url: z.string().url().nullable(),
         path: z.string().nullable(),
         sha256: z
@@ -43,7 +44,7 @@ export const isoSchema = z
         hidden: z.boolean(),
     })
     .refine(iso => !!iso.url !== !!iso.path, {
-        message: 'Give the ISO a URL or upload a file, not both.',
+        message: t('Give the ISO a URL or upload a file, not both.'),
         path: ['url'],
     })
 

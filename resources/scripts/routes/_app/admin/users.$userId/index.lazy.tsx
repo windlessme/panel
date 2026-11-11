@@ -9,6 +9,7 @@ import useUserDeletion from '@/features/users/hooks/use-user-deletion.ts'
 import { createLazyFileRoute, useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
 import { queryClient } from '@/lib/query-client.ts'
 
 import { Badge } from '@/components/ui/Badge'
@@ -49,10 +50,14 @@ function UserOverview() {
                                     user.rootAdmin ? 'secondary' : 'outline'
                                 }
                             >
-                                {user.rootAdmin ? 'Administrator' : 'User'}
+                                {user.rootAdmin
+                                    ? t('Administrator')
+                                    : t('User')}
                             </Badge>
                             {user.twoFactorEnabled && (
-                                <Badge variant={'outline'}>Two-factor on</Badge>
+                                <Badge variant={'outline'}>
+                                    {t('Two-factor on')}
+                                </Badge>
                             )}
                         </>
                     )}

@@ -11,6 +11,8 @@ import {
 } from '@tabler/icons-react'
 import { Outlet, createFileRoute } from '@tanstack/react-router'
 
+import { t } from '@/lib/i18n.ts'
+
 import AppLayout from '@/components/layouts/AppLayout.tsx'
 
 import { SidebarNav } from '@/components/ui/Navigation/Navigation.types.ts'
@@ -20,7 +22,7 @@ export const Route = createFileRoute('/_app/admin/nodes/$nodeId')({
         preloadNode(Number(nodeId)).catch(processAxiosError),
     component: NodeLayout,
     staticData: {
-        title: 'Dashboard',
+        title: t('Dashboard'),
     },
 })
 
@@ -31,9 +33,9 @@ function NodeLayout() {
 
     const nav: SidebarNav = {
         key: `admin-node:${nodeId}`,
-        back: { label: 'Nodes', to: '/admin/nodes' },
+        back: { label: t('Nodes'), to: '/admin/nodes' },
         context: {
-            title: node?.displayName ?? 'Node',
+            title: node?.displayName ?? t('Node'),
             subtitle: node?.fqdn,
             icon: IconServer,
         },
@@ -42,7 +44,7 @@ function NodeLayout() {
                 items: [
                     {
                         icon: IconLayoutGrid,
-                        label: 'Overview',
+                        label: t('Overview'),
                         path: `/admin/nodes/${nodeId}`,
                         activeOptions: {
                             exact: true,
@@ -50,22 +52,22 @@ function NodeLayout() {
                     },
                     {
                         icon: IconServer,
-                        label: 'Servers',
+                        label: t('Servers'),
                         path: `/admin/nodes/${nodeId}/servers`,
                     },
                 ],
             },
             {
-                label: 'Resources',
+                label: t('Resources'),
                 items: [
                     {
                         icon: IconDatabase,
-                        label: 'Storages',
+                        label: t('Storages'),
                         path: `/admin/nodes/${nodeId}/storages`,
                     },
                     {
                         icon: IconWifi,
-                        label: 'Network',
+                        label: t('Network'),
                         path: `/admin/nodes/${nodeId}/network`,
                     },
                     {
@@ -76,11 +78,11 @@ function NodeLayout() {
                 ],
             },
             {
-                label: 'Configuration',
+                label: t('Configuration'),
                 items: [
                     {
                         icon: IconSettings,
-                        label: 'Settings',
+                        label: t('Settings'),
                         path: `/admin/nodes/${nodeId}/settings`,
                     },
                 ],

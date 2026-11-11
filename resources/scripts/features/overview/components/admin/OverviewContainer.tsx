@@ -5,6 +5,8 @@ import { IconDatabaseOff } from '@tabler/icons-react'
 import { useQuery } from '@tanstack/react-query'
 import { ReactNode } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
 import { SimpleEmptyState } from '@/components/ui/EmptyStates'
 import { LinearProgressBar } from '@/components/ui/Progress'
@@ -58,7 +60,7 @@ const MetricTile = ({
                                 ? 'text-emerald-600 dark:text-emerald-400'
                                 : 'text-muted-foreground'
                         )}
-                        title='Change vs. last week'
+                        title={t('Change vs. last week')}
                     >
                         {up ? '▲' : '▼'} {Math.abs(rounded)}
                     </span>
@@ -129,7 +131,7 @@ const CapacityMeter = ({
             </div>
             <LinearProgressBar
                 value={Math.min(percent, 100)}
-                aria-label={`${label}: ${percent}%`}
+                aria-label={t('{{label}}: {{percent}}%', { label, percent })}
                 indicatorClassName={meterIndicatorClass[tone]}
             />
             {sub && <div className='text-label mt-1.5 text-xs'>{sub}</div>}
@@ -225,29 +227,29 @@ const Dashboard = ({ data }: { data: OverviewData }) => {
 
     return (
         <div className='@container min-w-0 space-y-4'>
-            <Heading>Admin Dashboard</Heading>
+            <Heading>{t('Admin Dashboard')}</Heading>
 
             <UpdateAvailableAlert />
 
             {/* Top-line counts */}
             <div className='grid grid-cols-2 gap-4 @xl:grid-cols-4'>
                 <MetricTile
-                    label='Servers'
+                    label={t('Servers')}
                     value={num(summary.servers)}
                     trend={data.trends.servers}
                 />
                 <MetricTile
-                    label='Nodes'
+                    label={t('Nodes')}
                     value={num(summary.nodes)}
                     trend={data.trends.nodes}
                 />
                 <MetricTile
-                    label='Users'
+                    label={t('Users')}
                     value={num(summary.users)}
                     trend={data.trends.users}
                 />
                 <MetricTile
-                    label='Backups'
+                    label={t('Backups')}
                     value={num(backups.total)}
                     trend={data.trends.backups}
                 />
@@ -258,36 +260,43 @@ const Dashboard = ({ data }: { data: OverviewData }) => {
                 <Card>
                     <CardHeader className='p-5 pb-2'>
                         <CardTitle className='text-base'>
-                            Fleet capacity
+                            {t('Fleet capacity')}
                         </CardTitle>
                     </CardHeader>
                     <CardContent className='flex flex-col gap-5 p-5 pt-2'>
                         <CapacityMeter
-                            label='Memory allocated'
+                            label={t('Memory allocated')}
                             figure={bytes(memory.allocated)}
-                            unit={`of ${bytes(memory.total)}`}
+                            unit={t('of {{total}}', {
+                                total: bytes(memory.total),
+                            })}
                             percent={memory.percent}
                             hasData
                             emptyText=''
                         />
                         <CapacityMeter
-                            label='Storage allocated'
+                            label={t('Storage allocated')}
                             figure={bytes(storage.allocated)}
-                            unit={`of ${bytes(storage.total)}`}
+                            unit={t('of {{total}}', {
+                                total: bytes(storage.total),
+                            })}
                             percent={storage.percent}
                             hasData={storage.total > 0}
-                            emptyText='No storage pools yet'
+                            emptyText={t('No storage pools yet')}
                         />
                         <CapacityMeter
-                            label='IP addresses'
+                            label={t('IP addresses')}
                             figure={`${num(addresses.assigned)} / ${num(addresses.total)}`}
                             unit='assigned'
                             percent={addresses.percent}
                             hasData={addresses.total > 0}
-                            emptyText='No IP pools yet'
+                            emptyText={t('No IP pools yet')}
                             sub={
                                 addresses.total > 0
-                                    ? `${num(addresses.pools)} pools · ${num(addresses.available)} available`
+                                    ? t('{{num}} pools · {{num2}} available', {
+                                          num: num(addresses.pools),
+                                          num2: num(addresses.available),
+                                      })
                                     : undefined
                             }
                         />
@@ -302,10 +311,10 @@ const Dashboard = ({ data }: { data: OverviewData }) => {
                 <Card>
                     <CardHeader className='flex flex-row items-center justify-between space-y-0 p-5 pb-2'>
                         <CardTitle className='text-base'>
-                            Servers by lifecycle
+                            {t('Servers by lifecycle')}
                         </CardTitle>
                         <StatLabel as='span' className='text-xs tabular-nums'>
-                            {num(servers.total)} total
+                            {t('{{num}} total', { num: num(servers.total) })}
                         </StatLabel>
                     </CardHeader>
                     <CardContent className='p-5 pt-2'>
@@ -318,10 +327,12 @@ const Dashboard = ({ data }: { data: OverviewData }) => {
                             />
                         ))}
                         <StatusRow
-                            label='Suspended'
+                            label={t('Suspended')}
                             count={servers.suspended}
                             barClass='bg-destructive'
-                            note='Suspension is separate from the lifecycle, so these servers are also counted in one of the rows above.'
+                            note={t(
+                                'Suspension is separate from the lifecycle, so these servers are also counted in one of the rows above.'
+                            )}
                         />
                     </CardContent>
                 </Card>
@@ -329,7 +340,7 @@ const Dashboard = ({ data }: { data: OverviewData }) => {
                 <Card className='flex flex-col'>
                     <CardHeader className='p-5 pb-2'>
                         <CardTitle className='text-base'>
-                            Backups &amp; ISOs
+                            {t('Backups &amp; ISOs')}
                         </CardTitle>
                     </CardHeader>
                     <CardContent className='flex flex-1 flex-col p-5 pt-2'>
@@ -337,15 +348,15 @@ const Dashboard = ({ data }: { data: OverviewData }) => {
                             <>
                                 <div className='grid grid-cols-3 gap-4'>
                                     <Stat
-                                        label='Backups'
+                                        label={t('Backups')}
                                         value={num(backups.total)}
                                     />
                                     <Stat
-                                        label='Success rate'
+                                        label={t('Success rate')}
                                         value={`${successRate}%`}
                                     />
                                     <Stat
-                                        label='Failed'
+                                        label={t('Failed')}
                                         value={num(backups.failed)}
                                         valueClassName={cn(
                                             backups.failed > 0 &&
@@ -355,24 +366,27 @@ const Dashboard = ({ data }: { data: OverviewData }) => {
                                 </div>
                                 <LinearProgressBar
                                     value={successRate}
-                                    aria-label={`Successful backups: ${successRate}%`}
+                                    aria-label={t(
+                                        'Successful backups: {{successRate}}%',
+                                        { successRate }
+                                    )}
                                     className='mt-4'
                                 />
                                 <div className='my-4 border-t' />
                                 <StatLabel className='mb-3 text-xs font-semibold'>
-                                    ISOs
+                                    {t('ISOs')}
                                 </StatLabel>
                                 <div className='grid grid-cols-3 gap-4'>
                                     <Stat
-                                        label='Ready'
+                                        label={t('Ready')}
                                         value={num(isos.successful)}
                                     />
                                     <Stat
-                                        label='Pending'
+                                        label={t('Pending')}
                                         value={num(isos.pending)}
                                     />
                                     <Stat
-                                        label='Total'
+                                        label={t('Total')}
                                         value={num(isos.total)}
                                     />
                                 </div>
@@ -381,8 +395,10 @@ const Dashboard = ({ data }: { data: OverviewData }) => {
                             <SimpleEmptyState
                                 className='p-0'
                                 icon={IconDatabaseOff}
-                                title='No backups or ISOs'
-                                description='Backups and uploaded ISOs will appear here.'
+                                title={t('No backups or ISOs')}
+                                description={t(
+                                    'Backups and uploaded ISOs will appear here.'
+                                )}
                             />
                         )}
                     </CardContent>
@@ -408,7 +424,7 @@ const OverviewContainer = () => {
     if (isError) {
         return (
             <p className='text-muted-foreground py-16 text-center text-sm'>
-                Couldn't load the dashboard metrics. Try again shortly.
+                {t("Couldn't load the dashboard metrics. Try again shortly.")}
             </p>
         )
     }

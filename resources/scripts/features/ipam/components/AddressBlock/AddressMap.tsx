@@ -6,6 +6,8 @@ import {
 import { cn } from '@/utils'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 
 /** Cells per row. 32 divides every v4 block into whole rows and keeps a /24 to eight lines. */
@@ -31,11 +33,11 @@ const CELL_TONES: Record<AddressMapState, string> = {
 }
 
 const STATE_LABELS: Record<AddressMapState, string> = {
-    assigned: 'Assigned',
-    reserved: 'Reserved',
-    system: 'System reserved',
-    available: 'Free',
-    ungenerated: 'Not generated',
+    assigned: t('Assigned'),
+    reserved: t('Reserved'),
+    system: t('System reserved'),
+    available: t('Free'),
+    ungenerated: t('Not generated'),
 }
 
 /** The states the server can filter on — the same four tokens `filter[state]` accepts. */
@@ -232,7 +234,7 @@ const AddressMap = ({
                         size={'sm'}
                         onClick={() => onStateFilterChange([])}
                     >
-                        Reset
+                        {t('Reset')}
                     </Button>
                 )}
             </div>
@@ -337,9 +339,9 @@ const AddressMap = ({
             </div>
 
             <p className={'text-muted-foreground text-xs'}>
-                Click an address to select it, drag across a run, or shift-click
-                to extend from the last one. Selected addresses can be reserved,
-                released or deleted together.
+                {t(
+                    'Click an address to select it, drag across a run, or shift-click to extend from the last one. Selected addresses can be reserved, released or deleted together.'
+                )}
             </p>
         </div>
     )

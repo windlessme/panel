@@ -17,6 +17,8 @@ import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { Form, FormButton } from '@/components/ui/Form'
 import { CheckboxForm, InputForm, TextareaForm } from '@/components/ui/Forms'
@@ -35,9 +37,9 @@ import {
 import { toast } from '@/components/ui/Toast'
 
 const scopeItems = [
-    { value: 'none', label: 'No access' },
-    { value: 'read', label: 'Read only' },
-    { value: 'write', label: 'Read & write' },
+    { value: 'none', label: t('No access') },
+    { value: 'read', label: t('Read only') },
+    { value: 'write', label: t('Read & write') },
 ]
 
 const defaultValues: TokenInput = {
@@ -74,11 +76,11 @@ const CreateTokenModal = ({ mutate }: Props) => {
             }, false)
 
             setPlainTextToken(token.plainTextToken ?? '')
-            toast.add({ title: 'API token created', type: 'success' })
+            toast.add({ title: t('API token created'), type: 'success' })
         },
         onError: e => {
             handleFormErrors(e, form.setError)
-            toast.add({ title: 'Failed to create token', type: 'error' })
+            toast.add({ title: t('Failed to create token'), type: 'error' })
         },
     })
 
@@ -107,11 +109,12 @@ const CreateTokenModal = ({ mutate }: Props) => {
                     <>
                         <ResponsiveDialogHeader>
                             <ResponsiveDialogTitle>
-                                Token created
+                                {t('Token created')}
                             </ResponsiveDialogTitle>
                             <ResponsiveDialogDescription>
-                                Copy this token now. For security, it won’t be
-                                shown again.
+                                {t(
+                                    'Copy this token now. For security, it won’t be shown again.'
+                                )}
                             </ResponsiveDialogDescription>
                         </ResponsiveDialogHeader>
                         <ResponsiveDialogBody>
@@ -131,7 +134,9 @@ const CreateTokenModal = ({ mutate }: Props) => {
                                     variant={'ghost'}
                                     size={'icon'}
                                     aria-label={
-                                        copied ? 'Token copied' : 'Copy token'
+                                        copied
+                                            ? t('Token copied')
+                                            : t('Copy token')
                                     }
                                     onClick={() => copy(plainTextToken)}
                                     className={'shrink-0'}
@@ -154,10 +159,12 @@ const CreateTokenModal = ({ mutate }: Props) => {
                     <>
                         <ResponsiveDialogHeader>
                             <ResponsiveDialogTitle>
-                                Create API token
+                                {t('Create API token')}
                             </ResponsiveDialogTitle>
                             <ResponsiveDialogDescription>
-                                A panel-wide token for the application API.
+                                {t(
+                                    'A panel-wide token for the application API.'
+                                )}
                             </ResponsiveDialogDescription>
                         </ResponsiveDialogHeader>
                         <Form {...form}>
@@ -169,15 +176,15 @@ const CreateTokenModal = ({ mutate }: Props) => {
                                 <ResponsiveDialogBody className={'space-y-4'}>
                                     <InputForm
                                         name={'name'}
-                                        label={'Name'}
-                                        placeholder={'e.g. Deploy bot'}
+                                        label={t('Name')}
+                                        placeholder={t('e.g. Deploy bot')}
                                     />
                                     <CheckboxForm
                                         name={'fullAccess'}
-                                        label={'Full access'}
-                                        description={
+                                        label={t('Full access')}
+                                        description={t(
                                             'Grant every ability. Turn off to scope the token per resource.'
-                                        }
+                                        )}
                                     />
                                     {!fullAccess &&
                                         TOKEN_RESOURCES.map(resource => (
@@ -190,14 +197,14 @@ const CreateTokenModal = ({ mutate }: Props) => {
                                         ))}
                                     <TextareaForm
                                         name={'allowedNetworks'}
-                                        label={'Network access'}
-                                        placeholder={
+                                        label={t('Network access')}
+                                        placeholder={t(
                                             '203.0.113.10\n2001:db8::/48'
-                                        }
+                                        )}
                                         rows={5}
-                                        description={
+                                        description={t(
                                             'Optional. Enter one IPv4 or IPv6 address or CIDR range per line. Leave empty to allow this token from any address.'
-                                        }
+                                        )}
                                     />
                                 </ResponsiveDialogBody>
                                 <ResponsiveDialogFooter className={'mt-4'}>
@@ -211,7 +218,7 @@ const CreateTokenModal = ({ mutate }: Props) => {
                                             </Button>
                                         }
                                     />
-                                    <FormButton>Create token</FormButton>
+                                    <FormButton>{t('Create token')}</FormButton>
                                 </ResponsiveDialogFooter>
                             </form>
                         </Form>

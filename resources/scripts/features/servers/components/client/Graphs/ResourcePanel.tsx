@@ -14,6 +14,8 @@ import useLiveMetrics from '@/features/servers/hooks/use-live-metrics.ts'
 import { IconChartAreaLine } from '@tabler/icons-react'
 import { useMemo } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Card } from '@/components/ui/Card'
 import { SimpleEmptyState } from '@/components/ui/EmptyStates'
 
@@ -150,15 +152,19 @@ const ResourcePanel = ({ from, xTickFormatter, stampFormatter }: Props) => {
                         icon={IconChartAreaLine}
                         title={
                             isError
-                                ? 'History is unavailable'
-                                : 'No history yet'
+                                ? t('History is unavailable')
+                                : t('No history yet')
                         }
                         /* No "below"/"beside" — the rail is left of this at
                            wide widths and above it once the grid collapses. */
                         description={
                             isError
-                                ? 'The node did not return usage statistics for this server. Live CPU and memory readings are unaffected.'
-                                : 'This server has not been running long enough for the node to have recorded usage over this period. Try a shorter range.'
+                                ? t(
+                                      'The node did not return usage statistics for this server. Live CPU and memory readings are unaffected.'
+                                  )
+                                : t(
+                                      'This server has not been running long enough for the node to have recorded usage over this period. Try a shorter range.'
+                                  )
                         }
                         className='p-6'
                     />

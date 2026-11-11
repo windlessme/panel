@@ -1,7 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
 
+import { t } from '@/lib/i18n.ts'
+
 export const Route = createFileRoute('/_app/admin/servers/$serverId/disks')({
     staticData: {
-        title: 'Disks',
+        title: t('Disks'),
     },
 })

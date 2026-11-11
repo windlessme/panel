@@ -2,6 +2,7 @@ import { userQueries } from '@/features/users/api.ts'
 import useQueryMutator from '@/hooks/use-query-mutator.ts'
 import { useMutation } from '@tanstack/react-query'
 
+import { t } from '@/lib/i18n.ts'
 import { queryClient } from '@/lib/query-client.ts'
 
 import useConfirmationStore from '@/components/ui/AlertDialog/use-confirmation-store.ts'
@@ -60,7 +61,10 @@ const useCredentialRevocation = <T extends { id: number }>({
     return async (item: T) => {
         const confirmed = await confirm({
             title: question,
-            description: `${nameOf(item)} will stop working immediately. ${consequence}`,
+            description: t(
+                '{{nameOf}} will stop working immediately. {{consequence}}',
+                { nameOf: nameOf(item), consequence }
+            ),
             confirmText,
             confirmButton: { variant: 'destructive' },
         })

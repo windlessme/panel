@@ -8,6 +8,8 @@ import { CSS } from '@dnd-kit/utilities'
 import { IconDots, IconGripVertical } from '@tabler/icons-react'
 import type { ReactNode } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     DropdownMenu,
@@ -36,7 +38,7 @@ const actionStyles = {
 } as const
 
 /** A field the user left unconstrained, in the ruleset's own vocabulary. */
-const Any = () => <span className={'text-muted-foreground'}>any</span>
+const Any = () => <span className={'text-muted-foreground'}>{t('any')}</span>
 
 interface CellProps {
     rule: FirewallRule
@@ -99,7 +101,7 @@ const RuleCells = ({
                     disabled={isMutating}
                     onCheckedChange={onToggle}
                     aria-label={
-                        rule.isEnabled ? 'Turn rule off' : 'Turn rule on'
+                        rule.isEnabled ? t('Turn rule off') : t('Turn rule on')
                     }
                 />
             </TableCell>
@@ -138,20 +140,22 @@ const RuleCells = ({
                         <Button
                             variant={'ghost'}
                             size={'icon'}
-                            aria-label={`Actions for rule ${ordinal}`}
+                            aria-label={t('Actions for rule {{ordinal}}', {
+                                ordinal,
+                            })}
                         >
                             <IconDots className={'size-4'} />
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align={'end'}>
                         <DropdownMenuItem onClick={onEdit}>
-                            Edit
+                            {t('Edit')}
                         </DropdownMenuItem>
                         <DropdownMenuItem
                             variant={'destructive'}
                             onClick={onDelete}
                         >
-                            Delete
+                            {t('Delete')}
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>

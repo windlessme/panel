@@ -3,6 +3,8 @@ import byteSize from 'byte-size'
 import { useState } from 'react'
 import { useWatch } from 'react-hook-form'
 
+import { t } from '@/lib/i18n.ts'
+
 import {
     Card,
     CardContent,
@@ -154,12 +156,17 @@ const MemoryResult = () => {
                         {hasMemory ? usable.value : '—'}
                     </span>
                     <span className={'text-muted-foreground text-xs'}>
-                        {hasMemory ? `${usable.unit} usable` : 'usable'}
+                        {hasMemory
+                            ? t('{{unit}} usable', { unit: usable.unit })
+                            : 'usable'}
                     </span>
                 </p>
                 <p className={'text-muted-foreground text-xs'}>
                     {hasMemory
-                        ? `${physical.value} ${physical.unit} physical`
+                        ? t('{{value}} {{unit}} physical', {
+                              value: physical.value,
+                              unit: physical.unit,
+                          })
                         : ''}
                     {hasMemory && overPct > 0 && (
                         <span className={'text-muted-foreground/70'}>
@@ -183,7 +190,7 @@ const ProcessorTag = () => {
                 'bg-primary/10 text-primary rounded-md px-2 py-0.5 font-mono text-xs font-semibold'
             }
         >
-            = {n} vCPU
+            {t('= {{n}} vCPU', { n })}
         </span>
     )
 }
@@ -195,16 +202,16 @@ const ProcessorTag = () => {
 const SpecificationsSection = () => (
     <Card className={'@container'}>
         <CardHeader>
-            <CardTitle>Capacity</CardTitle>
+            <CardTitle>{t('Capacity')}</CardTitle>
             <CardDescription>
-                Drives Convoy’s placement and overcommit checks.
+                {t('Drives Convoy’s placement and overcommit checks.')}
             </CardDescription>
         </CardHeader>
         <CardContent>
             <div>
                 <GroupHeader
                     icon={<IconCpu className={'size-4'} />}
-                    title={'Processor'}
+                    title={t('Processor')}
                     aside={<ProcessorTag />}
                 />
                 {/* Only cpuCount is enforced (app/Rules/HasSufficientCPU.php);
@@ -214,23 +221,23 @@ const SpecificationsSection = () => (
                 <div className={'grid grid-cols-1 gap-3 @lg:grid-cols-3'}>
                     <InputForm
                         name={'socketCount'}
-                        label={'Sockets'}
+                        label={t('Sockets')}
                         type={'number'}
-                        description={'Physical CPU sockets. For reference.'}
+                        description={t('Physical CPU sockets. For reference.')}
                     />
                     <InputForm
                         name={'coreCount'}
-                        label={'Cores'}
+                        label={t('Cores')}
                         type={'number'}
-                        description={'Physical cores. For reference.'}
+                        description={t('Physical cores. For reference.')}
                     />
                     <InputForm
                         name={'cpuCount'}
-                        label={'CPUs'}
+                        label={t('CPUs')}
                         type={'number'}
-                        description={
+                        description={t(
                             'Logical threads. Caps the vCPUs a server can be given.'
-                        }
+                        )}
                     />
                 </div>
             </div>
@@ -238,7 +245,7 @@ const SpecificationsSection = () => (
             <div className={'mt-5'}>
                 <GroupHeader
                     icon={<IconDeviceSdCard className={'size-4'} />}
-                    title={'Memory'}
+                    title={t('Memory')}
                 />
                 <div
                     className={
@@ -248,7 +255,7 @@ const SpecificationsSection = () => (
                     <MemoryAmountField />
                     <InputForm
                         name={'memoryOverallocate'}
-                        label={'Overallocate (%)'}
+                        label={t('Overallocate (%)')}
                         type={'number'}
                     />
                 </div>

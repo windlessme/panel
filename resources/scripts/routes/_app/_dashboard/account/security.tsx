@@ -1,6 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 export const searchSchema = z.object({
     // Set by the OAuth callback after a link attempt (success carries the provider id, failure a
     // code) so the security page can toast the outcome.
@@ -11,6 +13,6 @@ export const searchSchema = z.object({
 export const Route = createFileRoute('/_app/_dashboard/account/security')({
     validateSearch: searchSchema,
     staticData: {
-        title: 'Security',
+        title: t('Security'),
     },
 })

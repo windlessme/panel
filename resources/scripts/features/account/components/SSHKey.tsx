@@ -1,9 +1,10 @@
+import { sshKeyAlgorithm } from '@/features/account/ssh-keys/api.ts'
 import { SSHKey as Key } from '@/features/account/types.ts'
 import { IconKeyFilled, IconTrash } from '@tabler/icons-react'
 import { format } from 'date-fns'
 import { useMemo } from 'react'
 
-import { sshKeyAlgorithm } from '@/features/account/ssh-keys/api.ts'
+import { t } from '@/lib/i18n.ts'
 
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
@@ -36,16 +37,16 @@ const SSHKey = ({ publicKey: key, onDelete }: Props) => {
                 <div className={'flex flex-wrap items-center gap-x-2 gap-y-1'}>
                     <Badge
                         variant={'secondary'}
-                        className={'shrink-0 whitespace-nowrap font-mono'}
+                        className={'shrink-0 font-mono whitespace-nowrap'}
                     >
                         {sshKeyAlgorithm(key.publicKey)}
                     </Badge>
                     <span
                         className={
-                            'whitespace-nowrap text-xs text-muted-foreground'
+                            'text-muted-foreground text-xs whitespace-nowrap'
                         }
                     >
-                        Added {formattedDate}
+                        {t('Added {{formattedDate}}', { formattedDate })}
                     </span>
                 </div>
             </ItemContent>
@@ -53,7 +54,7 @@ const SSHKey = ({ publicKey: key, onDelete }: Props) => {
                 <Button
                     variant={'ghost'}
                     size={'icon'}
-                    aria-label={'Delete SSH key'}
+                    aria-label={t('Delete SSH key')}
                     onClick={() => onDelete(key)}
                 >
                     <IconTrash className={'h-4 w-4'} />

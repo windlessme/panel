@@ -11,6 +11,7 @@ import { IconPlus } from '@tabler/icons-react'
 import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
 import { queryClient } from '@/lib/query-client.ts'
 
 import { Alert, AlertDescription } from '@/components/ui/Alert'
@@ -76,9 +77,10 @@ const GenerateAddressesModal = ({ block, mutate }: Props) => {
 
             if (result.sparse) {
                 toast.add({
-                    title: 'Nothing to generate',
-                    description:
-                        'This block is minted on demand — addresses are created as they are allocated.',
+                    title: t('Nothing to generate'),
+                    description: t(
+                        'This block is minted on demand — addresses are created as they are allocated.'
+                    ),
                     type: 'info',
                 })
 
@@ -86,15 +88,22 @@ const GenerateAddressesModal = ({ block, mutate }: Props) => {
             }
 
             toast.add({
-                title: `Generated ${result.createdCount.toLocaleString()} addresses`,
+                title: t('Generated {{value}} addresses', {
+                    value: result.createdCount.toLocaleString(),
+                }),
                 description: result.isComplete
-                    ? 'Every address in this block now exists.'
-                    : `${result.remaining.toLocaleString()} left — run it again to continue.`,
+                    ? t('Every address in this block now exists.')
+                    : t('{{value}} left — run it again to continue.', {
+                          value: result.remaining.toLocaleString(),
+                      }),
                 type: 'success',
             })
         },
         onError: () => {
-            toast.add({ title: 'Failed to generate addresses', type: 'error' })
+            toast.add({
+                title: t('Failed to generate addresses'),
+                type: 'error',
+            })
         },
     })
 
@@ -121,36 +130,45 @@ const GenerateAddressesModal = ({ block, mutate }: Props) => {
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        Generate addresses
+                        {t('Generate addresses')}
                     </ResponsiveDialogTitle>
                     <ResponsiveDialogDescription>
-                        Create the address rows this block can hand out.
+                        {t('Create the address rows this block can hand out.')}
                     </ResponsiveDialogDescription>
                 </ResponsiveDialogHeader>
                 <ResponsiveDialogBody className={'flex flex-col gap-4'}>
                     <p className={'text-sm'}>
-                        <span className={'font-mono'}>{cidr}</span> handed out
-                        as{' '}
+                        <span className={'font-mono'}>{cidr}</span>{' '}
+                        {t('handed out as')}
                         <span className={'font-mono'}>
                             /{block.prefixLengthTo}
-                        </span>{' '}
-                        covers{' '}
-                        <b>{(view.total ?? 0).toLocaleString()} addresses</b>.{' '}
+                        </span>
+                        {t('covers')}
+                        <b>
+                            {t('{{value}} addresses', {
+                                value: (view.total ?? 0).toLocaleString(),
+                            })}
+                        </b>
+                        .{' '}
                         {view.total === view.ungenerated
-                            ? 'None exist yet.'
-                            : `${(view.total! - view.ungenerated).toLocaleString()} exist so far.`}
+                            ? t('None exist yet.')
+                            : t('{{value}} exist so far.', {
+                                  value: (
+                                      view.total! - view.ungenerated
+                                  ).toLocaleString(),
+                              })}
                     </p>
                     <Alert>
                         <AlertDescription>
-                            Addresses are written in batches, so a block this
-                            size may need more than one run. Each run reports
-                            how many are left.
+                            {t(
+                                'Addresses are written in batches, so a block this size may need more than one run. Each run reports how many are left.'
+                            )}
                         </AlertDescription>
                     </Alert>
                     <dl className={'grid grid-cols-3 gap-3'}>
                         <div className={'flex flex-col-reverse'}>
                             <dt className={'text-muted-foreground text-xs'}>
-                                Covers
+                                {t('Covers')}
                             </dt>
                             <dd className={'font-mono text-sm'}>
                                 {(view.total ?? 0).toLocaleString()}
@@ -158,7 +176,7 @@ const GenerateAddressesModal = ({ block, mutate }: Props) => {
                         </div>
                         <div className={'flex flex-col-reverse'}>
                             <dt className={'text-muted-foreground text-xs'}>
-                                To create
+                                {t('To create')}
                             </dt>
                             <dd className={'font-mono text-sm'}>
                                 {view.ungenerated.toLocaleString()}
@@ -166,7 +184,7 @@ const GenerateAddressesModal = ({ block, mutate }: Props) => {
                         </div>
                         <div className={'flex flex-col-reverse'}>
                             <dt className={'text-muted-foreground text-xs'}>
-                                Gateway
+                                {t('Gateway')}
                             </dt>
                             <dd className={'font-mono text-sm'}>
                                 {block.gateway ?? '—'}
@@ -174,9 +192,9 @@ const GenerateAddressesModal = ({ block, mutate }: Props) => {
                         </div>
                     </dl>
                     <p className={'text-muted-foreground text-xs'}>
-                        The network, broadcast and gateway addresses are created
-                        reserved — they exist so nothing else can take them, and
-                        they cannot be released.
+                        {t(
+                            'The network, broadcast and gateway addresses are created reserved — they exist so nothing else can take them, and they cannot be released.'
+                        )}
                     </p>
                 </ResponsiveDialogBody>
                 <ResponsiveDialogFooter className={'sm:mt-4'}>
@@ -188,7 +206,7 @@ const GenerateAddressesModal = ({ block, mutate }: Props) => {
                         }
                     />
                     <Button onClick={() => trigger()} loading={isPending}>
-                        Generate
+                        {t('Generate')}
                     </Button>
                 </ResponsiveDialogFooter>
             </ResponsiveDialogContent>

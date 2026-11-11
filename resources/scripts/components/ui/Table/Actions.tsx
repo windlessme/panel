@@ -2,6 +2,8 @@ import { IconDots } from '@tabler/icons-react'
 import { CellContext, ColumnDef } from '@tanstack/react-table'
 import { ReactNode } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     DropdownMenu,
@@ -26,7 +28,7 @@ const Actions = ({ children, disabledReason }: Props) => {
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button
-                    aria-label={disabledReason ?? 'Open menu'}
+                    aria-label={disabledReason ?? t('Open menu')}
                     title={disabledReason}
                     disabled={!!disabledReason}
                     variant='ghost'

@@ -5,6 +5,8 @@ import { IconServerOff } from '@tabler/icons-react'
 import { useQuery } from '@tanstack/react-query'
 import { createLazyFileRoute } from '@tanstack/react-router'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Card } from '@/components/ui/Card'
 import {
     CollectionErrorState,
@@ -27,7 +29,7 @@ function Dashboard() {
 
     return (
         <>
-            <Heading>My Servers</Heading>
+            <Heading>{t('My Servers')}</Heading>
             {isError && !data ? (
                 <Card className={'py-6'}>
                     <CollectionErrorState onRetry={refetch} />
@@ -37,17 +39,20 @@ function Dashboard() {
                     {/* Sized to the real row (py-3 around a title + hostname),
                         so the list doesn't jump when the data lands. */}
                     {Array.from({ length: 4 }).map((_, index) => (
-                        <Skeleton key={index} className={'h-[4.25rem] w-full'} />
+                        <Skeleton
+                            key={index}
+                            className={'h-[4.25rem] w-full'}
+                        />
                     ))}
                 </ItemGroup>
             ) : !data || data.items.length === 0 ? (
                 <Card className={'py-6'}>
                     <SimpleEmptyState
                         icon={IconServerOff}
-                        title={'No servers'}
-                        description={
+                        title={t('No servers')}
+                        description={t(
                             'Servers assigned to your account will appear here.'
-                        }
+                        )}
                     />
                 </Card>
             ) : (

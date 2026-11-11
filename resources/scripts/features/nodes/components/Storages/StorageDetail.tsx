@@ -17,6 +17,8 @@ import { Link } from '@tanstack/react-router'
 import byteSize from 'byte-size'
 import { useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import useConfirmationStore from '@/components/ui/AlertDialog/use-confirmation-store.ts'
 import { buttonVariants } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
@@ -86,7 +88,7 @@ const StorageDetail = ({ storageId }: { storageId: number }) => {
         <>
             <div className={'space-y-1'}>
                 <Heading>
-                    {storage?.displayName ?? storage?.name ?? 'Storage'}
+                    {storage?.displayName ?? storage?.name ?? t('Storage')}
                 </Heading>
                 {storage && <StorageSummary storage={storage} />}
             </div>
@@ -117,12 +119,18 @@ const StorageDetail = ({ storageId }: { storageId: number }) => {
                                             'text-muted-foreground text-sm'
                                         }
                                     >
-                                        available to allocate
+                                        {t('available to allocate')}
                                     </span>
                                 </div>
                                 <StatLabel className={'text-xs'}>
-                                    {fmt(view.used)} used · {fmt(view.reserved)}{' '}
-                                    reserved · {fmt(view.total)} total
+                                    {t(
+                                        '{{fmt}} used · {{fmt2}} reserved · {{fmt3}} total',
+                                        {
+                                            fmt: fmt(view.used),
+                                            fmt2: fmt(view.reserved),
+                                            fmt3: fmt(view.total),
+                                        }
+                                    )}
                                 </StatLabel>
                             </div>
                             <SegmentedProgressBar
@@ -159,7 +167,9 @@ const StorageDetail = ({ storageId }: { storageId: number }) => {
                         </>
                     ) : (
                         <StatLabel className={'text-xs'}>
-                            Convoy has not recorded capacity for this storage.
+                            {t(
+                                'Convoy has not recorded capacity for this storage.'
+                            )}
                         </StatLabel>
                     )}
                 </div>
@@ -174,23 +184,23 @@ const StorageDetail = ({ storageId }: { storageId: number }) => {
                     <Tabs defaultValue={'servers'}>
                         <TabsList className={'mx-4'}>
                             <TabsTrigger value={'servers'}>
-                                Servers {consumers?.servers.length ?? 0}
+                                {t('Servers')} {consumers?.servers.length ?? 0}
                             </TabsTrigger>
                             <TabsTrigger value={'backups'}>
-                                Backups {consumers?.backups.length ?? 0}
+                                {t('Backups')} {consumers?.backups.length ?? 0}
                             </TabsTrigger>
                         </TabsList>
 
                         <TabsContent value={'servers'}>
                             <StorageConsumerTable
                                 rows={consumers?.servers ?? []}
-                                label={'Server'}
-                                ownerLabel={'Owner'}
+                                label={t('Server')}
+                                ownerLabel={t('Owner')}
                                 emptyIcon={IconServer}
-                                emptyTitle={'No servers here'}
-                                emptyDescription={
+                                emptyTitle={t('No servers here')}
+                                emptyDescription={t(
                                     'No server keeps a disk on this storage.'
-                                }
+                                )}
                                 onDelete={setPendingServer}
                             />
                         </TabsContent>
@@ -198,13 +208,13 @@ const StorageDetail = ({ storageId }: { storageId: number }) => {
                         <TabsContent value={'backups'}>
                             <StorageConsumerTable
                                 rows={consumers?.backups ?? []}
-                                label={'Backup'}
-                                ownerLabel={'Server'}
+                                label={t('Backup')}
+                                ownerLabel={t('Server')}
                                 emptyIcon={IconFileZip}
-                                emptyTitle={'No backups here'}
-                                emptyDescription={
+                                emptyTitle={t('No backups here')}
+                                emptyDescription={t(
                                     'Nothing has been backed up to this storage.'
-                                }
+                                )}
                                 onDelete={async row => {
                                     const ok = await confirm({
                                         title: `Delete ${row.name}?`,
@@ -231,7 +241,7 @@ const StorageDetail = ({ storageId }: { storageId: number }) => {
 
             {storage && storage.sharedWith.length > 0 && (
                 <StatLabel className={'text-xs'}>
-                    Reached from{' '}
+                    {t('Reached from')}
                     {storage.sharedWith.map((node, index) => (
                         <span key={node.id}>
                             <Link

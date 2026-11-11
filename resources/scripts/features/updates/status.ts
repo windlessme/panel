@@ -1,5 +1,7 @@
 import { format, formatDistanceToNowStrict } from 'date-fns'
 
+import { t } from '@/lib/i18n.ts'
+
 import type { UpdateStatus } from './api'
 
 /**
@@ -38,25 +40,27 @@ const updateSummary = (status: UpdateStatus): UpdateSummary => {
         case 'update_available':
             return {
                 mark: 'behind',
-                label: 'Update available',
-                caption: `${status.latestVersion} is available`,
+                label: t('Update available'),
+                caption: t('{{latestVersion}} is available', {
+                    latestVersion: status.latestVersion,
+                }),
             }
         case 'up_to_date':
             return {
                 mark: 'current',
-                label: 'Up to date',
-                caption: 'Running the newest release',
+                label: t('Up to date'),
+                caption: t('Running the newest release'),
             }
         default:
             return {
                 mark: null,
-                label: 'Not comparable',
+                label: t('Not comparable'),
                 // The panel reports `canary` when it is running from source
                 // rather than a release archive, so there is no release to
                 // compare it against.
                 caption: status.latestVersion
-                    ? 'Built from source'
-                    : 'Not checked yet',
+                    ? t('Built from source')
+                    : t('Not checked yet'),
             }
     }
 }

@@ -5,6 +5,8 @@ import useQueryMutator from '@/hooks/use-query-mutator.ts'
 import { ImageGroup } from '@/types/image.ts'
 import { useMutation } from '@tanstack/react-query'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     ResponsiveDialog,
@@ -38,13 +40,13 @@ const DeleteImageGroupModal = () => {
             }, false)
             close()
             toast.add({
-                title: 'Image group deleted',
+                title: t('Image group deleted'),
                 type: 'success',
             })
         },
         onError: () => {
             toast.add({
-                title: 'Failed to delete image group',
+                title: t('Failed to delete image group'),
                 type: 'error',
             })
         },
@@ -60,11 +62,12 @@ const DeleteImageGroupModal = () => {
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        Delete image group
+                        {t('Delete image group')}
                     </ResponsiveDialogTitle>
                     <ResponsiveDialogDescription>
-                        Are you sure you want to delete this image group? This
-                        action cannot be undone.
+                        {t(
+                            'Are you sure you want to delete this image group? This action cannot be undone.'
+                        )}
                     </ResponsiveDialogDescription>
                 </ResponsiveDialogHeader>
                 <ResponsiveDialogFooter className={'mt-4'}>
@@ -84,7 +87,7 @@ const DeleteImageGroupModal = () => {
                         loading={isMutating}
                         variant={'destructive'}
                     >
-                        Delete
+                        {t('Delete')}
                     </Button>
                 </ResponsiveDialogFooter>
             </ResponsiveDialogContent>

@@ -5,6 +5,8 @@ import { useServerPresetsModalStore } from '@/routes/_app/admin/_dashboard/serve
 import { Mutator } from '@/types/query.ts'
 import type { ServerPreset } from '@/types/server-preset'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     ResponsiveDialog,
@@ -36,11 +38,11 @@ const DeletePresetModal = ({ mutate }: Props) => {
                 presets?.filter(item => item.uuid !== current.uuid)
             )
 
-            toast.add({ title: 'Preset deleted', type: 'success' })
+            toast.add({ title: t('Preset deleted'), type: 'success' })
 
             close()
         } catch (e) {
-            toast.add({ title: 'Deletion failed', type: 'error' })
+            toast.add({ title: t('Deletion failed'), type: 'error' })
             throw e
         }
     })
@@ -50,11 +52,12 @@ const DeletePresetModal = ({ mutate }: Props) => {
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        Delete {preset?.name}
+                        {t('Delete {{name}}', { name: preset?.name })}
                     </ResponsiveDialogTitle>
                     <ResponsiveDialogDescription>
-                        Servers already created from this preset are not
-                        affected — only the saved configuration goes away.
+                        {t(
+                            'Servers already created from this preset are not affected — only the saved configuration goes away.'
+                        )}
                     </ResponsiveDialogDescription>
                 </ResponsiveDialogHeader>
                 <ResponsiveDialogFooter className={'mt-4'}>
@@ -67,7 +70,7 @@ const DeletePresetModal = ({ mutate }: Props) => {
                         variant={'destructive'}
                         onClick={() => preset && submit(preset)}
                     >
-                        Delete
+                        {t('Delete')}
                     </Button>
                 </ResponsiveDialogFooter>
             </ResponsiveDialogContent>

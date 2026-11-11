@@ -1,11 +1,13 @@
 import ProfileCard from '@/features/account/components/ProfileCard.tsx'
 import { createLazyFileRoute } from '@tanstack/react-router'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Heading } from '@/components/ui/Typography'
 
 const Profile = () => (
     <>
-        <Heading>Profile</Heading>
+        <Heading>{t('Profile')}</Heading>
         {/* Capped rather than full-bleed: the fields are settings rows, and a
             label/control pair stretched across 1100px reads as two columns
             that have nothing to do with each other. */}

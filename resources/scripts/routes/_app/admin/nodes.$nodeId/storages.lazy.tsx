@@ -7,6 +7,8 @@ import { useStorages } from '@/features/nodes/storages/api.ts'
 import { IconDatabase } from '@tabler/icons-react'
 import { createLazyFileRoute } from '@tanstack/react-router'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Card } from '@/components/ui/Card'
 import {
     CollectionErrorState,
@@ -25,7 +27,7 @@ function NodeStorages() {
 
     return (
         <>
-            <Heading>Storages</Heading>
+            <Heading>{t('Storages')}</Heading>
             {Boolean(storages?.length) && (
                 <PageToolbar
                     actions={
@@ -52,10 +54,10 @@ function NodeStorages() {
                 <Card className={'py-6'}>
                     <SimpleEmptyState
                         icon={IconDatabase}
-                        title={'No storages'}
-                        description={
+                        title={t('No storages')}
+                        description={t(
                             'Add a storage to enable server deployments and resource management.'
-                        }
+                        )}
                         action={<CreateStorageModal />}
                     />
                 </Card>

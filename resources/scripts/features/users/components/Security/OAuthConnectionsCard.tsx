@@ -10,6 +10,8 @@ import useCredentialRevocation from '@/features/users/hooks/use-credential-revoc
 import { IconPlugConnected } from '@tabler/icons-react'
 import { formatDistanceToNow } from 'date-fns'
 
+import { t } from '@/lib/i18n.ts'
+
 interface Props {
     userId: number
 }
@@ -25,25 +27,28 @@ const OAuthConnectionsCard = ({ userId }: Props) => {
     const revoke = useCredentialRevocation<OAuthConnection>({
         queryKey: userCredentialQueries.oauthConnections(userId).queryKey,
         remove: connection => revokeUserOAuthConnection(userId, connection.id),
-        question: 'Unlink this login?',
-        successTitle: 'Login unlinked',
-        errorTitle: 'Failed to unlink login',
+        question: t('Unlink this login?'),
+        successTitle: t('Login unlinked'),
+        errorTitle: t('Failed to unlink login'),
         nameOf: connection => `The ${connection.label} login`,
-        consequence:
-            'The account can still sign in with its password, and can link the provider again.',
-        confirmText: 'Unlink',
+        consequence: t(
+            'The account can still sign in with its password, and can link the provider again.'
+        ),
+        confirmText: t('Unlink'),
     })
 
     return (
         <CredentialCard
-            title={'Linked logins'}
-            description={'Identity providers this account signs in through.'}
+            title={t('Linked logins')}
+            description={t('Identity providers this account signs in through.')}
             icon={IconPlugConnected}
             isLoading={isLoading}
             isError={isError}
             onRetry={refetch}
-            emptyTitle={'No linked logins'}
-            emptyDescription={'This account signs in with the panel directly.'}
+            emptyTitle={t('No linked logins')}
+            emptyDescription={t(
+                'This account signs in with the panel directly.'
+            )}
             rows={connections?.map(connection => (
                 <CredentialRow
                     key={connection.id}
@@ -53,9 +58,7 @@ const OAuthConnectionsCard = ({ userId }: Props) => {
                     onRevoke={() => revoke(connection)}
                     meta={
                         <span
-                            className={
-                                'text-muted-foreground truncate text-xs'
-                            }
+                            className={'text-muted-foreground truncate text-xs'}
                         >
                             {connection.email ?? connection.name ?? 'Linked'}
                             {connection.lastUsedAt

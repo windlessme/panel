@@ -17,6 +17,8 @@ import { Link } from '@tanstack/react-router'
 import { ColumnDef } from '@tanstack/react-table'
 import { useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Badge } from '@/components/ui/Badge.tsx'
 import { buttonVariants } from '@/components/ui/Button'
 import { DataTable } from '@/components/ui/DataTable'
@@ -50,20 +52,20 @@ const AttachedNodesTab = () => {
             variant={'destructive'}
             onClick={() => setSelectedNode(networkInterface.node || null)}
         >
-            Detach
+            {t('Detach')}
         </DropdownMenuItem>
     )
 
     const columns: ColumnDef<NetworkInterface>[] = [
         {
-            header: 'Interface',
+            header: t('Interface'),
             accessorKey: 'name',
             meta: {
                 skeletonWidth: '5rem',
             },
         },
         {
-            header: 'Node',
+            header: t('Node'),
             accessorKey: 'node.displayName',
             enableHiding: false,
             meta: {

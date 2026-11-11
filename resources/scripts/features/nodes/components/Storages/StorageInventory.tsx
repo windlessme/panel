@@ -5,6 +5,8 @@ import { cn } from '@/utils'
 import { Link } from '@tanstack/react-router'
 import byteSize from 'byte-size'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Badge } from '@/components/ui/Badge.tsx'
 import { buttonVariants } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
@@ -60,7 +62,7 @@ const Nodes = ({ storage }: { storage: NodeStorage }) =>
             ))}
         </span>
     ) : (
-        <StatLabel className='text-xs'>Not attached to a node</StatLabel>
+        <StatLabel className='text-xs'>{t('Not attached to a node')}</StatLabel>
     )
 
 const Capacity = ({ storage }: { storage: NodeStorage }) => {
@@ -69,9 +71,9 @@ const Capacity = ({ storage }: { storage: NodeStorage }) => {
     if (!view.known) {
         return (
             <>
-                <Badge variant='outline'>Unknown</Badge>
+                <Badge variant='outline'>{t('Unknown')}</Badge>
                 <StatLabel className='mt-1 block text-xs'>
-                    Convoy has not recorded capacity for this storage
+                    {t('Convoy has not recorded capacity for this storage')}
                 </StatLabel>
             </>
         )
@@ -113,10 +115,14 @@ const StorageInventory = ({ storages }: Props) => {
                 <Table>
                     <TableHeader>
                         <TableRow className='hover:bg-transparent'>
-                            <TableHead className='pl-4'>Storage</TableHead>
-                            <TableHead className='w-[18rem]'>Nodes</TableHead>
+                            <TableHead className='pl-4'>
+                                {t('Storage')}
+                            </TableHead>
+                            <TableHead className='w-[18rem]'>
+                                {t('Nodes')}
+                            </TableHead>
                             <TableHead className='w-[18rem] pr-4'>
-                                Capacity
+                                {t('Capacity')}
                             </TableHead>
                         </TableRow>
                     </TableHeader>

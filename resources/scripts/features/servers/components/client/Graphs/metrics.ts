@@ -5,6 +5,8 @@ import type {
 } from '@/types/server'
 import byteSize from 'byte-size'
 
+import { t } from '@/lib/i18n.ts'
+
 /**
  * The four metrics the resource panel plots, in the order they are stacked.
  *
@@ -85,7 +87,7 @@ export const METRICS: Metric[] = [
         key: 'cpu',
         name: 'CPU',
         color: 'var(--chart-cpu)',
-        shape: { kind: 'single', label: 'Usage' },
+        shape: { kind: 'single', label: t('Usage') },
         format: percent,
         formatShort: percent,
         ceiling: () => 100,
@@ -96,9 +98,9 @@ export const METRICS: Metric[] = [
     },
     {
         key: 'memory',
-        name: 'Memory',
+        name: t('Memory'),
         color: 'var(--chart-memory)',
-        shape: { kind: 'single', label: 'Used' },
+        shape: { kind: 'single', label: t('Used') },
         format: value => bytes(value, 2),
         formatShort: bytesShort,
         ceiling: server => server?.memory,
@@ -109,9 +111,9 @@ export const METRICS: Metric[] = [
     },
     {
         key: 'disk',
-        name: 'Disk I/O',
+        name: t('Disk I/O'),
         color: 'var(--chart-disk)',
-        shape: { kind: 'mirrored', positive: 'Read', negative: 'Write' },
+        shape: { kind: 'mirrored', positive: t('Read'), negative: t('Write') },
         format: rate,
         formatShort: rateShort,
         fromTimepoint: point => [point.disk.read, point.disk.write],
@@ -119,9 +121,9 @@ export const METRICS: Metric[] = [
     },
     {
         key: 'network',
-        name: 'Network',
+        name: t('Network'),
         color: 'var(--chart-network)',
-        shape: { kind: 'mirrored', positive: 'In', negative: 'Out' },
+        shape: { kind: 'mirrored', positive: t('In'), negative: t('Out') },
         format: rate,
         formatShort: rateShort,
         fromTimepoint: point => [point.network.in, point.network.out],

@@ -2,6 +2,8 @@ import ImageIconDisplay from '@/features/images/components/ImageIconDisplay'
 import { ImageGroup } from '@/types/image.ts'
 import { IconBox } from '@tabler/icons-react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Badge } from '@/components/ui/Badge'
 import {
     Field,
@@ -43,7 +45,9 @@ const ImageGroupCard = ({ group }: Props) => {
                             them), so this only ever marks a group an admin
                             can see and a customer cannot. */}
                         {group.isAdminOnly && (
-                            <Badge variant={'secondary'}>Admin only</Badge>
+                            <Badge variant={'secondary'}>
+                                {t('Admin only')}
+                            </Badge>
                         )}
                     </FieldTitle>
                     {group.description && (

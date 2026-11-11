@@ -9,6 +9,8 @@ import byteSize from 'byte-size'
 import { differenceInMilliseconds, intervalToDuration } from 'date-fns'
 import { useEffect, useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { LinearProgressBar } from '@/components/ui/Progress'
 
 interface DeploymentStepRowProps {
@@ -22,17 +24,17 @@ interface DeploymentStepRowProps {
 // (step.progressMode); the map only carries the display label and, for byte
 // progress, how to format it.
 const STEP_MAPPINGS: Record<string, { label: string; isBytes?: boolean }> = {
-    'fetch-image': { label: 'Downloading image', isBytes: true },
-    'import': { label: 'Creating VM from image', isBytes: true },
-    'configure': { label: 'Configuring VM' },
+    'fetch-image': { label: t('Downloading image'), isBytes: true },
+    'import': { label: t('Creating VM from image'), isBytes: true },
+    'configure': { label: t('Configuring VM') },
     // Retired with the move to disk images, and kept because deployments that
     // ran under it are still in the database and still have to render.
-    'clone': { label: 'Cloning image', isBytes: true },
-    'update-password': { label: 'Updating password' },
-    'delete-backups': { label: 'Deleting backups' },
-    'stop-vm': { label: 'Stopping VM' },
-    'delete-vm': { label: 'Deleting VM' },
-    'start-vm': { label: 'Starting VM' },
+    'clone': { label: t('Cloning image'), isBytes: true },
+    'update-password': { label: t('Updating password') },
+    'delete-backups': { label: t('Deleting backups') },
+    'stop-vm': { label: t('Stopping VM') },
+    'delete-vm': { label: t('Deleting VM') },
+    'start-vm': { label: t('Starting VM') },
 }
 
 /** The step's display name, for callers that need it outside a row. */

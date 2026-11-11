@@ -16,6 +16,8 @@ import {
 } from '@tabler/icons-react'
 import { useMutation } from '@tanstack/react-query'
 
+import { t } from '@/lib/i18n.ts'
+
 import useConfirmationStore from '@/components/ui/AlertDialog/use-confirmation-store.ts'
 import { Button } from '@/components/ui/Button'
 import {
@@ -64,13 +66,13 @@ const OAuthConnectionsCard = () => {
         onSuccess: (_, connection) => {
             mutate(list => list?.filter(c => c.id !== connection.id))
             toast.add({
-                title: `Disconnected ${connection.label}`,
+                title: t('Disconnected {{label}}', { label: connection.label }),
                 type: 'success',
             })
         },
         onError: () =>
             toast.add({
-                title: 'Failed to disconnect provider',
+                title: t('Failed to disconnect provider'),
                 type: 'error',
             }),
     })
@@ -85,8 +87,11 @@ const OAuthConnectionsCard = () => {
 
     const handleDisconnect = async (connection: OAuthConnection) => {
         const confirmed = await confirm({
-            title: `Disconnect ${connection.label}`,
-            description: `You will no longer be able to sign in with ${connection.label}. Make sure you can still access your account another way.`,
+            title: t('Disconnect {{label}}', { label: connection.label }),
+            description: t(
+                'You will no longer be able to sign in with {{label}}. Make sure you can still access your account another way.',
+                { label: connection.label }
+            ),
         })
         if (!confirmed) return
 
@@ -96,9 +101,11 @@ const OAuthConnectionsCard = () => {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Connected Accounts</CardTitle>
+                <CardTitle>{t('Connected Accounts')}</CardTitle>
                 <CardDescription>
-                    Sign in faster by connecting an external identity provider.
+                    {t(
+                        'Sign in faster by connecting an external identity provider.'
+                    )}
                 </CardDescription>
             </CardHeader>
             <CardContent
@@ -145,7 +152,7 @@ const OAuthConnectionsCard = () => {
                                                     handleDisconnect(connection)
                                                 }
                                             >
-                                                Disconnect
+                                                {t('Disconnect')}
                                             </Button>
                                         ) : (
                                             <Button
@@ -157,7 +164,7 @@ const OAuthConnectionsCard = () => {
                                                         )
                                                 }}
                                             >
-                                                Connect
+                                                {t('Connect')}
                                             </Button>
                                         )}
                                     </ItemActions>

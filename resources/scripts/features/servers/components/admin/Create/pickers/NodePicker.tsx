@@ -4,6 +4,8 @@ import { cn } from '@/utils'
 import { IconCheck, IconServer } from '@tabler/icons-react'
 import { useController } from 'react-hook-form'
 
+import { t } from '@/lib/i18n.ts'
+
 import SimpleEmptyState from '@/components/ui/EmptyStates/SimpleEmptyState'
 import { ResourceComboboxForm } from '@/components/ui/Forms'
 import Skeleton from '@/components/ui/Skeleton.tsx'
@@ -63,8 +65,8 @@ const NodePicker = () => {
                     <IconServer className={'ml-auto size-4 opacity-50'} />
                 </>
             )}
-            label={'Node'}
-            searchPlaceholder={'Search nodes...'}
+            label={t('Node')}
+            searchPlaceholder={t('Search nodes...')}
             nothingFoundMessage={
                 <div className='p-2'>
                     <SimpleEmptyState

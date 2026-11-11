@@ -12,6 +12,8 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { Form, FormButton } from '@/components/ui/Form'
 import { InputForm, TextareaForm } from '@/components/ui/Forms'
@@ -92,10 +94,10 @@ const EditAddressBlockModal = ({ addressBlockGroupId, mutate }: Props) => {
             }, false)
 
             close()
-            toast.add({ title: 'Address block updated', type: 'success' })
+            toast.add({ title: t('Address block updated'), type: 'success' })
         } catch (e) {
             handleFormErrors(e, form.setError)
-            toast.add({ title: 'Failed to save changes', type: 'error' })
+            toast.add({ title: t('Failed to save changes'), type: 'error' })
             throw e
         }
     }
@@ -105,34 +107,35 @@ const EditAddressBlockModal = ({ addressBlockGroupId, mutate }: Props) => {
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        Editing {addressBlock?.name || 'Address Block'}
+                        {t('Editing')}{' '}
+                        {addressBlock?.name || t('Address Block')}
                     </ResponsiveDialogTitle>
                 </ResponsiveDialogHeader>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(submit as any)}>
                         <ResponsiveDialogBody className={'space-y-2'}>
-                            <InputForm name={'name'} label={'Name'} />
+                            <InputForm name={'name'} label={t('Name')} />
                             <TextareaForm
                                 name={'description'}
-                                label={'Description'}
+                                label={t('Description')}
                             />
-                            <InputForm name={'baseIp'} label={'Base IP'} />
-                            <InputForm name={'gateway'} label={'Gateway'} />
+                            <InputForm name={'baseIp'} label={t('Base IP')} />
+                            <InputForm name={'gateway'} label={t('Gateway')} />
                             <InputForm
                                 name={'macAddress'}
-                                label={'MAC Address'}
+                                label={t('MAC Address')}
                             />
                             <div className={'grid grid-cols-2 gap-2'}>
                                 <InputForm
                                     name={'prefixLengthFrom'}
-                                    label={'Source Prefix Length'}
+                                    label={t('Source Prefix Length')}
                                     type={'number'}
                                     min={0}
                                     max={128}
                                 />
                                 <InputForm
                                     name={'prefixLengthTo'}
-                                    label={'Output Prefix Length'}
+                                    label={t('Output Prefix Length')}
                                     type={'number'}
                                     min={0}
                                     max={128}
@@ -147,7 +150,7 @@ const EditAddressBlockModal = ({ addressBlockGroupId, mutate }: Props) => {
                                     </Button>
                                 }
                             />
-                            <FormButton>Save</FormButton>
+                            <FormButton>{t('Save')}</FormButton>
                         </ResponsiveDialogFooter>
                     </form>
                 </Form>

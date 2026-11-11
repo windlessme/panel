@@ -1,20 +1,16 @@
+import {
+    type ApiKey as ApiKeyType,
+    apiKeyScopes,
+} from '@/features/account/api-keys/api.ts'
 import { IconTrash } from '@tabler/icons-react'
 import { formatDistanceToNow } from 'date-fns'
 import { useMemo } from 'react'
 
-import {
-    apiKeyScopes,
-    type ApiKey as ApiKeyType,
-} from '@/features/account/api-keys/api.ts'
+import { t } from '@/lib/i18n.ts'
 
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
-import {
-    Item,
-    ItemActions,
-    ItemContent,
-    ItemTitle,
-} from '@/components/ui/Item'
+import { Item, ItemActions, ItemContent, ItemTitle } from '@/components/ui/Item'
 
 /** A human label for a token's granted scope. */
 const scopeLabel = (abilities: string[]): string =>
@@ -43,7 +39,7 @@ const ApiKey = ({ apiKey, onDelete }: Props) => {
                     <Badge variant={'secondary'}>
                         {scopeLabel(apiKey.abilities)}
                     </Badge>
-                    <span className={'text-xs text-muted-foreground'}>
+                    <span className={'text-muted-foreground text-xs'}>
                         {lastUsed}
                     </span>
                 </div>
@@ -52,7 +48,7 @@ const ApiKey = ({ apiKey, onDelete }: Props) => {
                 <Button
                     variant={'ghost'}
                     size={'icon'}
-                    aria-label={'Delete API key'}
+                    aria-label={t('Delete API key')}
                     onClick={() => onDelete(apiKey)}
                 >
                     <IconTrash className={'h-4 w-4'} />

@@ -15,6 +15,8 @@ import { createLazyFileRoute } from '@tanstack/react-router'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     Card,
@@ -32,9 +34,9 @@ import { toast } from '@/components/ui/Toast'
 import { Heading } from '@/components/ui/Typography'
 
 const ENCRYPTION_ITEMS = [
-    { value: 'tls', label: 'STARTTLS (port 587)' },
-    { value: 'ssl', label: 'Implicit TLS (port 465)' },
-    { value: 'none', label: 'None (port 25)' },
+    { value: 'tls', label: t('STARTTLS (port 587)') },
+    { value: 'ssl', label: t('Implicit TLS (port 465)') },
+    { value: 'none', label: t('None (port 25)') },
 ]
 
 const EMPTY_FORM: MailSettingsForm = {
@@ -96,7 +98,7 @@ const MailSettingsPage = () => {
         onSuccess: async updated => {
             await mutateSettings(() => updated)
             form.resetField('password', { defaultValue: '' })
-            toast.add({ title: 'Mail settings updated', type: 'success' })
+            toast.add({ title: t('Mail settings updated'), type: 'success' })
         },
     })
 
@@ -110,7 +112,7 @@ const MailSettingsPage = () => {
         } catch (e) {
             handleFormErrors(e, form.setError)
             toast.add({
-                title: 'Failed to update mail settings',
+                title: t('Failed to update mail settings'),
                 type: 'error',
             })
             console.error(e)
@@ -129,12 +131,12 @@ const MailSettingsPage = () => {
             })
 
             toast.add({
-                title: `Test message sent to ${recipient}`,
+                title: t('Test message sent to {{recipient}}', { recipient }),
                 type: 'success',
             })
         } catch (e) {
             toast.add({
-                title: 'Test message failed',
+                title: t('Test message failed'),
                 description: transportError(e),
                 type: 'error',
             })
@@ -145,7 +147,7 @@ const MailSettingsPage = () => {
     if (isLoading) {
         return (
             <div className={'mx-auto w-full max-w-4xl space-y-4'}>
-                <Heading>Mail</Heading>
+                <Heading>{t('Mail')}</Heading>
                 <Skeleton className={'h-96'} />
             </div>
         )
@@ -163,7 +165,7 @@ const MailSettingsPage = () => {
      */
     return (
         <div className={'mx-auto w-full max-w-4xl space-y-4'}>
-            <Heading>Mail</Heading>
+            <Heading>{t('Mail')}</Heading>
             <Form {...form}>
                 <form
                     className={'space-y-4'}
@@ -171,9 +173,9 @@ const MailSettingsPage = () => {
                 >
                     <Card>
                         <CardHeader>
-                            <CardTitle>SMTP server</CardTitle>
+                            <CardTitle>{t('SMTP server')}</CardTitle>
                             <CardDescription>
-                                The relay Convoy sends through.
+                                {t('The relay Convoy sends through.')}
                             </CardDescription>
                         </CardHeader>
                         <CardContent>
@@ -186,33 +188,33 @@ const MailSettingsPage = () => {
                                 >
                                     <InputForm
                                         name={'host'}
-                                        label={'Host'}
+                                        label={t('Host')}
                                         placeholder={'smtp.example.com'}
                                     />
                                     <InputForm
                                         name={'port'}
-                                        label={'Port'}
+                                        label={t('Port')}
                                         type={'number'}
                                         inputMode={'numeric'}
                                     />
                                 </div>
                                 <SelectForm
                                     name={'encryption'}
-                                    label={'Encryption'}
+                                    label={t('Encryption')}
                                     items={ENCRYPTION_ITEMS}
                                 />
                                 <div className={'grid grid-cols-2 gap-3'}>
                                     <InputForm
                                         name={'username'}
-                                        label={'Username'}
+                                        label={t('Username')}
                                         autoComplete={'off'}
-                                        description={
+                                        description={t(
                                             "Leave empty if the relay doesn't require authentication."
-                                        }
+                                        )}
                                     />
                                     <InputForm
                                         name={'password'}
-                                        label={'Password'}
+                                        label={t('Password')}
                                         type={'password'}
                                         autoComplete={'new-password'}
                                         placeholder={
@@ -222,8 +224,12 @@ const MailSettingsPage = () => {
                                         }
                                         description={
                                             settings?.passwordSet
-                                                ? 'Leave blank to keep the stored password.'
-                                                : 'Stored encrypted. Never shown again.'
+                                                ? t(
+                                                      'Leave blank to keep the stored password.'
+                                                  )
+                                                : t(
+                                                      'Stored encrypted. Never shown again.'
+                                                  )
                                         }
                                     />
                                 </div>
@@ -233,10 +239,11 @@ const MailSettingsPage = () => {
 
                     <Card>
                         <CardHeader>
-                            <CardTitle>Sender</CardTitle>
+                            <CardTitle>{t('Sender')}</CardTitle>
                             <CardDescription>
-                                Must be an address the server above is allowed
-                                to send as.
+                                {t(
+                                    'Must be an address the server above is allowed to send as.'
+                                )}
                             </CardDescription>
                         </CardHeader>
                         <CardContent>
@@ -244,13 +251,13 @@ const MailSettingsPage = () => {
                                 <div className={'grid grid-cols-2 gap-3'}>
                                     <InputForm
                                         name={'fromAddress'}
-                                        label={'From address'}
+                                        label={t('From address')}
                                         placeholder={'panel@example.com'}
                                     />
                                     <InputForm
                                         name={'fromName'}
-                                        label={'From name'}
-                                        placeholder={'Convoy'}
+                                        label={t('From name')}
+                                        placeholder={t('Convoy')}
                                     />
                                 </div>
                             </FieldGroup>
@@ -264,11 +271,12 @@ const MailSettingsPage = () => {
                                 loading={isTesting}
                                 onClick={test}
                             >
-                                Send test email{' '}
+                                {t('Send test email')}
                                 <IconSend className={'size-4'} />
                             </Button>
                             <FormButton className={'flex'}>
-                                Save changes <IconCheck className={'size-4'} />
+                                {t('Save changes')}{' '}
+                                <IconCheck className={'size-4'} />
                             </FormButton>
                         </CardFooter>
                     </Card>

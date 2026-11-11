@@ -2,6 +2,8 @@ import { useMailSettings } from '@/features/settings/api.ts'
 import { IconAlertTriangle } from '@tabler/icons-react'
 import { Link } from '@tanstack/react-router'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Alert, AlertDescription } from '@/components/ui/Alert'
 
 interface Props {
@@ -31,12 +33,12 @@ const MailNotConfiguredAlert = ({ children }: Props) => {
         <Alert>
             <IconAlertTriangle className={'size-4'} />
             <AlertDescription>
-                Mail isn't set up. {children}{' '}
+                {t("Mail isn't set up. {{children}}", { children })}
                 <Link
                     to={'/admin/settings/mail'}
                     className={'underline underline-offset-4'}
                 >
-                    Set up mail
+                    {t('Set up mail')}
                 </Link>
                 .
             </AlertDescription>

@@ -16,6 +16,8 @@ import { useNavigate } from '@tanstack/react-router'
 import { useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { t } from '@/lib/i18n.ts'
+
 import {
     Field,
     FieldDescription,
@@ -76,7 +78,7 @@ const OSSelectionForm = ({ server }: OSSelectionFormProps) => {
             }),
         onSuccess: () => {
             toast.add({
-                title: 'The installation started successfully.',
+                title: t('The installation started successfully.'),
                 type: 'success',
             })
             // Patch the record rather than only invalidating it: the layout
@@ -101,7 +103,10 @@ const OSSelectionForm = ({ server }: OSSelectionFormProps) => {
         onError: e => {
             if (handleFormErrors(e, form.setError)) return
 
-            toast.add({ title: 'Failed to start installation.', type: 'error' })
+            toast.add({
+                title: t('Failed to start installation.'),
+                type: 'error',
+            })
         },
     })
 
@@ -117,42 +122,44 @@ const OSSelectionForm = ({ server }: OSSelectionFormProps) => {
             >
                 <FieldGroup>
                     <Field>
-                        <FieldTitle>Operating system</FieldTitle>
+                        <FieldTitle>{t('Operating system')}</FieldTitle>
                         <ImageGroupField groups={imageGroups} />
                     </Field>
 
                     <Field>
-                        <FieldTitle>Version</FieldTitle>
+                        <FieldTitle>{t('Version')}</FieldTitle>
                         <ImageField group={selectedGroup} />
                     </Field>
 
                     <InputForm
                         name={'accountPassword'}
-                        label={'Password'}
+                        label={t('Password')}
                         type={'password'}
                         autoComplete={'new-password'}
                     />
                     <InputForm
                         name={'accountPasswordConfirmation'}
-                        label={'Confirm password'}
+                        label={t('Confirm password')}
                         type={'password'}
                         autoComplete={'new-password'}
                     />
                     <CheckboxForm
                         name={'startOnCompletion'}
-                        label={'Start the server when the install finishes'}
-                        description={
+                        label={t('Start the server when the install finishes')}
+                        description={t(
                             'Leave it off to attach an ISO or change settings before the first boot.'
-                        }
+                        )}
                     />
                 </FieldGroup>
 
                 <FieldDescription>
-                    Installation progress replaces this screen once it starts.
+                    {t(
+                        'Installation progress replaces this screen once it starts.'
+                    )}
                 </FieldDescription>
 
                 <FormButton className={'w-full'}>
-                    Install operating system
+                    {t('Install operating system')}
                 </FormButton>
             </form>
         </Form>

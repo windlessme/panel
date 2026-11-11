@@ -14,6 +14,8 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { Form, FormButton } from '@/components/ui/Form'
 import { InputForm } from '@/components/ui/Forms'
@@ -106,10 +108,10 @@ const EditStorageModal = () => {
 
             close()
 
-            toast.add({ title: 'Storage updated', type: 'success' })
+            toast.add({ title: t('Storage updated'), type: 'success' })
         } catch (e) {
             handleFormErrors(e, form.setError)
-            toast.add({ title: 'Failed to save changes', type: 'error' })
+            toast.add({ title: t('Failed to save changes'), type: 'error' })
             throw e
         }
     }
@@ -119,7 +121,7 @@ const EditStorageModal = () => {
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        Editing {storage?.displayName ?? storage?.name}
+                        {t('Editing')} {storage?.displayName ?? storage?.name}
                     </ResponsiveDialogTitle>
                 </ResponsiveDialogHeader>
                 <Form {...form}>
@@ -127,24 +129,24 @@ const EditStorageModal = () => {
                         <ResponsiveDialogBody className={'space-y-2'}>
                             <InputForm
                                 name={'displayName'}
-                                label={'Display Name'}
+                                label={t('Display Name')}
                             />
                             <InputForm
                                 name={'description'}
-                                label={'Description'}
+                                label={t('Description')}
                             />
                             <InputForm
                                 name={'name'}
-                                label={'Name'}
+                                label={t('Name')}
                                 autoComplete={'off'}
                             />
-                            <InputForm name={'size'} label={'Size (MiB)'} />
+                            <InputForm name={'size'} label={t('Size (MiB)')} />
                             <InputForm
                                 name={'reservedBytes'}
-                                label={'Reserved headroom (MiB)'}
-                                description={
+                                label={t('Reserved headroom (MiB)')}
+                                description={t(
                                     'Free space Convoy will never allocate into. Leave blank for none.'
-                                }
+                                )}
                             />
                         </ResponsiveDialogBody>
                         <ResponsiveDialogFooter className={'mt-4'}>
@@ -155,7 +157,7 @@ const EditStorageModal = () => {
                                     </Button>
                                 }
                             />
-                            <FormButton>Save</FormButton>
+                            <FormButton>{t('Save')}</FormButton>
                         </ResponsiveDialogFooter>
                     </form>
                 </Form>

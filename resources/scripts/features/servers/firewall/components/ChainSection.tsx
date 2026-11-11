@@ -30,6 +30,8 @@ import {
 import { IconArrowDown, IconArrowUp, IconPlus } from '@tabler/icons-react'
 import { useEffect, useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     Select,
@@ -209,7 +211,7 @@ const ChainSection = ({
                 <span className={'flex-1'} />
                 <Button variant={'outline'} size={'sm'} onClick={onAdd}>
                     <IconPlus className={'size-4'} />
-                    Add rule
+                    {t('Add rule')}
                 </Button>
             </div>
 
@@ -254,13 +256,19 @@ const ChainSection = ({
                         <TableHeader>
                             <TableRow>
                                 <TableHead className={'w-8 pl-5'}>
-                                    <span className={'sr-only'}>Reorder</span>
+                                    <span className={'sr-only'}>
+                                        {t('Reorder')}
+                                    </span>
                                 </TableHead>
                                 <TableHead className={'w-10'}>#</TableHead>
-                                <TableHead className={'w-12'}>On</TableHead>
-                                <TableHead className={'w-24'}>Action</TableHead>
+                                <TableHead className={'w-12'}>
+                                    {t('On')}
+                                </TableHead>
+                                <TableHead className={'w-24'}>
+                                    {t('Action')}
+                                </TableHead>
                                 <TableHead className={'w-40'}>
-                                    Service
+                                    {t('Service')}
                                 </TableHead>
                                 {/* The chain says which end of the connection
                                     this is, so the column can name the far end
@@ -268,12 +276,14 @@ const ChainSection = ({
                                     empty address columns. */}
                                 <TableHead className={'w-48'}>
                                     {direction === 'in'
-                                        ? 'Source'
-                                        : 'Destination'}
+                                        ? t('Source')
+                                        : t('Destination')}
                                 </TableHead>
-                                <TableHead>Comment</TableHead>
+                                <TableHead>{t('Comment')}</TableHead>
                                 <TableHead className={'w-10'}>
-                                    <span className={'sr-only'}>Actions</span>
+                                    <span className={'sr-only'}>
+                                        {t('Actions')}
+                                    </span>
                                 </TableHead>
                             </TableRow>
                         </TableHeader>
@@ -351,7 +361,13 @@ const ChainSection = ({
                 >
                     <SelectTrigger
                         className={'h-8'}
-                        aria-label={`Default policy for ${directionLabels[direction].toLowerCase()} traffic`}
+                        aria-label={t(
+                            'Default policy for {{toLowerCase}} traffic',
+                            {
+                                toLowerCase:
+                                    directionLabels[direction].toLowerCase(),
+                            }
+                        )}
                     >
                         <SelectValue />
                     </SelectTrigger>
@@ -374,7 +390,7 @@ const ChainSection = ({
                         'text-muted-foreground flex items-center gap-2 text-xs'
                     }
                 >
-                    Log unmatched traffic
+                    {t('Log unmatched traffic')}
                     <Switch
                         checked={draftLogging ?? isLoggingUnmatched}
                         disabled={isPending || isSaving}

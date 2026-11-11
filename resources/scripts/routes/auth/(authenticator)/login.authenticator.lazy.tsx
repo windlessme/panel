@@ -18,6 +18,8 @@ import { useEffect, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     CardContent,
@@ -46,12 +48,12 @@ import { toast } from '@/components/ui/Toast'
 
 const otpSchema = z.object({
     type: z.literal('code'),
-    code: z.string().length(6, 'Invalid code'),
+    code: z.string().length(6, t('Invalid code')),
 })
 
 const recoverySchema = z.object({
     type: z.literal('recovery'),
-    recoveryCode: z.string().length(21, 'Invalid recovery code'),
+    recoveryCode: z.string().length(21, t('Invalid recovery code')),
 })
 
 const passkeySchema = z.object({ type: z.literal('passkey') })
@@ -68,7 +70,7 @@ const schema = z.discriminatedUnion('type', [
 // would just be narrating that a second time.
 const DESCRIPTIONS: Record<string, string | null> = {
     code: 'Enter the 6-digit code from your authenticator app.',
-    recovery: 'Enter one of your one-time recovery codes.',
+    recovery: t('Enter one of your one-time recovery codes.'),
     passkey: null,
 }
 
@@ -115,7 +117,10 @@ const Authenticator = () => {
 
                 if (isPasskeyDismissal(e)) return
 
-                toast.add({ title: 'Failed to verify passkey', type: 'error' })
+                toast.add({
+                    title: t('Failed to verify passkey'),
+                    type: 'error',
+                })
             },
         })
 
@@ -138,7 +143,7 @@ const Authenticator = () => {
         } catch (e) {
             if (handleFormErrors(e, form.setError)) return
 
-            toast.add({ title: 'Failed to verify code', type: 'error' })
+            toast.add({ title: t('Failed to verify code'), type: 'error' })
 
             throw e
         }
@@ -179,7 +184,7 @@ const Authenticator = () => {
     return (
         <>
             <CardHeader>
-                <CardTitle as={'h1'}>Two-factor required</CardTitle>
+                <CardTitle as={'h1'}>{t('Two-factor required')}</CardTitle>
                 {description && (
                     <CardDescription>{description}</CardDescription>
                 )}
@@ -250,7 +255,7 @@ const Authenticator = () => {
                         ) : type === 'recovery' ? (
                             <InputForm
                                 name={'recoveryCode'}
-                                label={'Recovery code'}
+                                label={t('Recovery code')}
                             />
                         ) : (
                             <div
@@ -269,8 +274,10 @@ const Authenticator = () => {
                                 )}
                                 <p className={'text-sm'}>
                                     {isPasskeyPending
-                                        ? 'Waiting for your passkey.'
-                                        : 'Confirm with your passkey to continue.'}
+                                        ? t('Waiting for your passkey.')
+                                        : t(
+                                              'Confirm with your passkey to continue.'
+                                          )}
                                 </p>
                             </div>
                         )}
@@ -287,7 +294,7 @@ const Authenticator = () => {
                                     form.setValue('type', 'recovery')
                                 }
                             >
-                                Recovery code
+                                {t('Recovery code')}
                             </Button>
                         )}
                         {type !== 'code' && methods?.authenticator && (
@@ -297,7 +304,7 @@ const Authenticator = () => {
                                 variant={'ghost'}
                                 onClick={() => form.setValue('type', 'code')}
                             >
-                                Use a code
+                                {t('Use a code')}
                             </Button>
                         )}
                         {type !== 'passkey' && methods?.passkey && (
@@ -307,12 +314,12 @@ const Authenticator = () => {
                                 variant={'ghost'}
                                 onClick={() => form.setValue('type', 'passkey')}
                             >
-                                Use a passkey
+                                {t('Use a passkey')}
                             </Button>
                         )}
                         {type === 'recovery' && (
                             <FormButton className={'max-sm:w-full'}>
-                                Continue
+                                {t('Continue')}
                             </FormButton>
                         )}
                         {type === 'passkey' && (
@@ -322,7 +329,7 @@ const Authenticator = () => {
                                 loading={isPasskeyPending}
                                 onClick={() => authenticateWithPasskey()}
                             >
-                                Try again
+                                {t('Try again')}
                             </Button>
                         )}
                     </CardFooter>

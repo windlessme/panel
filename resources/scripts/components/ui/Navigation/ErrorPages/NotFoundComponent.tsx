@@ -2,6 +2,8 @@ import { Route as ClientDashboardRoute } from '@/routes/_app/_dashboard.tsx'
 import { Route as AdminDashboardRoute } from '@/routes/_app/admin/_dashboard.tsx'
 import { Link, useLocation, useRouter } from '@tanstack/react-router'
 
+import { t } from '@/lib/i18n.ts'
+
 import ErrorPageLayout, {
     ErrorCode,
     ErrorDescription,
@@ -20,12 +22,14 @@ const NotFoundComponent = () => {
     return (
         <ErrorPageLayout>
             <ErrorCode>404</ErrorCode>
-            <ErrorTitle>Page not found</ErrorTitle>
+            <ErrorTitle>{t('Page not found')}</ErrorTitle>
             <ErrorDescription>
-                Sorry, we couldn’t find the page you’re looking for.
+                {t('Sorry, we couldn’t find the page you’re looking for.')}
             </ErrorDescription>
             <ErrorFooter>
-                <Button onClick={() => router.history.back()}>Go back</Button>
+                <Button onClick={() => router.history.back()}>
+                    {t('Go back')}
+                </Button>
                 <Link
                     to={
                         isAdmin
@@ -36,7 +40,7 @@ const NotFoundComponent = () => {
                         variant: 'ghost',
                     })}
                 >
-                    Home
+                    {t('Home')}
                 </Link>
             </ErrorFooter>
         </ErrorPageLayout>

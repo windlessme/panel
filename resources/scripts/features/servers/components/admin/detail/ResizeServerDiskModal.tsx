@@ -9,6 +9,8 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { Form, FormButton } from '@/components/ui/Form'
 import { InputForm } from '@/components/ui/Forms'
@@ -62,12 +64,12 @@ const ResizeServerDiskModal = ({ serverId, disk, onOpenChange }: Props) => {
                 diskId: disk.id,
                 size: data.size * BYTES_PER_GIB,
             })
-            toast.add({ title: 'Disk resized', type: 'success' })
+            toast.add({ title: t('Disk resized'), type: 'success' })
             onOpenChange(false)
         } catch (e) {
             const handled = handleFormErrors(e, form.setError, { size: 'size' })
             if (!handled)
-                toast.add({ title: 'Failed to resize disk', type: 'error' })
+                toast.add({ title: t('Failed to resize disk'), type: 'error' })
         }
     }
 
@@ -75,12 +77,15 @@ const ResizeServerDiskModal = ({ serverId, disk, onOpenChange }: Props) => {
         <ResponsiveDialog open={disk !== null} onOpenChange={onOpenChange}>
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
-                    <ResponsiveDialogTitle>Resize disk</ResponsiveDialogTitle>
+                    <ResponsiveDialogTitle>
+                        {t('Resize disk')}
+                    </ResponsiveDialogTitle>
                     {disk && (
                         <ResponsiveDialogDescription>
-                            {disk.interface ?? 'This disk'} is currently{' '}
-                            {byteSize(disk.size, { units: 'iec' }).toString()}.
-                            Disks can only grow.
+                            {disk.interface ?? t('This disk')}{' '}
+                            {t('is currently')}
+                            {byteSize(disk.size, { units: 'iec' }).toString()}
+                            {t('. Disks can only grow.')}
                         </ResponsiveDialogDescription>
                     )}
                 </ResponsiveDialogHeader>
@@ -89,7 +94,7 @@ const ResizeServerDiskModal = ({ serverId, disk, onOpenChange }: Props) => {
                         <ResponsiveDialogBody>
                             <InputForm
                                 name={'size'}
-                                label={'New size (GiB)'}
+                                label={t('New size (GiB)')}
                                 type={'number'}
                                 min={currentGib}
                             />
@@ -102,7 +107,7 @@ const ResizeServerDiskModal = ({ serverId, disk, onOpenChange }: Props) => {
                                     </Button>
                                 }
                             />
-                            <FormButton>Resize</FormButton>
+                            <FormButton>{t('Resize')}</FormButton>
                         </ResponsiveDialogFooter>
                     </form>
                 </Form>

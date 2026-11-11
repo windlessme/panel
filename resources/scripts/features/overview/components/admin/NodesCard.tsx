@@ -1,6 +1,8 @@
 import { IconAlertTriangle, IconServerBolt } from '@tabler/icons-react'
 import { Link } from '@tanstack/react-router'
 
+import { t } from '@/lib/i18n.ts'
+
 import { buttonVariants } from '@/components/ui/Button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
 import { SimpleEmptyState } from '@/components/ui/EmptyStates'
@@ -40,7 +42,7 @@ type ResourceUsage = App.Data.Admin.Overview.ResourceUsageData
 const Meter = ({ percent, label }: { percent: number; label: string }) => (
     <LinearProgressBar
         value={Math.min(percent, 100)}
-        aria-label={`${label}: ${percent}%`}
+        aria-label={t('{{label}}: {{percent}}%', { label, percent })}
         indicatorClassName={meterIndicatorClass[capacityTone(percent)]}
     />
 )
@@ -82,7 +84,7 @@ const NoMetric = ({ sub }: { sub?: string }) => (
         <span className='text-muted-foreground text-sm' aria-hidden>
             —
         </span>
-        <span className='sr-only'>Unavailable</span>
+        <span className='sr-only'>{t('Unavailable')}</span>
         {sub && <StatLabel className='mt-1.5 text-xs'>{sub}</StatLabel>}
     </div>
 )
@@ -110,8 +112,10 @@ const NodeStorage = ({ node }: { node: NodeSummary }) => {
         return (
             <Usage
                 usage={node.resources.disk}
-                label={`Root filesystem used on ${node.displayName}`}
-                sub='Root filesystem — no datastores reported'
+                label={t('Root filesystem used on {{displayName}}', {
+                    displayName: node.displayName,
+                })}
+                sub={t('Root filesystem — no datastores reported')}
             />
         )
     }
@@ -119,7 +123,9 @@ const NodeStorage = ({ node }: { node: NodeSummary }) => {
     return (
         <Usage
             usage={storage}
-            label={`Storage used on ${node.displayName}`}
+            label={t('Storage used on {{displayName}}', {
+                displayName: node.displayName,
+            })}
             sub={
                 `Across ${num(datastoreCount)} datastore${datastoreCount === 1 ? '' : 's'}` +
                 // Naming the excluded stores matters: without it the total looks
@@ -171,11 +177,12 @@ const SnapshotMeta = ({ node }: { node: NodeSummary }) =>
                     className='size-3.5 shrink-0 text-amber-600 dark:text-amber-400'
                     aria-hidden
                 />
-                Metrics unavailable
+                {t('Metrics unavailable')}
             </TooltipTrigger>
             <TooltipContent className='max-w-64'>
-                Couldn&apos;t fetch resource usage from this node. Memory and
-                storage figures are unknown until it reports again.
+                {t(
+                    'Couldn&apos;t fetch resource usage from this node. Memory and storage figures are unknown until it reports again.'
+                )}
             </TooltipContent>
         </Tooltip>
     )
@@ -184,7 +191,8 @@ const ServerCount = ({ node }: { node: NodeSummary }) => (
     <>
         {num(node.servers)}{' '}
         <span className='text-label font-normal'>
-            server{node.servers === 1 ? '' : 's'}
+            {t('server')}
+            {node.servers === 1 ? '' : 's'}
         </span>
     </>
 )
@@ -192,9 +200,10 @@ const ServerCount = ({ node }: { node: NodeSummary }) => (
 const NodesCard = ({ nodes }: { nodes: NodeSummary[] }) => (
     <Card>
         <CardHeader className='flex flex-row items-center justify-between space-y-0 p-5 pb-2'>
-            <CardTitle className='text-base'>Nodes</CardTitle>
+            <CardTitle className='text-base'>{t('Nodes')}</CardTitle>
             <StatLabel as='span' className='text-xs'>
-                {num(nodes.length)} host{nodes.length === 1 ? '' : 's'}
+                {t('{{num}} host', { num: num(nodes.length) })}
+                {nodes.length === 1 ? '' : 's'}
             </StatLabel>
         </CardHeader>
         <CardContent className='p-5 pt-2'>
@@ -202,8 +211,8 @@ const NodesCard = ({ nodes }: { nodes: NodeSummary[] }) => (
                 <SimpleEmptyState
                     className='p-0 py-4'
                     icon={IconServerBolt}
-                    title='No nodes yet'
-                    description='Add a node to start provisioning servers.'
+                    title={t('No nodes yet')}
+                    description={t('Add a node to start provisioning servers.')}
                     action={
                         <Link className={buttonVariants()} to='/admin/nodes'>
                             Add node
@@ -217,15 +226,17 @@ const NodesCard = ({ nodes }: { nodes: NodeSummary[] }) => (
                         <Table>
                             <TableHeader>
                                 <TableRow>
-                                    <TableHead className='pl-0'>Node</TableHead>
+                                    <TableHead className='pl-0'>
+                                        {t('Node')}
+                                    </TableHead>
                                     <TableHead className='w-20 text-center'>
-                                        Servers
+                                        {t('Servers')}
                                     </TableHead>
                                     <TableHead className='w-[32%]'>
-                                        Memory
+                                        {t('Memory')}
                                     </TableHead>
                                     <TableHead className='w-[32%]'>
-                                        Storage
+                                        {t('Storage')}
                                     </TableHead>
                                 </TableRow>
                             </TableHeader>
@@ -263,12 +274,34 @@ const NodesCard = ({ nodes }: { nodes: NodeSummary[] }) => (
                                                     usage={
                                                         node.resources.memory
                                                     }
-                                                    label={`Memory used on ${node.displayName}`}
-                                                    sub={`${bytes(node.memory.allocated)} committed`}
+                                                    label={t(
+                                                        'Memory used on {{displayName}}',
+                                                        {
+                                                            displayName:
+                                                                node.displayName,
+                                                        }
+                                                    )}
+                                                    sub={t(
+                                                        '{{allocated}} committed',
+                                                        {
+                                                            allocated: bytes(
+                                                                node.memory
+                                                                    .allocated
+                                                            ),
+                                                        }
+                                                    )}
                                                 />
                                             ) : (
                                                 <NoMetric
-                                                    sub={`${bytes(node.memory.allocated)} committed`}
+                                                    sub={t(
+                                                        '{{allocated}} committed',
+                                                        {
+                                                            allocated: bytes(
+                                                                node.memory
+                                                                    .allocated
+                                                            ),
+                                                        }
+                                                    )}
                                                 />
                                             )}
                                         </TableCell>
@@ -322,27 +355,47 @@ const NodesCard = ({ nodes }: { nodes: NodeSummary[] }) => (
                                         <div className='grid grid-cols-1 gap-3 @lg:grid-cols-2'>
                                             <div>
                                                 <StatLabel className='mb-1.5 text-xs'>
-                                                    Memory
+                                                    {t('Memory')}
                                                 </StatLabel>
                                                 <Usage
                                                     usage={
                                                         node.resources.memory
                                                     }
-                                                    label={`Memory used on ${node.displayName}`}
-                                                    sub={`${bytes(node.memory.allocated)} committed`}
+                                                    label={t(
+                                                        'Memory used on {{displayName}}',
+                                                        {
+                                                            displayName:
+                                                                node.displayName,
+                                                        }
+                                                    )}
+                                                    sub={t(
+                                                        '{{allocated}} committed',
+                                                        {
+                                                            allocated: bytes(
+                                                                node.memory
+                                                                    .allocated
+                                                            ),
+                                                        }
+                                                    )}
                                                 />
                                             </div>
                                             <div>
                                                 <StatLabel className='mb-1.5 text-xs'>
-                                                    Storage
+                                                    {t('Storage')}
                                                 </StatLabel>
                                                 <NodeStorage node={node} />
                                             </div>
                                         </div>
                                     ) : (
                                         <StatLabel className='text-xs'>
-                                            {bytes(node.memory.allocated)}{' '}
-                                            memory committed
+                                            {t(
+                                                '{{allocated}} memory committed',
+                                                {
+                                                    allocated: bytes(
+                                                        node.memory.allocated
+                                                    ),
+                                                }
+                                            )}
                                         </StatLabel>
                                     )}
                                 </ItemContent>

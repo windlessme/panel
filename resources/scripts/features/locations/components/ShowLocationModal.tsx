@@ -2,6 +2,8 @@ import AttachedNodesList from '@/features/locations/components/AttachedNodesList
 import { useModal } from '@/hooks/create-modal-store.ts'
 import { useLocationsModalStore } from '@/routes/_app/admin/_dashboard/locations.lazy.tsx'
 
+import { t } from '@/lib/i18n.ts'
+
 import {
     ResponsiveDialog,
     ResponsiveDialogBody,
@@ -26,7 +28,7 @@ const ShowLocationModal = () => {
                         {location?.shortCode}
                     </ResponsiveDialogTitle>
                     <ResponsiveDialogDescription>
-                        Nodes attached to this location
+                        {t('Nodes attached to this location')}
                     </ResponsiveDialogDescription>
                 </ResponsiveDialogHeader>
                 <ResponsiveDialogBody

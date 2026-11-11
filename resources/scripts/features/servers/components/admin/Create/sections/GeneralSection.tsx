@@ -3,6 +3,8 @@ import StoragePicker from '@/features/servers/components/admin/Create/pickers/St
 import UserPicker from '@/features/servers/components/admin/Create/pickers/UserPicker'
 import { useWatch } from 'react-hook-form'
 
+import { t } from '@/lib/i18n.ts'
+
 import {
     Card,
     CardContent,
@@ -28,15 +30,17 @@ const GeneralSection = () => {
     return (
         <Card className={'@container'}>
             <CardHeader>
-                <CardTitle>General</CardTitle>
+                <CardTitle>{t('General')}</CardTitle>
                 <CardDescription>
-                    What the server is called, who owns it, and where it runs.
+                    {t(
+                        'What the server is called, who owns it, and where it runs.'
+                    )}
                 </CardDescription>
             </CardHeader>
             <CardContent className={'space-y-4'}>
                 <div className={'grid grid-cols-1 gap-3 @2xl:grid-cols-2'}>
-                    <InputForm name={'name'} label={'Server Name'} />
-                    <InputForm name={'hostname'} label={'Hostname'} />
+                    <InputForm name={'name'} label={t('Server Name')} />
+                    <InputForm name={'hostname'} label={t('Hostname')} />
                 </div>
 
                 <div className={'grid grid-cols-1 gap-3 @2xl:grid-cols-2'}>
@@ -55,7 +59,11 @@ const GeneralSection = () => {
                     fields={['vmid']}
                     summary={`VM ID · ${vmid ? vmid : 'next free on the node'}`}
                 >
-                    <InputForm name={'vmid'} label={'VM ID'} type={'number'} />
+                    <InputForm
+                        name={'vmid'}
+                        label={t('VM ID')}
+                        type={'number'}
+                    />
                 </FieldFold>
             </CardContent>
         </Card>

@@ -2,6 +2,8 @@ import { cn } from '@/utils'
 import { DotsHorizontalIcon } from '@radix-ui/react-icons'
 import { ComponentProps } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 const BreadcrumbEllipsis = ({
     className,
     ...props
@@ -13,7 +15,7 @@ const BreadcrumbEllipsis = ({
         {...props}
     >
         <DotsHorizontalIcon className='h-4 w-4' />
-        <span className='sr-only'>More</span>
+        <span className='sr-only'>{t('More')}</span>
     </span>
 )
 BreadcrumbEllipsis.displayName = 'BreadcrumbElipssis'

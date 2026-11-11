@@ -1,5 +1,7 @@
 import type { TimeRange } from '@/features/servers/detail/api.ts'
 
+import { t } from '@/lib/i18n.ts'
+
 import {
     Select,
     SelectContent,
@@ -10,11 +12,11 @@ import {
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/Tabs'
 
 const timeRangeItems = [
-    { value: 'hour', label: 'Hourly' },
-    { value: 'day', label: 'Daily' },
-    { value: 'week', label: 'Weekly' },
-    { value: 'month', label: 'Monthly' },
-    { value: 'year', label: 'Yearly' },
+    { value: 'hour', label: t('Hourly') },
+    { value: 'day', label: t('Daily') },
+    { value: 'week', label: t('Weekly') },
+    { value: 'month', label: t('Monthly') },
+    { value: 'year', label: t('Yearly') },
 ] as const
 
 interface Props {
@@ -31,11 +33,11 @@ const TimeRangeSelector = ({ from, setFrom }: Props) => {
                 className={'mb-5 hidden @sm:block'}
             >
                 <TabsList>
-                    <TabsTrigger value='hour'>Hourly</TabsTrigger>
-                    <TabsTrigger value='day'>Daily</TabsTrigger>
-                    <TabsTrigger value='week'>Weekly</TabsTrigger>
-                    <TabsTrigger value='month'>Monthly</TabsTrigger>
-                    <TabsTrigger value='year'>Yearly</TabsTrigger>
+                    <TabsTrigger value='hour'>{t('Hourly')}</TabsTrigger>
+                    <TabsTrigger value='day'>{t('Daily')}</TabsTrigger>
+                    <TabsTrigger value='week'>{t('Weekly')}</TabsTrigger>
+                    <TabsTrigger value='month'>{t('Monthly')}</TabsTrigger>
+                    <TabsTrigger value='year'>{t('Yearly')}</TabsTrigger>
                 </TabsList>
             </Tabs>
             <Select

@@ -7,6 +7,8 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { Form, FormButton } from '@/components/ui/Form'
 import { InputForm } from '@/components/ui/Forms'
@@ -25,24 +27,29 @@ import { toast } from '@/components/ui/Toast'
 
 const schema = z
     .object({
-        currentPassword: z.string().min(1, 'Current password is required'),
+        currentPassword: z.string().min(1, t('Current password is required')),
         password: z
             .string()
             .min(
                 PASSWORD_MIN_LENGTH,
-                `Password must be at least ${PASSWORD_MIN_LENGTH} characters`
+                t(
+                    'Password must be at least {{PASSWORD_MIN_LENGTH}} characters',
+                    { PASSWORD_MIN_LENGTH }
+                )
             )
             .refine(
                 pwd =>
                     new TextEncoder().encode(pwd).length <= PASSWORD_MAX_BYTES,
-                `Password must be at most ${PASSWORD_MAX_BYTES} bytes`
+                t('Password must be at most {{PASSWORD_MAX_BYTES}} bytes', {
+                    PASSWORD_MAX_BYTES,
+                })
             ),
         passwordConfirmation: z
             .string()
-            .min(1, 'Password confirmation is required'),
+            .min(1, t('Password confirmation is required')),
     })
     .refine(data => data.password === data.passwordConfirmation, {
-        message: "Passwords don't match",
+        message: t("Passwords don't match"),
         path: ['passwordConfirmation'],
     })
 
@@ -65,7 +72,7 @@ const PasswordChangeDialog = () => {
             await updatePassword(data)
             form.reset()
             setOpen(false)
-            toast.add({ title: 'Password updated', type: 'success' })
+            toast.add({ title: t('Password updated'), type: 'success' })
         } catch (error) {
             handleFormErrors(error, form.setError)
 
@@ -87,27 +94,27 @@ const PasswordChangeDialog = () => {
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        Change Your Password
+                        {t('Change Your Password')}
                     </ResponsiveDialogTitle>
                 </ResponsiveDialogHeader>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(submit)}>
                         <ResponsiveDialogBody className={'space-y-2'}>
                             <InputForm
-                                label={'Current Password'}
+                                label={t('Current Password')}
                                 name={'currentPassword'}
                                 autoComplete='current-password'
                                 type={'password'}
                             />
                             <InputForm
-                                label={'Password'}
+                                label={t('Password')}
                                 name={'password'}
                                 autoComplete={'new-password'}
                                 type={'password'}
                             />
                             <PasswordStrengthIndicator password={password} />
                             <InputForm
-                                label={'Confirm Password'}
+                                label={t('Confirm Password')}
                                 name={'passwordConfirmation'}
                                 autoComplete={'new-password'}
                                 type={'password'}
@@ -121,7 +128,7 @@ const PasswordChangeDialog = () => {
                                     </Button>
                                 }
                             />
-                            <FormButton>Confirm</FormButton>
+                            <FormButton>{t('Confirm')}</FormButton>
                         </ResponsiveDialogFooter>
                     </form>
                 </Form>

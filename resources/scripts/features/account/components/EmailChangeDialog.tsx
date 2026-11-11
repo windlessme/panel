@@ -8,6 +8,8 @@ import { type ReactElement, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import AuthDialog from '@/components/ui/Dialog/AuthDialog.tsx'
 import { Form, FormButton } from '@/components/ui/Form'
@@ -45,7 +47,7 @@ const EmailChangeDialog = ({ trigger }: Props) => {
             await mutate(() => updated)
             form.reset()
             setOpen(false)
-            toast.add({ title: 'Email updated', type: 'success' })
+            toast.add({ title: t('Email updated'), type: 'success' })
         } catch (e) {
             handleFormErrors(e, form.setError)
 
@@ -65,14 +67,14 @@ const EmailChangeDialog = ({ trigger }: Props) => {
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        Change Your Email
+                        {t('Change Your Email')}
                     </ResponsiveDialogTitle>
                 </ResponsiveDialogHeader>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(submit)}>
                         <ResponsiveDialogBody>
                             <InputForm
-                                label={'Email'}
+                                label={t('Email')}
                                 name={'email'}
                                 type={'email'}
                                 autoComplete={'email'}
@@ -86,7 +88,7 @@ const EmailChangeDialog = ({ trigger }: Props) => {
                                     </Button>
                                 }
                             />
-                            <FormButton>Confirm</FormButton>
+                            <FormButton>{t('Confirm')}</FormButton>
                         </ResponsiveDialogFooter>
                     </form>
                 </Form>

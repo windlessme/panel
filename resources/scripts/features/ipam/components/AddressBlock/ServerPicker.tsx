@@ -1,10 +1,11 @@
+import { getCompatibleServers } from '@/features/ipam/api.ts'
+import { useServer } from '@/features/servers/admin/api.ts'
 import { Server } from '@/types/server.ts'
 import { cn } from '@/utils'
 import { IconCheck, IconServer } from '@tabler/icons-react'
 import { useController } from 'react-hook-form'
 
-import { getCompatibleServers } from '@/features/ipam/api.ts'
-import { useServer } from '@/features/servers/admin/api.ts'
+import { t } from '@/lib/i18n.ts'
 
 import { ResourceComboboxForm } from '@/components/ui/Forms'
 import Skeleton from '@/components/ui/Skeleton.tsx'
@@ -19,8 +20,9 @@ const ServerPicker = ({ addressBlockGroupId }: Props) => {
     }>({
         name: 'serverId',
     })
-    const { data: selectedServer, isLoading: isLoadingSelection } =
-        useServer(field.value ? Number(field.value) : null)
+    const { data: selectedServer, isLoading: isLoadingSelection } = useServer(
+        field.value ? Number(field.value) : null
+    )
 
     return (
         <ResourceComboboxForm<Server>
@@ -44,7 +46,7 @@ const ServerPicker = ({ addressBlockGroupId }: Props) => {
                     <dl className={'flex grow flex-col overflow-hidden'}>
                         <dt className={'truncate'}>{server.name}</dt>
                         <dd
-                            className={'truncate text-xs text-muted-foreground'}
+                            className={'text-muted-foreground truncate text-xs'}
                         >
                             {server.node?.name}
                         </dd>
@@ -71,8 +73,8 @@ const ServerPicker = ({ addressBlockGroupId }: Props) => {
                     <IconServer className={'ml-auto size-4 opacity-50'} />
                 </>
             )}
-            label={'Server'}
-            searchPlaceholder={'Search servers...'}
+            label={t('Server')}
+            searchPlaceholder={t('Search servers...')}
         />
     )
 }

@@ -2,6 +2,8 @@ import ImageGroupPicker from '@/features/servers/components/admin/Create/pickers
 import ImagePicker from '@/features/servers/components/admin/Create/pickers/ImagePicker'
 import { useWatch } from 'react-hook-form'
 
+import { t } from '@/lib/i18n.ts'
+
 import {
     Card,
     CardContent,
@@ -41,10 +43,11 @@ const OperatingSystemSection = () => {
     return (
         <Card className={'@container'}>
             <CardHeader>
-                <CardTitle>Operating system</CardTitle>
+                <CardTitle>{t('Operating system')}</CardTitle>
                 <CardDescription>
-                    What happens when this server is created, and the image it
-                    is built from.
+                    {t(
+                        'What happens when this server is created, and the image it is built from.'
+                    )}
                 </CardDescription>
             </CardHeader>
             <CardContent className={'space-y-4'}>
@@ -59,31 +62,31 @@ const OperatingSystemSection = () => {
                     <div className={'space-y-3'}>
                         <CheckboxForm
                             name={'deferredOsSelection'}
-                            label={'Let the owner choose the OS'}
-                            description={
+                            label={t('Let the owner choose the OS')}
+                            description={t(
                                 'Nothing is installed now — the server is handed over for its owner to pick an image.'
-                            }
+                            )}
                         />
 
                         {!deferredOsSelection && (
                             <>
                                 <CheckboxForm
                                     name={'shouldCreateVm'}
-                                    label={'Create the virtual machine now'}
-                                    description={
+                                    label={t('Create the virtual machine now')}
+                                    description={t(
                                         'Leave off to record the server in Convoy without building it on the node.'
-                                    }
+                                    )}
                                 />
 
                                 {shouldCreateVm && (
                                     <CheckboxForm
                                         name={'startOnCompletion'}
-                                        label={
+                                        label={t(
                                             'Start once the install finishes'
-                                        }
-                                        description={
+                                        )}
+                                        description={t(
                                             'The server boots as soon as it is built.'
-                                        }
+                                        )}
                                     />
                                 )}
                             </>
@@ -99,17 +102,15 @@ const OperatingSystemSection = () => {
                             }
                         >
                             <ImageGroupPicker />
-                            <ImagePicker
-                                imageGroupId={imageGroupId || null}
-                            />
+                            <ImagePicker imageGroupId={imageGroupId || null} />
                         </div>
 
                         <InputForm
                             name={'accountPassword'}
-                            label={'Root password'}
+                            label={t('Root password')}
                             type={'password'}
                             autoComplete={'new-password'}
-                            description={'Set on the guest at install.'}
+                            description={t('Set on the guest at install.')}
                         />
                     </>
                 )}

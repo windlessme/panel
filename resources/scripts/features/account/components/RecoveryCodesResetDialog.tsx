@@ -7,6 +7,8 @@ import { useModal } from '@/hooks/create-modal-store.ts'
 import useAsyncFunction from '@/hooks/use-async-function.ts'
 import { useQueryClient } from '@tanstack/react-query'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     ResponsiveDialog,
@@ -31,14 +33,14 @@ const RecoveryCodesResetDialog = () => {
                 queryKey: recoveryCodeQueries.codes().queryKey,
             })
 
-            toast.add({ title: 'Recovery codes reset', type: 'success' })
+            toast.add({ title: t('Recovery codes reset'), type: 'success' })
 
             // Closing this step reveals the parent, which is already showing the
             // codes — now the fresh ones. No separate reveal to queue up.
             close()
         } catch (e) {
             toast.add({
-                title: 'Failed to reset recovery codes',
+                title: t('Failed to reset recovery codes'),
                 type: 'error',
             })
             throw e
@@ -50,12 +52,12 @@ const RecoveryCodesResetDialog = () => {
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        Reset recovery codes
+                        {t('Reset recovery codes')}
                     </ResponsiveDialogTitle>
                     <ResponsiveDialogDescription>
-                        This replaces all eight codes with new ones. Any code
-                        you have written down or saved will stop working,
-                        whichever method you saved it for.
+                        {t(
+                            'This replaces all eight codes with new ones. Any code you have written down or saved will stop working, whichever method you saved it for.'
+                        )}
                     </ResponsiveDialogDescription>
                 </ResponsiveDialogHeader>
                 <ResponsiveDialogFooter>
@@ -67,7 +69,7 @@ const RecoveryCodesResetDialog = () => {
                         variant={'destructive'}
                         onClick={reset}
                     >
-                        Reset
+                        {t('Reset')}
                     </Button>
                 </ResponsiveDialogFooter>
             </ResponsiveDialogContent>

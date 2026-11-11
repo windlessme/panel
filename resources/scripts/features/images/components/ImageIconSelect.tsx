@@ -2,6 +2,8 @@ import ImageIconDisplay from '@/features/images/components/ImageIconDisplay.tsx'
 import { ImageIcon } from '@/types/image.ts'
 import { useFormContext } from 'react-hook-form'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import SelectForm, {
     SelectFormItem,
@@ -21,8 +23,8 @@ const ImageIconSelect = () => {
         <div>
             <SelectForm
                 name={'icon'}
-                label={'Icon'}
-                placeholder={'Select an icon...'}
+                label={t('Icon')}
+                placeholder={t('Select an icon...')}
                 items={Object.values(ImageIcon).map(
                     (icon): SelectFormItem => ({
                         value: icon,
@@ -44,7 +46,7 @@ const ImageIconSelect = () => {
                 onClick={() => setValue('icon', null, { shouldDirty: true })}
                 type='button'
             >
-                Clear
+                {t('Clear')}
             </Button>
         </div>
     )

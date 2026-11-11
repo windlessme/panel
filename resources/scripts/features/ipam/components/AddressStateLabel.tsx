@@ -1,6 +1,8 @@
 import { Address, AddressState, AddressStateReason } from '@/types/address.ts'
 import { cn } from '@/utils'
 
+import { t } from '@/lib/i18n.ts'
+
 export type AddressStateKind = 'assigned' | 'reserved' | 'system' | 'available'
 
 /**
@@ -25,19 +27,19 @@ const TONES: Record<
     assigned: {
         pip: 'bg-address-assigned',
         text: 'text-address-assigned',
-        label: 'Assigned',
+        label: t('Assigned'),
     },
     reserved: {
         pip: 'bg-address-reserved',
         text: 'text-address-reserved',
-        label: 'Reserved',
+        label: t('Reserved'),
     },
     /* Neutral on purpose: network, broadcast and gateway are not anybody's decision, and colouring
        them like a hold invites a click that always fails. */
     system: {
         pip: 'bg-address-system',
         text: 'text-muted-foreground',
-        label: 'System',
+        label: t('System'),
     },
     /* An outline rather than a fill, because free is the absence of a claim — but the ring has to
        be dark enough to actually see at 6px. `ring-border` is the hairline used to separate large
@@ -45,7 +47,7 @@ const TONES: Record<
     available: {
         pip: 'bg-background ring-muted-foreground/60 ring-1 ring-inset',
         text: 'text-muted-foreground',
-        label: 'Available',
+        label: t('Available'),
     },
 }
 

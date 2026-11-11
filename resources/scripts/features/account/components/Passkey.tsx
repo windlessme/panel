@@ -5,6 +5,8 @@ import { IconKeyFilled, IconPencil, IconTrash } from '@tabler/icons-react'
 import { format } from 'date-fns'
 import { useMemo } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     Item,
@@ -33,13 +35,15 @@ const Passkey = ({ passkey }: Props) => {
             </ItemMedia>
             <ItemContent className={'overflow-x-hidden'}>
                 <ItemTitle className={'truncate'}>{passkey.name}</ItemTitle>
-                <ItemDescription>Added {formattedDate}</ItemDescription>
+                <ItemDescription>
+                    {t('Added {{formattedDate}}', { formattedDate })}
+                </ItemDescription>
             </ItemContent>
             <ItemActions>
                 <Button
                     variant={'ghost'}
                     size={'icon'}
-                    aria-label={'Rename passkey'}
+                    aria-label={t('Rename passkey')}
                     onClick={() => openModal('rename', passkey)}
                 >
                     <IconPencil className={'h-4 w-4'} />
@@ -47,7 +51,7 @@ const Passkey = ({ passkey }: Props) => {
                 <Button
                     variant={'ghost'}
                     size={'icon'}
-                    aria-label={'Delete passkey'}
+                    aria-label={t('Delete passkey')}
                     onClick={() => openModal('delete', passkey)}
                 >
                     <IconTrash className={'h-4 w-4'} />

@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { toast } from '@/components/ui/Toast'
 
 interface UseClipboardOptions {
@@ -48,7 +50,7 @@ const useClipboard = (
                 })
                 .catch(err => {
                     toast.add({
-                        title: 'Failed to copy to clipboard',
+                        title: t('Failed to copy to clipboard'),
                         type: 'error',
                     })
                     throw err

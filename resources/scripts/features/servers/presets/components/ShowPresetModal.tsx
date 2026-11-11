@@ -1,12 +1,14 @@
+import { useImageDefinitions } from '@/features/images/definitions/api.ts'
 import { useNode } from '@/features/nodes/api.ts'
 import { useNetworkInterfaces } from '@/features/nodes/network-interfaces/api.ts'
 import { useStorages } from '@/features/nodes/storages/api.ts'
-import { useImageDefinitions } from '@/features/images/definitions/api.ts'
 import { useModal } from '@/hooks/create-modal-store.ts'
 import { useServerPresetsModalStore } from '@/routes/_app/admin/_dashboard/server-presets.lazy.tsx'
 import type { ServerPresetSettings } from '@/types/server-preset'
 import byteSize from 'byte-size'
 import { ReactNode } from 'react'
+
+import { t } from '@/lib/i18n.ts'
 
 import {
     ResponsiveDialog,
@@ -48,7 +50,10 @@ const PresetSettings = ({ settings }: { settings: ServerPresetSettings }) => {
     const { data: node } = useNode(settings.nodeId ?? undefined)
     const { data: storages } = useStorages(settings.nodeId ?? undefined)
     const { data: interfaces } = useNetworkInterfaces(settings.nodeId ?? null)
-    const { data: definitions } = useImageDefinitions(settings.imageGroupUuid, {})
+    const { data: definitions } = useImageDefinitions(
+        settings.imageGroupUuid,
+        {}
+    )
 
     // A storage's display name is optional, so fall back to its PVE name the
     // way the create form's picker labels it; the id is the last resort, for a
@@ -66,86 +71,96 @@ const PresetSettings = ({ settings }: { settings: ServerPresetSettings }) => {
             ?.name ?? `Interface #${settings.networkInterfaceId}`
 
     const imageName =
-        definitions?.find(image => image.uuid === settings.imageUuid)
-            ?.name ?? settings.imageUuid
+        definitions?.find(image => image.uuid === settings.imageUuid)?.name ??
+        settings.imageUuid
 
     return (
         <dl className={'divide-y'}>
             {settings.nodeId != null && (
-                <Row label={'Node'}>
-                    {node?.displayName ?? `Node #${settings.nodeId}`}
+                <Row label={t('Node')}>
+                    {node?.displayName ??
+                        t('Node #{{nodeId}}', { nodeId: settings.nodeId })}
                 </Row>
             )}
             {settings.storageId != null && (
-                <Row label={'Storage'}>{storageName(settings.storageId)}</Row>
+                <Row label={t('Storage')}>
+                    {storageName(settings.storageId)}
+                </Row>
             )}
             {settings.cpu != null && <Row label={'vCPU'}>{settings.cpu}</Row>}
             {settings.memory != null && (
-                <Row label={'Memory'}>{mib(settings.memory)}</Row>
+                <Row label={t('Memory')}>{mib(settings.memory)}</Row>
             )}
             {settings.disk != null && (
-                <Row label={'Primary disk'}>{mib(settings.disk)}</Row>
+                <Row label={t('Primary disk')}>{mib(settings.disk)}</Row>
             )}
             {settings.disks?.map((disk, index) => (
-                <Row key={index} label={`Extra disk ${index + 1}`}>
-                    {byteSize(disk.size * GIBIBYTE, iec).toString()} on{' '}
-                    {storageName(disk.storageId)}
+                <Row
+                    key={index}
+                    label={t('Extra disk {{value}}', { value: index + 1 })}
+                >
+                    {t('{{value}} on {{storageName}}', {
+                        value: byteSize(disk.size * GIBIBYTE, iec).toString(),
+                        storageName: storageName(disk.storageId),
+                    })}
                 </Row>
             ))}
             {settings.bandwidth != null && (
-                <Row label={'Bandwidth'}>
+                <Row label={t('Bandwidth')}>
                     {unlimited(settings.bandwidth) ?? mib(settings.bandwidth)}
                 </Row>
             )}
             {settings.speedLimit != null && (
-                <Row label={'Speed limit'}>
+                <Row label={t('Speed limit')}>
                     {settings.speedLimit === -1
-                        ? 'Uncapped'
-                        : `${settings.speedLimit} MB/s`}
+                        ? t('Uncapped')
+                        : t('{{speedLimit}} MB/s', {
+                              speedLimit: settings.speedLimit,
+                          })}
                 </Row>
             )}
             {settings.backupCount != null && (
-                <Row label={'Backup count'}>
+                <Row label={t('Backup count')}>
                     {unlimited(settings.backupCount) ?? settings.backupCount}
                 </Row>
             )}
             {settings.backupSize != null && (
-                <Row label={'Backup storage'}>
+                <Row label={t('Backup storage')}>
                     {unlimited(settings.backupSize) ?? mib(settings.backupSize)}
                 </Row>
             )}
             {settings.networkInterfaceId != null && (
-                <Row label={'Network interface'}>{interfaceName}</Row>
+                <Row label={t('Network interface')}>{interfaceName}</Row>
             )}
             {settings.vlanTag != null && (
                 <Row label={'VLAN'}>{settings.vlanTag}</Row>
             )}
             {settings.addressesIpv4Count != null && (
-                <Row label={'IPv4 addresses'}>
+                <Row label={t('IPv4 addresses')}>
                     {settings.addressesIpv4Count}
                 </Row>
             )}
             {settings.addressesIpv6Count != null && (
-                <Row label={'IPv6 addresses'}>
+                <Row label={t('IPv6 addresses')}>
                     {settings.addressesIpv6Count}
                 </Row>
             )}
             {settings.deferredOsSelection != null && (
-                <Row label={'Owner picks the OS'}>
-                    {settings.deferredOsSelection ? 'Yes' : 'No'}
+                <Row label={t('Owner picks the OS')}>
+                    {settings.deferredOsSelection ? t('Yes') : t('No')}
                 </Row>
             )}
             {settings.shouldCreateVm != null && (
-                <Row label={'Create the VM'}>
-                    {settings.shouldCreateVm ? 'Yes' : 'No'}
+                <Row label={t('Create the VM')}>
+                    {settings.shouldCreateVm ? t('Yes') : t('No')}
                 </Row>
             )}
             {settings.imageUuid != null && (
-                <Row label={'Image'}>{imageName}</Row>
+                <Row label={t('Image')}>{imageName}</Row>
             )}
             {settings.startOnCompletion != null && (
-                <Row label={'Start when built'}>
-                    {settings.startOnCompletion ? 'Yes' : 'No'}
+                <Row label={t('Start when built')}>
+                    {settings.startOnCompletion ? t('Yes') : t('No')}
                 </Row>
             )}
         </dl>
@@ -168,7 +183,9 @@ const ShowPresetModal = () => {
                     </ResponsiveDialogTitle>
                     <ResponsiveDialogDescription>
                         {preset?.description ??
-                            'Applied to the create form as a starting point.'}
+                            t(
+                                'Applied to the create form as a starting point.'
+                            )}
                     </ResponsiveDialogDescription>
                 </ResponsiveDialogHeader>
                 <ResponsiveDialogBody>

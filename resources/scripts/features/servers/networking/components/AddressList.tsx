@@ -6,6 +6,8 @@ import { Address } from '@/types/address.ts'
 import { IconWifiOff } from '@tabler/icons-react'
 import { useMemo } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Badge } from '@/components/ui/Badge'
 import { CardTable, CardTableColumn } from '@/components/ui/CardTable'
 import CopyValue from '@/components/ui/CopyValue.tsx'
@@ -41,7 +43,7 @@ const Value = ({ label, value }: { label: string; value: string | null }) =>
     value ? (
         <CopyValue label={label} value={value} />
     ) : (
-        <span aria-label={'None'}>&mdash;</span>
+        <span aria-label={t('None')}>{t('&mdash;')}</span>
     )
 
 interface Props {
@@ -76,11 +78,11 @@ const AddressList = ({ addresses, filter = 'all' }: Props) => {
     const columns: CardTableColumn<Address>[] = [
         {
             key: 'address',
-            header: 'Address',
+            header: t('Address'),
             className: 'whitespace-nowrap',
             cell: address => (
                 <CopyValue
-                    label={'Address'}
+                    label={t('Address')}
                     value={`${address.ip}/${address.prefixLength}`}
                     className={
                         'text-foreground font-medium tracking-tight tabular-nums'
@@ -97,7 +99,7 @@ const AddressList = ({ addresses, filter = 'all' }: Props) => {
             ? [
                   {
                       key: 'version',
-                      header: 'Type',
+                      header: t('Type'),
                       cell: (address: Address) => (
                           <Badge variant={'secondary'}>
                               {versionLabels[address.version]}
@@ -110,11 +112,11 @@ const AddressList = ({ addresses, filter = 'all' }: Props) => {
             ? [
                   {
                       key: 'gateway',
-                      header: 'Gateway',
+                      header: t('Gateway'),
                       className:
                           'text-muted-foreground text-xs whitespace-nowrap',
                       cell: (address: Address) => (
-                          <Value label={'Gateway'} value={address.gateway} />
+                          <Value label={t('Gateway')} value={address.gateway} />
                       ),
                   },
               ]
@@ -123,12 +125,12 @@ const AddressList = ({ addresses, filter = 'all' }: Props) => {
             ? [
                   {
                       key: 'mac',
-                      header: 'MAC address',
+                      header: t('MAC address'),
                       className:
                           'text-muted-foreground text-xs whitespace-nowrap',
                       cell: (address: Address) => (
                           <Value
-                              label={'MAC address'}
+                              label={t('MAC address')}
                               value={address.macAddress}
                           />
                       ),
@@ -141,14 +143,14 @@ const AddressList = ({ addresses, filter = 'all' }: Props) => {
     // every row is still one fact, and saying so once beats a column of dashes.
     const shared = [
         gateways.length === 1 && {
-            label: 'Gateway',
+            label: t('Gateway'),
             value: sharedGateway,
-            missing: 'No gateway reported',
+            missing: t('No gateway reported'),
         },
         macs.length === 1 && {
-            label: 'MAC address',
+            label: t('MAC address'),
             value: sharedMac,
-            missing: 'No MAC address reported',
+            missing: t('No MAC address reported'),
         },
     ].filter(Boolean) as {
         label: string
@@ -158,7 +160,7 @@ const AddressList = ({ addresses, filter = 'all' }: Props) => {
 
     return (
         <CardTable
-            caption={'IP addresses allocated to this server'}
+            caption={t('IP addresses allocated to this server')}
             rows={visible}
             rowKey={address => address.id}
             columns={columns}

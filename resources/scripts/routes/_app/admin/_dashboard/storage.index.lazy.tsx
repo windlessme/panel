@@ -4,6 +4,8 @@ import { IconDatabase } from '@tabler/icons-react'
 import { useQuery } from '@tanstack/react-query'
 import { createLazyFileRoute } from '@tanstack/react-router'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Card } from '@/components/ui/Card'
 import {
     CollectionErrorState,
@@ -26,7 +28,7 @@ function StorageInventoryPage() {
 
     return (
         <>
-            <Heading>Storage</Heading>
+            <Heading>{t('Storage')}</Heading>
 
             {isError && !storages ? (
                 <Card className={'py-6'}>
@@ -42,10 +44,10 @@ function StorageInventoryPage() {
                 <Card className={'py-6'}>
                     <SimpleEmptyState
                         icon={IconDatabase}
-                        title={'No storage yet'}
-                        description={
+                        title={t('No storage yet')}
+                        description={t(
                             'Register storage on a node to deploy servers there.'
-                        }
+                        )}
                     />
                 </Card>
             ) : (

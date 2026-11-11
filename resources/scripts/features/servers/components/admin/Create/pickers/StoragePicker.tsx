@@ -4,6 +4,8 @@ import { IconDatabase } from '@tabler/icons-react'
 import byteSize from 'byte-size'
 import { useFormContext } from 'react-hook-form'
 
+import { t } from '@/lib/i18n.ts'
+
 import SimpleEmptyState from '@/components/ui/EmptyStates/SimpleEmptyState'
 import {
     FormControl,
@@ -56,8 +58,9 @@ const StoragePicker = ({
                         {storage.displayName} ({storage.name})
                     </span>
                     <span className='text-muted-foreground text-xs'>
-                        {byteSize(free, { units: 'iec' }).toString()} free out
-                        of {byteSize(storage.size, { units: 'iec' }).toString()}
+                        {byteSize(free, { units: 'iec' }).toString()}{' '}
+                        {t('free out of')}{' '}
+                        {byteSize(storage.size, { units: 'iec' }).toString()}
                     </span>
                 </div>
             ),

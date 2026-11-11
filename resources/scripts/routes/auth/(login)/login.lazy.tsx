@@ -12,6 +12,8 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import {
     CardContent,
     CardFooter,
@@ -24,7 +26,7 @@ import { toast } from '@/components/ui/Toast'
 
 const schema = z.object({
     email: z.string().email(),
-    password: z.string().min(1, 'Password is required'),
+    password: z.string().min(1, t('Password is required')),
 })
 
 const Login = () => {
@@ -77,10 +79,10 @@ const Login = () => {
             })
         } catch {
             form.setError('email', {
-                message: 'Invalid email or password',
+                message: t('Invalid email or password'),
             })
             form.setError('password', {
-                message: 'Invalid email or password',
+                message: t('Invalid email or password'),
             })
         }
     }
@@ -88,7 +90,7 @@ const Login = () => {
     return (
         <>
             <CardHeader>
-                <CardTitle as={'h1'}>Sign in</CardTitle>
+                <CardTitle as={'h1'}>{t('Sign in')}</CardTitle>
             </CardHeader>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(submit)}>
@@ -108,7 +110,7 @@ const Login = () => {
                                         className={'bg-border h-px flex-1'}
                                         aria-hidden
                                     />
-                                    or
+                                    {t('or')}
                                     <span
                                         className={'bg-border h-px flex-1'}
                                         aria-hidden
@@ -118,14 +120,14 @@ const Login = () => {
                         )}
                         <InputForm
                             name={'email'}
-                            label={'Email'}
+                            label={t('Email')}
                             type={'email'}
                             placeholder={'you@example.com'}
                             autoComplete={PASSKEY_AUTOFILL_AUTOCOMPLETE}
                         />
                         <InputForm
                             name={'password'}
-                            label={'Password'}
+                            label={t('Password')}
                             type={'password'}
                             autoComplete={'current-password'}
                         />
@@ -135,7 +137,9 @@ const Login = () => {
                         divider, the passkey button and every provider in here,
                         which made the tinted region taller than the fields. */}
                     <CardFooter className={'flex-col items-stretch gap-2'}>
-                        <FormButton className={'w-full'}>Sign in</FormButton>
+                        <FormButton className={'w-full'}>
+                            {t('Sign in')}
+                        </FormButton>
                         <LoginWithPasskeyButton redirectTo={redirect} />
                     </CardFooter>
                 </form>

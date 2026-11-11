@@ -3,6 +3,7 @@ import { deleteUser, userQueries } from '@/features/users/api.ts'
 import type { AdminUser } from '@/types/admin/user.ts'
 import { useMutation } from '@tanstack/react-query'
 
+import { t } from '@/lib/i18n.ts'
 import { queryClient } from '@/lib/query-client.ts'
 
 import useConfirmationStore from '@/components/ui/AlertDialog/use-confirmation-store.ts'
@@ -32,14 +33,14 @@ const useUserDeletion = ({ onDeleted }: Options = {}) => {
     const { mutate: remove } = useMutation({
         mutationFn: (user: AdminUser) => deleteUser(user.id),
         onSuccess: async () => {
-            toast.add({ title: 'User deleted', type: 'success' })
+            toast.add({ title: t('User deleted'), type: 'success' })
             // A delete changes counts on rows this page cannot see, so this refetches rather than
             // patching the cached page in place.
             await queryClient.invalidateQueries({ queryKey: userQueries.all() })
             onDeleted?.()
         },
         onError: () =>
-            toast.add({ title: 'Failed to delete user', type: 'error' }),
+            toast.add({ title: t('Failed to delete user'), type: 'error' }),
     })
 
     const confirmAndDelete = async (user: AdminUser) => {
@@ -48,17 +49,22 @@ const useUserDeletion = ({ onDeleted }: Options = {}) => {
 
         const confirmed = await confirm({
             title: isSelf
-                ? 'You are signed in as this account'
+                ? t('You are signed in as this account')
                 : owns
-                  ? `${user.name} still owns servers`
-                  : 'Delete user',
+                  ? t('{{name}} still owns servers', { name: user.name })
+                  : t('Delete user'),
             description: isSelf
-                ? 'An account cannot delete itself. Another administrator can remove it for you.'
+                ? t(
+                      'An account cannot delete itself. Another administrator can remove it for you.'
+                  )
                 : owns
                   ? `${countOf(user.serversCount, 'server')} still belong to this account. Transfer or delete ${user.serversCount === 1 ? 'it' : 'them'} first.`
-                  : `Delete ${user.name} (${user.email})? Their API tokens, SSH keys and sessions go with them. This cannot be undone.`,
-            confirmText: 'Delete',
-            cancelText: isSelf || owns ? 'Close' : 'Cancel',
+                  : t(
+                        'Delete {{name}} ({{email}})? Their API tokens, SSH keys and sessions go with them. This cannot be undone.',
+                        { name: user.name, email: user.email }
+                    ),
+            confirmText: t('Delete'),
+            cancelText: isSelf || owns ? t('Close') : t('Cancel'),
             confirmButton: {
                 variant: 'destructive',
                 disabled: isSelf || owns,

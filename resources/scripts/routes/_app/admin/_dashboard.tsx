@@ -16,6 +16,8 @@ import {
 } from '@tabler/icons-react'
 import { Outlet, createFileRoute } from '@tanstack/react-router'
 
+import { t } from '@/lib/i18n.ts'
+
 import AppLayout from '@/components/layouts/AppLayout.tsx'
 
 import { SidebarNav } from '@/components/ui/Navigation/Navigation.types.ts'
@@ -31,7 +33,7 @@ export const Route = createFileRoute('/_app/admin/_dashboard')({
         )
     },
     staticData: {
-        title: 'Dashboard',
+        title: t('Dashboard'),
     },
 })
 
@@ -42,7 +44,7 @@ const nav: SidebarNav = {
             items: [
                 {
                     icon: IconHome,
-                    label: 'Dashboard',
+                    label: t('Dashboard'),
                     path: '/admin',
                     activeOptions: {
                         exact: true,
@@ -51,32 +53,32 @@ const nav: SidebarNav = {
             ],
         },
         {
-            label: 'Infrastructure',
+            label: t('Infrastructure'),
             items: [
                 {
                     icon: IconMapPin,
-                    label: 'Locations',
+                    label: t('Locations'),
                     path: '/admin/locations',
                 },
                 {
                     icon: IconServer,
-                    label: 'Nodes',
+                    label: t('Nodes'),
                     path: '/admin/nodes',
                 },
                 {
                     icon: IconTransform,
-                    label: 'Anchors',
+                    label: t('Anchors'),
                     path: '/admin/anchors',
                 },
                 {
                     icon: IconServer,
-                    label: 'Servers',
+                    label: t('Servers'),
                     path: '/admin/servers',
                 },
             ],
         },
         {
-            label: 'Provisioning',
+            label: t('Provisioning'),
             items: [
                 {
                     icon: IconMapPins,
@@ -85,47 +87,47 @@ const nav: SidebarNav = {
                 },
                 {
                     icon: IconDatabase,
-                    label: 'Storage',
+                    label: t('Storage'),
                     path: '/admin/storage',
                 },
                 {
                     icon: IconBoxMargin,
-                    label: 'Images',
+                    label: t('Images'),
                     path: '/admin/images',
                 },
                 {
                     icon: IconDisc,
-                    label: 'ISOs',
+                    label: t('ISOs'),
                     path: '/admin/isos',
                 },
                 {
                     icon: IconStack2,
-                    label: 'Server Presets',
+                    label: t('Server Presets'),
                     path: '/admin/server-presets',
                 },
             ],
         },
         {
-            label: 'Administration',
+            label: t('Administration'),
             items: [
                 {
                     icon: IconUsers,
-                    label: 'Users',
+                    label: t('Users'),
                     path: '/admin/users',
                 },
                 {
                     icon: IconKey,
-                    label: 'API Tokens',
+                    label: t('API Tokens'),
                     path: '/admin/tokens',
                 },
                 {
                     icon: IconHistory,
-                    label: 'Audit Log',
+                    label: t('Audit Log'),
                     path: '/admin/audit-log',
                 },
                 {
                     icon: IconSettings,
-                    label: 'Settings',
+                    label: t('Settings'),
                     path: '/admin/settings',
                 },
             ],

@@ -17,6 +17,8 @@ import { startRegistration } from '@simplewebauthn/browser'
 import { useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Alert, AlertDescription } from '@/components/ui/Alert'
 import { Button } from '@/components/ui/Button'
 import AuthDialog from '@/components/ui/Dialog/AuthDialog.tsx'
@@ -68,7 +70,7 @@ const PasskeysMainDialog = () => {
                 openModal('rename', result.passkey)
             }
 
-            toast.add({ title: 'Passkey added', type: 'success' })
+            toast.add({ title: t('Passkey added'), type: 'success' })
         } catch (e) {
             // The authenticator's own failures never reach the API, so they keep
             // a local message; everything else defers to what the server said —
@@ -110,20 +112,22 @@ const PasskeysMainDialog = () => {
             />
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
-                    <ResponsiveDialogTitle>Passkeys</ResponsiveDialogTitle>
+                    <ResponsiveDialogTitle>
+                        {t('Passkeys')}
+                    </ResponsiveDialogTitle>
 
                     <ResponsiveDialogDescription>
-                        Securely sign in with fingerprint, face, screen lock, or
-                        security key
+                        {t(
+                            'Securely sign in with fingerprint, face, screen lock, or security key'
+                        )}
                     </ResponsiveDialogDescription>
 
                     {!window.isSecureContext && (
                         <Alert variant={'destructive'}>
                             <AlertDescription>
-                                This site is not operating in a secure context
-                                (HTTPS or localhost), which is required for
-                                passkey registration. Please ensure the site
-                                uses HTTPS to enable this feature.
+                                {t(
+                                    'This site is not operating in a secure context (HTTPS or localhost), which is required for passkey registration. Please ensure the site uses HTTPS to enable this feature.'
+                                )}
                             </AlertDescription>
                         </Alert>
                     )}
@@ -150,7 +154,7 @@ const PasskeysMainDialog = () => {
                         onClick={register}
                         disabled={!window.isSecureContext}
                     >
-                        Add passkey
+                        {t('Add passkey')}
                     </Button>
                 </ResponsiveDialogFooter>
                 {/* Nested inside the parent's content: Base UI gives these no

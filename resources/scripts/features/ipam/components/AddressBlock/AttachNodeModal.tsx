@@ -11,6 +11,8 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { Form, FormButton } from '@/components/ui/Form'
 import {
@@ -26,8 +28,8 @@ import {
 import { toast } from '@/components/ui/Toast'
 
 const schema = z.object({
-    nodeId: z.string().min(1, 'A node is required'),
-    networkInterfaceId: z.string().min(1, 'A network interface is required'),
+    nodeId: z.string().min(1, t('A node is required')),
+    networkInterfaceId: z.string().min(1, t('A network interface is required')),
 })
 
 interface Props {
@@ -57,10 +59,13 @@ const AttachNodeModal = ({ mutate }: Props) => {
             await mutate()
             form.reset()
             setOpen(false)
-            toast.add({ title: 'Node attached successfully', type: 'success' })
+            toast.add({
+                title: t('Node attached successfully'),
+                type: 'success',
+            })
         } catch (e) {
             handleFormErrors(e, form.setError)
-            toast.add({ title: 'Failed to attach node', type: 'error' })
+            toast.add({ title: t('Failed to attach node'), type: 'error' })
         }
     }
 
@@ -75,7 +80,9 @@ const AttachNodeModal = ({ mutate }: Props) => {
             />
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
-                    <ResponsiveDialogTitle>Attach Node</ResponsiveDialogTitle>
+                    <ResponsiveDialogTitle>
+                        {t('Attach Node')}
+                    </ResponsiveDialogTitle>
                 </ResponsiveDialogHeader>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(submit)}>
@@ -93,7 +100,7 @@ const AttachNodeModal = ({ mutate }: Props) => {
                                     </Button>
                                 }
                             />
-                            <FormButton>Attach</FormButton>
+                            <FormButton>{t('Attach')}</FormButton>
                         </ResponsiveDialogFooter>
                     </form>
                 </Form>

@@ -14,6 +14,7 @@ import {
 import { Link } from '@tanstack/react-router'
 import { ReactNode } from 'react'
 
+import { t } from '@/lib/i18n.ts'
 import { TablerIcon } from '@/lib/tabler.ts'
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
@@ -81,7 +82,7 @@ const AttentionRow = ({ item }: { item: AttentionItem }) => {
                 <ItemTitle className='w-full min-w-0'>
                     <span className='truncate'>{item.title}</span>
                 </ItemTitle>
-                <ItemDescription className='block truncate text-nowrap text-xs'>
+                <ItemDescription className='block truncate text-xs text-nowrap'>
                     {item.description}
                 </ItemDescription>
             </ItemContent>
@@ -104,8 +105,8 @@ const deriveAttention = (
             tone: 'alert',
             icon: IconAlertTriangle,
             title: `${num(summary.failedServers)} server${summary.failedServers === 1 ? '' : 's'} failed to install`,
-            description: 'Review provisioning logs on the affected nodes.',
-            action: <ActionLink to='/admin/servers'>Review</ActionLink>,
+            description: t('Review provisioning logs on the affected nodes.'),
+            action: <ActionLink to='/admin/servers'>{t('Review')}</ActionLink>,
         })
     }
 
@@ -115,9 +116,10 @@ const deriveAttention = (
             tone: 'alert',
             icon: IconNetwork,
             title: `${num(summary.flaggedClusters)} cluster identit${summary.flaggedClusters === 1 ? 'y' : 'ies'} flagged`,
-            description:
-                'A cluster reported members that share nothing with what Convoy recorded.',
-            action: <ActionLink to='/admin/nodes'>Review</ActionLink>,
+            description: t(
+                'A cluster reported members that share nothing with what Convoy recorded.'
+            ),
+            action: <ActionLink to='/admin/nodes'>{t('Review')}</ActionLink>,
         })
     }
 
@@ -127,9 +129,10 @@ const deriveAttention = (
             tone: 'alert',
             icon: IconAlertTriangle,
             title: `${num(servers.flagged)} server${servers.flagged === 1 ? '' : 's'} flagged`,
-            description:
-                'Placement could not be reconciled automatically — a guest moved somewhere Convoy cannot follow.',
-            action: <ActionLink to='/admin/servers'>Review</ActionLink>,
+            description: t(
+                'Placement could not be reconciled automatically — a guest moved somewhere Convoy cannot follow.'
+            ),
+            action: <ActionLink to='/admin/servers'>{t('Review')}</ActionLink>,
         })
     }
 
@@ -139,8 +142,8 @@ const deriveAttention = (
             tone: 'alert',
             icon: IconDatabaseExclamation,
             title: `${num(backups.failed)} backup${backups.failed === 1 ? '' : 's'} failed`,
-            description: 'Backups that did not complete successfully.',
-            action: <ActionLink to='/admin/servers'>View</ActionLink>,
+            description: t('Backups that did not complete successfully.'),
+            action: <ActionLink to='/admin/servers'>{t('View')}</ActionLink>,
         })
     }
 
@@ -151,10 +154,16 @@ const deriveAttention = (
             id: 'update-available',
             tone: 'neutral',
             icon: IconCircleArrowUp,
-            title: `Convoy ${update.latestVersion} is available`,
-            description: `This panel is running ${update.currentVersion}.`,
+            title: t('Convoy {{latestVersion}} is available', {
+                latestVersion: update.latestVersion,
+            }),
+            description: t('This panel is running {{currentVersion}}.', {
+                currentVersion: update.currentVersion,
+            }),
             action: (
-                <ActionLink to='/admin/settings/updates'>View</ActionLink>
+                <ActionLink to='/admin/settings/updates'>
+                    {t('View')}
+                </ActionLink>
             ),
         })
     }
@@ -166,9 +175,14 @@ const deriveAttention = (
                 id: `node-capacity-${node.id}`,
                 tone: 'neutral',
                 icon: IconServerBolt,
-                title: `${node.displayName} near memory capacity`,
-                description: `Allocated ${node.memory.percent}% of ${bytes(node.memory.total)}.`,
-                action: <ActionLink to='/admin/nodes'>View</ActionLink>,
+                title: t('{{displayName}} near memory capacity', {
+                    displayName: node.displayName,
+                }),
+                description: t('Allocated {{percent}}% of {{total}}.', {
+                    percent: node.memory.percent,
+                    total: bytes(node.memory.total),
+                }),
+                action: <ActionLink to='/admin/nodes'>{t('View')}</ActionLink>,
             })
         })
 
@@ -178,8 +192,8 @@ const deriveAttention = (
             tone: 'neutral',
             icon: IconPlayerPause,
             title: `${num(servers.suspended)} server${servers.suspended === 1 ? '' : 's'} suspended`,
-            description: 'Suspended servers are not running.',
-            action: <ActionLink to='/admin/servers'>View</ActionLink>,
+            description: t('Suspended servers are not running.'),
+            action: <ActionLink to='/admin/servers'>{t('View')}</ActionLink>,
         })
     }
 
@@ -192,33 +206,35 @@ const deriveSetup = (data: OverviewData): AttentionItem[] => [
         id: 'setup-node',
         tone: 'setup',
         icon: IconServerBolt,
-        title: 'Add another node',
-        description: `You have ${num(data.summary.nodes)}. More nodes, more capacity.`,
-        action: <ActionLink to='/admin/nodes'>Add node</ActionLink>,
+        title: t('Add another node'),
+        description: t('You have {{num}}. More nodes, more capacity.', {
+            num: num(data.summary.nodes),
+        }),
+        action: <ActionLink to='/admin/nodes'>{t('Add node')}</ActionLink>,
     },
     {
         id: 'setup-ip',
         tone: 'setup',
         icon: IconNetwork,
-        title: 'Create an IP pool',
-        description: 'Servers need addresses to come online.',
-        action: <ActionLink to='/admin/ipam'>New pool</ActionLink>,
+        title: t('Create an IP pool'),
+        description: t('Servers need addresses to come online.'),
+        action: <ActionLink to='/admin/ipam'>{t('New pool')}</ActionLink>,
     },
     {
         id: 'setup-iso',
         tone: 'setup',
         icon: IconDisc,
-        title: 'Upload an ISO',
-        description: 'Give users something to install from.',
-        action: <ActionLink to='/admin/nodes'>Add ISO</ActionLink>,
+        title: t('Upload an ISO'),
+        description: t('Give users something to install from.'),
+        action: <ActionLink to='/admin/nodes'>{t('Add ISO')}</ActionLink>,
     },
     {
         id: 'setup-team',
         tone: 'setup',
         icon: IconUserPlus,
-        title: 'Invite your team',
-        description: 'Add admins and give them access.',
-        action: <ActionLink to='/admin/servers'>Invite</ActionLink>,
+        title: t('Invite your team'),
+        description: t('Add admins and give them access.'),
+        action: <ActionLink to='/admin/servers'>{t('Invite')}</ActionLink>,
     },
 ]
 
@@ -247,8 +263,10 @@ const NeedsAttentionCard = ({ data, isFresh }: Props) => {
                     <SimpleEmptyState
                         className='p-0'
                         icon={IconCheck}
-                        title='All clear'
-                        description='No failed servers, backups, or capacity warnings.'
+                        title={t('All clear')}
+                        description={t(
+                            'No failed servers, backups, or capacity warnings.'
+                        )}
                     />
                 ) : (
                     <OverflowItemGroup

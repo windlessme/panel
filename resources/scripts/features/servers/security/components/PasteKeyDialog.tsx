@@ -1,6 +1,9 @@
 import { useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
+import { Label } from '@/components/ui/Label'
 import {
     ResponsiveDialog,
     ResponsiveDialogBody,
@@ -11,7 +14,6 @@ import {
     ResponsiveDialogHeader,
     ResponsiveDialogTitle,
 } from '@/components/ui/ResponsiveDialog'
-import { Label } from '@/components/ui/Label'
 import { Textarea } from '@/components/ui/Textarea'
 
 interface Props {
@@ -45,20 +47,23 @@ const PasteKeyDialog = ({ open, onOpenChange, onAdd }: Props) => {
         <ResponsiveDialog open={open} onOpenChange={close}>
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
-                    <ResponsiveDialogTitle>Paste a one-off key</ResponsiveDialogTitle>
+                    <ResponsiveDialogTitle>
+                        {t('Paste a one-off key')}
+                    </ResponsiveDialogTitle>
                     <ResponsiveDialogDescription>
-                        Added to this server only — it isn’t saved to your
-                        keychain. One key per line.
+                        {t(
+                            'Added to this server only — it isn’t saved to your keychain. One key per line.'
+                        )}
                     </ResponsiveDialogDescription>
                 </ResponsiveDialogHeader>
                 <ResponsiveDialogBody className={'space-y-2'}>
-                    <Label htmlFor={'paste-key'}>Public key</Label>
+                    <Label htmlFor={'paste-key'}>{t('Public key')}</Label>
                     <Textarea
                         id={'paste-key'}
                         rows={4}
                         value={value}
                         onChange={e => setValue(e.target.value)}
-                        placeholder={'ssh-ed25519 AAAA… user@host'}
+                        placeholder={t('ssh-ed25519 AAAA… user@host')}
                         className={'font-mono text-xs'}
                     />
                 </ResponsiveDialogBody>
@@ -71,7 +76,7 @@ const PasteKeyDialog = ({ open, onOpenChange, onAdd }: Props) => {
                         }
                     />
                     <Button onClick={add} disabled={value.trim().length === 0}>
-                        Add key
+                        {t('Add key')}
                     </Button>
                 </ResponsiveDialogFooter>
             </ResponsiveDialogContent>

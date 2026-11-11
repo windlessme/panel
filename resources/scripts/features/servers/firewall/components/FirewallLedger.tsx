@@ -23,6 +23,8 @@ import { getApiErrorMessage } from '@/utils/http.ts'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import useConfirmationStore from '@/components/ui/AlertDialog/use-confirmation-store.ts'
 import { Card } from '@/components/ui/Card'
 import Skeleton from '@/components/ui/Skeleton.tsx'
@@ -179,7 +181,7 @@ const FirewallLedger = ({ uuid }: Props) => {
         mutationFn: (rule: FirewallRule) =>
             deleteRule(uuid, rule.position!, rule.digest),
         onSuccess: () => {
-            toast.add({ title: 'Rule deleted', type: 'success' })
+            toast.add({ title: t('Rule deleted'), type: 'success' })
         },
         onError: e =>
             toast.add({
@@ -205,10 +207,11 @@ const FirewallLedger = ({ uuid }: Props) => {
 
         if (direction === 'in' && willBlockSsh(policy, rules ?? [])) {
             const confirmed = await confirm({
-                title: 'This will cut off SSH',
-                description:
-                    'No enabled rule allows inbound traffic on port 22, so once the default policy changes you will not be able to reach this server over SSH. The console will still work.',
-                confirmText: 'Apply anyway',
+                title: t('This will cut off SSH'),
+                description: t(
+                    'No enabled rule allows inbound traffic on port 22, so once the default policy changes you will not be able to reach this server over SSH. The console will still work.'
+                ),
+                confirmText: t('Apply anyway'),
                 confirmButton: { variant: 'destructive' },
             })
 
@@ -226,11 +229,13 @@ const FirewallLedger = ({ uuid }: Props) => {
 
     const onDelete = async (rule: FirewallRule) => {
         const confirmed = await confirm({
-            title: 'Delete rule',
+            title: t('Delete rule'),
             description: rule.comment
-                ? `"${rule.comment}" will stop being enforced immediately.`
-                : 'This rule will stop being enforced immediately.',
-            confirmText: 'Delete',
+                ? t('"{{comment}}" will stop being enforced immediately.', {
+                      comment: rule.comment,
+                  })
+                : t('This rule will stop being enforced immediately.'),
+            confirmText: t('Delete'),
             confirmButton: { variant: 'destructive' },
         })
 

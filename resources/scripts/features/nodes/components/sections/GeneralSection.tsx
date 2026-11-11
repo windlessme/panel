@@ -1,5 +1,7 @@
 import LocationPicker from '@/features/locations/components/LocationPicker.tsx'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
 import { InputForm } from '@/components/ui/Forms'
 
@@ -14,10 +16,10 @@ import { InputForm } from '@/components/ui/Forms'
 const GeneralSection = () => (
     <Card className={'@container'}>
         <CardHeader>
-            <CardTitle>General</CardTitle>
+            <CardTitle>{t('General')}</CardTitle>
         </CardHeader>
         <CardContent className={'grid grid-cols-1 gap-3 @2xl:grid-cols-3'}>
-            <InputForm name={'displayName'} label={'Display Name'} />
+            <InputForm name={'displayName'} label={t('Display Name')} />
             <LocationPicker />
         </CardContent>
     </Card>

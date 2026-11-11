@@ -6,13 +6,14 @@ import axios from 'axios'
 import { z } from 'zod'
 
 import { type DataResponse, apiFetch } from '@/lib/api'
+import { t } from '@/lib/i18n.ts'
 
 export const profileSchema = z.object({
-    name: z.string().min(1, 'A display name is required').max(191),
+    name: z.string().min(1, t('A display name is required')).max(191),
 })
 
 export const emailSchema = z.object({
-    email: z.string().email('Enter a valid email address').max(191),
+    email: z.string().email(t('Enter a valid email address')).max(191),
 })
 
 /** Kept in step with the `mimes` rule the upload endpoint validates against. */

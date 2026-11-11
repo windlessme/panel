@@ -31,6 +31,7 @@ import { Link, createLazyFileRoute, useParams } from '@tanstack/react-router'
 import { ColumnDef } from '@tanstack/react-table'
 import { useMemo, useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
 import { queryClient } from '@/lib/query-client.ts'
 
 import { buttonVariants } from '@/components/ui/Button'
@@ -57,12 +58,12 @@ import { Heading } from '@/components/ui/Typography'
  */
 const STATE_FILTER: DataTableFilterField<Address> = {
     id: 'state',
-    label: 'State',
+    label: t('State'),
     options: [
-        { label: 'Available', value: 'available' },
-        { label: 'Assigned', value: 'assigned' },
-        { label: 'Reserved', value: 'reserved' },
-        { label: 'System', value: 'system' },
+        { label: t('Available'), value: 'available' },
+        { label: t('Assigned'), value: 'assigned' },
+        { label: t('Reserved'), value: 'reserved' },
+        { label: t('System'), value: 'system' },
     ],
 }
 
@@ -173,13 +174,16 @@ function BlockIndex() {
             toast.add({
                 title:
                     updated.state === AddressState.Reserved
-                        ? 'Address reserved'
-                        : 'Address released',
+                        ? t('Address reserved')
+                        : t('Address released'),
                 type: 'success',
             })
         },
         onError: () =>
-            toast.add({ title: 'Failed to update reservation', type: 'error' }),
+            toast.add({
+                title: t('Failed to update reservation'),
+                type: 'error',
+            }),
     })
 
     const renderActions = (address: Address) => {
@@ -188,20 +192,20 @@ function BlockIndex() {
         return (
             <>
                 <DropdownMenuItem onClick={() => openModal('edit', address)}>
-                    Edit
+                    {t('Edit')}
                 </DropdownMenuItem>
                 {kind === 'available' && (
                     <DropdownMenuItem
                         onClick={() => toggleReservation(address)}
                     >
-                        Reserve
+                        {t('Reserve')}
                     </DropdownMenuItem>
                 )}
                 {kind === 'reserved' && (
                     <DropdownMenuItem
                         onClick={() => toggleReservation(address)}
                     >
-                        Release
+                        {t('Release')}
                     </DropdownMenuItem>
                 )}
                 {/* The destructive item sits below a rule, the way it does in every other menu in
@@ -211,7 +215,7 @@ function BlockIndex() {
                     variant={'destructive'}
                     onClick={() => openModal('delete', address)}
                 >
-                    Delete
+                    {t('Delete')}
                 </DropdownMenuItem>
             </>
         )
@@ -235,7 +239,7 @@ function BlockIndex() {
             ),
         },
         {
-            header: 'State',
+            header: t('State'),
             accessorKey: 'state',
             meta: {
                 skeletonWidth: '5rem',
@@ -245,7 +249,7 @@ function BlockIndex() {
             ),
         },
         {
-            header: 'Server',
+            header: t('Server'),
             accessorKey: 'server',
             meta: {
                 skeletonWidth: '6rem',
@@ -271,7 +275,7 @@ function BlockIndex() {
             },
         },
         {
-            header: 'MAC address',
+            header: t('MAC address'),
             accessorKey: 'macAddress',
             meta: {
                 skeletonWidth: '7rem',

@@ -7,6 +7,8 @@ import ImageGroupSidebar from '@/features/images/components/ImageGroupSidebar.ts
 import { IconDisc } from '@tabler/icons-react'
 import { createLazyFileRoute } from '@tanstack/react-router'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Card } from '@/components/ui/Card'
 import {
     CollectionErrorState,
@@ -26,7 +28,7 @@ function ImagesIndex() {
 
     return (
         <>
-            <Heading>Images</Heading>
+            <Heading>{t('Images')}</Heading>
             {Boolean(groups?.length) && (
                 <PageToolbar actions={<CreateImageGroupModal />} />
             )}
@@ -49,10 +51,10 @@ function ImagesIndex() {
                 <Card className={'py-6'}>
                     <SimpleEmptyState
                         icon={IconDisc}
-                        title={'No image groups'}
-                        description={
+                        title={t('No image groups')}
+                        description={t(
                             'Create an image group to organise the operating systems servers can be built from.'
-                        }
+                        )}
                         action={<CreateImageGroupModal />}
                     />
                 </Card>

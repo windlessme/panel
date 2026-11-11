@@ -11,6 +11,8 @@ import {
 } from '@tabler/icons-react'
 import { Outlet, createFileRoute } from '@tanstack/react-router'
 
+import { t } from '@/lib/i18n.ts'
+
 import AppLayout from '@/components/layouts/AppLayout.tsx'
 
 import { SidebarNav } from '@/components/ui/Navigation/Navigation.types.ts'
@@ -22,7 +24,7 @@ export const Route = createFileRoute('/_app/admin/users/$userId')({
     staticData: {
         // Names the section, not the row: the breadcrumb then reads "Users > Overview", and the
         // account's own name is already the sidebar's context header.
-        title: 'Users',
+        title: t('Users'),
     },
 })
 
@@ -33,9 +35,9 @@ function UserLayout() {
 
     const nav: SidebarNav = {
         key: `admin-user:${userId}`,
-        back: { label: 'Users', to: '/admin/users' },
+        back: { label: t('Users'), to: '/admin/users' },
         context: {
-            title: user?.name ?? 'User',
+            title: user?.name ?? t('User'),
             subtitle: user?.email,
             icon: IconUser,
         },
@@ -44,7 +46,7 @@ function UserLayout() {
                 items: [
                     {
                         icon: IconLayoutGrid,
-                        label: 'Overview',
+                        label: t('Overview'),
                         path: `/admin/users/${userId}`,
                         activeOptions: {
                             exact: true,
@@ -52,32 +54,32 @@ function UserLayout() {
                     },
                     {
                         icon: IconServer,
-                        label: 'Servers',
+                        label: t('Servers'),
                         path: `/admin/users/${userId}/servers`,
                     },
                 ],
             },
             {
-                label: 'Access',
+                label: t('Access'),
                 items: [
                     {
                         icon: IconShieldLock,
-                        label: 'Security',
+                        label: t('Security'),
                         path: `/admin/users/${userId}/security`,
                     },
                     {
                         icon: IconKey,
-                        label: 'API keys',
+                        label: t('API keys'),
                         path: `/admin/users/${userId}/api-keys`,
                     },
                 ],
             },
             {
-                label: 'History',
+                label: t('History'),
                 items: [
                     {
                         icon: IconHistory,
-                        label: 'Activity',
+                        label: t('Activity'),
                         path: `/admin/users/${userId}/activity`,
                     },
                 ],

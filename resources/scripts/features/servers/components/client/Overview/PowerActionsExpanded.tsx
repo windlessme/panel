@@ -6,6 +6,8 @@ import {
     useServerState,
 } from '@/features/servers/detail/api.ts'
 
+import { t } from '@/lib/i18n.ts'
+
 import useConfirmationStore from '@/components/ui/AlertDialog/use-confirmation-store.ts'
 import { Button } from '@/components/ui/Button'
 import { toast } from '@/components/ui/Toast'
@@ -28,7 +30,7 @@ const PowerActionsExpanded = () => {
 
             await sendPowerCommand(server!.uuid, action)
         } catch (e) {
-            toast.add({ title: 'Power action failed', type: 'error' })
+            toast.add({ title: t('Power action failed'), type: 'error' })
             throw e
         }
     }
@@ -43,7 +45,7 @@ const PowerActionsExpanded = () => {
                     }
                     onClick={() => handlePowerAction('start')}
                 >
-                    Start
+                    {t('Start')}
                 </Button>
                 <Button
                     variant={'outline'}
@@ -52,7 +54,7 @@ const PowerActionsExpanded = () => {
                     }
                     onClick={() => handlePowerAction('restart')}
                 >
-                    Restart
+                    {t('Restart')}
                 </Button>
                 <Button
                     variant={'destructiveOutline'}
@@ -61,7 +63,7 @@ const PowerActionsExpanded = () => {
                     }
                     onClick={() => handlePowerAction('kill')}
                 >
-                    Kill
+                    {t('Kill')}
                 </Button>
                 <Button
                     variant={'destructive'}
@@ -70,7 +72,7 @@ const PowerActionsExpanded = () => {
                     }
                     onClick={() => handlePowerAction('shutdown')}
                 >
-                    Shutdown
+                    {t('Shutdown')}
                 </Button>
             </div>
         </>

@@ -12,6 +12,8 @@ import useQueryMutator from '@/hooks/use-query-mutator.ts'
 import { useQuery } from '@tanstack/react-query'
 import { createLazyFileRoute } from '@tanstack/react-router'
 
+import { t } from '@/lib/i18n.ts'
+
 import { PageToolbar } from '@/components/ui/PageToolbar'
 import Heading from '@/components/ui/Typography/Heading.tsx'
 
@@ -27,7 +29,7 @@ const ServerBackups = () => {
 
     return (
         <>
-            <Heading>Backups</Heading>
+            <Heading>{t('Backups')}</Heading>
             <PageToolbar
                 actions={
                     <>
@@ -53,5 +55,5 @@ const ServerBackups = () => {
 export const Route = createLazyFileRoute('/_app/servers/$serverUuid/backups')({
     component: ServerBackups,
     // @ts-ignore
-    meta: () => [{ title: 'Backups' }],
+    meta: () => [{ title: t('Backups') }],
 })

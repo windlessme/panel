@@ -1,3 +1,5 @@
+import { useUser } from '@/features/auth/api.ts'
+import { preloadServer, useServer } from '@/features/servers/detail/api.ts'
 import useTitle from '@/hooks/use-title.ts'
 import { processAxiosError } from '@/utils/http.ts'
 import {
@@ -17,31 +19,24 @@ import {
 import { Outlet, createFileRoute } from '@tanstack/react-router'
 import { Suspense, lazy } from 'react'
 
-import { useUser } from '@/features/auth/api.ts'
-import { useServer, preloadServer } from '@/features/servers/detail/api.ts'
+import { t } from '@/lib/i18n.ts'
 
 import AppLayout from '@/components/layouts/AppLayout.tsx'
-import Spinner from '@/components/ui/Spinner.tsx'
 
 import { SidebarNav } from '@/components/ui/Navigation/Navigation.types.ts'
+import Spinner from '@/components/ui/Spinner.tsx'
 
 const InstallingServer = lazy(
     () =>
-        import(
-            '@/features/servers/components/client/Status/InstallingServer.tsx'
-        )
+        import('@/features/servers/components/client/Status/InstallingServer.tsx')
 )
 const SuspendedServer = lazy(
     () =>
-        import(
-            '@/features/servers/components/client/Status/SuspendedServer.tsx'
-        )
+        import('@/features/servers/components/client/Status/SuspendedServer.tsx')
 )
 const DeferredOSSelection = lazy(
     () =>
-        import(
-            '@/features/servers/components/client/Status/DeferredOSSelection.tsx'
-        )
+        import('@/features/servers/components/client/Status/DeferredOSSelection.tsx')
 )
 
 export const Route = createFileRoute('/_app/servers/$serverUuid')({
@@ -49,7 +44,7 @@ export const Route = createFileRoute('/_app/servers/$serverUuid')({
         preloadServer(serverUuid).catch(processAxiosError),
     component: ServerLayout,
     staticData: {
-        title: 'Dashboard',
+        title: t('Dashboard'),
     },
 })
 
@@ -61,9 +56,9 @@ function ServerLayout() {
 
     const nav: SidebarNav = {
         key: `server:${serverUuid}`,
-        back: { label: 'Servers', to: '/' },
+        back: { label: t('Servers'), to: '/' },
         context: {
-            title: server?.name ?? 'Server',
+            title: server?.name ?? t('Server'),
             icon: IconServer,
         },
         groups: [
@@ -71,63 +66,63 @@ function ServerLayout() {
                 items: [
                     {
                         icon: IconLayoutGrid,
-                        label: 'Overview',
+                        label: t('Overview'),
                         path: `/servers/${serverUuid}`,
                         activeOptions: { exact: true },
                     },
                     {
                         icon: IconChartBar,
-                        label: 'Graphs',
+                        label: t('Graphs'),
                         path: `/servers/${serverUuid}/graphs`,
                     },
                     {
                         icon: IconHistory,
-                        label: 'Activity',
+                        label: t('Activity'),
                         path: `/servers/${serverUuid}/activity`,
                     },
                 ],
             },
             {
-                label: 'Storage & Network',
+                label: t('Storage & Network'),
                 items: [
                     {
                         icon: IconCopy,
-                        label: 'Backups',
+                        label: t('Backups'),
                         path: `/servers/${serverUuid}/backups`,
                     },
                     {
                         icon: IconDisc,
-                        label: 'ISO Library',
+                        label: t('ISO Library'),
                         path: `/servers/${serverUuid}/iso-library`,
                     },
                     {
                         icon: IconDatabase,
-                        label: 'Storage',
+                        label: t('Storage'),
                         path: `/servers/${serverUuid}/storage`,
                     },
                     {
                         icon: IconNetwork,
-                        label: 'Networking',
+                        label: t('Networking'),
                         path: `/servers/${serverUuid}/networking`,
                     },
                     {
                         icon: IconShieldHalf,
-                        label: 'Firewall',
+                        label: t('Firewall'),
                         path: `/servers/${serverUuid}/firewall`,
                     },
                 ],
             },
             {
-                label: 'Configuration',
+                label: t('Configuration'),
                 items: [
                     {
                         icon: IconLock,
-                        label: 'Security',
+                        label: t('Security'),
                         path: `/servers/${serverUuid}/security`,
                     },
                     {
                         icon: IconRefresh,
-                        label: 'Rebuild',
+                        label: t('Rebuild'),
                         path: `/servers/${serverUuid}/rebuild`,
                     },
                 ],
@@ -138,11 +133,11 @@ function ServerLayout() {
             ...(user?.rootAdmin && server
                 ? [
                       {
-                          label: 'Admin',
+                          label: t('Admin'),
                           items: [
                               {
                                   icon: IconShieldCog,
-                                  label: 'Manage in Admin',
+                                  label: t('Manage in Admin'),
                                   path: `/admin/servers/${server.id}`,
                               },
                           ],

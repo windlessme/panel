@@ -4,6 +4,8 @@ import AddressRows from '@/features/servers/networking/components/AddressRows.ts
 import { IconChevronRight } from '@tabler/icons-react'
 import { Link, useParams } from '@tanstack/react-router'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     Card,
@@ -22,14 +24,14 @@ const IpamCard = () => {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>IPAM</CardTitle>
+                <CardTitle>{t('IPAM')}</CardTitle>
                 {/* The count line the list used to render above itself, moved
                     into the slot every other card puts a description in: what
                     this card holds, rather than its title again in a sentence. */}
                 <CardDescription>
                     {addresses?.length
                         ? summarizeAddresses(addresses)
-                        : 'Addresses allocated to this server.'}
+                        : t('Addresses allocated to this server.')}
                 </CardDescription>
                 <CardAction>
                     <Button variant={'ghost'} size={'sm'} asChild>
@@ -37,7 +39,7 @@ const IpamCard = () => {
                             to={'/servers/$serverUuid/networking'}
                             params={{ serverUuid }}
                         >
-                            Networking
+                            {t('Networking')}
                             {/* The app's "goes somewhere" mark — the same
                                 chevron the server rows and account settings
                                 trail their links with. Decorative: the button

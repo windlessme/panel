@@ -16,6 +16,7 @@ import {
 import { z } from 'zod'
 
 import { type DataResponse, type PaginatedResponse, apiFetch } from '@/lib/api'
+import { t } from '@/lib/i18n.ts'
 import { queryClient } from '@/lib/query-client.ts'
 import { rawDataToServer } from '@/lib/transformers/server.ts'
 
@@ -36,7 +37,7 @@ const speedLimitSchema = z.coerce
     .number()
     .refine(
         value => value === -1 || value >= 1,
-        'Use -1 for uncapped, or at least 1 MB/s'
+        t('Use -1 for uncapped, or at least 1 MB/s')
     )
 
 const optionalAccountPasswordSchema = z.preprocess(
@@ -47,7 +48,7 @@ const optionalAccountPasswordSchema = z.preprocess(
 const unlimitedOrNonNegative = z.coerce
     .number()
     .int()
-    .min(-1, 'Use -1 for unlimited')
+    .min(-1, t('Use -1 for unlimited'))
 
 export const serverBuildSchema = refineOveragePenalty(
     z.object({
@@ -65,11 +66,11 @@ export const serverBuildSchema = refineOveragePenalty(
 
 export const serverSchema = z
     .object({
-        name: z.string().min(1, 'Name is required.').max(191),
-        hostname: z.string().min(1, 'Hostname is required.').max(191),
-        nodeId: z.string({ error: 'Node is required.' }).min(1),
-        storageId: z.string({ error: 'Storage is required.' }).min(1),
-        userId: z.string({ error: 'User is required.' }).min(1),
+        name: z.string().min(1, t('Name is required.')).max(191),
+        hostname: z.string().min(1, t('Hostname is required.')).max(191),
+        nodeId: z.string({ error: t('Node is required.') }).min(1),
+        storageId: z.string({ error: t('Storage is required.') }).min(1),
+        userId: z.string({ error: t('User is required.') }).min(1),
         vmid: z.string().optional(),
 
         // limits
@@ -87,7 +88,7 @@ export const serverSchema = z
             .array(
                 z.object({
                     storageId: z
-                        .string({ error: 'Storage is required.' })
+                        .string({ error: t('Storage is required.') })
                         .min(1),
                     size: z.coerce.number().min(1),
                 })
@@ -100,7 +101,7 @@ export const serverSchema = z
 
         // IP addresses
         networkInterfaceId: z
-            .string({ error: 'Network Interface is required.' })
+            .string({ error: t('Network Interface is required.') })
             .min(1),
         vlanTag: vlanTagSchema,
         addressesIpv4Count: z.coerce.number().min(0).max(100).optional(),
@@ -120,14 +121,14 @@ export const serverSchema = z
                 ctx.addIssue({
                     code: z.ZodIssueCode.custom,
                     path: ['accountPassword'],
-                    message: 'Password is required.',
+                    message: t('Password is required.'),
                 })
             }
             if (!data.imageUuid) {
                 ctx.addIssue({
                     code: z.ZodIssueCode.custom,
                     path: ['imageUuid'],
-                    message: 'An operating system is required.',
+                    message: t('An operating system is required.'),
                 })
             }
         }

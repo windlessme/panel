@@ -4,6 +4,8 @@ import { cn } from '@/utils'
 import { IconCheck, IconUser } from '@tabler/icons-react'
 import { useController } from 'react-hook-form'
 
+import { t } from '@/lib/i18n.ts'
+
 import { ResourceComboboxForm } from '@/components/ui/Forms'
 import Skeleton from '@/components/ui/Skeleton.tsx'
 
@@ -62,8 +64,8 @@ const UserPicker = () => {
                     <IconUser className={'ml-auto size-4 opacity-50'} />
                 </>
             )}
-            label={'User'}
-            searchPlaceholder={'Search users...'}
+            label={t('User')}
+            searchPlaceholder={t('Search users...')}
         />
     )
 }

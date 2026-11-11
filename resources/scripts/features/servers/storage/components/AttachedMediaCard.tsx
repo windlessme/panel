@@ -9,6 +9,8 @@ import { IconDisc } from '@tabler/icons-react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     Card,
@@ -56,7 +58,7 @@ const AttachedMediaCard = ({ uuid }: Props) => {
             queryClient.invalidateQueries({
                 queryKey: ['servers', uuid, 'storage'],
             })
-            toast.add({ title: 'ISO ejected', type: 'success' })
+            toast.add({ title: t('ISO ejected'), type: 'success' })
         },
         onError: e =>
             toast.add({
@@ -68,9 +70,9 @@ const AttachedMediaCard = ({ uuid }: Props) => {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Attached media</CardTitle>
+                <CardTitle>{t('Attached media')}</CardTitle>
                 <CardDescription>
-                    The image in this server’s CD/DVD drive.
+                    {t('The image in this server’s CD/DVD drive.')}
                 </CardDescription>
             </CardHeader>
             <CardContent className={'flex-1'}>
@@ -98,22 +100,23 @@ const AttachedMediaCard = ({ uuid }: Props) => {
                                     loading={isPending}
                                     onClick={() => eject(mounted.uuid)}
                                 >
-                                    Eject
+                                    {t('Eject')}
                                 </Button>
                             </ItemActions>
                         </Item>
                         <p className={'text-muted-foreground text-xs'}>
-                            Switch the drive on above to boot from it — an
-                            attached image the boot order skips is never read.
+                            {t(
+                                'Switch the drive on above to boot from it — an attached image the boot order skips is never read.'
+                            )}
                         </p>
                     </div>
                 ) : (
                     <SimpleEmptyState
                         icon={IconDisc}
-                        title={'Drive is empty'}
-                        description={
+                        title={t('Drive is empty')}
+                        description={t(
                             'Mount an image to install an operating system or boot a rescue environment.'
-                        }
+                        )}
                         action={
                             <Button variant={'outline'} asChild>
                                 <Link

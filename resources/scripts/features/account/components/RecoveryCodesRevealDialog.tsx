@@ -1,6 +1,8 @@
 import RecoveryCodeList from '@/features/account/components/RecoveryCodeList.tsx'
 import useClipboard from '@/hooks/use-clipboard.ts'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     ResponsiveDialog,
@@ -34,7 +36,7 @@ interface Props {
  */
 const RecoveryCodesRevealDialog = ({ codes, onClose }: Props) => {
     const { copy } = useClipboard({
-        successMessage: 'Copied recovery codes to clipboard',
+        successMessage: t('Copied recovery codes to clipboard'),
     })
 
     return (
@@ -45,12 +47,12 @@ const RecoveryCodesRevealDialog = ({ codes, onClose }: Props) => {
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        Save your recovery codes
+                        {t('Save your recovery codes')}
                     </ResponsiveDialogTitle>
                     <ResponsiveDialogDescription>
-                        Each of these one-time codes signs you in if you lose
-                        access to your other methods. Store them somewhere safe
-                        — this is the only time they are shown.
+                        {t(
+                            'Each of these one-time codes signs you in if you lose access to your other methods. Store them somewhere safe — this is the only time they are shown.'
+                        )}
                     </ResponsiveDialogDescription>
                 </ResponsiveDialogHeader>
                 <ResponsiveDialogBody>
@@ -61,7 +63,7 @@ const RecoveryCodesRevealDialog = ({ codes, onClose }: Props) => {
                         variant={'outline'}
                         onClick={() => codes && copy(codes.join('\n'))}
                     >
-                        Copy codes
+                        {t('Copy codes')}
                     </Button>
                     <ResponsiveDialogClose
                         render={<Button>I saved my codes</Button>}

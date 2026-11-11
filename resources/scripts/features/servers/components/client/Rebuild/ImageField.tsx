@@ -1,6 +1,8 @@
 import ImageCard from '@/features/servers/components/client/Rebuild/ImageCard'
 import { ImageGroup } from '@/types/image.ts'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Empty, EmptyDescription, EmptyHeader } from '@/components/ui/Empty'
 import {
     FormControl,
@@ -23,8 +25,10 @@ const ImageField = ({ group }: Props) => {
                 <EmptyHeader>
                     <EmptyDescription>
                         {group
-                            ? 'This operating system has no versions available.'
-                            : 'Choose an operating system first.'}
+                            ? t(
+                                  'This operating system has no versions available.'
+                              )
+                            : t('Choose an operating system first.')}
                     </EmptyDescription>
                 </EmptyHeader>
             </Empty>
@@ -45,10 +49,7 @@ const ImageField = ({ group }: Props) => {
                             }
                         >
                             {definitions.map(image => (
-                                <ImageCard
-                                    key={image.uuid}
-                                    image={image}
-                                />
+                                <ImageCard key={image.uuid} image={image} />
                             ))}
                         </RadioGroup>
                     </FormControl>

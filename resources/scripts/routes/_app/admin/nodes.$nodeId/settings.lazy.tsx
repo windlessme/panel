@@ -21,6 +21,8 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
 import { Form, FormButton } from '@/components/ui/Form'
@@ -76,7 +78,7 @@ function NodeSettings() {
         onSuccess: async updatedNode => {
             await mutateNode(() => updatedNode)
             await mutateNodeLists()
-            toast.add({ title: 'Node updated', type: 'success' })
+            toast.add({ title: t('Node updated'), type: 'success' })
         },
     })
 
@@ -91,7 +93,7 @@ function NodeSettings() {
             })
         } catch (e) {
             handleFormErrors(e, form.setError)
-            toast.add({ title: 'Failed to update node', type: 'error' })
+            toast.add({ title: t('Failed to update node'), type: 'error' })
             console.error(e)
         }
     }
@@ -115,7 +117,7 @@ function NodeSettings() {
                     each label away from its own control. */}
                 <div className={'mx-auto w-full max-w-4xl'}>
                     <FormToolbar
-                        title={'Settings'}
+                        title={t('Settings')}
                         subtitle={
                             <span className={'flex items-center gap-3'}>
                                 <span className={'truncate'}>
@@ -164,7 +166,7 @@ function NodeSettings() {
 
                         <Card>
                             <CardHeader>
-                                <CardTitle>Bandwidth</CardTitle>
+                                <CardTitle>{t('Bandwidth')}</CardTitle>
                             </CardHeader>
                             <CardContent>
                                 <OveragePenaltyFields

@@ -2,6 +2,8 @@ import { IconCheck, IconTrash } from '@tabler/icons-react'
 import byteSize from 'byte-size'
 import { type ReactNode, useEffect, useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Label } from '@/components/ui/Label'
@@ -58,11 +60,12 @@ const RebuildConfirmDialog = ({
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        Rebuild {serverName}?
+                        {t('Rebuild {{serverName}}?', { serverName })}
                     </ResponsiveDialogTitle>
                     <ResponsiveDialogDescription>
-                        This cannot be undone. Type the server's name to
-                        confirm.
+                        {t(
+                            "This cannot be undone. Type the server's name to confirm."
+                        )}
                     </ResponsiveDialogDescription>
                 </ResponsiveDialogHeader>
 
@@ -77,25 +80,29 @@ const RebuildConfirmDialog = ({
                                 className={'text-destructive mt-0.5 size-4'}
                             />
                             <span>
-                                {byteSize(disk, { units: 'iec' }).toString()}{' '}
-                                disk erased
+                                {byteSize(disk, { units: 'iec' }).toString()}
+                                {t('disk erased')}
                             </span>
                         </li>
                         <li className={'flex items-start gap-2'}>
                             <IconCheck className={'mt-0.5 size-4'} />
-                            <span>{imageLabel} installed</span>
+                            <span>
+                                {t('{{imageLabel}} installed', { imageLabel })}
+                            </span>
                         </li>
                         <li className={'flex items-start gap-2'}>
                             <IconCheck className={'mt-0.5 size-4'} />
                             <span>
-                                Backups, IP addresses and firewall rules kept
+                                {t(
+                                    'Backups, IP addresses and firewall rules kept'
+                                )}
                             </span>
                         </li>
                     </ul>
 
                     <div className={'flex flex-col gap-2'}>
                         <Label htmlFor={'confirm-server-name'}>
-                            Server name
+                            {t('Server name')}
                         </Label>
                         <Input
                             id={'confirm-server-name'}
@@ -126,7 +133,7 @@ const RebuildConfirmDialog = ({
                         disabled={typedName.trim() !== serverName}
                         onClick={onConfirm}
                     >
-                        Rebuild server
+                        {t('Rebuild server')}
                     </Button>
                 </ResponsiveDialogFooter>
 

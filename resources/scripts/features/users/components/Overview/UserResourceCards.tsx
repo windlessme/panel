@@ -9,6 +9,8 @@ import {
 } from '@tabler/icons-react'
 import byteSize from 'byte-size'
 
+import { t } from '@/lib/i18n.ts'
+
 import LinearProgressBar from '@/components/ui/Progress/LinearProgressBar.tsx'
 import Skeleton from '@/components/ui/Skeleton.tsx'
 
@@ -28,7 +30,9 @@ const countOf = (count: number, noun: string) =>
 /** The figure, in the type the statistic row uses everywhere else. */
 const Value = ({ children }: { children: React.ReactNode }) => (
     <span
-        className={'text-lg font-semibold tracking-tight @sm:text-xl @xl:text-2xl'}
+        className={
+            'text-lg font-semibold tracking-tight @sm:text-xl @xl:text-2xl'
+        }
     >
         {children}
     </span>
@@ -80,17 +84,19 @@ const UserResourceCards = ({ resources }: Props) => {
 
     return (
         <div
-            className={'grid grid-cols-2 gap-4 @2xl:grid-cols-3 @5xl:grid-cols-5'}
+            className={
+                'grid grid-cols-2 gap-4 @2xl:grid-cols-3 @5xl:grid-cols-5'
+            }
         >
-            <StatisticCard compact title={'Servers'} icon={IconServer}>
+            <StatisticCard compact title={t('Servers')} icon={IconServer}>
                 <p>
                     <Value>{resources.serversCount}</Value>
                     <Sub>
                         {serverNotes.length > 0
                             ? serverNotes.join(' · ')
                             : resources.serversCount > 0
-                              ? 'all active'
-                              : 'none yet'}
+                              ? t('all active')
+                              : t('none yet')}
                     </Sub>
                 </p>
             </StatisticCard>
@@ -106,23 +112,27 @@ const UserResourceCards = ({ resources }: Props) => {
                 </p>
             </StatisticCard>
 
-            <StatisticCard compact title={'Memory'} icon={IconDeviceDesktopAnalytics}>
+            <StatisticCard
+                compact
+                title={t('Memory')}
+                icon={IconDeviceDesktopAnalytics}
+            >
                 <p>
                     <Value>{format(resources.memory)}</Value>
-                    <Sub>allocated</Sub>
+                    <Sub>{t('allocated')}</Sub>
                 </p>
             </StatisticCard>
 
-            <StatisticCard compact title={'Disk'} icon={IconDatabase}>
+            <StatisticCard compact title={t('Disk')} icon={IconDatabase}>
                 <p>
                     <Value>{format(resources.disk)}</Value>
-                    <Sub>allocated</Sub>
+                    <Sub>{t('allocated')}</Sub>
                 </p>
             </StatisticCard>
 
             <StatisticCard
                 compact
-                title={'Bandwidth'}
+                title={t('Bandwidth')}
                 icon={IconWifi}
                 className={'col-span-2 @2xl:col-span-1'}
                 meter={
@@ -139,8 +149,10 @@ const UserResourceCards = ({ resources }: Props) => {
                     <Value>{format(resources.bandwidthUsage)}</Value>
                     <Sub>
                         {isUnmetered
-                            ? 'used · at least one server unmetered'
-                            : `of ${format(resources.bandwidthLimit ?? 0)} this period`}
+                            ? t('used · at least one server unmetered')
+                            : t('of {{value}} this period', {
+                                  value: format(resources.bandwidthLimit ?? 0),
+                              })}
                     </Sub>
                 </p>
             </StatisticCard>

@@ -9,6 +9,8 @@ import { useModal } from '@/hooks/create-modal-store.ts'
 import useAsyncFunction from '@/hooks/use-async-function.ts'
 import { useQueryClient } from '@tanstack/react-query'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     ResponsiveDialog,
@@ -34,7 +36,7 @@ const PasskeyDeleteDialog = () => {
             try {
                 await deletePasskey(currentPasskey.id)
 
-                toast.add({ title: 'Passkey deleted', type: 'success' })
+                toast.add({ title: t('Passkey deleted'), type: 'success' })
 
                 await queryClient.invalidateQueries({
                     queryKey: passkeyQueries.all(),
@@ -47,7 +49,7 @@ const PasskeyDeleteDialog = () => {
 
                 close()
             } catch (e) {
-                toast.add({ title: 'Deletion failed', type: 'error' })
+                toast.add({ title: t('Deletion failed'), type: 'error' })
                 throw e
             }
         }
@@ -61,12 +63,12 @@ const PasskeyDeleteDialog = () => {
             <ResponsiveDialogContent className={'max-h-[50vh]'}>
                 <ResponsiveDialogHeader className={'overflow-x-hidden'}>
                     <ResponsiveDialogTitle className={'truncate'}>
-                        Delete {passkey?.name}?
+                        {t('Delete {{name}}?', { name: passkey?.name })}
                     </ResponsiveDialogTitle>
                     <ResponsiveDialogDescription>
-                        Are you sure you want to delete this passkey? You will
-                        no longer be able to use it to authenticate once you
-                        delete it.
+                        {t(
+                            'Are you sure you want to delete this passkey? You will no longer be able to use it to authenticate once you delete it.'
+                        )}
                     </ResponsiveDialogDescription>
                 </ResponsiveDialogHeader>
 
@@ -79,7 +81,7 @@ const PasskeyDeleteDialog = () => {
                         variant={'destructive'}
                         onClick={() => passkey && submit(passkey)}
                     >
-                        Delete
+                        {t('Delete')}
                     </Button>
                 </ResponsiveDialogFooter>
             </ResponsiveDialogContent>

@@ -12,6 +12,8 @@ import { IconKey } from '@tabler/icons-react'
 import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     Card,
@@ -40,24 +42,24 @@ const KeychainCard = () => {
         mutationFn: (key: SSHKeyType) => deleteSSHKey(key.id),
         onSuccess: (_, key) => {
             mutate(keys => keys?.filter(k => k.id !== key.id))
-            toast.add({ title: 'SSH key removed', type: 'success' })
+            toast.add({ title: t('SSH key removed'), type: 'success' })
         },
         onError: () =>
-            toast.add({ title: 'Failed to remove key', type: 'error' }),
+            toast.add({ title: t('Failed to remove key'), type: 'error' }),
     })
 
     return (
         <>
             <Card>
                 <CardHeader>
-                    <CardTitle>SSH Keychain</CardTitle>
+                    <CardTitle>{t('SSH Keychain')}</CardTitle>
                     {keys && keys.length > 0 && (
                         <CardAction>
                             <Button
                                 variant={'outline'}
                                 onClick={() => setCreateOpen(true)}
                             >
-                                Add Key
+                                {t('Add Key')}
                             </Button>
                         </CardAction>
                     )}
@@ -76,7 +78,7 @@ const KeychainCard = () => {
                         <Skeleton className={'h-40 w-full'} />
                     ) : keys.length > 0 ? (
                         <OverflowItemGroup
-                            title={'SSH Keychain'}
+                            title={t('SSH Keychain')}
                             rows={keys.map(key => (
                                 <SSHKey
                                     key={key.id}
@@ -88,8 +90,10 @@ const KeychainCard = () => {
                     ) : (
                         <SimpleEmptyState
                             icon={IconKey}
-                            title={'SSH Keychain'}
-                            description={'You have no keys in your keychain.'}
+                            title={t('SSH Keychain')}
+                            description={t(
+                                'You have no keys in your keychain.'
+                            )}
                             action={
                                 <Button onClick={() => setCreateOpen(true)}>
                                     Add Key
@@ -110,11 +114,11 @@ const KeychainCard = () => {
             <ConfirmWithAuthDialog
                 subject={keyToRemove}
                 onClose={() => setKeyToRemove(null)}
-                title={'Remove SSH key'}
+                title={t('Remove SSH key')}
                 description={key =>
                     `“${key.name}” will be removed from your keychain. Servers it was already added to are unaffected.`
                 }
-                confirmText={'Remove'}
+                confirmText={t('Remove')}
                 onConfirm={remove}
             />
         </>

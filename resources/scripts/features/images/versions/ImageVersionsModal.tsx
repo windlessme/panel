@@ -17,6 +17,8 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { Form, FormButton } from '@/components/ui/Form'
 import { InputForm, SwitchForm } from '@/components/ui/Forms'
@@ -117,7 +119,7 @@ const ImageVersionsModal = ({
                 format: uploaded.format,
             })
         } catch {
-            toast.add({ title: 'Failed to upload the disk', type: 'error' })
+            toast.add({ title: t('Failed to upload the disk'), type: 'error' })
         } finally {
             setUploading(null)
         }
@@ -133,10 +135,13 @@ const ImageVersionsModal = ({
             await refresh()
             form.reset()
             setDisks([emptySystemDisk()])
-            toast.add({ title: 'Version published', type: 'success' })
+            toast.add({ title: t('Version published'), type: 'success' })
         } catch (e) {
             if (!handleFormErrors(e, form.setError)) {
-                toast.add({ title: 'Failed to publish version', type: 'error' })
+                toast.add({
+                    title: t('Failed to publish version'),
+                    type: 'error',
+                })
             }
         }
     }
@@ -146,15 +151,16 @@ const ImageVersionsModal = ({
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        {image.name} versions
+                        {t('{{name}} versions', { name: image.name })}
                     </ResponsiveDialogTitle>
                 </ResponsiveDialogHeader>
                 <ResponsiveDialogBody className={'space-y-6'}>
                     <div className={'space-y-2'}>
                         {versions?.length === 0 && (
                             <p className={'text-muted-foreground text-sm'}>
-                                No versions yet. Until one is published, this
-                                image cannot be installed.
+                                {t(
+                                    'No versions yet. Until one is published, this image cannot be installed.'
+                                )}
                             </p>
                         )}
 
@@ -168,16 +174,22 @@ const ImageVersionsModal = ({
                                 <div className={'min-w-0 grow'}>
                                     <p className={'font-semibold'}>
                                         {version.version}
-                                        {!version.isActive && ' · retired'}
+                                        {!version.isActive && t(' · retired')}
                                     </p>
                                     <p
                                         className={
                                             'text-muted-foreground text-sm'
                                         }
                                     >
-                                        {formatBytes(version.size)} to transfer
-                                        · {formatBytes(version.minimumDisk)}{' '}
-                                        provisioned
+                                        {t(
+                                            '{{size}} to transfer · {{minimumDisk}} provisioned',
+                                            {
+                                                size: formatBytes(version.size),
+                                                minimumDisk: formatBytes(
+                                                    version.minimumDisk
+                                                ),
+                                            }
+                                        )}
                                     </p>
                                 </div>
                                 <Button
@@ -194,13 +206,15 @@ const ImageVersionsModal = ({
                                         await refresh()
                                     }}
                                 >
-                                    {version.isActive ? 'Retire' : 'Restore'}
+                                    {version.isActive
+                                        ? t('Retire')
+                                        : t('Restore')}
                                 </Button>
                                 <Button
                                     type={'button'}
                                     variant={'ghost'}
                                     size={'icon'}
-                                    aria-label={'Delete version'}
+                                    aria-label={t('Delete version')}
                                     onClick={async () => {
                                         try {
                                             await deleteImageVersion(
@@ -230,12 +244,12 @@ const ImageVersionsModal = ({
                         >
                             <InputForm
                                 name={'version'}
-                                label={'Version'}
-                                description={'major.minor.patch, e.g. 1.0.0'}
+                                label={t('Version')}
+                                description={t('major.minor.patch, e.g. 1.0.0')}
                             />
                             <SwitchForm
                                 name={'isActive'}
-                                label={'Offer this version to new servers'}
+                                label={t('Offer this version to new servers')}
                             />
 
                             {disks.map((disk, index) => (
@@ -277,12 +291,12 @@ const ImageVersionsModal = ({
                                         ])
                                     }
                                 >
-                                    Add a UEFI varstore
+                                    {t('Add a UEFI varstore')}
                                 </Button>
                             )}
 
                             <div className={'flex justify-end'}>
-                                <FormButton>Publish version</FormButton>
+                                <FormButton>{t('Publish version')}</FormButton>
                             </div>
                         </form>
                     </Form>
@@ -311,8 +325,8 @@ const DiskRow = ({
         <div className={'flex items-center justify-between'}>
             <Label>
                 {disk.role === ImageDiskRole.SYSTEM
-                    ? 'System disk'
-                    : 'UEFI varstore'}{' '}
+                    ? t('System disk')
+                    : t('UEFI varstore')}{' '}
                 <span className={'text-muted-foreground font-mono text-xs'}>
                     {disk.slot}
                 </span>
@@ -323,7 +337,7 @@ const DiskRow = ({
                     className={'text-muted-foreground text-xs underline'}
                     onClick={onRemove}
                 >
-                    Remove
+                    {t('Remove')}
                 </button>
             )}
         </div>
@@ -331,8 +345,13 @@ const DiskRow = ({
         {disk.path ? (
             <p className={'text-muted-foreground text-sm'}>
                 <IconCloudUpload className={'mr-1 inline size-4'} />
-                Hosted by Convoy · {formatBytes(disk.size)} ·{' '}
-                {formatBytes(disk.virtualSize)} provisioned
+                {t(
+                    'Hosted by Convoy · {{size}} · {{virtualSize}} provisioned',
+                    {
+                        size: formatBytes(disk.size),
+                        virtualSize: formatBytes(disk.virtualSize),
+                    }
+                )}
             </p>
         ) : (
             <>
@@ -350,7 +369,9 @@ const DiskRow = ({
                     />
                 </div>
                 <p className={'text-muted-foreground text-xs'}>
-                    Or upload the file and Convoy will serve it to your nodes.
+                    {t(
+                        'Or upload the file and Convoy will serve it to your nodes.'
+                    )}
                 </p>
                 <Input
                     type={'file'}
@@ -363,7 +384,9 @@ const DiskRow = ({
                 />
                 {uploading && (
                     <p className={'text-muted-foreground text-xs'}>
-                        Uploading… {Math.round(progress * 100)}%
+                        {t('Uploading… {{round}}%', {
+                            round: Math.round(progress * 100),
+                        })}
                     </p>
                 )}
             </>
@@ -373,7 +396,7 @@ const DiskRow = ({
         {!disk.path && (
             <div className={'grid gap-2 sm:grid-cols-3'}>
                 <div className={'space-y-1'}>
-                    <Label className={'text-xs'}>SHA-256</Label>
+                    <Label className={'text-xs'}>{t('SHA-256')}</Label>
                     <Input
                         value={disk.sha256}
                         onChange={event =>
@@ -382,7 +405,9 @@ const DiskRow = ({
                     />
                 </div>
                 <div className={'space-y-1'}>
-                    <Label className={'text-xs'}>File size (bytes)</Label>
+                    <Label className={'text-xs'}>
+                        {t('File size (bytes)')}
+                    </Label>
                     <Input
                         value={disk.size || ''}
                         onChange={event =>
@@ -392,7 +417,7 @@ const DiskRow = ({
                 </div>
                 <div className={'space-y-1'}>
                     <Label className={'text-xs'}>
-                        Provisioned size (bytes)
+                        {t('Provisioned size (bytes)')}
                     </Label>
                     <Input
                         value={disk.virtualSize || ''}

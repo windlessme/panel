@@ -10,13 +10,10 @@ import { IconAlertTriangle } from '@tabler/icons-react'
 import byteSize from 'byte-size'
 import { useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
 import { mapConnectionErrorType } from '@/lib/transformers/node.ts'
 
-import {
-    Alert,
-    AlertDescription,
-    AlertTitle,
-} from '@/components/ui/Alert'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/Alert'
 import { Button } from '@/components/ui/Button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
 import { LinearProgressBar } from '@/components/ui/Progress'
@@ -133,14 +130,18 @@ const NodeOverview = ({ nodeId }: NodeOverviewProps) => {
             {node?.clusterFlaggedAt && (
                 <Alert variant='destructive'>
                     <IconAlertTriangle className='size-4' />
-                    <AlertTitle>Cluster identity needs review</AlertTitle>
+                    <AlertTitle>
+                        {t('Cluster identity needs review')}
+                    </AlertTitle>
                     <AlertDescription>
                         <p>
                             {node.clusterFlagReason ??
-                                'The cluster reported members that share nothing with what Convoy has recorded.'}{' '}
-                            Storage adoption and server placement reconciliation
-                            are paused for this cluster until the flag is
-                            cleared.
+                                t(
+                                    'The cluster reported members that share nothing with what Convoy has recorded.'
+                                )}
+                            {t(
+                                'Storage adoption and server placement reconciliation are paused for this cluster until the flag is cleared.'
+                            )}
                         </p>
                         <Button
                             variant='outline'
@@ -163,7 +164,7 @@ const NodeOverview = ({ nodeId }: NodeOverviewProps) => {
                                 })
                             }
                         >
-                            Clear flag
+                            {t('Clear flag')}
                         </Button>
                     </AlertDescription>
                 </Alert>
@@ -172,7 +173,7 @@ const NodeOverview = ({ nodeId }: NodeOverviewProps) => {
             <div className='grid grid-cols-1 gap-4 @md:grid-cols-2 @xl:grid-cols-3'>
                 <Card>
                     <CardHeader>
-                        <CardTitle>Live resources</CardTitle>
+                        <CardTitle>{t('Live resources')}</CardTitle>
                     </CardHeader>
                     <CardContent>
                         {liveStatus ? (
@@ -180,7 +181,7 @@ const NodeOverview = ({ nodeId }: NodeOverviewProps) => {
                                 <div className='space-y-2'>
                                     <div className='flex justify-between gap-4 text-sm'>
                                         <span className='text-muted-foreground'>
-                                            CPU
+                                            {t('CPU')}
                                         </span>
                                         <span>
                                             {(
@@ -191,13 +192,13 @@ const NodeOverview = ({ nodeId }: NodeOverviewProps) => {
                                     </div>
                                     <LinearProgressBar
                                         value={liveStatus.cpuUsage * 100}
-                                        aria-label='CPU usage'
+                                        aria-label={t('CPU usage')}
                                     />
                                 </div>
                                 <div className='space-y-2'>
                                     <div className='flex justify-between gap-4 text-sm'>
                                         <span className='text-muted-foreground'>
-                                            Memory
+                                            {t('Memory')}
                                         </span>
                                         <span className='text-right'>
                                             {formatBytes(
@@ -214,12 +215,12 @@ const NodeOverview = ({ nodeId }: NodeOverviewProps) => {
                                             liveStatus.memory.used,
                                             liveStatus.memory.total
                                         )}
-                                        aria-label='Memory usage'
+                                        aria-label={t('Memory usage')}
                                     />
                                 </div>
                                 <dl className='grid grid-cols-2 gap-y-3 text-sm'>
                                     <dt className='text-muted-foreground'>
-                                        Load average
+                                        {t('Load average')}
                                     </dt>
                                     <dd className='text-right'>
                                         {liveStatus.loadAverage
@@ -227,7 +228,7 @@ const NodeOverview = ({ nodeId }: NodeOverviewProps) => {
                                             .join(' / ')}
                                     </dd>
                                     <dt className='text-muted-foreground'>
-                                        Uptime
+                                        {t('Uptime')}
                                     </dt>
                                     <dd className='text-right'>
                                         {formatDuration(
@@ -264,7 +265,9 @@ const NodeOverview = ({ nodeId }: NodeOverviewProps) => {
                                      * "Retry" would imply something had already
                                      * been tried and failed here.
                                      */}
-                                    {shouldCheck ? 'Retry' : 'Check anyway'}
+                                    {shouldCheck
+                                        ? t('Retry')
+                                        : t('Check anyway')}
                                 </Button>
                             </div>
                         ) : (
@@ -275,7 +278,7 @@ const NodeOverview = ({ nodeId }: NodeOverviewProps) => {
 
                 <Card>
                     <CardHeader>
-                        <CardTitle>Allocation</CardTitle>
+                        <CardTitle>{t('Allocation')}</CardTitle>
                     </CardHeader>
                     <CardContent>
                         {node ? (
@@ -283,7 +286,7 @@ const NodeOverview = ({ nodeId }: NodeOverviewProps) => {
                                 <div className='space-y-2'>
                                     <div className='flex justify-between gap-4 text-sm'>
                                         <span className='text-muted-foreground'>
-                                            Memory committed
+                                            {t('Memory committed')}
                                         </span>
                                         <span className='text-right'>
                                             {formatBytes(node.memoryAllocated)}{' '}
@@ -292,24 +295,26 @@ const NodeOverview = ({ nodeId }: NodeOverviewProps) => {
                                     </div>
                                     <LinearProgressBar
                                         value={allocationPercent}
-                                        aria-label='Committed memory allocation'
+                                        aria-label={t(
+                                            'Committed memory allocation'
+                                        )}
                                     />
                                 </div>
                                 <dl className='grid grid-cols-2 gap-y-3 text-sm'>
                                     <dt className='text-muted-foreground'>
-                                        Physical memory
+                                        {t('Physical memory')}
                                     </dt>
                                     <dd className='text-right'>
                                         {formatBytes(node.memory)}
                                     </dd>
                                     <dt className='text-muted-foreground'>
-                                        Overallocation
+                                        {t('Overallocation')}
                                     </dt>
                                     <dd className='text-right'>
                                         {node.memoryOverallocate}%
                                     </dd>
                                     <dt className='text-muted-foreground'>
-                                        Servers
+                                        {t('Servers')}
                                     </dt>
                                     <dd className='text-right'>
                                         {node.serversCount}
@@ -324,25 +329,33 @@ const NodeOverview = ({ nodeId }: NodeOverviewProps) => {
 
                 <Card className='@md:col-span-2 @xl:col-span-1'>
                     <CardHeader>
-                        <CardTitle>System</CardTitle>
+                        <CardTitle>{t('System')}</CardTitle>
                     </CardHeader>
                     <CardContent>
                         {liveStatus && node ? (
                             <dl className='grid grid-cols-[auto_1fr] gap-x-4 gap-y-3 text-sm'>
-                                <dt className='text-muted-foreground'>CPU</dt>
+                                <dt className='text-muted-foreground'>
+                                    {t('CPU')}
+                                </dt>
                                 <dd className='text-right'>
                                     {liveStatus.cpu.model}
                                 </dd>
                                 <dt className='text-muted-foreground'>
-                                    Topology
+                                    {t('Topology')}
                                 </dt>
                                 <dd className='text-right'>
-                                    {liveStatus.cpu.socketCount} socket /{' '}
-                                    {liveStatus.cpu.coreCount} cores /{' '}
-                                    {liveStatus.cpu.cpuCount} threads
+                                    {t(
+                                        '{{socketCount}} socket / {{coreCount}} cores / {{cpuCount}} threads',
+                                        {
+                                            socketCount:
+                                                liveStatus.cpu.socketCount,
+                                            coreCount: liveStatus.cpu.coreCount,
+                                            cpuCount: liveStatus.cpu.cpuCount,
+                                        }
+                                    )}
                                 </dd>
                                 <dt className='text-muted-foreground'>
-                                    Root filesystem
+                                    {t('Root filesystem')}
                                 </dt>
                                 <dd className='text-right'>
                                     {formatBytes(
@@ -354,7 +367,7 @@ const NodeOverview = ({ nodeId }: NodeOverviewProps) => {
                                     )}
                                 </dd>
                                 <dt className='text-muted-foreground'>
-                                    Cluster
+                                    {t('Cluster')}
                                 </dt>
                                 <dd className='text-right'>
                                     {/*
@@ -363,34 +376,38 @@ const NodeOverview = ({ nodeId }: NodeOverviewProps) => {
                                      * existing" list: a host in no cluster shares
                                      * no storage with anything.
                                      */}
-                                    {node.clusterName ?? 'Standalone'}
+                                    {node.clusterName ?? t('Standalone')}
                                 </dd>
                                 <dt className='text-muted-foreground'>
-                                    Proxmox VE
+                                    {t('Proxmox VE')}
                                 </dt>
                                 <dd className='text-right'>
                                     {formatPveVersion(liveStatus.pveVersion)}
                                 </dd>
                                 <dt className='text-muted-foreground'>
-                                    Kernel
+                                    {t('Kernel')}
                                 </dt>
                                 <dd className='text-right'>
                                     {liveStatus.kernel.release}
                                 </dd>
-                                <dt className='text-muted-foreground'>Boot</dt>
+                                <dt className='text-muted-foreground'>
+                                    {t('Boot')}
+                                </dt>
                                 <dd className='text-right'>
                                     {liveStatus.boot.mode === 'efi'
                                         ? 'EFI'
-                                        : 'Legacy BIOS'}
+                                        : t('Legacy BIOS')}
                                     {liveStatus.boot.secureBoot
-                                        ? ' · Secure Boot'
+                                        ? t(' · Secure Boot')
                                         : ''}
                                 </dd>
                                 <dt className='text-muted-foreground'>
-                                    TLS verification
+                                    {t('TLS verification')}
                                 </dt>
                                 <dd className='text-right'>
-                                    {node.verifyTls ? 'Enabled' : 'Disabled'}
+                                    {node.verifyTls
+                                        ? t('Enabled')
+                                        : t('Disabled')}
                                 </dd>
                             </dl>
                         ) : !failure ? (
@@ -398,20 +415,22 @@ const NodeOverview = ({ nodeId }: NodeOverviewProps) => {
                         ) : node ? (
                             <dl className='grid grid-cols-2 gap-y-3 text-sm'>
                                 <dt className='text-muted-foreground'>
-                                    Proxmox name
+                                    {t('Proxmox name')}
                                 </dt>
                                 <dd className='text-right'>{node.name}</dd>
                                 <dt className='text-muted-foreground'>
-                                    Cluster
+                                    {t('Cluster')}
                                 </dt>
                                 <dd className='text-right'>
-                                    {node.clusterName ?? 'Standalone'}
+                                    {node.clusterName ?? t('Standalone')}
                                 </dd>
                                 <dt className='text-muted-foreground'>
-                                    TLS verification
+                                    {t('TLS verification')}
                                 </dt>
                                 <dd className='text-right'>
-                                    {node.verifyTls ? 'Enabled' : 'Disabled'}
+                                    {node.verifyTls
+                                        ? t('Enabled')
+                                        : t('Disabled')}
                                 </dd>
                             </dl>
                         ) : (

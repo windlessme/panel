@@ -3,38 +3,40 @@ import type { PowerActionResult } from '@/types/server.ts'
 import { useParams } from '@tanstack/react-router'
 import { useEffect, useRef } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { toast } from '@/components/ui/Toast'
 
 type Command = PowerActionResult['command']
 
 const progressLabel: Record<Command, string> = {
-    start: 'Starting server…',
-    restart: 'Restarting server…',
-    reset: 'Resetting server…',
-    resume: 'Resuming server…',
-    suspend: 'Suspending server…',
-    shutdown: 'Shutting down server…',
-    kill: 'Killing server…',
+    start: t('Starting server…'),
+    restart: t('Restarting server…'),
+    reset: t('Resetting server…'),
+    resume: t('Resuming server…'),
+    suspend: t('Suspending server…'),
+    shutdown: t('Shutting down server…'),
+    kill: t('Killing server…'),
 }
 
 const successLabel: Record<Command, string> = {
-    start: 'Server started',
-    restart: 'Server restarted',
-    reset: 'Server reset',
-    resume: 'Server resumed',
-    suspend: 'Server suspended',
-    shutdown: 'Server shut down',
-    kill: 'Server killed',
+    start: t('Server started'),
+    restart: t('Server restarted'),
+    reset: t('Server reset'),
+    resume: t('Server resumed'),
+    suspend: t('Server suspended'),
+    shutdown: t('Server shut down'),
+    kill: t('Server killed'),
 }
 
 const failureLabel: Record<Command, string> = {
-    start: 'Failed to start server',
-    restart: 'Failed to restart server',
-    reset: 'Failed to reset server',
-    resume: 'Failed to resume server',
-    suspend: 'Failed to suspend server',
-    shutdown: 'Failed to shut down server',
-    kill: 'Failed to kill server',
+    start: t('Failed to start server'),
+    restart: t('Failed to restart server'),
+    reset: t('Failed to reset server'),
+    resume: t('Failed to resume server'),
+    suspend: t('Failed to suspend server'),
+    shutdown: t('Failed to shut down server'),
+    kill: t('Failed to kill server'),
 }
 
 // Proxmox error strings can be long; keep the toast description readable rather

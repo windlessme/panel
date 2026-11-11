@@ -9,6 +9,8 @@ import { IconDisc } from '@tabler/icons-react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import byteSize from 'byte-size'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
 import {
@@ -50,13 +52,13 @@ const ISOLibraryCard = ({ uuid }: Props) => {
         onSuccess: (_, iso) => {
             queryClient.invalidateQueries({ queryKey: mediaQueries.all(uuid) })
             toast.add({
-                title: iso.mounted ? 'ISO unmounted' : 'ISO mounted',
+                title: iso.mounted ? t('ISO unmounted') : t('ISO mounted'),
                 type: 'success',
             })
         },
         onError: () =>
             toast.add({
-                title: 'Failed to change mounted media',
+                title: t('Failed to change mounted media'),
                 type: 'error',
             }),
     })
@@ -64,9 +66,11 @@ const ISOLibraryCard = ({ uuid }: Props) => {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>ISO Library</CardTitle>
+                <CardTitle>{t('ISO Library')}</CardTitle>
                 <CardDescription>
-                    Mount installation media to this server’s CD/DVD drive.
+                    {t(
+                        'Mount installation media to this server’s CD/DVD drive.'
+                    )}
                 </CardDescription>
             </CardHeader>
             <CardContent>
@@ -77,7 +81,7 @@ const ISOLibraryCard = ({ uuid }: Props) => {
                 ) : media.length > 0 ? (
                     <OverflowItemGroup
                         max={4}
-                        title={'ISO Library'}
+                        title={t('ISO Library')}
                         rows={media.map(iso => {
                             const size = byteSize(iso.size, {
                                 units: 'iec',
@@ -127,10 +131,10 @@ const ISOLibraryCard = ({ uuid }: Props) => {
                 ) : (
                     <SimpleEmptyState
                         icon={IconDisc}
-                        title={'No media available'}
-                        description={
+                        title={t('No media available')}
+                        description={t(
                             'This server’s node has no ISO images available.'
-                        }
+                        )}
                     />
                 )}
             </CardContent>

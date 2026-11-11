@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 /**
  * Shared shape for the overage-penalty override control (segmented
  * Inherit | Custom). The cascade is server -> node -> global, so any tier that
@@ -39,7 +41,7 @@ export const refineOveragePenalty = <T extends z.ZodTypeAny>(schema: T) =>
             ctx.addIssue({
                 code: z.ZodIssueCode.custom,
                 path: ['overagePenaltyRate'],
-                message: 'A throttle rate is required',
+                message: t('A throttle rate is required'),
             })
             return
         }
@@ -48,14 +50,18 @@ export const refineOveragePenalty = <T extends z.ZodTypeAny>(schema: T) =>
             ctx.addIssue({
                 code: z.ZodIssueCode.custom,
                 path: ['overagePenaltyRate'],
-                message: `Must be at least ${MIN_RATE_MB} MB/s`,
+                message: t('Must be at least {{MIN_RATE_MB}} MB/s', {
+                    MIN_RATE_MB,
+                }),
             })
         }
     })
 
 /** Form defaults for a tier whose stored override may be null (= inherit). */
 export const overagePenaltyDefaults = (penalty: OveragePenalty | null) => ({
-    overagePenaltyMode: (penalty ? 'custom' : 'inherit') as 'inherit' | 'custom',
+    overagePenaltyMode: (penalty ? 'custom' : 'inherit') as
+        | 'inherit'
+        | 'custom',
     overagePenaltyAction: (penalty?.action ?? 'throttle') as
         | 'throttle'
         | 'disconnect',

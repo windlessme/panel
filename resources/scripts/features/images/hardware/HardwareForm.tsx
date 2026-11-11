@@ -4,6 +4,8 @@ import { IconAlertTriangle, IconPlus, IconX } from '@tabler/icons-react'
 import { useMemo, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Label } from '@/components/ui/Label'
@@ -81,7 +83,7 @@ const HardwareForm = ({ nodeId, ostype }: Props) => {
     if (isLoading) {
         return (
             <p className={'text-muted-foreground text-sm'}>
-                Loading Proxmox settings…
+                {t('Loading Proxmox settings…')}
             </p>
         )
     }
@@ -96,9 +98,9 @@ const HardwareForm = ({ nodeId, ostype }: Props) => {
                 >
                     <IconAlertTriangle className={'mt-0.5 size-4 shrink-0'} />
                     <span>
-                        No node answered, so these are Convoy's bundled Proxmox
-                        settings. A node's own schema is more complete and is
-                        what the build is finally judged against.
+                        {t(
+                            "No node answered, so these are Convoy's bundled Proxmox settings. A node's own schema is more complete and is what the build is finally judged against."
+                        )}
                     </span>
                 </p>
             )}
@@ -143,7 +145,7 @@ const HardwareForm = ({ nodeId, ostype }: Props) => {
                     size={'sm'}
                     onClick={() => setShowAdvanced(true)}
                 >
-                    <IconPlus className={'size-4'} /> Add another setting
+                    <IconPlus className={'size-4'} /> {t('Add another setting')}
                 </Button>
             )}
         </div>
@@ -185,7 +187,7 @@ const HardwareField = ({
                         className={'text-muted-foreground text-xs underline'}
                         onClick={() => onChange('')}
                     >
-                        {removable ? 'Remove' : 'Reset to inherited'}
+                        {removable ? t('Remove') : t('Reset to inherited')}
                     </button>
                 )}
             </div>
@@ -247,14 +249,14 @@ const AddSetting = ({
     return (
         <div className={'flex items-end gap-2'}>
             <div className={'grow space-y-1.5'}>
-                <Label>Proxmox setting</Label>
+                <Label>{t('Proxmox setting')}</Label>
                 <Select
                     onValueChange={(value: string | null) =>
                         value && onAdd(value)
                     }
                 >
                     <SelectTrigger>
-                        <SelectValue placeholder={'Choose a setting…'} />
+                        <SelectValue placeholder={t('Choose a setting…')} />
                     </SelectTrigger>
                     <SelectContent>
                         {options.map(key => (
@@ -270,7 +272,7 @@ const AddSetting = ({
                 variant={'ghost'}
                 size={'icon'}
                 onClick={onCancel}
-                aria-label={'Cancel'}
+                aria-label={t('Cancel')}
             >
                 <IconX className={'size-4'} />
             </Button>

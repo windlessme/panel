@@ -11,6 +11,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import AuthDialog from '@/components/ui/Dialog/AuthDialog.tsx'
 import { Form, FormButton } from '@/components/ui/Form'
@@ -46,13 +48,13 @@ const SSHKeyCreateDialog = ({ open, onOpenChange }: Props) => {
         mutationFn: createSSHKey,
         onSuccess: async key => {
             await mutate(keys => (keys ? [key, ...keys] : keys), false)
-            toast.add({ title: 'SSH key added', type: 'success' })
+            toast.add({ title: t('SSH key added'), type: 'success' })
             onOpenChange(false)
             setTimeout(() => form.reset(defaultValues), 200)
         },
         onError: e => {
             handleFormErrors(e, form.setError)
-            toast.add({ title: 'Failed to add key', type: 'error' })
+            toast.add({ title: t('Failed to add key'), type: 'error' })
         },
     })
 
@@ -66,10 +68,13 @@ const SSHKeyCreateDialog = ({ open, onOpenChange }: Props) => {
         <ResponsiveDialog open={open} onOpenChange={close}>
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
-                    <ResponsiveDialogTitle>Add SSH key</ResponsiveDialogTitle>
+                    <ResponsiveDialogTitle>
+                        {t('Add SSH key')}
+                    </ResponsiveDialogTitle>
                     <ResponsiveDialogDescription>
-                        Save a public key to your keychain to reuse it across
-                        your servers.
+                        {t(
+                            'Save a public key to your keychain to reuse it across your servers.'
+                        )}
                     </ResponsiveDialogDescription>
                 </ResponsiveDialogHeader>
 
@@ -78,13 +83,13 @@ const SSHKeyCreateDialog = ({ open, onOpenChange }: Props) => {
                         <ResponsiveDialogBody className={'space-y-4'}>
                             <InputForm
                                 name={'name'}
-                                label={'Name'}
-                                placeholder={'e.g. Work laptop'}
+                                label={t('Name')}
+                                placeholder={t('e.g. Work laptop')}
                             />
                             <TextareaForm
                                 name={'publicKey'}
-                                label={'Public key'}
-                                placeholder={'ssh-ed25519 AAAA… user@host'}
+                                label={t('Public key')}
+                                placeholder={t('ssh-ed25519 AAAA… user@host')}
                             />
                         </ResponsiveDialogBody>
                         <ResponsiveDialogFooter className={'mt-4'}>
@@ -95,7 +100,7 @@ const SSHKeyCreateDialog = ({ open, onOpenChange }: Props) => {
                                     </Button>
                                 }
                             />
-                            <FormButton>Add key</FormButton>
+                            <FormButton>{t('Add key')}</FormButton>
                         </ResponsiveDialogFooter>
                     </form>
                 </Form>

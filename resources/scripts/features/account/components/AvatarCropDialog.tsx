@@ -2,6 +2,8 @@ import { AvatarCrop } from '@/features/account/profile/api.ts'
 import { cn } from '@/utils'
 import { useEffect, useRef, useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     ResponsiveDialog,
@@ -132,7 +134,7 @@ const AvatarCropDialog = ({ file, onCancel, onConfirm, busy }: Props) => {
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        Crop Your Picture
+                        {t('Crop Your Picture')}
                     </ResponsiveDialogTitle>
                 </ResponsiveDialogHeader>
                 <ResponsiveDialogBody
@@ -194,7 +196,7 @@ const AvatarCropDialog = ({ file, onCancel, onConfirm, busy }: Props) => {
                         style={{ maxWidth: VIEWPORT }}
                     >
                         <span className={'text-muted-foreground text-sm'}>
-                            Zoom
+                            {t('Zoom')}
                         </span>
                         <input
                             type={'range'}
@@ -216,14 +218,14 @@ const AvatarCropDialog = ({ file, onCancel, onConfirm, busy }: Props) => {
                         type={'button'}
                         onClick={onCancel}
                     >
-                        Cancel
+                        {t('Cancel')}
                     </Button>
                     <Button
                         loading={busy}
                         disabled={!natural || busy}
                         onClick={confirm}
                     >
-                        Save picture
+                        {t('Save picture')}
                     </Button>
                 </ResponsiveDialogFooter>
             </ResponsiveDialogContent>

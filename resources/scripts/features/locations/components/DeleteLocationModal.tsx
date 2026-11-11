@@ -6,6 +6,8 @@ import { useLocationsModalStore } from '@/routes/_app/admin/_dashboard/locations
 import { Mutator } from '@/types/query.ts'
 import { IconExclamationCircle } from '@tabler/icons-react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Alert, AlertDescription } from '@/components/ui/Alert'
 import { Button } from '@/components/ui/Button'
 import {
@@ -47,11 +49,11 @@ const DeleteLocationModal = ({ mutate }: Props) => {
                     }
                 })
 
-                toast.add({ title: 'Location deleted', type: 'success' })
+                toast.add({ title: t('Location deleted'), type: 'success' })
 
                 close()
             } catch (e) {
-                toast.add({ title: 'Deletion failed', type: 'error' })
+                toast.add({ title: t('Deletion failed'), type: 'error' })
                 throw e
             }
         }
@@ -62,10 +64,12 @@ const DeleteLocationModal = ({ mutate }: Props) => {
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        Delete {location?.shortCode}
+                        {t('Delete {{shortCode}}', {
+                            shortCode: location?.shortCode,
+                        })}
                     </ResponsiveDialogTitle>
                     <ResponsiveDialogDescription>
-                        Are you sure you want to delete this location?
+                        {t('Are you sure you want to delete this location?')}
                     </ResponsiveDialogDescription>
                 </ResponsiveDialogHeader>
                 <ResponsiveDialogBody>
@@ -75,9 +79,9 @@ const DeleteLocationModal = ({ mutate }: Props) => {
                         <Alert variant={'destructive'}>
                             <IconExclamationCircle className={'size-4'} />
                             <AlertDescription>
-                                This location cannot be deleted because there
-                                are nodes associated. Please remove all nodes
-                                before attempting to delete the location.
+                                {t(
+                                    'This location cannot be deleted because there are nodes associated. Please remove all nodes before attempting to delete the location.'
+                                )}
                             </AlertDescription>
                         </Alert>
                     )}
@@ -95,7 +99,7 @@ const DeleteLocationModal = ({ mutate }: Props) => {
                             location?.nodesCount && location.nodesCount > 0
                         )}
                     >
-                        Delete
+                        {t('Delete')}
                     </Button>
                 </ResponsiveDialogFooter>
             </ResponsiveDialogContent>

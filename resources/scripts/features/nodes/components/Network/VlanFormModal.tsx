@@ -17,6 +17,8 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { Form, FormButton } from '@/components/ui/Form'
 import { InputForm, TextareaForm } from '@/components/ui/Forms'
@@ -90,12 +92,12 @@ const VlanFormModal = ({ mode }: { mode: 'create' | 'edit' }) => {
 
             close()
             toast.add({
-                title: mode === 'edit' ? 'VLAN updated' : 'VLAN declared',
+                title: mode === 'edit' ? t('VLAN updated') : t('VLAN declared'),
                 type: 'success',
             })
         } catch (e) {
             handleFormErrors(e, form.setError)
-            toast.add({ title: 'Failed to save changes', type: 'error' })
+            toast.add({ title: t('Failed to save changes'), type: 'error' })
             throw e
         }
     }
@@ -106,13 +108,19 @@ const VlanFormModal = ({ mode }: { mode: 'create' | 'edit' }) => {
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
                         {mode === 'edit'
-                            ? `Editing VLAN ${vlan?.tag}`
-                            : 'Declare VLAN'}
+                            ? t('Editing VLAN {{tag}}', { tag: vlan?.tag })
+                            : t('Declare VLAN')}
                     </ResponsiveDialogTitle>
                     <ResponsiveDialogDescription>
                         {mode === 'edit'
-                            ? `On ${networkInterface?.name}. Renaming a VLAN does not change any server's tag.`
-                            : `On ${networkInterface?.name}. Servers already carrying this tag will be listed under it.`}
+                            ? t(
+                                  "On {{name}}. Renaming a VLAN does not change any server's tag.",
+                                  { name: networkInterface?.name }
+                              )
+                            : t(
+                                  'On {{name}}. Servers already carrying this tag will be listed under it.',
+                                  { name: networkInterface?.name }
+                              )}
                     </ResponsiveDialogDescription>
                 </ResponsiveDialogHeader>
                 <Form {...form}>
@@ -120,7 +128,7 @@ const VlanFormModal = ({ mode }: { mode: 'create' | 'edit' }) => {
                         <ResponsiveDialogBody className={'space-y-2'}>
                             <InputForm
                                 name={'tag'}
-                                label={'VLAN tag'}
+                                label={t('VLAN tag')}
                                 type={'number'}
                                 min={1}
                                 max={4094}
@@ -128,15 +136,15 @@ const VlanFormModal = ({ mode }: { mode: 'create' | 'edit' }) => {
                             />
                             <InputForm
                                 name={'name'}
-                                label={'Name'}
-                                description={
+                                label={t('Name')}
+                                description={t(
                                     'Optional. Shown instead of the bare tag.'
-                                }
+                                )}
                                 autoComplete={'off'}
                             />
                             <TextareaForm
                                 name={'description'}
-                                label={'Description'}
+                                label={t('Description')}
                             />
                         </ResponsiveDialogBody>
                         <ResponsiveDialogFooter className={'mt-4'}>
@@ -146,7 +154,7 @@ const VlanFormModal = ({ mode }: { mode: 'create' | 'edit' }) => {
                                 }
                             />
                             <FormButton>
-                                {mode === 'edit' ? 'Save' : 'Declare'}
+                                {mode === 'edit' ? t('Save') : t('Declare')}
                             </FormButton>
                         </ResponsiveDialogFooter>
                     </form>

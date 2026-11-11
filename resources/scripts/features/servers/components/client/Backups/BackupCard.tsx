@@ -1,6 +1,8 @@
 import { Backup, BackupErrorCode } from '@/features/servers/types.ts'
 import { IconAlertTriangle } from '@tabler/icons-react'
 
+import { t } from '@/lib/i18n.ts'
+
 import {
     Item,
     ItemContent,
@@ -31,7 +33,7 @@ const BackupCard = ({ backup }: Props) => {
                     <ItemDescription className={'text-destructive'}>
                         <span className={'inline-flex items-center gap-1'}>
                             <IconAlertTriangle className={'h-3.5 w-3.5'} />
-                            Failed
+                            {t('Failed')}
                         </span>{' '}
                         {BACKUP_ERROR_LABELS[backup.errorCode!]}
                         {backup.errorMessage ? `: ${backup.errorMessage}` : ''}

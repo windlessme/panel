@@ -12,6 +12,7 @@ import { useParams } from '@tanstack/react-router'
 import { z } from 'zod'
 
 import { type DataResponse, type PaginatedResponse, apiFetch } from '@/lib/api'
+import { t } from '@/lib/i18n.ts'
 
 export type BackupListParams = QueryBuilderParams<'completed_at' | 'created_at'>
 
@@ -144,7 +145,7 @@ export const backupModes = ['snapshot', 'suspend', 'kill'] as const
 export const compressionTypes = ['none', 'lzo', 'gzip', 'zstd'] as const
 
 export const createBackupSchema = z.object({
-    name: z.string().min(1, 'A name is required').max(40),
+    name: z.string().min(1, t('A name is required')).max(40),
     mode: z.enum(backupModes),
     compressionType: z.enum(compressionTypes),
     isLocked: z.boolean(),

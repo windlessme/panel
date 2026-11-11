@@ -9,6 +9,8 @@ import { Link, createLazyFileRoute } from '@tanstack/react-router'
 import { ColumnDef } from '@tanstack/react-table'
 import byteSize from 'byte-size'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Badge } from '@/components/ui/Badge.tsx'
 import { buttonVariants } from '@/components/ui/Button'
 import { DataTable } from '@/components/ui/DataTable'
@@ -57,7 +59,7 @@ function UserServers() {
             accessorKey: 'name',
             enableHiding: false,
             header: ({ column }) => (
-                <DataTableColumnHeader column={column} title={'Name'} />
+                <DataTableColumnHeader column={column} title={t('Name')} />
             ),
             meta: { skeletonWidth: '6rem' },
             cell: ({ cell }) => (
@@ -74,18 +76,18 @@ function UserServers() {
                     {/* Separate from power state, not a value of it -- a suspended server can be
                         running, and the tile above counts these. */}
                     {cell.row.original.suspendedAt && (
-                        <Badge variant={'destructive'}>Suspended</Badge>
+                        <Badge variant={'destructive'}>{t('Suspended')}</Badge>
                     )}
                 </span>
             ),
         },
         {
-            header: 'Hostname',
+            header: t('Hostname'),
             accessorKey: 'hostname',
             meta: { skeletonWidth: '6rem' },
         },
         {
-            header: 'Power',
+            header: t('Power'),
             accessorKey: 'powerState',
             meta: { skeletonWidth: '4rem' },
             cell: ({ row }) => (
@@ -97,11 +99,13 @@ function UserServers() {
             accessorKey: 'cpu',
             meta: { skeletonWidth: '2rem' },
             cell: ({ cell }) => (
-                <span className={'tabular-nums'}>{cell.getValue<number>()}</span>
+                <span className={'tabular-nums'}>
+                    {cell.getValue<number>()}
+                </span>
             ),
         },
         {
-            header: 'Memory',
+            header: t('Memory'),
             accessorKey: 'memory',
             meta: { skeletonWidth: '4rem' },
             cell: ({ cell }) => (
@@ -111,7 +115,7 @@ function UserServers() {
             ),
         },
         {
-            header: 'Disk',
+            header: t('Disk'),
             accessorKey: 'disk',
             meta: { skeletonWidth: '4rem' },
             cell: ({ cell }) => (
@@ -127,7 +131,7 @@ function UserServers() {
 
     return (
         <>
-            <Heading>Servers</Heading>
+            <Heading>{t('Servers')}</Heading>
             <DataTable
                 paginated
                 searchable
@@ -161,7 +165,9 @@ function UserServers() {
                                     >
                                         {server.name}
                                     </Link>
-                                    <PowerStateBadge state={server.powerState} />
+                                    <PowerStateBadge
+                                        state={server.powerState}
+                                    />
                                     {server.suspendedAt && (
                                         <Badge variant={'destructive'}>
                                             Suspended

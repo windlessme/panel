@@ -11,6 +11,8 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { Form, FormButton } from '@/components/ui/Form'
 import { InputForm, TextareaForm } from '@/components/ui/Forms'
@@ -56,10 +58,10 @@ const CreateBlockGroupModal = ({ mutate }: Props) => {
 
             form.reset()
             setOpen(false)
-            toast.add({ title: 'Block group created', type: 'success' })
+            toast.add({ title: t('Block group created'), type: 'success' })
         } catch (e) {
             handleFormErrors(e, form.setError)
-            toast.add({ title: 'Failed to save changes', type: 'error' })
+            toast.add({ title: t('Failed to save changes'), type: 'error' })
             throw e
         }
     }
@@ -76,16 +78,16 @@ const CreateBlockGroupModal = ({ mutate }: Props) => {
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        New Block Group
+                        {t('New Block Group')}
                     </ResponsiveDialogTitle>
                 </ResponsiveDialogHeader>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(submit as any)}>
                         <ResponsiveDialogBody className={'space-y-2'}>
-                            <InputForm name={'name'} label={'Name'} />
+                            <InputForm name={'name'} label={t('Name')} />
                             <TextareaForm
                                 name={'description'}
-                                label={'Description'}
+                                label={t('Description')}
                             />
                         </ResponsiveDialogBody>
                         <ResponsiveDialogFooter className={'mt-4'}>
@@ -96,7 +98,7 @@ const CreateBlockGroupModal = ({ mutate }: Props) => {
                                     </Button>
                                 }
                             />
-                            <FormButton>Add block group</FormButton>
+                            <FormButton>{t('Add block group')}</FormButton>
                         </ResponsiveDialogFooter>
                     </form>
                 </Form>

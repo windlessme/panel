@@ -17,6 +17,8 @@ import { cn } from '@/utils'
 import { Link } from '@tanstack/react-router'
 import { ColumnDef } from '@tanstack/react-table'
 
+import { t } from '@/lib/i18n.ts'
+
 import { buttonVariants } from '@/components/ui/Button'
 import { DataTable } from '@/components/ui/DataTable'
 import {
@@ -80,18 +82,18 @@ const AddressBlockTab = () => {
                         addressBlockId: String(block.id),
                     }}
                 >
-                    View
+                    {t('View')}
                 </Link>
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => openModal('edit', block)}>
-                Edit
+                {t('Edit')}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
                 variant={'destructive'}
                 onClick={() => openModal('delete', block)}
             >
-                Delete
+                {t('Delete')}
             </DropdownMenuItem>
         </>
     )

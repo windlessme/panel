@@ -8,6 +8,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 import { useEffect, useMemo, useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     Card,
@@ -60,7 +62,7 @@ const NameserversCard = ({ uuid }: Props) => {
             queryClient.invalidateQueries({
                 queryKey: nameserverQueries.all(uuid),
             })
-            toast.add({ title: 'Nameservers updated', type: 'success' })
+            toast.add({ title: t('Nameservers updated'), type: 'success' })
         },
         onError: e =>
             toast.add({
@@ -72,9 +74,9 @@ const NameserversCard = ({ uuid }: Props) => {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>DNS Nameservers</CardTitle>
+                <CardTitle>{t('DNS Nameservers')}</CardTitle>
                 <CardDescription>
-                    Resolvers applied to the server via cloud-init.
+                    {t('Resolvers applied to the server via cloud-init.')}
                 </CardDescription>
             </CardHeader>
             <CardContent className={'space-y-2'}>
@@ -89,7 +91,7 @@ const NameserversCard = ({ uuid }: Props) => {
                             >
                                 <Input
                                     value={value}
-                                    placeholder={'e.g. 1.1.1.1'}
+                                    placeholder={t('e.g. 1.1.1.1')}
                                     className={'font-mono'}
                                     onChange={e =>
                                         setValues(prev =>
@@ -102,7 +104,10 @@ const NameserversCard = ({ uuid }: Props) => {
                                 <Button
                                     variant={'ghost'}
                                     size={'icon'}
-                                    aria-label={`Remove nameserver ${index + 1}`}
+                                    aria-label={t(
+                                        'Remove nameserver {{value}}',
+                                        { value: index + 1 }
+                                    )}
                                     className={'shrink-0'}
                                     onClick={() =>
                                         setValues(prev =>
@@ -119,7 +124,7 @@ const NameserversCard = ({ uuid }: Props) => {
                             onClick={() => setValues(prev => [...prev, ''])}
                         >
                             <IconPlus className={'size-4'} />
-                            Add nameserver
+                            {t('Add nameserver')}
                         </Button>
                     </>
                 )}
@@ -131,14 +136,14 @@ const NameserversCard = ({ uuid }: Props) => {
                         onClick={() => nameservers && setValues(nameservers)}
                         disabled={isPending}
                     >
-                        Reset
+                        {t('Reset')}
                     </Button>
                     <Button
                         onClick={() => save()}
                         loading={isPending}
                         disabled={!canSave}
                     >
-                        Save changes
+                        {t('Save changes')}
                     </Button>
                 </CardFooter>
             )}

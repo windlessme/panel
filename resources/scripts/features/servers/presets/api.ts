@@ -4,6 +4,7 @@ import { queryOptions, useQuery } from '@tanstack/react-query'
 import { z } from 'zod'
 
 import { type DataResponse, apiFetch } from '@/lib/api'
+import { t } from '@/lib/i18n.ts'
 import { rawDataToServerPreset } from '@/lib/transformers/server-preset.ts'
 
 /**
@@ -12,7 +13,7 @@ import { rawDataToServerPreset } from '@/lib/transformers/server-preset.ts'
  * what a valid build looks like.
  */
 export const serverPresetSchema = z.object({
-    name: z.string().min(1, 'Name is required.').max(191),
+    name: z.string().min(1, t('Name is required.')).max(191),
     description: z.preprocess(
         value => (value === '' ? null : value),
         z.string().max(191).nullable()

@@ -1,7 +1,8 @@
+import { connectionErrorCopy } from '@/features/nodes/connection-errors.ts'
 import { Node } from '@/types/node.ts'
 import { cn } from '@/utils'
 
-import { connectionErrorCopy } from '@/features/nodes/connection-errors.ts'
+import { t } from '@/lib/i18n.ts'
 import { mapConnectionErrorType } from '@/lib/transformers/node.ts'
 
 import {
@@ -24,9 +25,9 @@ const TONE: Record<Node['status'], string> = {
 }
 
 const LABEL: Record<Node['status'], string> = {
-    online: 'Online',
-    unreachable: 'Unreachable',
-    unknown: 'Unknown',
+    online: t('Online'),
+    unreachable: t('Unreachable'),
+    unknown: t('Unknown'),
 }
 
 /**

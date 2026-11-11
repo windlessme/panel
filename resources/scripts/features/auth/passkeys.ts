@@ -11,6 +11,8 @@ import { useMutation } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { useCallback, useEffect, useRef } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { toast } from '@/components/ui/Toast'
 
 /**
@@ -67,7 +69,7 @@ export const usePasskeyLogin = (redirectTo?: string) => {
         onError: e => {
             if (isPasskeyDismissal(e)) return
 
-            toast.add({ title: 'That passkey did not work', type: 'error' })
+            toast.add({ title: t('That passkey did not work'), type: 'error' })
         },
     })
 

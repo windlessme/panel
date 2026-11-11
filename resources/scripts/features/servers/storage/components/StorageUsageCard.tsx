@@ -1,6 +1,8 @@
 import { useServer, useServerResources } from '@/features/servers/detail/api.ts'
 import { formatBytes } from '@/features/servers/storage/api.ts'
 
+import { t } from '@/lib/i18n.ts'
+
 import {
     Card,
     CardContent,
@@ -38,9 +40,9 @@ const StorageUsageCard = ({ uuid }: Props) => {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Filesystem usage</CardTitle>
+                <CardTitle>{t('Filesystem usage')}</CardTitle>
                 <CardDescription>
-                    Reported live by the guest agent.
+                    {t('Reported live by the guest agent.')}
                 </CardDescription>
             </CardHeader>
             <CardContent className={'flex-1'}>
@@ -49,17 +51,17 @@ const StorageUsageCard = ({ uuid }: Props) => {
                 ) : isError || !hasUsage ? (
                     <div className={'flex flex-col gap-3 text-sm'}>
                         <p className={'text-muted-foreground'}>
-                            The guest agent isn’t answering, so there’s nothing
-                            to report on how full the filesystem is. Install and
-                            start{' '}
+                            {t(
+                                'The guest agent isn’t answering, so there’s nothing to report on how full the filesystem is. Install and start'
+                            )}
                             <code className={'font-mono'}>
-                                qemu-guest-agent
-                            </code>{' '}
-                            inside the server to see usage here.
+                                {t('qemu-guest-agent')}
+                            </code>
+                            {t('inside the server to see usage here.')}
                         </p>
                         {provisioned > 0 && (
                             <Row
-                                label={'Provisioned'}
+                                label={t('Provisioned')}
                                 value={formatBytes(provisioned)}
                             />
                         )}
@@ -80,22 +82,25 @@ const StorageUsageCard = ({ uuid }: Props) => {
                                         'text-muted-foreground text-sm tabular-nums'
                                     }
                                 >
-                                    used · {percent}%
+                                    {t('used · {{percent}}%', { percent })}
                                 </span>
                             </p>
                             <LinearProgressBar
                                 value={percent}
-                                aria-label={`${percent}% of the filesystem is used`}
+                                aria-label={t(
+                                    '{{percent}}% of the filesystem is used',
+                                    { percent }
+                                )}
                             />
                         </div>
 
                         <div className={'flex flex-col'}>
                             <Row
-                                label={'Filesystem'}
+                                label={t('Filesystem')}
                                 value={formatBytes(usage.totalBytes)}
                             />
                             <Row
-                                label={'Free'}
+                                label={t('Free')}
                                 value={formatBytes(
                                     Math.max(
                                         0,
@@ -105,7 +110,7 @@ const StorageUsageCard = ({ uuid }: Props) => {
                             />
                             {provisioned > 0 && (
                                 <Row
-                                    label={'Provisioned'}
+                                    label={t('Provisioned')}
                                     value={formatBytes(provisioned)}
                                 />
                             )}

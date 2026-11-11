@@ -2,6 +2,8 @@ import { useUpdateStatus } from '@/features/updates/api.ts'
 import { IconCircleArrowUp } from '@tabler/icons-react'
 import { Link } from '@tanstack/react-router'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/Alert'
 
 /**
@@ -19,14 +21,20 @@ const UpdateAvailableAlert = () => {
     return (
         <Alert className={'border-amber-500/40 dark:border-amber-400/40'}>
             <IconCircleArrowUp className={'size-4'} />
-            <AlertTitle>Convoy {status.latestVersion} is available</AlertTitle>
+            <AlertTitle>
+                {t('Convoy {{latestVersion}} is available', {
+                    latestVersion: status.latestVersion,
+                })}
+            </AlertTitle>
             <AlertDescription className={'text-muted-foreground'}>
-                This panel is running {status.currentVersion}.{' '}
+                {t('This panel is running {{currentVersion}}.', {
+                    currentVersion: status.currentVersion,
+                })}
                 <Link
                     to={'/admin/settings/updates'}
                     className={'underline underline-offset-4'}
                 >
-                    See what changed
+                    {t('See what changed')}
                 </Link>
                 .
             </AlertDescription>

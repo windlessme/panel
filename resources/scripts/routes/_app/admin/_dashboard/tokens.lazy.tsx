@@ -15,6 +15,8 @@ import { ColumnDef } from '@tanstack/react-table'
 import { formatDistanceToNow } from 'date-fns'
 import { useState } from 'react'
 
+import { t as translate } from '@/lib/i18n.ts'
+
 import useConfirmationStore from '@/components/ui/AlertDialog/use-confirmation-store.ts'
 import { Badge } from '@/components/ui/Badge.tsx'
 import { DataTable } from '@/components/ui/DataTable'
@@ -57,16 +59,25 @@ function TokensIndex() {
                       }
                     : data
             )
-            toast.add({ title: 'API token revoked', type: 'success' })
+            toast.add({
+                title: translate('API token revoked'),
+                type: 'success',
+            })
         },
         onError: () =>
-            toast.add({ title: 'Failed to revoke token', type: 'error' }),
+            toast.add({
+                title: translate('Failed to revoke token'),
+                type: 'error',
+            }),
     })
 
     const handleDelete = async (token: ApiKey) => {
         const confirmed = await confirm({
-            title: 'Revoke API token',
-            description: `Any integration using “${token.name}” will immediately lose access. This cannot be undone.`,
+            title: translate('Revoke API token'),
+            description: translate(
+                'Any integration using “{{name}}” will immediately lose access. This cannot be undone.',
+                { name: token.name }
+            ),
         })
         if (!confirmed) return
 
@@ -76,26 +87,26 @@ function TokensIndex() {
     const renderActions = (token: ApiKey) => (
         <>
             <DropdownMenuItem onClick={() => setEditingToken(token)}>
-                Edit restrictions
+                {translate('Edit restrictions')}
             </DropdownMenuItem>
             <DropdownMenuItem
                 variant={'destructive'}
                 onClick={() => handleDelete(token)}
             >
-                Revoke
+                {translate('Revoke')}
             </DropdownMenuItem>
         </>
     )
 
     const columns: ColumnDef<ApiKey>[] = [
         {
-            header: 'Name',
+            header: translate('Name'),
             accessorKey: 'name',
             enableHiding: false,
             meta: { skeletonWidth: '8rem' },
         },
         {
-            header: 'Abilities',
+            header: translate('Abilities'),
             id: 'abilities',
             meta: { skeletonWidth: '6rem' },
             cell: ({ row }) => (
@@ -105,7 +116,7 @@ function TokensIndex() {
             ),
         },
         {
-            header: 'Network access',
+            header: translate('Network access'),
             id: 'networkAccess',
             meta: { skeletonWidth: '8rem' },
             cell: ({ row }) => (
@@ -115,7 +126,7 @@ function TokensIndex() {
             ),
         },
         {
-            header: 'Created by',
+            header: translate('Created by'),
             id: 'createdBy',
             meta: { skeletonWidth: '8rem' },
             cell: ({ row }) =>
@@ -124,7 +135,7 @@ function TokensIndex() {
                 ),
         },
         {
-            header: 'Last used',
+            header: translate('Last used'),
             accessorKey: 'lastUsedAt',
             meta: { skeletonWidth: '6rem' },
             cell: ({ cell }) => {
@@ -133,7 +144,9 @@ function TokensIndex() {
                 return value ? (
                     formatLastUsed(value)
                 ) : (
-                    <span className={'text-muted-foreground'}>Never</span>
+                    <span className={'text-muted-foreground'}>
+                        {translate('Never')}
+                    </span>
                 )
             },
         },
@@ -142,7 +155,7 @@ function TokensIndex() {
 
     return (
         <>
-            <Heading>API Tokens</Heading>
+            <Heading>{translate('API Tokens')}</Heading>
             <DataTable
                 data={data}
                 columns={columns}

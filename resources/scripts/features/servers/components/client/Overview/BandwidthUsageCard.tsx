@@ -3,6 +3,8 @@ import { useServer } from '@/features/servers/detail/api.ts'
 import { IconWifi } from '@tabler/icons-react'
 import byteSize from 'byte-size'
 
+import { t } from '@/lib/i18n.ts'
+
 import LinearProgressBar from '@/components/ui/Progress/LinearProgressBar.tsx'
 
 const BandwidthUsageCard = () => {
@@ -28,7 +30,7 @@ const BandwidthUsageCard = () => {
 
     return (
         <StatisticCard
-            title={'Bandwidth'}
+            title={t('Bandwidth')}
             icon={IconWifi}
             className={'col-span-2 @5xl:col-span-1'}
             context={

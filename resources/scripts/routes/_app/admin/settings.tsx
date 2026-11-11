@@ -9,6 +9,8 @@ import {
 } from '@tabler/icons-react'
 import { Outlet, createFileRoute } from '@tanstack/react-router'
 
+import { t } from '@/lib/i18n.ts'
+
 import AppLayout from '@/components/layouts/AppLayout.tsx'
 
 import { SidebarNav } from '@/components/ui/Navigation/Navigation.types.ts'
@@ -16,7 +18,7 @@ import { SidebarNav } from '@/components/ui/Navigation/Navigation.types.ts'
 export const Route = createFileRoute('/_app/admin/settings')({
     component: SettingsLayout,
     staticData: {
-        title: 'Settings',
+        title: t('Settings'),
     },
 })
 
@@ -25,9 +27,9 @@ export const Route = createFileRoute('/_app/admin/settings')({
 // client server tabs ended up declared-but-missing.
 const nav: SidebarNav = {
     key: 'admin-settings',
-    back: { label: 'Admin', to: '/admin' },
+    back: { label: t('Admin'), to: '/admin' },
     context: {
-        title: 'Settings',
+        title: t('Settings'),
         subtitle: 'Panel-wide defaults',
         icon: IconSettings,
     },
@@ -36,27 +38,27 @@ const nav: SidebarNav = {
             items: [
                 {
                     icon: IconGauge,
-                    label: 'Bandwidth',
+                    label: t('Bandwidth'),
                     path: '/admin/settings/bandwidth',
                 },
                 {
                     icon: IconAnchor,
-                    label: 'Anchor',
+                    label: t('Anchor'),
                     path: '/admin/settings/anchor',
                 },
                 {
                     icon: IconUserCog,
-                    label: 'Accounts',
+                    label: t('Accounts'),
                     path: '/admin/settings/account',
                 },
                 {
                     icon: IconMail,
-                    label: 'Mail',
+                    label: t('Mail'),
                     path: '/admin/settings/mail',
                 },
                 {
                     icon: IconRefresh,
-                    label: 'Updates',
+                    label: t('Updates'),
                     path: '/admin/settings/updates',
                 },
             ],

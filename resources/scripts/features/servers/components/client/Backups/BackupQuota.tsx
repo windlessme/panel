@@ -5,6 +5,8 @@ import {
 import { cn } from '@/utils'
 import byteSize from 'byte-size'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { LinearProgressBar } from '@/components/ui/Progress'
 import {
@@ -140,7 +142,7 @@ const Detail = ({
             <LinearProgressBar
                 className={'mt-3'}
                 value={percent}
-                aria-label={`${percent}% used`}
+                aria-label={t('{{percent}}% used', { percent })}
                 indicatorClassName={isExhausted ? 'bg-destructive' : undefined}
             />
         )}
@@ -199,19 +201,21 @@ const BackupQuota = () => {
             />
             <SheetContent side={'right'}>
                 <SheetHeader>
-                    <SheetTitle>Backup Quota</SheetTitle>
+                    <SheetTitle>{t('Backup Quota')}</SheetTitle>
                 </SheetHeader>
                 <dl className={'mt-4 flex flex-col gap-8'}>
                     <Detail
-                        label={'Backups'}
+                        label={t('Backups')}
                         used={
                             quota.hasCountLimit || quota.isCountUnlimited
                                 ? `${quota.count}`
-                                : 'None allocated'
+                                : t('None allocated')
                         }
                         of={
                             quota.hasCountLimit
-                                ? `of ${quota.countLimit}`
+                                ? t('of {{countLimit}}', {
+                                      countLimit: quota.countLimit,
+                                  })
                                 : null
                         }
                         note={countNote(quota)}
@@ -222,15 +226,17 @@ const BackupQuota = () => {
                         }
                     />
                     <Detail
-                        label={'Storage'}
+                        label={t('Storage')}
                         used={
                             quota.hasSizeLimit || quota.isSizeUnlimited
                                 ? formatBytes(quota.size)
-                                : 'None allocated'
+                                : t('None allocated')
                         }
                         of={
                             quota.hasSizeLimit
-                                ? `of ${formatBytes(quota.sizeLimit)}`
+                                ? t('of {{sizeLimit}}', {
+                                      sizeLimit: formatBytes(quota.sizeLimit),
+                                  })
                                 : null
                         }
                         note={sizeNote(quota)}

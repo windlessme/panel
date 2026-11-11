@@ -5,6 +5,8 @@ import { useServer } from '@/features/servers/detail/api.ts'
 import useLiveMetrics from '@/features/servers/hooks/use-live-metrics.ts'
 import { IconCpu } from '@tabler/icons-react'
 
+import { t } from '@/lib/i18n.ts'
+
 import Skeleton from '@/components/ui/Skeleton.tsx'
 
 const CpuUsageCard = () => {
@@ -15,7 +17,7 @@ const CpuUsageCard = () => {
 
     return (
         <StatisticCard
-            title={'CPU Usage'}
+            title={t('CPU Usage')}
             icon={IconCpu}
             /* The percentage is of the cores this server was given, not of the
                node -- which is the one denominator the overview never printed.

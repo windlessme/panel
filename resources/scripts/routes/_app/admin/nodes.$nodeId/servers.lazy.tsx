@@ -1,12 +1,14 @@
 import { ServerQueryParams, useServers } from '@/features/servers/admin/api.ts'
-import ServerPowerActions from '@/features/servers/components/admin/ServerPowerActions.tsx'
 import PowerStateBadge from '@/features/servers/components/PowerStateBadge.tsx'
+import ServerPowerActions from '@/features/servers/components/admin/ServerPowerActions.tsx'
 import useDataTable from '@/hooks/use-data-table.ts'
 import { Server } from '@/types/server.ts'
 import { cn } from '@/utils'
 import { IconPlus } from '@tabler/icons-react'
 import { Link, createLazyFileRoute } from '@tanstack/react-router'
 import { ColumnDef } from '@tanstack/react-table'
+
+import { t } from '@/lib/i18n.ts'
 
 import { Badge } from '@/components/ui/Badge.tsx'
 import { buttonVariants } from '@/components/ui/Button'
@@ -49,7 +51,7 @@ function NodeServers() {
             enableHiding: false,
             enableSorting: true,
             header: ({ column }) => (
-                <DataTableColumnHeader column={column} title='Name' />
+                <DataTableColumnHeader column={column} title={t('Name')} />
             ),
             meta: {
                 skeletonWidth: '5rem',
@@ -64,14 +66,14 @@ function NodeServers() {
             ),
         },
         {
-            header: 'Hostname',
+            header: t('Hostname'),
             accessorKey: 'hostname',
             meta: {
                 skeletonWidth: '4rem',
             },
         },
         {
-            header: 'Power',
+            header: t('Power'),
             accessorKey: 'powerState',
             cell: ({ row }) => (
                 <PowerStateBadge state={row.original.powerState} />
@@ -87,7 +89,7 @@ function NodeServers() {
 
     return (
         <>
-            <Heading>Servers</Heading>
+            <Heading>{t('Servers')}</Heading>
             <DataTable
                 paginated
                 searchable

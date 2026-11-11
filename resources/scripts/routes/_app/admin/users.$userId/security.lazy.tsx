@@ -4,6 +4,8 @@ import SSHKeysCard from '@/features/users/components/Security/SSHKeysCard.tsx'
 import TwoFactorCard from '@/features/users/components/Security/TwoFactorCard.tsx'
 import { createLazyFileRoute } from '@tanstack/react-router'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Heading } from '@/components/ui/Typography'
 
 export const Route = createLazyFileRoute('/_app/admin/users/$userId/security')({
@@ -20,7 +22,7 @@ function UserSecurity() {
 
     return (
         <>
-            <Heading>Security</Heading>
+            <Heading>{t('Security')}</Heading>
             <div className={'grid grid-cols-1 gap-4 @3xl:grid-cols-2'}>
                 <TwoFactorCard userId={numericUserId} />
                 <PasskeysCard userId={numericUserId} />

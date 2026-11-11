@@ -13,6 +13,7 @@ import { keepPreviousData, queryOptions, useQuery } from '@tanstack/react-query'
 import { z } from 'zod'
 
 import { type DataResponse, type PaginatedResponse, apiFetch } from '@/lib/api'
+import { t } from '@/lib/i18n.ts'
 
 // TokenController is served on both the panel (`/api/admin`) and the Application
 // token API (`/api/application`), so Wayfinder emits URI-keyed dictionaries
@@ -44,7 +45,7 @@ export const allowedNetworksSchema = z.string().superRefine((value, ctx) => {
     if (rules.length > 100) {
         ctx.addIssue({
             code: 'custom',
-            message: 'Enter no more than 100 addresses or CIDR ranges.',
+            message: t('Enter no more than 100 addresses or CIDR ranges.'),
         })
     }
 
@@ -54,7 +55,10 @@ export const allowedNetworksSchema = z.string().superRefine((value, ctx) => {
     if (invalid !== -1) {
         ctx.addIssue({
             code: 'custom',
-            message: `Line ${invalid + 1} must be a valid IPv4 or IPv6 address or CIDR range.`,
+            message: t(
+                'Line {{value}} must be a valid IPv4 or IPv6 address or CIDR range.',
+                { value: invalid + 1 }
+            ),
         })
     }
 })
@@ -70,7 +74,7 @@ export const tokenSchema = z
         data =>
             data.fullAccess ||
             Object.values(data.scopes).some(access => access !== 'none'),
-        { message: 'Grant at least one ability.', path: ['scopes'] }
+        { message: t('Grant at least one ability.'), path: ['scopes'] }
     )
 
 export type TokenInput = z.infer<typeof tokenSchema>

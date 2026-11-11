@@ -1,5 +1,7 @@
 import { IconCircleCheck } from '@tabler/icons-react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Badge } from '@/components/ui/Badge'
 import {
     Tooltip,
@@ -50,12 +52,12 @@ const AnchorProtocol = ({
             <TooltipProvider>
                 <Tooltip>
                     <TooltipTrigger className='text-muted-foreground cursor-help text-sm'>
-                        Not reported
+                        {t('Not reported')}
                     </TooltipTrigger>
                     <TooltipContent className='max-w-64'>
-                        This anchor hasn&apos;t told the panel which protocol
-                        versions it speaks. It reports that on its first
-                        heartbeat after enrolling.
+                        {t(
+                            'This anchor hasn&apos;t told the panel which protocol versions it speaks. It reports that on its first heartbeat after enrolling.'
+                        )}
                     </TooltipContent>
                 </Tooltip>
             </TooltipProvider>
@@ -67,13 +69,17 @@ const AnchorProtocol = ({
             <TooltipProvider>
                 <Tooltip>
                     <TooltipTrigger className='cursor-help'>
-                        <Badge variant='destructive'>Incompatible</Badge>
+                        <Badge variant='destructive'>{t('Incompatible')}</Badge>
                     </TooltipTrigger>
                     <TooltipContent className='max-w-64'>
-                        Speaks protocol {range(anchor)}, and this panel speaks{' '}
-                        {anchor.panelProtocolVersion}. Console sessions will
-                        fail until the two overlap — upgrade whichever side is
-                        behind.
+                        {t(
+                            'Speaks protocol {{range}}, and this panel speaks {{panelProtocolVersion}}. Console sessions will fail until the two overlap — upgrade whichever side is behind.',
+                            {
+                                range: range(anchor),
+                                panelProtocolVersion:
+                                    anchor.panelProtocolVersion,
+                            }
+                        )}
                     </TooltipContent>
                 </Tooltip>
             </TooltipProvider>
@@ -85,13 +91,16 @@ const AnchorProtocol = ({
             <Tooltip>
                 <TooltipTrigger
                     className='text-success flex cursor-help items-center gap-1.5 text-sm'
-                    aria-label='Compatible with this panel'
+                    aria-label={t('Compatible with this panel')}
                 >
                     <IconCircleCheck className='size-4' aria-hidden />
-                    Compatible
+                    {t('Compatible')}
                 </TooltipTrigger>
                 <TooltipContent className='max-w-64'>
-                    Speaks protocol {range(anchor)}, which this panel supports.
+                    {t(
+                        'Speaks protocol {{range}}, which this panel supports.',
+                        { range: range(anchor) }
+                    )}
                 </TooltipContent>
             </Tooltip>
         </TooltipProvider>

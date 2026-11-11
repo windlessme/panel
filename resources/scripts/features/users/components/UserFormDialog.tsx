@@ -17,6 +17,8 @@ import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Alert, AlertDescription } from '@/components/ui/Alert'
 import { Button } from '@/components/ui/Button'
 import CopyValue from '@/components/ui/CopyValue.tsx'
@@ -102,7 +104,7 @@ const UserFormDialog = ({ user, currentUserId, close, refresh }: Props) => {
             close()
         } catch (error) {
             handleFormErrors(error, form.setError)
-            toast.add({ title: 'Failed to save user', type: 'error' })
+            toast.add({ title: t('Failed to save user'), type: 'error' })
         }
     }
 
@@ -124,12 +126,16 @@ const UserFormDialog = ({ user, currentUserId, close, refresh }: Props) => {
                 <ResponsiveDialogContent>
                     <ResponsiveDialogHeader>
                         <ResponsiveDialogTitle>
-                            Account created
+                            {t('Account created')}
                         </ResponsiveDialogTitle>
                         <ResponsiveDialogDescription>
                             {invite.emailed
-                                ? 'Invitation emailed. The link is below too.'
-                                : "Mail isn't set up. Send this link yourself."}
+                                ? t(
+                                      'Invitation emailed. The link is below too.'
+                                  )
+                                : t(
+                                      "Mail isn't set up. Send this link yourself."
+                                  )}
                         </ResponsiveDialogDescription>
                     </ResponsiveDialogHeader>
                     <ResponsiveDialogBody className={'flex flex-col gap-3'}>
@@ -144,18 +150,21 @@ const UserFormDialog = ({ user, currentUserId, close, refresh }: Props) => {
                                 }
                             />
                             <CopyValue
-                                label={'invitation link'}
+                                label={t('invitation link')}
                                 value={invite.link}
                                 className={'text-xs break-all'}
                             />
                         </div>
                         <p className={'text-muted-foreground text-sm'}>
-                            Single use. Expires{' '}
-                            {new Date(invite.expiresAt).toLocaleDateString()}.
+                            {t('Single use. Expires {{value}}.', {
+                                value: new Date(
+                                    invite.expiresAt
+                                ).toLocaleDateString(),
+                            })}
                         </p>
                     </ResponsiveDialogBody>
                     <ResponsiveDialogFooter className={'mt-4'}>
-                        <Button onClick={dismiss}>Done</Button>
+                        <Button onClick={dismiss}>{t('Done')}</Button>
                     </ResponsiveDialogFooter>
                 </ResponsiveDialogContent>
             </ResponsiveDialog>
@@ -170,12 +179,18 @@ const UserFormDialog = ({ user, currentUserId, close, refresh }: Props) => {
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        {current ? `Edit ${current.name}` : 'Add user'}
+                        {current
+                            ? t('Edit {{name}}', { name: current.name })
+                            : t('Add user')}
                     </ResponsiveDialogTitle>
                     <ResponsiveDialogDescription>
                         {current
-                            ? 'Changes apply the next time they load the panel.'
-                            : 'Set a password, or leave it blank to send an invite.'}
+                            ? t(
+                                  'Changes apply the next time they load the panel.'
+                              )
+                            : t(
+                                  'Set a password, or leave it blank to send an invite.'
+                              )}
                     </ResponsiveDialogDescription>
                 </ResponsiveDialogHeader>
                 <Form {...form}>
@@ -187,29 +202,33 @@ const UserFormDialog = ({ user, currentUserId, close, refresh }: Props) => {
                                 every visit to this dialog. */}
                             {current === null && (
                                 <MailNotConfiguredAlert>
-                                    Nothing will be emailed to this account.
+                                    {t(
+                                        'Nothing will be emailed to this account.'
+                                    )}
                                 </MailNotConfiguredAlert>
                             )}
                             <InputForm
                                 name={'name'}
-                                label={'Name'}
+                                label={t('Name')}
                                 autoComplete={'off'}
                             />
                             <InputForm
                                 name={'email'}
-                                label={'Email'}
+                                label={t('Email')}
                                 type={'email'}
                                 autoComplete={'off'}
                             />
                             <InputForm
                                 name={'password'}
-                                label={'Password'}
+                                label={t('Password')}
                                 type={'password'}
                                 autoComplete={'new-password'}
                                 description={
                                     current
-                                        ? 'Leave blank to keep their current password.'
-                                        : 'Blank sends an invite instead.'
+                                        ? t(
+                                              'Leave blank to keep their current password.'
+                                          )
+                                        : t('Blank sends an invite instead.')
                                 }
                             />
                             {/* Only once there is something to grade: on an edit
@@ -223,19 +242,19 @@ const UserFormDialog = ({ user, currentUserId, close, refresh }: Props) => {
                             )}
                             <CheckboxForm
                                 name={'rootAdmin'}
-                                label={'Administrator'}
-                                description={
+                                label={t('Administrator')}
+                                description={t(
                                     'Full access to every node, server and account in the panel.'
-                                }
+                                )}
                                 disabled={cannotSelfDemote}
                             />
                             {cannotSelfDemote && (
                                 <Alert>
                                     <IconAlertTriangle className={'size-4'} />
                                     <AlertDescription>
-                                        You can't remove your own administrator
-                                        access. Another administrator can do it
-                                        for you.
+                                        {t(
+                                            "You can't remove your own administrator access. Another administrator can do it for you."
+                                        )}
                                     </AlertDescription>
                                 </Alert>
                             )}
@@ -249,7 +268,7 @@ const UserFormDialog = ({ user, currentUserId, close, refresh }: Props) => {
                                 }
                             />
                             <FormButton>
-                                {current ? 'Save' : 'Add user'}
+                                {current ? t('Save') : t('Add user')}
                             </FormButton>
                         </ResponsiveDialogFooter>
                     </form>

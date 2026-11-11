@@ -3,6 +3,8 @@ import { IconX } from '@tabler/icons-react'
 import { Link } from '@tanstack/react-router'
 import { ReactNode } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { buttonVariants } from '@/components/ui/Button'
 
 interface Props {
@@ -24,7 +26,7 @@ const FullscreenLayout = ({
         <div className={'flex h-full flex-col'}>
             <header
                 className={
-                    'flex justify-between border-b border-accent py-4 pl-3 pr-5'
+                    'border-accent flex justify-between border-b py-4 pr-5 pl-3'
                 }
             >
                 <div className={'flex items-center'}>
@@ -37,19 +39,19 @@ const FullscreenLayout = ({
                             }),
                             'absolute'
                         )}
-                        aria-label='Go back'
+                        aria-label={t('Go back')}
                     >
                         <IconX
                             aria-hidden='true'
-                            className={'size-4 text-accent-foreground/60'}
+                            className={'text-accent-foreground/60 size-4'}
                         />
                     </Link>
                     <div
-                        className={'ml-11 mr-5 h-4 w-px bg-muted-foreground/30'}
+                        className={'bg-muted-foreground/30 mr-5 ml-11 h-4 w-px'}
                     />
                     <h1
                         className={
-                            'text-sm font-medium text-accent-foreground/90'
+                            'text-accent-foreground/90 text-sm font-medium'
                         }
                     >
                         {title}

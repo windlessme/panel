@@ -1,5 +1,7 @@
 import type { AddressCapacity } from '@/types/address-capacity.ts'
 
+import { t } from '@/lib/i18n.ts'
+
 import type { Segment } from '@/components/ui/Progress'
 
 /**
@@ -82,17 +84,17 @@ export const addressCapacity = (
                       {
                           value: share(assignedCount, totalUnits),
                           color: 'var(--address-assigned)',
-                          label: 'Assigned',
+                          label: t('Assigned'),
                       },
                       {
                           value: share(reservedCount, totalUnits),
                           color: 'var(--address-reserved)',
-                          label: 'Reserved',
+                          label: t('Reserved'),
                       },
                       {
                           value: share(systemCount, totalUnits),
                           color: 'var(--address-system)',
-                          label: 'System',
+                          label: t('System'),
                       },
                   ].filter(segment => segment.value > 0),
     }

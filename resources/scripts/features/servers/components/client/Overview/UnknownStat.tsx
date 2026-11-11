@@ -1,5 +1,7 @@
 import { cn } from '@/utils'
 
+import { t } from '@/lib/i18n.ts'
+
 /**
  * What a live tile shows once the state call has failed.
  *
@@ -19,7 +21,7 @@ const UnknownStat = ({ className }: { className?: string }) => (
             className
         )}
     >
-        Unknown
+        {t('Unknown')}
     </p>
 )
 

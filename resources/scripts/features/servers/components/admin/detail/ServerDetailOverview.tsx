@@ -7,6 +7,8 @@ import { useQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 import byteSize from 'byte-size'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
@@ -68,11 +70,11 @@ const ServerDetailOverview = ({ serverId }: Props) => {
     })
 
     const specs = server && [
-        { title: 'vCPU Cores', value: server.cpu },
-        { title: 'Memory', value: formatBytes(server.memory) },
-        { title: 'Disk', value: formatBytes(server.disk) },
+        { title: t('vCPU Cores'), value: server.cpu },
+        { title: t('Memory'), value: formatBytes(server.memory) },
+        { title: t('Disk'), value: formatBytes(server.disk) },
         {
-            title: 'Bandwidth',
+            title: t('Bandwidth'),
             value:
                 server.bandwidth.limit > 0
                     ? formatBytes(server.bandwidth.limit)
@@ -82,7 +84,7 @@ const ServerDetailOverview = ({ serverId }: Props) => {
 
     const details = server && [
         {
-            title: 'Node',
+            title: t('Node'),
             value: server.node ? (
                 <Link
                     className='text-primary hover:underline'
@@ -95,10 +97,10 @@ const ServerDetailOverview = ({ serverId }: Props) => {
             ),
         },
         {
-            title: 'Owner (user ID)',
+            title: t('Owner (user ID)'),
             value: (
                 <CopyValue
-                    label={'user ID'}
+                    label={t('user ID')}
                     value={String(server.userId)}
                     className={'tabular-nums'}
                 />
@@ -124,8 +126,8 @@ const ServerDetailOverview = ({ serverId }: Props) => {
                 />
             ),
         },
-        { title: 'Created', value: server.createdAt.toLocaleString() },
-        { title: 'Description', value: server.description || '—' },
+        { title: t('Created'), value: server.createdAt.toLocaleString() },
+        { title: t('Description'), value: server.description || '—' },
     ]
 
     return (
@@ -147,16 +149,19 @@ const ServerDetailOverview = ({ serverId }: Props) => {
                         </Badge>
                     )}
                     {server?.suspendedAt && (
-                        <Badge variant='destructive'>Suspended</Badge>
+                        <Badge variant='destructive'>{t('Suspended')}</Badge>
                     )}
                     {server?.flaggedAt && (
                         <TooltipProvider>
                             <Tooltip>
                                 <TooltipTrigger asChild>
-                                    <Badge variant='destructive'>Flagged</Badge>
+                                    <Badge variant='destructive'>
+                                        {t('Flagged')}
+                                    </Badge>
                                 </TooltipTrigger>
                                 <TooltipContent className='max-w-72'>
-                                    {server.flagReason ?? 'Flagged for review.'}
+                                    {server.flagReason ??
+                                        t('Flagged for review.')}
                                 </TooltipContent>
                             </Tooltip>
                         </TooltipProvider>
@@ -217,29 +222,33 @@ const ServerDetailOverview = ({ serverId }: Props) => {
             <div className='grid grid-cols-1 gap-4 @md:grid-cols-2 @xl:grid-cols-3'>
                 <Card>
                     <CardHeader>
-                        <CardTitle>Live state</CardTitle>
+                        <CardTitle>{t('Live state')}</CardTitle>
                     </CardHeader>
                     <CardContent>
                         {state ? (
                             <dl className='grid grid-cols-2 gap-y-3 text-sm'>
-                                <dt className='text-muted-foreground'>Power</dt>
+                                <dt className='text-muted-foreground'>
+                                    {t('Power')}
+                                </dt>
                                 <dd className='text-right font-medium'>
                                     {state.powerState === 'running'
-                                        ? 'Running'
-                                        : 'Stopped'}
+                                        ? t('Running')
+                                        : t('Stopped')}
                                 </dd>
                                 <dt className='text-muted-foreground'>
-                                    Uptime
+                                    {t('Uptime')}
                                 </dt>
                                 <dd className='text-right'>
                                     {formatDuration(state.uptime)}
                                 </dd>
-                                <dt className='text-muted-foreground'>CPU</dt>
+                                <dt className='text-muted-foreground'>
+                                    {t('CPU')}
+                                </dt>
                                 <dd className='text-right'>
                                     {(state.cpuUsed * 100).toFixed(1)}%
                                 </dd>
                                 <dt className='text-muted-foreground'>
-                                    Memory
+                                    {t('Memory')}
                                 </dt>
                                 <dd className='text-right'>
                                     {formatBytes(state.memoryUsed)} /{' '}
@@ -254,7 +263,7 @@ const ServerDetailOverview = ({ serverId }: Props) => {
 
                 <Card>
                     <CardHeader>
-                        <CardTitle>Specifications</CardTitle>
+                        <CardTitle>{t('Specifications')}</CardTitle>
                     </CardHeader>
                     <CardContent>
                         {specs ? (
@@ -278,7 +287,7 @@ const ServerDetailOverview = ({ serverId }: Props) => {
 
                 <Card className='@md:col-span-2 @xl:col-span-1'>
                     <CardHeader>
-                        <CardTitle>Details</CardTitle>
+                        <CardTitle>{t('Details')}</CardTitle>
                     </CardHeader>
                     <CardContent>
                         {details ? (

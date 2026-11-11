@@ -22,6 +22,8 @@ import { useMutation } from '@tanstack/react-query'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
 import { ButtonGroup, ButtonGroupSeparator } from '@/components/ui/ButtonGroup'
@@ -54,17 +56,19 @@ import { toast } from '@/components/ui/Toast'
 const consoles = [
     {
         type: 'novnc',
-        label: 'Display',
+        label: t('Display'),
         icon: IconDeviceDesktop,
-        description:
-            'Graphical output with mouse and keyboard. Use this for installers and boot screens.',
+        description: t(
+            'Graphical output with mouse and keyboard. Use this for installers and boot screens.'
+        ),
     },
     {
         type: 'xtermjs',
-        label: 'Serial terminal',
+        label: t('Serial terminal'),
         icon: IconTerminal2,
-        description:
-            'Text only, with copy and paste. Holds up over a slow connection.',
+        description: t(
+            'Text only, with copy and paste. Holds up over a slow connection.'
+        ),
     },
 ] satisfies {
     type: ConsoleType
@@ -87,7 +91,7 @@ const ConsoleButton = () => {
             <ButtonGroup className={shell}>
                 <Button className={leadingHalf} disabled>
                     <IconTerminal2 />
-                    Console
+                    {t('Console')}
                 </Button>
                 <ButtonGroupSeparator />
                 <Button className={trailingHalf} disabled aria-hidden>
@@ -135,13 +139,13 @@ const ConsoleControls = ({ server }: { server: Server }) => {
                     }
                 >
                     <IconTerminal2 />
-                    Console
+                    {t('Console')}
                 </Button>
                 <ButtonGroupSeparator />
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button
-                            aria-label={'Console options'}
+                            aria-label={t('Console options')}
                             className={trailingHalf}
                         >
                             <IconChevronDown />
@@ -157,7 +161,9 @@ const ConsoleControls = ({ server }: { server: Server }) => {
                                     onClick={launched(type)}
                                 >
                                     <Icon />
-                                    Open {label.toLowerCase()}
+                                    {t('Open {{toLowerCase}}', {
+                                        toLowerCase: label.toLowerCase(),
+                                    })}
                                 </Link>
                             </DropdownMenuItem>
                         ))}
@@ -170,12 +176,12 @@ const ConsoleControls = ({ server }: { server: Server }) => {
                                 onClick={launched(lastUsed ?? 'novnc')}
                             >
                                 <IconExternalLink />
-                                Open in new window
+                                {t('Open in new window')}
                             </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => setPicking(true)}>
                             <IconSettings />
-                            Console options…
+                            {t('Console options…')}
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
@@ -184,10 +190,12 @@ const ConsoleControls = ({ server }: { server: Server }) => {
                 <ResponsiveDialogContent>
                     <ResponsiveDialogHeader>
                         <ResponsiveDialogTitle>
-                            Open console
+                            {t('Open console')}
                         </ResponsiveDialogTitle>
                         <ResponsiveDialogDescription>
-                            Choose how you want to connect to {server.name}.
+                            {t('Choose how you want to connect to {{name}}.', {
+                                name: server.name,
+                            })}
                         </ResponsiveDialogDescription>
                     </ResponsiveDialogHeader>
                     <ResponsiveDialogBody className={'flex flex-col gap-2'}>
@@ -233,7 +241,7 @@ const ConsoleControls = ({ server }: { server: Server }) => {
                                                                 'font-medium'
                                                             }
                                                         >
-                                                            Last used
+                                                            {t('Last used')}
                                                         </Badge>
                                                     )}
                                                 </ItemTitle>
@@ -267,7 +275,7 @@ const ConsoleControls = ({ server }: { server: Server }) => {
                                     setNewWindow(checked)
                                 }
                             />
-                            Open in a new window
+                            {t('Open in a new window')}
                         </Label>
                     </ResponsiveDialogBody>
                 </ResponsiveDialogContent>
@@ -303,7 +311,7 @@ const SerialDeviceNotice = ({
         onSuccess: status => refresh(() => status),
         onError: () =>
             toast.add({
-                title: 'Could not add the serial device',
+                title: t('Could not add the serial device'),
                 type: 'error',
             }),
     })
@@ -318,14 +326,17 @@ const SerialDeviceNotice = ({
         >
             {serial.restartRequired ? (
                 <p>
-                    The serial device is added but only appears once the server
-                    boots. Restart {server.name} to finish enabling it.
+                    {t(
+                        'The serial device is added but only appears once the server boots. Restart {{name}} to finish enabling it.',
+                        { name: server.name }
+                    )}
                 </p>
             ) : (
                 <>
                     <p>
-                        This server has no serial device, so the terminal will
-                        connect to nothing. Adding one takes a restart.
+                        {t(
+                            'This server has no serial device, so the terminal will connect to nothing. Adding one takes a restart.'
+                        )}
                     </p>
                     <Button
                         variant={'outline'}
@@ -334,7 +345,7 @@ const SerialDeviceNotice = ({
                         loading={enabling}
                         onClick={() => mutate()}
                     >
-                        Add serial device
+                        {t('Add serial device')}
                     </Button>
                 </>
             )}
@@ -370,7 +381,7 @@ const DisplayOutputNotice = ({
         onSuccess: status => refresh(() => status),
         onError: () =>
             toast.add({
-                title: 'Could not change the display',
+                title: t('Could not change the display'),
                 type: 'error',
             }),
     })
@@ -385,16 +396,19 @@ const DisplayOutputNotice = ({
         >
             {display.restartRequired ? (
                 <p>
-                    The display is set but only takes effect once the server
-                    boots. Restart {server.name} to finish enabling it.
+                    {t(
+                        'The display is set but only takes effect once the server boots. Restart {{name}} to finish enabling it.',
+                        { name: server.name }
+                    )}
                 </p>
             ) : (
                 <>
                     <p>
-                        This server's display is set to{' '}
-                        <code>{display.display}</code>, so it has no screen for
-                        the display console to show. Giving it one takes a
-                        restart, and does not affect the serial console.
+                        {t("This server's display is set to")}
+                        <code>{display.display}</code>
+                        {t(
+                            ', so it has no screen for the display console to show. Giving it one takes a restart, and does not affect the serial console.'
+                        )}
                     </p>
                     <Button
                         variant={'outline'}
@@ -403,7 +417,7 @@ const DisplayOutputNotice = ({
                         loading={enabling}
                         onClick={() => mutate()}
                     >
-                        Enable display output
+                        {t('Enable display output')}
                     </Button>
                 </>
             )}

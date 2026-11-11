@@ -1,14 +1,14 @@
 import { rawDataToServerResources } from '@/features/servers/transforms'
 import type { Deployment, DeploymentStep } from '@/features/servers/types'
 import { Address } from '@/types/address.ts'
+import type { ImageDefinition } from '@/types/image'
+import { ImageGroup } from '@/types/image.ts'
 import type {
     Server,
     ServerResources,
     ServerStateData,
     ServerTimepointData,
 } from '@/types/server'
-import type { ImageDefinition } from '@/types/image'
-import { ImageGroup } from '@/types/image.ts'
 import AddressController from '@/wayfinder/actions/App/Http/Controllers/Client/Servers/AddressController'
 import ResourceController from '@/wayfinder/actions/App/Http/Controllers/Client/Servers/ResourceController'
 import ServerController from '@/wayfinder/actions/App/Http/Controllers/Client/Servers/ServerController'
@@ -24,13 +24,14 @@ import { useEffect, useState } from 'react'
 import { z } from 'zod'
 
 import { type DataResponse, apiFetch } from '@/lib/api'
+import { t } from '@/lib/i18n.ts'
 import { queryClient } from '@/lib/query-client.ts'
 import { rawDataToAddress } from '@/lib/transformers/address.ts'
+import { rawDataToImageGroup } from '@/lib/transformers/image.ts'
 import {
     rawDataToServer,
     rawDataToServerTimepointData,
 } from '@/lib/transformers/server.ts'
-import { rawDataToImageGroup } from '@/lib/transformers/image.ts'
 
 export type TimeRange = 'hour' | 'day' | 'week' | 'month' | 'year'
 export type ConsolidatorFn = 'AVERAGE' | 'MAX'
@@ -53,19 +54,19 @@ export const reinstallServerSchema = z
     .object({
         imageGroupUuid: z
             .string()
-            .min(1, 'Please select an operating system'),
-        imageUuid: z.string().min(1, 'Please select a version'),
+            .min(1, t('Please select an operating system')),
+        imageUuid: z.string().min(1, t('Please select a version')),
         accountPassword: z
             .string()
-            .min(8, 'Password must be at least 8 characters')
-            .max(191, 'Password must be at most 191 characters'),
+            .min(8, t('Password must be at least 8 characters'))
+            .max(191, t('Password must be at most 191 characters')),
         accountPasswordConfirmation: z
             .string()
-            .min(1, 'Please confirm the password'),
+            .min(1, t('Please confirm the password')),
         startOnCompletion: z.boolean(),
     })
     .refine(data => data.accountPassword === data.accountPasswordConfirmation, {
-        message: "Passwords don't match",
+        message: t("Passwords don't match"),
         path: ['accountPasswordConfirmation'],
     })
 
@@ -174,9 +175,7 @@ export const getServerDeployment = async (
         startOnCompletion: data.startOnCompletion,
         requestedAt: new Date(data.requestedAt),
         completedAt: data.completedAt ? new Date(data.completedAt) : null,
-        image: imageData
-            ? (imageData as ImageDefinition)
-            : undefined,
+        image: imageData ? (imageData as ImageDefinition) : undefined,
         steps,
     }
 }

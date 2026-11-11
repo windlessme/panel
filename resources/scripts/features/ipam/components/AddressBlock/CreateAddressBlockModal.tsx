@@ -12,6 +12,8 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { Form, FormButton } from '@/components/ui/Form'
 import { InputForm, TextareaForm } from '@/components/ui/Forms'
@@ -72,10 +74,10 @@ const CreateAddressBlockModal = ({ addressBlockGroupId, mutate }: Props) => {
 
             form.reset()
             setOpen(false)
-            toast.add({ title: 'Address block created', type: 'success' })
+            toast.add({ title: t('Address block created'), type: 'success' })
         } catch (e) {
             handleFormErrors(e, form.setError)
-            toast.add({ title: 'Failed to save changes', type: 'error' })
+            toast.add({ title: t('Failed to save changes'), type: 'error' })
             throw e
         }
     }
@@ -92,7 +94,7 @@ const CreateAddressBlockModal = ({ addressBlockGroupId, mutate }: Props) => {
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        New Address Block
+                        {t('New Address Block')}
                     </ResponsiveDialogTitle>
                 </ResponsiveDialogHeader>
                 <Form {...form}>
@@ -102,10 +104,10 @@ const CreateAddressBlockModal = ({ addressBlockGroupId, mutate }: Props) => {
                                 'space-y-2 max-sm:max-h-[60vh] max-sm:overflow-y-auto'
                             }
                         >
-                            <InputForm name={'name'} label={'Name'} />
+                            <InputForm name={'name'} label={t('Name')} />
                             <TextareaForm
                                 name={'description'}
-                                label={'Description'}
+                                label={t('Description')}
                             />
                             <TabForm
                                 name={'version'}
@@ -113,26 +115,30 @@ const CreateAddressBlockModal = ({ addressBlockGroupId, mutate }: Props) => {
                                     className: 'grid grid-cols-2 w-full',
                                 }}
                             >
-                                <TabsTrigger value={'ipv4'}>IPv4</TabsTrigger>
-                                <TabsTrigger value={'ipv6'}>IPv6</TabsTrigger>
+                                <TabsTrigger value={'ipv4'}>
+                                    {t('IPv4')}
+                                </TabsTrigger>
+                                <TabsTrigger value={'ipv6'}>
+                                    {t('IPv6')}
+                                </TabsTrigger>
                             </TabForm>
-                            <InputForm name={'baseIp'} label={'Base IP'} />
-                            <InputForm name={'gateway'} label={'Gateway'} />
+                            <InputForm name={'baseIp'} label={t('Base IP')} />
+                            <InputForm name={'gateway'} label={t('Gateway')} />
                             <InputForm
                                 name={'macAddress'}
-                                label={'MAC Address'}
+                                label={t('MAC Address')}
                             />
                             <div className={'grid grid-cols-2 gap-2'}>
                                 <InputForm
                                     name={'prefixLengthFrom'}
-                                    label={'Source Prefix Length'}
+                                    label={t('Source Prefix Length')}
                                     type={'number'}
                                     min={0}
                                     max={128}
                                 />
                                 <InputForm
                                     name={'prefixLengthTo'}
-                                    label={'Output Prefix Length'}
+                                    label={t('Output Prefix Length')}
                                     type={'number'}
                                     min={0}
                                     max={128}
@@ -147,7 +153,7 @@ const CreateAddressBlockModal = ({ addressBlockGroupId, mutate }: Props) => {
                                     </Button>
                                 }
                             />
-                            <FormButton>Add address block</FormButton>
+                            <FormButton>{t('Add address block')}</FormButton>
                         </ResponsiveDialogFooter>
                     </form>
                 </Form>

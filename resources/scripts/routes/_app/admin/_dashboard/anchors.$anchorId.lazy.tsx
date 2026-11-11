@@ -11,6 +11,8 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { Card, CardContent } from '@/components/ui/Card'
 import { Form, FormButton } from '@/components/ui/Form'
@@ -69,7 +71,8 @@ function ApproveEnrollmentPage() {
         const s = enrollment.suggestions as Record<string, unknown>
         const pick = (...keys: string[]) => {
             for (const key of keys) {
-                if (s[key] !== undefined && s[key] !== null) return String(s[key])
+                if (s[key] !== undefined && s[key] !== null)
+                    return String(s[key])
             }
 
             return ''
@@ -114,7 +117,7 @@ function ApproveEnrollmentPage() {
                 memory: data.memory * 1024 * 1024,
             })
 
-            toast.add({ title: 'Node added', type: 'success' })
+            toast.add({ title: t('Node added'), type: 'success' })
 
             navigate({
                 to: '/admin/nodes/$nodeId',
@@ -126,7 +129,10 @@ function ApproveEnrollmentPage() {
             // The reported fields are hidden by default, so a validation error
             // on one of them would otherwise point at nothing.
             setEditingFacts(true)
-            toast.add({ title: 'Could not approve this machine', type: 'error' })
+            toast.add({
+                title: t('Could not approve this machine'),
+                type: 'error',
+            })
         }
     }
 
@@ -140,21 +146,21 @@ function ApproveEnrollmentPage() {
                         'mx-auto grid w-full max-w-5xl items-start gap-6 lg:grid-cols-5'
                     }
                 >
-                    <div
-                        className={'flex flex-col gap-4 lg:col-span-3'}
-                    >
+                    <div className={'flex flex-col gap-4 lg:col-span-3'}>
                         <div>
-                            <Heading>Let {enrollment.name} join?</Heading>
+                            <Heading>
+                                {t('Let {{name}} join?', {
+                                    name: enrollment.name,
+                                })}
+                            </Heading>
                         </div>
 
                         <Card>
-                            <CardContent
-                                className={'flex flex-col gap-5 p-5'}
-                            >
+                            <CardContent className={'flex flex-col gap-5 p-5'}>
                                 <SelectForm
                                     name={'locationId'}
-                                    label={'Which location?'}
-                                    placeholder={'Select a location'}
+                                    label={t('Which location?')}
+                                    placeholder={t('Select a location')}
                                     items={(locations?.items ?? []).map(
                                         location => ({
                                             label: location.shortCode,
@@ -169,7 +175,7 @@ function ApproveEnrollmentPage() {
 
                                 <div
                                     className={
-                                        'flex flex-col gap-3 border-t border-border pt-5'
+                                        'border-border flex flex-col gap-3 border-t pt-5'
                                     }
                                 >
                                     <div
@@ -177,32 +183,29 @@ function ApproveEnrollmentPage() {
                                             'flex flex-wrap items-center gap-2'
                                         }
                                     >
-                                        <span
-                                            className={'text-sm font-medium'}
-                                        >
-                                            Proxmox API token
+                                        <span className={'text-sm font-medium'}>
+                                            {t('Proxmox API token')}
                                         </span>
                                         <StatLabel
                                             className={
                                                 'bg-muted rounded px-1.5 py-0.5 text-xs'
                                             }
                                         >
-                                            Goes away once the agent mints its
-                                            own
+                                            {t(
+                                                'Goes away once the agent mints its own'
+                                            )}
                                         </StatLabel>
                                     </div>
                                     <div
-                                        className={
-                                            'grid gap-3 sm:grid-cols-2'
-                                        }
+                                        className={'grid gap-3 sm:grid-cols-2'}
                                     >
                                         <InputForm
                                             name={'tokenId'}
-                                            label={'Token ID'}
+                                            label={t('Token ID')}
                                         />
                                         <InputForm
                                             name={'tokenSecret'}
-                                            label={'Token secret'}
+                                            label={t('Token secret')}
                                         />
                                     </div>
                                 </div>
@@ -211,7 +214,7 @@ function ApproveEnrollmentPage() {
 
                         <div className={'flex flex-wrap gap-2'}>
                             <FormButton className={'flex'}>
-                                Approve and add node
+                                {t('Approve and add node')}
                                 <IconCheck className={'size-4'} />
                             </FormButton>
                             <Button
@@ -221,7 +224,7 @@ function ApproveEnrollmentPage() {
                                     navigate({ to: '/admin/anchors' })
                                 }
                             >
-                                Cancel
+                                {t('Cancel')}
                             </Button>
                         </div>
                     </div>
@@ -240,33 +243,36 @@ function ApproveEnrollmentPage() {
                                 >
                                     <InputForm
                                         name={'displayName'}
-                                        label={'Display name'}
+                                        label={t('Display name')}
                                     />
                                     <InputForm
                                         name={'name'}
-                                        label={'Proxmox node name'}
+                                        label={t('Proxmox node name')}
                                     />
                                     <InputForm name={'fqdn'} label={'FQDN'} />
-                                    <InputForm name={'port'} label={'Port'} />
+                                    <InputForm
+                                        name={'port'}
+                                        label={t('Port')}
+                                    />
                                     <InputForm
                                         name={'agentPublicUrl'}
-                                        label={'Agent address'}
+                                        label={t('Agent address')}
                                     />
                                     <InputForm
                                         name={'socketCount'}
-                                        label={'Sockets'}
+                                        label={t('Sockets')}
                                     />
                                     <InputForm
                                         name={'coreCount'}
-                                        label={'Cores'}
+                                        label={t('Cores')}
                                     />
                                     <InputForm
                                         name={'cpuCount'}
-                                        label={'Threads'}
+                                        label={t('Threads')}
                                     />
                                     <InputForm
                                         name={'memory'}
-                                        label={'Memory (MiB)'}
+                                        label={t('Memory (MiB)')}
                                     />
                                 </CardContent>
                             </Card>

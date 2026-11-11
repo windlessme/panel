@@ -12,6 +12,8 @@ import { Route } from '@/routes/_app/admin/nodes.$nodeId/network.tsx'
 import { NetworkInterface, Vlan } from '@/types/network-interface.ts'
 import { AxiosError } from 'axios'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     ResponsiveDialog,
@@ -43,7 +45,7 @@ const DeleteVlanModal = () => {
 
                 await mutate(withVlans(interfaceId, removeVlan(target)), false)
 
-                toast.add({ title: 'VLAN deleted', type: 'success' })
+                toast.add({ title: t('VLAN deleted'), type: 'success' })
                 close()
             } catch (e) {
                 let message = 'Deletion failed'
@@ -69,7 +71,7 @@ const DeleteVlanModal = () => {
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        Delete VLAN {vlan?.tag}
+                        {t('Delete VLAN {{tag}}', { tag: vlan?.tag })}
                     </ResponsiveDialogTitle>
                     <ResponsiveDialogDescription>
                         {inUse
@@ -77,8 +79,13 @@ const DeleteVlanModal = () => {
                                  losing connectivity: the tag lives on the
                                  servers, so nothing about their networking
                                  changes. Only the name goes away. */
-                              `This only removes the name. ${subject} tag ${vlan?.tag}, and the VLAN stays listed as undeclared.`
-                            : 'Nothing is using this VLAN. It will disappear from the list.'}
+                              t(
+                                  'This only removes the name. {{subject}} tag {{tag}}, and the VLAN stays listed as undeclared.',
+                                  { subject, tag: vlan?.tag }
+                              )
+                            : t(
+                                  'Nothing is using this VLAN. It will disappear from the list.'
+                              )}
                     </ResponsiveDialogDescription>
                 </ResponsiveDialogHeader>
                 <ResponsiveDialogFooter className={'mt-4'}>
@@ -95,7 +102,7 @@ const DeleteVlanModal = () => {
                             submit(networkInterface.id, vlan)
                         }
                     >
-                        Delete
+                        {t('Delete')}
                     </Button>
                 </ResponsiveDialogFooter>
             </ResponsiveDialogContent>

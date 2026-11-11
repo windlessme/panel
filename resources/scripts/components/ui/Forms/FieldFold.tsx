@@ -1,6 +1,8 @@
 import { ReactNode, useState } from 'react'
 import { useFormState } from 'react-hook-form'
 
+import { t } from '@/lib/i18n.ts'
+
 import {
     Collapsible,
     CollapsiblePanel,
@@ -80,7 +82,7 @@ const FieldFold = ({ fields, summary, children }: Props) => {
                     {summary}
                 </p>
                 <CollapsibleTrigger className={'w-auto shrink-0'}>
-                    {open ? 'Hide' : 'Edit'}
+                    {open ? t('Hide') : t('Edit')}
                 </CollapsibleTrigger>
             </div>
             <CollapsiblePanel>

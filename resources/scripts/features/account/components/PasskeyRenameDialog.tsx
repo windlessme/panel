@@ -10,6 +10,8 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { Form, FormButton } from '@/components/ui/Form'
 import { InputForm } from '@/components/ui/Forms'
@@ -53,7 +55,7 @@ const PasskeyRenameDialog = () => {
 
         await renamePasskey(passkey.id, data.name)
 
-        toast.add({ title: 'Passkey renamed', type: 'success' })
+        toast.add({ title: t('Passkey renamed'), type: 'success' })
 
         await queryClient.invalidateQueries({ queryKey: passkeyQueries.all() })
 
@@ -68,17 +70,17 @@ const PasskeyRenameDialog = () => {
             <ResponsiveDialogContent className={'max-h-[50vh]'}>
                 <ResponsiveDialogHeader className={'overflow-x-hidden'}>
                     <ResponsiveDialogTitle className={'truncate'}>
-                        Rename {passkey?.name}
+                        {t('Rename {{name}}', { name: passkey?.name })}
                     </ResponsiveDialogTitle>
                     <ResponsiveDialogDescription>
-                        Change the name of this passkey.
+                        {t('Change the name of this passkey.')}
                     </ResponsiveDialogDescription>
                 </ResponsiveDialogHeader>
 
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(submit)}>
                         <ResponsiveDialogBody>
-                            <InputForm name={'name'} label={'Name'} />
+                            <InputForm name={'name'} label={t('Name')} />
                         </ResponsiveDialogBody>
                         <ResponsiveDialogFooter className={'mt-4'}>
                             <ResponsiveDialogClose
@@ -88,7 +90,7 @@ const PasskeyRenameDialog = () => {
                                     </Button>
                                 }
                             />
-                            <FormButton>Confirm</FormButton>
+                            <FormButton>{t('Confirm')}</FormButton>
                         </ResponsiveDialogFooter>
                     </form>
                 </Form>

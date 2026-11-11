@@ -2,6 +2,8 @@ import type { StorageConsumer } from '@/features/nodes/storages/api.ts'
 import byteSize from 'byte-size'
 import { useEffect, useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Label } from '@/components/ui/Label'
@@ -63,20 +65,23 @@ const DeleteServerDialog = ({
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        Delete {server?.name}?
+                        {t('Delete {{name}}?', { name: server?.name })}
                     </ResponsiveDialogTitle>
                     <ResponsiveDialogDescription>
-                        This destroys the server and everything on it. It cannot
-                        be undone.
+                        {t(
+                            'This destroys the server and everything on it. It cannot be undone.'
+                        )}
                     </ResponsiveDialogDescription>
                 </ResponsiveDialogHeader>
 
                 <ResponsiveDialogBody className={'flex flex-col gap-4'}>
                     <dl className={'grid grid-cols-2 gap-y-2 text-sm'}>
-                        <dt className={'text-muted-foreground'}>Owner</dt>
+                        <dt className={'text-muted-foreground'}>
+                            {t('Owner')}
+                        </dt>
                         <dd className={'text-right'}>{server?.owner ?? '—'}</dd>
                         <dt className={'text-muted-foreground'}>
-                            Reclaimed here
+                            {t('Reclaimed here')}
                         </dt>
                         <dd className={'text-right font-mono tabular-nums'}>
                             {server ? fmt(server.size) : '—'}
@@ -85,7 +90,7 @@ const DeleteServerDialog = ({
 
                     <div className={'flex flex-col gap-2'}>
                         <Label htmlFor={'confirm-server-name'}>
-                            Type <b>{server?.name}</b> to confirm
+                            {t('Type')} <b>{server?.name}</b> {t('to confirm')}
                         </Label>
                         <Input
                             id={'confirm-server-name'}
@@ -106,7 +111,7 @@ const DeleteServerDialog = ({
                         loading={isPending}
                         onClick={onConfirm}
                     >
-                        Delete server
+                        {t('Delete server')}
                     </Button>
                 </ResponsiveDialogFooter>
             </ResponsiveDialogContent>

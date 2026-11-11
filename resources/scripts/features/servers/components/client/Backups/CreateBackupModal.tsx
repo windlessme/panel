@@ -13,6 +13,8 @@ import { AxiosError } from 'axios'
 import { type ReactElement, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Alert, AlertDescription } from '@/components/ui/Alert'
 import { Button } from '@/components/ui/Button'
 import {
@@ -42,16 +44,16 @@ import {
 // Mode decides what happens to a RUNNING guest, so the copy has to say so —
 // "Kill" stops the VM for the duration of the backup.
 const modeItems = [
-    { value: 'snapshot', label: 'Snapshot — no downtime' },
-    { value: 'suspend', label: 'Suspend — guest is paused' },
-    { value: 'kill', label: 'Kill — guest is stopped' },
+    { value: 'snapshot', label: t('Snapshot — no downtime') },
+    { value: 'suspend', label: t('Suspend — guest is paused') },
+    { value: 'kill', label: t('Kill — guest is stopped') },
 ]
 
 const compressionItems = [
-    { value: 'zstd', label: 'ZSTD — fast, recommended' },
-    { value: 'gzip', label: 'GZIP — slower, smaller' },
-    { value: 'lzo', label: 'LZO — fastest, larger' },
-    { value: 'none', label: 'None — no compression' },
+    { value: 'zstd', label: t('ZSTD — fast, recommended') },
+    { value: 'gzip', label: t('GZIP — slower, smaller') },
+    { value: 'lzo', label: t('LZO — fastest, larger') },
+    { value: 'none', label: t('None — no compression') },
 ]
 
 // The backend's backup failures are curated and actionable — the throttle names
@@ -106,7 +108,7 @@ const CreateBackupModal = ({
 
             form.reset(createBackupDefaults)
             setOpen(false)
-            toast.add({ title: 'Backup started', type: 'success' })
+            toast.add({ title: t('Backup started'), type: 'success' })
         } catch (e) {
             handleFormErrors(e, form.setError)
             toast.add({
@@ -135,7 +137,7 @@ const CreateBackupModal = ({
                         }
                         onClick={event => event.preventDefault()}
                     >
-                        <IconPlus className={'size-4'} /> Create backup
+                        <IconPlus className={'size-4'} /> {t('Create backup')}
                     </Button>
                 </TooltipTrigger>
                 <TooltipContent>{blockedReason}</TooltipContent>
@@ -156,7 +158,9 @@ const CreateBackupModal = ({
             />
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
-                    <ResponsiveDialogTitle>Create Backup</ResponsiveDialogTitle>
+                    <ResponsiveDialogTitle>
+                        {t('Create Backup')}
+                    </ResponsiveDialogTitle>
                 </ResponsiveDialogHeader>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(submit)}>
@@ -174,7 +178,7 @@ const CreateBackupModal = ({
                                 stop it — the vendor opt-outs do. */}
                             <InputForm
                                 name={'name'}
-                                label={'Name'}
+                                label={t('Name')}
                                 autoComplete={'off'}
                                 data-1p-ignore
                                 data-lpignore={'true'}
@@ -185,29 +189,29 @@ const CreateBackupModal = ({
                                 the rest stays out of the way until asked for. */}
                             <Collapsible>
                                 <CollapsibleTrigger>
-                                    Advanced
+                                    {t('Advanced')}
                                 </CollapsibleTrigger>
                                 <CollapsiblePanel>
                                     <div className={'space-y-4 pt-3'}>
                                         <SelectForm
                                             name={'mode'}
-                                            label={'Mode'}
+                                            label={t('Mode')}
                                             items={modeItems}
-                                            description={
+                                            description={t(
                                                 'How the guest is handled while the backup runs.'
-                                            }
+                                            )}
                                         />
                                         <SelectForm
                                             name={'compressionType'}
-                                            label={'Compression'}
+                                            label={t('Compression')}
                                             items={compressionItems}
                                         />
                                         <CheckboxForm
                                             name={'isLocked'}
-                                            label={'Lock this backup'}
-                                            description={
+                                            label={t('Lock this backup')}
+                                            description={t(
                                                 'Protects the backup from automatic pruning.'
-                                            }
+                                            )}
                                         />
                                     </div>
                                 </CollapsiblePanel>
@@ -222,7 +226,7 @@ const CreateBackupModal = ({
                                 }
                             />
                             <FormButton disabled={Boolean(blockedReason)}>
-                                Create backup
+                                {t('Create backup')}
                             </FormButton>
                         </ResponsiveDialogFooter>
                     </form>

@@ -1,6 +1,8 @@
 import { cn } from '@/utils'
 import { ReactNode, useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     Sheet,
@@ -52,7 +54,9 @@ const OverflowItemGroup = ({ rows, max = 3, title, className }: Props) => {
                         className='mt-auto w-full'
                         onClick={() => setOpen(true)}
                     >
-                        Show all {rows.length} &rarr;
+                        {t('Show all {{length}} &rarr;', {
+                            length: rows.length,
+                        })}
                     </Button>
                 )}
             </div>

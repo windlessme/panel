@@ -2,6 +2,8 @@ import { cn } from '@/utils'
 import { useHeadroom } from '@mantine/hooks'
 import { ReactNode, useEffect, useRef, useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 interface Props {
     title: string
     /** Orienting line under the title. Hidden below `sm` — see below. */
@@ -51,7 +53,7 @@ const FormToolbar = ({ title, subtitle, actions }: Props) => {
 
             observer = new IntersectionObserver(
                 ([entry]) => setStuck(!entry.isIntersecting),
-                { rootMargin: `-${offset}px 0px 0px 0px` }
+                { rootMargin: t('-{{offset}}px 0px 0px 0px', { offset }) }
             )
 
             observer.observe(sentinel)

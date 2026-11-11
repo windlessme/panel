@@ -10,6 +10,8 @@ import { useMutation } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     Card,
@@ -45,12 +47,12 @@ const PasswordCard = ({ uuid }: Props) => {
         mutationFn: (data: PasswordInput) =>
             updateServerPassword(uuid, data.password),
         onSuccess: () => {
-            toast.add({ title: 'Root password updated', type: 'success' })
+            toast.add({ title: t('Root password updated'), type: 'success' })
             form.reset(defaultValues)
         },
         onError: e => {
             handleFormErrors(e, form.setError)
-            toast.add({ title: 'Failed to update password', type: 'error' })
+            toast.add({ title: t('Failed to update password'), type: 'error' })
         },
     })
 
@@ -78,10 +80,11 @@ const PasswordCard = ({ uuid }: Props) => {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Root Password</CardTitle>
+                <CardTitle>{t('Root Password')}</CardTitle>
                 <CardDescription>
-                    Set a new password for the server’s default user. Applied on
-                    the next boot via cloud-init.
+                    {t(
+                        'Set a new password for the server’s default user. Applied on the next boot via cloud-init.'
+                    )}
                 </CardDescription>
             </CardHeader>
             <Form {...form}>
@@ -96,13 +99,13 @@ const PasswordCard = ({ uuid }: Props) => {
                     <CardContent className={'flex-1 space-y-2'}>
                         <InputForm
                             name={'password'}
-                            label={'New password'}
+                            label={t('New password')}
                             type={'password'}
                             autoComplete={'new-password'}
                         />
                         <InputForm
                             name={'passwordConfirmation'}
-                            label={'Confirm password'}
+                            label={t('Confirm password')}
                             type={'password'}
                             autoComplete={'new-password'}
                         />
@@ -119,7 +122,7 @@ const PasswordCard = ({ uuid }: Props) => {
                                 isPending
                             }
                         >
-                            Set password
+                            {t('Set password')}
                         </Button>
                     </CardFooter>
                 </form>

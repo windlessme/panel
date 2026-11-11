@@ -1,6 +1,8 @@
 import { useIsAuthenticatorEnabled } from '@/features/account/authenticator/api.ts'
 import { IconAsteriskSimple, IconDeviceMobileFilled } from '@tabler/icons-react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Badge } from '@/components/ui/Badge'
 import { SimpleEmptyState } from '@/components/ui/EmptyStates'
 import {
@@ -34,10 +36,10 @@ const AuthenticatorStatus = () => {
         return (
             <SimpleEmptyState
                 icon={IconAsteriskSimple}
-                title={'Authenticator is disabled'}
-                description={
+                title={t('Authenticator is disabled')}
+                description={t(
                     'You have not enabled the authenticator for your account.'
-                }
+                )}
             />
         )
     }
@@ -49,12 +51,13 @@ const AuthenticatorStatus = () => {
             </ItemMedia>
             <ItemContent>
                 <ItemTitle>
-                    Authenticator app
-                    <Badge variant={'secondary'}>Enabled</Badge>
+                    {t('Authenticator app')}
+                    <Badge variant={'secondary'}>{t('Enabled')}</Badge>
                 </ItemTitle>
                 <ItemDescription>
-                    A code from your app is required when you sign in with your
-                    password.
+                    {t(
+                        'A code from your app is required when you sign in with your password.'
+                    )}
                 </ItemDescription>
             </ItemContent>
         </Item>

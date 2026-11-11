@@ -16,6 +16,8 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
 import { Form, FormButton } from '@/components/ui/Form'
 import Skeleton from '@/components/ui/Skeleton.tsx'
@@ -51,7 +53,10 @@ function BandwidthSettingsPage() {
         mutationFn: updateBandwidthSettings,
         onSuccess: async updated => {
             await mutateSettings(() => updated)
-            toast.add({ title: 'Bandwidth settings updated', type: 'success' })
+            toast.add({
+                title: t('Bandwidth settings updated'),
+                type: 'success',
+            })
         },
     })
 
@@ -61,7 +66,7 @@ function BandwidthSettingsPage() {
         } catch (e) {
             handleFormErrors(e, form.setError)
             toast.add({
-                title: 'Failed to update bandwidth settings',
+                title: t('Failed to update bandwidth settings'),
                 type: 'error',
             })
             console.error(e)
@@ -71,7 +76,7 @@ function BandwidthSettingsPage() {
     if (isLoading || !settings) {
         return (
             <>
-                <Heading>Bandwidth</Heading>
+                <Heading>{t('Bandwidth')}</Heading>
                 <Skeleton className={'h-64'} />
             </>
         )
@@ -79,12 +84,12 @@ function BandwidthSettingsPage() {
 
     return (
         <div className={'@container space-y-4'}>
-            <Heading>Bandwidth</Heading>
+            <Heading>{t('Bandwidth')}</Heading>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(submit as any)}>
                     <Card>
                         <CardHeader>
-                            <CardTitle>Overage penalty</CardTitle>
+                            <CardTitle>{t('Overage penalty')}</CardTitle>
                         </CardHeader>
                         <CardContent>
                             <PenaltyActionFields />
@@ -93,7 +98,8 @@ function BandwidthSettingsPage() {
 
                     <div className={'mt-4 flex justify-end'}>
                         <FormButton className={'flex'}>
-                            Save changes <IconCheck className={'size-4'} />
+                            {t('Save changes')}{' '}
+                            <IconCheck className={'size-4'} />
                         </FormButton>
                     </div>
                 </form>

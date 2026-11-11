@@ -15,6 +15,8 @@ import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import AuthDialog from '@/components/ui/Dialog/AuthDialog.tsx'
 import { Form, FormButton } from '@/components/ui/Form'
@@ -54,11 +56,11 @@ const ApiKeyCreateDialog = ({ open, onOpenChange }: Props) => {
         onSuccess: async ({ key, plainTextToken }) => {
             await mutate(keys => (keys ? [key, ...keys] : keys), false)
             setPlainTextToken(plainTextToken)
-            toast.add({ title: 'API token created', type: 'success' })
+            toast.add({ title: t('API token created'), type: 'success' })
         },
         onError: e => {
             handleFormErrors(e, form.setError)
-            toast.add({ title: 'Failed to create token', type: 'error' })
+            toast.add({ title: t('Failed to create token'), type: 'error' })
         },
     })
 
@@ -79,11 +81,12 @@ const ApiKeyCreateDialog = ({ open, onOpenChange }: Props) => {
                     <>
                         <ResponsiveDialogHeader>
                             <ResponsiveDialogTitle>
-                                API token created
+                                {t('API token created')}
                             </ResponsiveDialogTitle>
                             <ResponsiveDialogDescription>
-                                Copy your token now. For your security, it won’t
-                                be shown again.
+                                {t(
+                                    'Copy your token now. For your security, it won’t be shown again.'
+                                )}
                             </ResponsiveDialogDescription>
                         </ResponsiveDialogHeader>
 
@@ -104,7 +107,9 @@ const ApiKeyCreateDialog = ({ open, onOpenChange }: Props) => {
                                     variant={'ghost'}
                                     size={'icon'}
                                     aria-label={
-                                        copied ? 'Token copied' : 'Copy token'
+                                        copied
+                                            ? t('Token copied')
+                                            : t('Copy token')
                                     }
                                     onClick={() => copy(plainTextToken)}
                                     className={'shrink-0'}
@@ -128,11 +133,12 @@ const ApiKeyCreateDialog = ({ open, onOpenChange }: Props) => {
                     <>
                         <ResponsiveDialogHeader>
                             <ResponsiveDialogTitle>
-                                Create API token
+                                {t('Create API token')}
                             </ResponsiveDialogTitle>
                             <ResponsiveDialogDescription>
-                                Generate a personal access token to use the API
-                                on your behalf.
+                                {t(
+                                    'Generate a personal access token to use the API on your behalf.'
+                                )}
                             </ResponsiveDialogDescription>
                         </ResponsiveDialogHeader>
 
@@ -145,12 +151,12 @@ const ApiKeyCreateDialog = ({ open, onOpenChange }: Props) => {
                                 <ResponsiveDialogBody className={'space-y-4'}>
                                     <InputForm
                                         name={'name'}
-                                        label={'Name'}
-                                        placeholder={'e.g. Deploy CLI'}
+                                        label={t('Name')}
+                                        placeholder={t('e.g. Deploy CLI')}
                                     />
                                     <SelectForm
                                         name={'scope'}
-                                        label={'Access'}
+                                        label={t('Access')}
                                         items={apiKeyScopes.map(scope => ({
                                             value: scope.value,
                                             label: scope.label,
@@ -168,7 +174,7 @@ const ApiKeyCreateDialog = ({ open, onOpenChange }: Props) => {
                                             </Button>
                                         }
                                     />
-                                    <FormButton>Create token</FormButton>
+                                    <FormButton>{t('Create token')}</FormButton>
                                 </ResponsiveDialogFooter>
                             </form>
                         </Form>

@@ -22,6 +22,8 @@ import { IconDatabase } from '@tabler/icons-react'
 import { useQueryClient } from '@tanstack/react-query'
 import { useMemo, useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { Card, CardContent } from '@/components/ui/Card'
 import {
@@ -118,7 +120,7 @@ const LoadBalancerSidebar = () => {
 
             // --- Manually handle loading toast ---
             const toastId = toast.add({
-                title: 'Saving backup order...',
+                title: t('Saving backup order...'),
                 type: 'loading',
             }) // Show loading toast immediately
 
@@ -132,7 +134,7 @@ const LoadBalancerSidebar = () => {
                 // Update the toast to success
                 toast.add({
                     id: toastId,
-                    title: 'Saved changes',
+                    title: t('Saved changes'),
                     type: 'success',
                 })
             } catch (error) {
@@ -142,7 +144,7 @@ const LoadBalancerSidebar = () => {
                 // Update the toast to error
                 toast.add({
                     id: toastId,
-                    title: 'Failed to save changes',
+                    title: t('Failed to save changes'),
                     type: 'error',
                 })
             }
@@ -164,11 +166,11 @@ const LoadBalancerSidebar = () => {
                 {' '}
                 {/* Ensure flex column layout */}
                 <SheetHeader>
-                    <SheetTitle>Load Balancer</SheetTitle>
+                    <SheetTitle>{t('Load Balancer')}</SheetTitle>
                     <SheetDescription>
-                        Drag and drop to reorder the storages used for backups.
-                        The top storage is used first. Only storages marked
-                        'stores backups' are shown here.
+                        {t(
+                            "Drag and drop to reorder the storages used for backups. The top storage is used first. Only storages marked 'stores backups' are shown here."
+                        )}
                     </SheetDescription>
                 </SheetHeader>
                 <div className='flex-grow overflow-y-auto py-4'>
@@ -196,10 +198,10 @@ const LoadBalancerSidebar = () => {
                                 {/* Add padding top */}
                                 <SimpleEmptyState
                                     icon={IconDatabase}
-                                    title={'No Backup Storages'}
-                                    description={
+                                    title={t('No Backup Storages')}
+                                    description={t(
                                         'No storages on this node are configured to store backups, or no storages exist yet.'
-                                    }
+                                    )}
                                 />
                             </CardContent>
                         </Card>

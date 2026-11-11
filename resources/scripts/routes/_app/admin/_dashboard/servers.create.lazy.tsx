@@ -12,6 +12,8 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import { buttonVariants } from '@/components/ui/Button'
 import { Form, FormButton } from '@/components/ui/Form'
 import FormToolbar from '@/components/ui/FormToolbar'
@@ -89,7 +91,7 @@ const CreateServerPage = () => {
 
             await createServer(convertedData)
 
-            toast.add({ title: 'Server created', type: 'success' })
+            toast.add({ title: t('Server created'), type: 'success' })
 
             navigate({
                 to: '/admin/servers',
@@ -119,7 +121,7 @@ const CreateServerPage = () => {
                 'limits.addresses': 'addresses',
                 ...diskFieldMapping,
             })
-            toast.add({ title: 'Failed to create server', type: 'error' })
+            toast.add({ title: t('Failed to create server'), type: 'error' })
             console.error(e)
         }
     }
@@ -132,10 +134,10 @@ const CreateServerPage = () => {
                     each label away from its own control. */}
                 <div className={'mx-auto w-full max-w-4xl'}>
                     <FormToolbar
-                        title={'Add a new server'}
-                        subtitle={
+                        title={t('Add a new server')}
+                        subtitle={t(
                             'Place a server on a node and describe what it gets.'
-                        }
+                        )}
                         actions={
                             <>
                                 <Link

@@ -1,7 +1,7 @@
 import { useIdentityConfirmed } from '@/features/auth/identity/api.ts'
-import RebuildConfirmDialog from '@/features/servers/components/client/Rebuild/RebuildConfirmDialog'
 import ImageField from '@/features/servers/components/client/Rebuild/ImageField'
 import ImageGroupField from '@/features/servers/components/client/Rebuild/ImageGroupField'
+import RebuildConfirmDialog from '@/features/servers/components/client/Rebuild/RebuildConfirmDialog'
 import {
     type ReinstallServerInput,
     reinstallServer,
@@ -17,6 +17,8 @@ import { useMutation } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
+
+import { t } from '@/lib/i18n.ts'
 
 import {
     Card,
@@ -82,7 +84,7 @@ const RebuildForm = ({ server }: Props) => {
         onSuccess: () => {
             setConfirming(false)
             toast.add({
-                title: 'The installation started successfully.',
+                title: t('The installation started successfully.'),
                 type: 'success',
             })
             // The server layout swaps to <InstallingServer /> off `lifecycle`,
@@ -113,7 +115,10 @@ const RebuildForm = ({ server }: Props) => {
 
             if (handleFormErrors(e, form.setError)) return
 
-            toast.add({ title: 'Failed to start installation.', type: 'error' })
+            toast.add({
+                title: t('Failed to start installation.'),
+                type: 'error',
+            })
         },
     })
 
@@ -156,9 +161,9 @@ const RebuildForm = ({ server }: Props) => {
             >
                 <Card>
                     <CardHeader>
-                        <CardTitle>Operating system</CardTitle>
+                        <CardTitle>{t('Operating system')}</CardTitle>
                         <CardDescription>
-                            Choose the image to install.
+                            {t('Choose the image to install.')}
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -168,11 +173,15 @@ const RebuildForm = ({ server }: Props) => {
 
                 <Card>
                     <CardHeader>
-                        <CardTitle>Version</CardTitle>
+                        <CardTitle>{t('Version')}</CardTitle>
                         <CardDescription>
                             {selectedGroup
-                                ? `Which release of ${selectedGroup.name} to install.`
-                                : 'Pick a release once you have chosen an operating system.'}
+                                ? t('Which release of {{name}} to install.', {
+                                      name: selectedGroup.name,
+                                  })
+                                : t(
+                                      'Pick a release once you have chosen an operating system.'
+                                  )}
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -182,40 +191,41 @@ const RebuildForm = ({ server }: Props) => {
 
                 <Card>
                     <CardHeader>
-                        <CardTitle>Password</CardTitle>
+                        <CardTitle>{t('Password')}</CardTitle>
                         <CardDescription>
-                            Set the password for the default account on the
-                            fresh install.
+                            {t(
+                                'Set the password for the default account on the fresh install.'
+                            )}
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
                         <FieldGroup>
                             <InputForm
                                 name={'accountPassword'}
-                                label={'Password'}
+                                label={t('Password')}
                                 type={'password'}
                                 autoComplete={'new-password'}
                             />
                             <InputForm
                                 name={'accountPasswordConfirmation'}
-                                label={'Confirm password'}
+                                label={t('Confirm password')}
                                 type={'password'}
                                 autoComplete={'new-password'}
                             />
                             <CheckboxForm
                                 name={'startOnCompletion'}
-                                label={
+                                label={t(
                                     'Start the server when the install finishes'
-                                }
-                                description={
+                                )}
+                                description={t(
                                     'Leave it off to attach an ISO or change settings before the first boot.'
-                                }
+                                )}
                             />
                         </FieldGroup>
                     </CardContent>
                     <CardFooter className={'justify-end gap-2'}>
                         <FormButton variant={'destructive'}>
-                            Erase disk and install
+                            {t('Erase disk and install')}
                         </FormButton>
                     </CardFooter>
                 </Card>

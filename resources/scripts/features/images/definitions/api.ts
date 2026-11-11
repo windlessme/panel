@@ -11,6 +11,7 @@ import {
 import { z } from 'zod'
 
 import { type DataResponse, apiFetch } from '@/lib/api'
+import { t } from '@/lib/i18n.ts'
 import { rawDataToImageDefinition } from '@/lib/transformers/image.ts'
 
 import { toast } from '@/components/ui/Toast'
@@ -153,10 +154,13 @@ export const useDeleteImageDefinitionMutation = (imageGroupUuid: string) => {
                 current =>
                     current ? current.filter(i => i.uuid !== imageUuid) : []
             )
-            toast.add({ title: 'Image deleted successfully', type: 'success' })
+            toast.add({
+                title: t('Image deleted successfully'),
+                type: 'success',
+            })
         },
         onError: () => {
-            toast.add({ title: 'Failed to delete image', type: 'error' })
+            toast.add({ title: t('Failed to delete image'), type: 'error' })
         },
     })
 

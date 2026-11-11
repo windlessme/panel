@@ -13,6 +13,8 @@ import { cn } from '@/utils'
 import { createLazyFileRoute } from '@tanstack/react-router'
 import { ColumnDef } from '@tanstack/react-table'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Badge } from '@/components/ui/Badge.tsx'
 import { buttonVariants } from '@/components/ui/Button'
 import { DataTable } from '@/components/ui/DataTable'
@@ -51,21 +53,21 @@ function LocationsIndex() {
     const renderActions = (location: Location) => (
         <>
             <DropdownMenuItem onClick={() => openModal('edit', location)}>
-                Edit
+                {t('Edit')}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
                 variant={'destructive'}
                 onClick={() => openModal('delete', location)}
             >
-                Delete
+                {t('Delete')}
             </DropdownMenuItem>
         </>
     )
 
     const columns: ColumnDef<Location>[] = [
         {
-            header: 'Short Code',
+            header: t('Short Code'),
             accessorKey: 'shortCode',
             enableHiding: false,
             meta: {
@@ -81,14 +83,14 @@ function LocationsIndex() {
             ),
         },
         {
-            header: 'Description',
+            header: t('Description'),
             accessorKey: 'description',
             meta: {
                 skeletonWidth: '10rem',
             },
         },
         {
-            header: 'Nodes',
+            header: t('Nodes'),
             accessorKey: 'nodesCount',
             meta: {
                 skeletonWidth: '1rem',
@@ -102,7 +104,7 @@ function LocationsIndex() {
             maxSize: 40,
         },
         {
-            header: 'Servers',
+            header: t('Servers'),
             accessorKey: 'serversCount',
             meta: {
                 skeletonWidth: '1rem',
@@ -120,7 +122,7 @@ function LocationsIndex() {
 
     return (
         <>
-            <Heading>Locations</Heading>
+            <Heading>{t('Locations')}</Heading>
             <DataTable
                 data={data}
                 columns={columns}

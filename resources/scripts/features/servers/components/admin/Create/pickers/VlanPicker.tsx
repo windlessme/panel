@@ -1,6 +1,8 @@
 import { NetworkInterface } from '@/types/network-interface.ts'
 import { useFormContext } from 'react-hook-form'
 
+import { t } from '@/lib/i18n.ts'
+
 import {
     FormControl,
     FormDescription,
@@ -59,9 +61,9 @@ const VlanPicker = ({ networkInterface }: Props) => {
                 <span
                     className={'flex w-full items-center justify-between gap-2'}
                 >
-                    <span>VLAN {vlan.tag}</span>
+                    <span>{t('VLAN {{tag}}', { tag: vlan.tag })}</span>
                     <span className={'text-muted-foreground text-xs'}>
-                        {vlan.name ?? 'Unnamed'}
+                        {vlan.name ?? t('Unnamed')}
                     </span>
                 </span>
             ),

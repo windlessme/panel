@@ -11,6 +11,8 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { Form, FormButton } from '@/components/ui/Form'
 import {
@@ -81,10 +83,10 @@ const EditAddressModal = ({ mutate }: Props) => {
             }, false)
 
             close()
-            toast.add({ title: 'Address updated', type: 'success' })
+            toast.add({ title: t('Address updated'), type: 'success' })
         } catch (e) {
             handleFormErrors(e, form.setError)
-            toast.add({ title: 'Failed to save changes', type: 'error' })
+            toast.add({ title: t('Failed to save changes'), type: 'error' })
             throw e
         }
     }
@@ -94,7 +96,7 @@ const EditAddressModal = ({ mutate }: Props) => {
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        Editing Address {address?.ip}
+                        {t('Editing Address {{ip}}', { ip: address?.ip })}
                     </ResponsiveDialogTitle>
                 </ResponsiveDialogHeader>
                 <Form {...form}>
@@ -111,7 +113,7 @@ const EditAddressModal = ({ mutate }: Props) => {
                                 onClick={() => form.setValue('serverId', '')}
                                 type='button'
                             >
-                                Clear
+                                {t('Clear')}
                             </Button>
                         </ResponsiveDialogBody>
                         <ResponsiveDialogFooter className={'mt-4'}>
@@ -122,7 +124,7 @@ const EditAddressModal = ({ mutate }: Props) => {
                                     </Button>
                                 }
                             />
-                            <FormButton>Save</FormButton>
+                            <FormButton>{t('Save')}</FormButton>
                         </ResponsiveDialogFooter>
                     </form>
                 </Form>

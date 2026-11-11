@@ -10,6 +10,8 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { Form, FormButton } from '@/components/ui/Form'
 import { TextareaForm } from '@/components/ui/Forms'
@@ -65,7 +67,7 @@ const EditTokenNetworksModal = ({ token, onClose, mutate }: Props) => {
 
             onClose()
             toast.add({
-                title: 'Network restrictions updated',
+                title: t('Network restrictions updated'),
                 type: 'success',
             })
         } catch (error) {
@@ -73,7 +75,7 @@ const EditTokenNetworksModal = ({ token, onClose, mutate }: Props) => {
                 allowed_networks: 'allowedNetworks',
             })
             toast.add({
-                title: 'Failed to update network restrictions',
+                title: t('Failed to update network restrictions'),
                 type: 'error',
             })
         }
@@ -87,11 +89,13 @@ const EditTokenNetworksModal = ({ token, onClose, mutate }: Props) => {
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        Edit network access
+                        {t('Edit network access')}
                     </ResponsiveDialogTitle>
                     <ResponsiveDialogDescription>
-                        Restrict “{token?.name}” to known source addresses.
-                        Changes apply immediately.
+                        {t(
+                            'Restrict “{{name}}” to known source addresses. Changes apply immediately.',
+                            { name: token?.name }
+                        )}
                     </ResponsiveDialogDescription>
                 </ResponsiveDialogHeader>
                 <Form {...form}>
@@ -99,12 +103,12 @@ const EditTokenNetworksModal = ({ token, onClose, mutate }: Props) => {
                         <ResponsiveDialogBody>
                             <TextareaForm
                                 name={'allowedNetworks'}
-                                label={'Allowed addresses and ranges'}
-                                placeholder={'203.0.113.10\n2001:db8::/48'}
+                                label={t('Allowed addresses and ranges')}
+                                placeholder={t('203.0.113.10\n2001:db8::/48')}
                                 rows={7}
-                                description={
+                                description={t(
                                     'Enter one IPv4 or IPv6 address or CIDR range per line. Leave empty to make the token unrestricted.'
-                                }
+                                )}
                             />
                         </ResponsiveDialogBody>
                         <ResponsiveDialogFooter className={'mt-4'}>
@@ -115,7 +119,7 @@ const EditTokenNetworksModal = ({ token, onClose, mutate }: Props) => {
                                     </Button>
                                 }
                             />
-                            <FormButton>Save changes</FormButton>
+                            <FormButton>{t('Save changes')}</FormButton>
                         </ResponsiveDialogFooter>
                     </form>
                 </Form>

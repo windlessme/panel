@@ -9,6 +9,8 @@ import {
 import { Link } from '@tanstack/react-router'
 import { ReactNode } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { SegmentedProgressBar } from '@/components/ui/Progress'
 import Skeleton from '@/components/ui/Skeleton.tsx'
 
@@ -45,7 +47,7 @@ const IpamSummaryCards = () => {
         <div className={'grid grid-cols-1 gap-4 @2xl:grid-cols-3'}>
             <StatisticCard
                 compact
-                title={'Addresses in use'}
+                title={t('Addresses in use')}
                 icon={IconNetwork}
                 meter={
                     view?.known ? (
@@ -61,12 +63,14 @@ const IpamSummaryCards = () => {
                         <Value>{view.inUse.toLocaleString()}</Value>
                         <Sub>
                             {view.usable === null
-                                ? 'assigned or held'
-                                : `of ${view.usable.toLocaleString()} usable${
-                                      view.percent === null
-                                          ? ''
-                                          : ` · ${view.percent.toFixed(0)}%`
-                                  }`}
+                                ? t('assigned or held')
+                                : t('of {{value}} usable{{value2}}', {
+                                      value: view.usable.toLocaleString(),
+                                      value2:
+                                          view.percent === null
+                                              ? ''
+                                              : ` · ${view.percent.toFixed(0)}%`,
+                                  })}
                             {view.sparseBlockCount > 0 &&
                                 ` · ${countOf(view.sparseBlockCount, 'block')} minted on demand`}
                         </Sub>
@@ -78,7 +82,7 @@ const IpamSummaryCards = () => {
 
             <StatisticCard
                 compact
-                title={'Free addresses'}
+                title={t('Free addresses')}
                 icon={IconCircleDashed}
             >
                 {summary && view ? (
@@ -88,8 +92,10 @@ const IpamSummaryCards = () => {
                             {view.free > 0
                                 ? `ready to hand out across ${countOf(summary.poolsCount, 'pool')}`
                                 : view.ungenerated > 0
-                                  ? `${view.ungenerated.toLocaleString()} units not generated yet`
-                                  : 'nothing left to hand out'}
+                                  ? t('{{value}} units not generated yet', {
+                                        value: view.ungenerated.toLocaleString(),
+                                    })
+                                  : t('nothing left to hand out')}
                         </Sub>
                     </p>
                 ) : (
@@ -99,7 +105,7 @@ const IpamSummaryCards = () => {
 
             <StatisticCard
                 compact
-                title={'Blocks over 90%'}
+                title={t('Blocks over 90%')}
                 icon={IconAlertTriangle}
             >
                 {summary ? (

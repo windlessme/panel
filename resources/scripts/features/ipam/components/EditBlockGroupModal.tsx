@@ -12,6 +12,8 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { Form, FormButton } from '@/components/ui/Form'
 import { InputForm, TextareaForm } from '@/components/ui/Forms'
@@ -78,10 +80,10 @@ const EditBlockGroupModal = ({ mutate }: Props) => {
             }, false)
 
             close()
-            toast.add({ title: 'Block group updated', type: 'success' })
+            toast.add({ title: t('Block group updated'), type: 'success' })
         } catch (e) {
             handleFormErrors(e, form.setError)
-            toast.add({ title: 'Failed to save changes', type: 'error' })
+            toast.add({ title: t('Failed to save changes'), type: 'error' })
             throw e
         }
     }
@@ -91,16 +93,16 @@ const EditBlockGroupModal = ({ mutate }: Props) => {
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        Editing {blockGroup?.name}
+                        {t('Editing {{name}}', { name: blockGroup?.name })}
                     </ResponsiveDialogTitle>
                 </ResponsiveDialogHeader>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(submit as any)}>
                         <ResponsiveDialogBody className={'space-y-2'}>
-                            <InputForm name={'name'} label={'Name'} />
+                            <InputForm name={'name'} label={t('Name')} />
                             <TextareaForm
                                 name={'description'}
-                                label={'Description'}
+                                label={t('Description')}
                             />
                         </ResponsiveDialogBody>
                         <ResponsiveDialogFooter className={'mt-4'}>
@@ -111,7 +113,7 @@ const EditBlockGroupModal = ({ mutate }: Props) => {
                                     </Button>
                                 }
                             />
-                            <FormButton>Save</FormButton>
+                            <FormButton>{t('Save')}</FormButton>
                         </ResponsiveDialogFooter>
                     </form>
                 </Form>

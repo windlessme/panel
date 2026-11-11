@@ -4,6 +4,8 @@ import usePagination from '@/hooks/use-pagination.ts'
 import { useQuery } from '@tanstack/react-query'
 import { createLazyFileRoute } from '@tanstack/react-router'
 
+import { t } from '@/lib/i18n.ts'
+
 import Heading from '@/components/ui/Typography/Heading.tsx'
 
 const ServerActivity = () => {
@@ -16,7 +18,7 @@ const ServerActivity = () => {
 
     return (
         <>
-            <Heading>Activity</Heading>
+            <Heading>{t('Activity')}</Heading>
             <AuditFeed
                 data={data}
                 isLoading={isLoading}
@@ -32,5 +34,5 @@ const ServerActivity = () => {
 export const Route = createLazyFileRoute('/_app/servers/$serverUuid/activity')({
     component: ServerActivity,
     // @ts-ignore
-    meta: () => [{ title: 'Activity' }],
+    meta: () => [{ title: t('Activity') }],
 })

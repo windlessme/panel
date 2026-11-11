@@ -6,6 +6,8 @@ import { PaginatedAddressBlockGroups } from '@/types/address-block-group.ts'
 import { Mutator } from '@/types/query.ts'
 import { AxiosError } from 'axios'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     ResponsiveDialog,
@@ -44,7 +46,7 @@ const DeleteBlockGroupModal = ({ mutate }: Props) => {
                 }
             }, false)
 
-            toast.add({ title: 'Block group deleted', type: 'success' })
+            toast.add({ title: t('Block group deleted'), type: 'success' })
             close()
         } catch (e) {
             // Check if it's an Axios error with a response
@@ -56,10 +58,10 @@ const DeleteBlockGroupModal = ({ mutate }: Props) => {
                         e.response.data.message || 'Deletion not authorized'
                     toast.add({ title: message, type: 'error' })
                 } else {
-                    toast.add({ title: 'Deletion failed', type: 'error' })
+                    toast.add({ title: t('Deletion failed'), type: 'error' })
                 }
             } else {
-                toast.add({ title: 'Deletion failed', type: 'error' })
+                toast.add({ title: t('Deletion failed'), type: 'error' })
             }
 
             throw e
@@ -71,11 +73,12 @@ const DeleteBlockGroupModal = ({ mutate }: Props) => {
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        Delete {blockGroup?.name}
+                        {t('Delete {{name}}', { name: blockGroup?.name })}
                     </ResponsiveDialogTitle>
                     <ResponsiveDialogDescription>
-                        Are you sure you want to delete this block group? This
-                        action cannot be undone.
+                        {t(
+                            'Are you sure you want to delete this block group? This action cannot be undone.'
+                        )}
                     </ResponsiveDialogDescription>
                 </ResponsiveDialogHeader>
                 <ResponsiveDialogFooter className={'mt-4'}>
@@ -88,7 +91,7 @@ const DeleteBlockGroupModal = ({ mutate }: Props) => {
                         variant={'destructive'}
                         onClick={submit}
                     >
-                        Delete
+                        {t('Delete')}
                     </Button>
                 </ResponsiveDialogFooter>
             </ResponsiveDialogContent>

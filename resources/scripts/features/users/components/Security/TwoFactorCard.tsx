@@ -1,10 +1,11 @@
-import { userQueries, useUser } from '@/features/users/api.ts'
+import { useUser, userQueries } from '@/features/users/api.ts'
 import CredentialCard from '@/features/users/components/Security/CredentialCard.tsx'
 import CredentialRow from '@/features/users/components/Security/CredentialRow.tsx'
 import { disableUserTwoFactor } from '@/features/users/credentials/api.ts'
 import { IconShieldLock } from '@tabler/icons-react'
 import { useMutation } from '@tanstack/react-query'
 
+import { t } from '@/lib/i18n.ts'
 import { queryClient } from '@/lib/query-client.ts'
 
 import useConfirmationStore from '@/components/ui/AlertDialog/use-confirmation-store.ts'
@@ -34,14 +35,17 @@ const TwoFactorCard = ({ userId }: Props) => {
             await queryClient.invalidateQueries({ queryKey: userQueries.all() })
         },
         onError: () =>
-            toast.add({ title: 'Failed to disable two-factor', type: 'error' }),
+            toast.add({
+                title: t('Failed to disable two-factor'),
+                type: 'error',
+            }),
     })
 
     const handleDisable = async () => {
         const confirmed = await confirm({
-            title: 'Disable two-factor?',
+            title: t('Disable two-factor?'),
             description: `${user?.name ?? 'This account'} will sign in with a password alone until they set it up again. Recovery codes are cleared with it unless a passkey remains.`,
-            confirmText: 'Disable',
+            confirmText: t('Disable'),
             confirmButton: { variant: 'destructive' },
         })
 
@@ -51,7 +55,7 @@ const TwoFactorCard = ({ userId }: Props) => {
     return (
         <CredentialCard
             title={'Two-factor'}
-            description={'The authenticator app on this account.'}
+            description={t('The authenticator app on this account.')}
             icon={IconShieldLock}
             isLoading={isLoading}
             isError={isError}
@@ -61,8 +65,8 @@ const TwoFactorCard = ({ userId }: Props) => {
                 // A passkey is a second factor too, so "signs in with a password alone" would be
                 // untrue of an account that has one.
                 user && user.passkeysCount > 0
-                    ? 'A passkey is the only second factor on this account.'
-                    : 'This account signs in with a password alone.'
+                    ? t('A passkey is the only second factor on this account.')
+                    : t('This account signs in with a password alone.')
             }
             rows={
                 user
@@ -80,7 +84,8 @@ const TwoFactorCard = ({ userId }: Props) => {
                                               'text-muted-foreground text-xs'
                                           }
                                       >
-                                          A one-time code is required at sign-in.
+                                          A one-time code is required at
+                                          sign-in.
                                       </span>
                                   }
                               />,

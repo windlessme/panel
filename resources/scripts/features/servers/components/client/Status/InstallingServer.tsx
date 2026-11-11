@@ -1,9 +1,9 @@
 import {
     retryInstallation,
     serverQueries,
+    useImageGroups,
     useServer,
     useServerDeployment,
-    useImageGroups,
 } from '@/features/servers/detail/api.ts'
 import {
     Deployment,
@@ -18,6 +18,8 @@ import { useQueryClient } from '@tanstack/react-query'
 import byteSize from 'byte-size'
 import { formatDistanceToNowStrict } from 'date-fns'
 import { useEffect, useMemo, useRef, useState } from 'react'
+
+import { t } from '@/lib/i18n.ts'
 
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/Alert'
 import { Button } from '@/components/ui/Button'
@@ -157,9 +159,7 @@ const InstallingServer = ({ server }: InstallingServerProps) => {
 
     const imageName = deployment?.image?.name
     const imageFamily = imageGroups?.find(group =>
-        group.definitions?.some(
-            image => image.uuid === deployment?.image?.uuid
-        )
+        group.definitions?.some(image => image.uuid === deployment?.image?.uuid)
     )?.name
     const imageLabel = imageName
         ? [imageFamily, imageName].filter(Boolean).join(' ')
@@ -253,7 +253,10 @@ const InstallingServer = ({ server }: InstallingServerProps) => {
             await retryInstallation(server.uuid)
             refetchServer()
         } catch (error) {
-            toast.add({ title: 'Failed to retry installation.', type: 'error' })
+            toast.add({
+                title: t('Failed to retry installation.'),
+                type: 'error',
+            })
         }
     }
 
@@ -275,8 +278,10 @@ const InstallingServer = ({ server }: InstallingServerProps) => {
                             <IconAlertTriangle className={'size-4'} />
                             <AlertTitle>
                                 {failedStep
-                                    ? `${stepLabel(failedStep.name)} failed`
-                                    : 'The installation failed'}
+                                    ? t('{{stepLabel}} failed', {
+                                          stepLabel: stepLabel(failedStep.name),
+                                      })
+                                    : t('The installation failed')}
                             </AlertTitle>
                             <AlertDescription>
                                 {failedStep?.errorCode && (
@@ -288,7 +293,9 @@ const InstallingServer = ({ server }: InstallingServerProps) => {
                                 {failedStep?.errorMessage ??
                                     (failedStep?.errorCode
                                         ? null
-                                        : 'The node did not say why. Retry, and contact your provider if it fails again.')}
+                                        : t(
+                                              'The node did not say why. Retry, and contact your provider if it fails again.'
+                                          ))}
                             </AlertDescription>
                         </Alert>
                     )}
@@ -303,10 +310,10 @@ const InstallingServer = ({ server }: InstallingServerProps) => {
                                 >
                                     <span className={'text-lg font-medium'}>
                                         {allComplete
-                                            ? 'All steps finished'
+                                            ? t('All steps finished')
                                             : headlineStep
                                               ? stepLabel(headlineStep.name)
-                                              : 'Finishing up'}
+                                              : t('Finishing up')}
                                     </span>
                                     <span
                                         className={cn(
@@ -361,7 +368,7 @@ const InstallingServer = ({ server }: InstallingServerProps) => {
                                     {!allComplete && (
                                         <span>
                                             {remaining === 0
-                                                ? 'Last step'
+                                                ? t('Last step')
                                                 : `${remaining} step${remaining === 1 ? '' : 's'} after this`}
                                         </span>
                                     )}
@@ -382,7 +389,9 @@ const InstallingServer = ({ server }: InstallingServerProps) => {
                                             'size-3.5 transition-transform group-open/steps:rotate-90'
                                         }
                                     />
-                                    All {steps.length} steps
+                                    {t('All {{length}} steps', {
+                                        length: steps.length,
+                                    })}
                                 </summary>
                                 <ol className={'flex flex-col pt-2'}>
                                     {steps.map((step, index) => (
@@ -456,8 +465,9 @@ const InstallingServer = ({ server }: InstallingServerProps) => {
 
                     {!isFailed && (
                         <p className={'text-muted-foreground text-sm'}>
-                            You can leave this page. The work runs on the node,
-                            and this screen picks it back up.
+                            {t(
+                                'You can leave this page. The work runs on the node, and this screen picks it back up.'
+                            )}
                         </p>
                     )}
                 </CardContent>
@@ -465,7 +475,7 @@ const InstallingServer = ({ server }: InstallingServerProps) => {
                 {isFailed && (
                     <CardFooter className={'justify-end'}>
                         <Button onClick={handleRetry} variant={'destructive'}>
-                            Retry installation
+                            {t('Retry installation')}
                         </Button>
                     </CardFooter>
                 )}

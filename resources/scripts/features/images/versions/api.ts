@@ -4,6 +4,7 @@ import { queryOptions, useQuery } from '@tanstack/react-query'
 import { z } from 'zod'
 
 import { type DataResponse, apiFetch } from '@/lib/api'
+import { t } from '@/lib/i18n.ts'
 import { rawDataToImageVersion } from '@/lib/transformers/image.ts'
 
 /**
@@ -23,12 +24,12 @@ export const imageDiskSchema = z
         format: z.enum(['qcow2', 'raw']).default('qcow2'),
     })
     .refine(disk => !!disk.url !== !!disk.path, {
-        message: 'Give the disk a URL or upload a file, not both.',
+        message: t('Give the disk a URL or upload a file, not both.'),
         path: ['url'],
     })
 
 export const imageVersionSchema = z.object({
-    version: z.string().regex(/^\d+\.\d+\.\d+$/, 'Use major.minor.patch'),
+    version: z.string().regex(/^\d+\.\d+\.\d+$/, t('Use major.minor.patch')),
     isActive: z.boolean().default(true),
     disks: z
         .array(imageDiskSchema)
@@ -36,7 +37,7 @@ export const imageVersionSchema = z.object({
         .refine(
             disks =>
                 disks.filter(d => d.role === ImageDiskRole.SYSTEM).length === 1,
-            { message: 'A version needs exactly one system disk.' }
+            { message: t('A version needs exactly one system disk.') }
         ),
 })
 

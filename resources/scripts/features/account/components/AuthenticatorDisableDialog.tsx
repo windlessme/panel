@@ -8,6 +8,8 @@ import { useModal } from '@/hooks/create-modal-store.ts'
 import useAsyncFunction from '@/hooks/use-async-function.ts'
 import { useQueryClient } from '@tanstack/react-query'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     ResponsiveDialog,
@@ -37,12 +39,12 @@ const AuthenticatorDisableDialog = () => {
                 queryKey: recoveryCodeQueries.all(),
             })
 
-            toast.add({ title: 'Authenticator disabled', type: 'success' })
+            toast.add({ title: t('Authenticator disabled'), type: 'success' })
 
             close()
         } catch (e) {
             toast.add({
-                title: 'Failed to disable authenticator',
+                title: t('Failed to disable authenticator'),
                 type: 'error',
             })
             throw e
@@ -54,11 +56,12 @@ const AuthenticatorDisableDialog = () => {
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        Disable Authenticator
+                        {t('Disable Authenticator')}
                     </ResponsiveDialogTitle>
                     <ResponsiveDialogDescription>
-                        Are you sure you want to disable the authenticator for
-                        your account?
+                        {t(
+                            'Are you sure you want to disable the authenticator for your account?'
+                        )}
                     </ResponsiveDialogDescription>
                 </ResponsiveDialogHeader>
                 <ResponsiveDialogFooter>
@@ -70,7 +73,7 @@ const AuthenticatorDisableDialog = () => {
                         variant={'destructive'}
                         onClick={disable}
                     >
-                        Disable
+                        {t('Disable')}
                     </Button>
                 </ResponsiveDialogFooter>
             </ResponsiveDialogContent>

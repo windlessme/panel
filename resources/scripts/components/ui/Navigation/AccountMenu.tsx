@@ -6,6 +6,8 @@ import { cn } from '@/utils'
 import { useQueryClient } from '@tanstack/react-query'
 import { Link, useLocation, useRouter } from '@tanstack/react-router'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     DropdownMenu,
@@ -48,7 +50,7 @@ const AccountMenu = () => {
                     variant='outline'
                     size='icon'
                     className='overflow-hidden rounded-full p-0'
-                    aria-label={'Open account menu'}
+                    aria-label={t('Open account menu')}
                 >
                     {/* Fills the button rather than sitting inside it: a
                         picture inset from its own outline reads as a framed
@@ -75,14 +77,14 @@ const AccountMenu = () => {
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
-                    <Link to='/account'>Account settings</Link>
+                    <Link to='/account'>{t('Account settings')}</Link>
                 </DropdownMenuItem>
                 {user?.rootAdmin ? (
                     <>
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup>
                             <DropdownMenuLabel className='text-muted-foreground text-xs font-medium'>
-                                Workspace
+                                {t('Workspace')}
                             </DropdownMenuLabel>
                             <DropdownMenuItem
                                 asChild
@@ -98,11 +100,11 @@ const AccountMenu = () => {
                                     }
                                 >
                                     <span className='min-w-0 flex-1 truncate'>
-                                        Client Area
+                                        {t('Client Area')}
                                     </span>
                                     {!isAdminArea ? (
                                         <span className='text-muted-foreground ml-auto text-xs'>
-                                            Current
+                                            {t('Current')}
                                         </span>
                                     ) : null}
                                 </Link>
@@ -121,11 +123,11 @@ const AccountMenu = () => {
                                     }
                                 >
                                     <span className='min-w-0 flex-1 truncate'>
-                                        Admin Console
+                                        {t('Admin Console')}
                                     </span>
                                     {isAdminArea ? (
                                         <span className='text-muted-foreground ml-auto text-xs'>
-                                            Current
+                                            {t('Current')}
                                         </span>
                                     ) : null}
                                 </Link>
@@ -136,7 +138,7 @@ const AccountMenu = () => {
                 <DropdownMenuSeparator />
                 <DropdownMenuSub>
                     <DropdownMenuSubTrigger>
-                        <span className={'flex-1'}>Theme</span>
+                        <span className={'flex-1'}>{t('Theme')}</span>
                         <span
                             className={
                                 'text-muted-foreground text-xs capitalize'
@@ -151,19 +153,21 @@ const AccountMenu = () => {
                             onValueChange={setTheme}
                         >
                             <DropdownMenuRadioItem value={'light'}>
-                                Light
+                                {t('Light')}
                             </DropdownMenuRadioItem>
                             <DropdownMenuRadioItem value={'dark'}>
-                                Dark
+                                {t('Dark')}
                             </DropdownMenuRadioItem>
                             <DropdownMenuRadioItem value={'system'}>
-                                System
+                                {t('System')}
                             </DropdownMenuRadioItem>
                         </DropdownMenuRadioGroup>
                     </DropdownMenuSubContent>
                 </DropdownMenuSub>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={signout}>Sign out</DropdownMenuItem>
+                <DropdownMenuItem onClick={signout}>
+                    {t('Sign out')}
+                </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
     )

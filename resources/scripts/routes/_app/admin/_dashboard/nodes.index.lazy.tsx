@@ -1,4 +1,5 @@
 import { useNodes } from '@/features/nodes/api.ts'
+import NodeStatusIndicator from '@/features/nodes/components/NodeStatusIndicator.tsx'
 import useClipboard from '@/hooks/use-clipboard.ts'
 import useDataTable from '@/hooks/use-data-table.ts'
 import { Node } from '@/types/node.ts'
@@ -8,7 +9,7 @@ import { Link, createLazyFileRoute } from '@tanstack/react-router'
 import { ColumnDef } from '@tanstack/react-table'
 import byteSize from 'byte-size'
 
-import NodeStatusIndicator from '@/features/nodes/components/NodeStatusIndicator.tsx'
+import { t } from '@/lib/i18n.ts'
 
 import { buttonVariants } from '@/components/ui/Button'
 import { DataTable } from '@/components/ui/DataTable'
@@ -44,17 +45,19 @@ function NodesIndex() {
     const renderActions = (node: Node) => (
         <>
             <DropdownMenuItem onClick={() => copy(node.id.toString())}>
-                Copy ID
+                {t('Copy ID')}
             </DropdownMenuItem>{' '}
-            <DropdownMenuItem>Edit</DropdownMenuItem>
+            <DropdownMenuItem>{t('Edit')}</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem variant={'destructive'}>Delete</DropdownMenuItem>
+            <DropdownMenuItem variant={'destructive'}>
+                {t('Delete')}
+            </DropdownMenuItem>
         </>
     )
 
     const columns: ColumnDef<Node>[] = [
         {
-            header: 'Name',
+            header: t('Name'),
             accessorKey: 'displayName',
             enableHiding: false,
             meta: {
@@ -88,7 +91,7 @@ function NodesIndex() {
             },
         },
         {
-            header: 'Status',
+            header: t('Status'),
             accessorKey: 'status',
             // Written by `nodes:poll`, so this costs no PVE call per row — see
             // docs/node-status-plan.md.
@@ -98,7 +101,7 @@ function NodesIndex() {
             cell: ({ row }) => <NodeStatusIndicator node={row.original} />,
         },
         {
-            header: 'Memory',
+            header: t('Memory'),
             accessorKey: 'memory',
             meta: {
                 skeletonWidth: '1rem',
@@ -110,7 +113,7 @@ function NodesIndex() {
 
     return (
         <>
-            <Heading>Nodes</Heading>
+            <Heading>{t('Nodes')}</Heading>
             <DataTable
                 paginated
                 searchable

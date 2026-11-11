@@ -3,6 +3,8 @@ import { IconPlus, IconTrash } from '@tabler/icons-react'
 import byteSize from 'byte-size'
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     Card,
@@ -87,7 +89,7 @@ const AdditionalDisks = () => {
     return (
         <div className={'space-y-3'}>
             <div className={'flex items-center justify-between gap-3'}>
-                <p className={'text-sm font-medium'}>Additional disks</p>
+                <p className={'text-sm font-medium'}>{t('Additional disks')}</p>
                 <Button
                     type={'button'}
                     variant={'outline'}
@@ -95,15 +97,17 @@ const AdditionalDisks = () => {
                     disabled={!nodeId}
                     onClick={() => append({ storageId: '', size: 10 })}
                 >
-                    <IconPlus className={'size-4'} /> Add disk
+                    <IconPlus className={'size-4'} /> {t('Add disk')}
                 </Button>
             </div>
 
             {fields.length === 0 ? (
                 <p className={'text-muted-foreground text-sm'}>
                     {nodeId
-                        ? 'None. The primary disk is set above.'
-                        : 'Choose a node first — data disks come from its storages.'}
+                        ? t('None. The primary disk is set above.')
+                        : t(
+                              'Choose a node first — data disks come from its storages.'
+                          )}
                 </p>
             ) : (
                 fields.map((field, index) => (
@@ -123,7 +127,7 @@ const AdditionalDisks = () => {
                             />
                             <InputForm
                                 name={`disks.${index}.size`}
-                                label={'Size'}
+                                label={t('Size')}
                                 type={'number'}
                                 min={1}
                                 suffix={'GiB'}
@@ -135,7 +139,7 @@ const AdditionalDisks = () => {
                             size={'icon'}
                             className={'text-destructive mb-1'}
                             onClick={() => remove(index)}
-                            aria-label={'Remove disk'}
+                            aria-label={t('Remove disk')}
                         >
                             <IconTrash className={'size-4'} />
                         </Button>
@@ -158,10 +162,11 @@ const ResourcesSection = () => {
     return (
         <Card className={'@container'}>
             <CardHeader>
-                <CardTitle>Resources</CardTitle>
+                <CardTitle>{t('Resources')}</CardTitle>
                 <CardDescription>
-                    The limits this server is built with. All of them can be
-                    changed later from its settings.
+                    {t(
+                        'The limits this server is built with. All of them can be changed later from its settings.'
+                    )}
                 </CardDescription>
             </CardHeader>
             <CardContent>
@@ -189,13 +194,13 @@ const ResourcesSection = () => {
                             />
                             <InputForm
                                 name={'memory'}
-                                label={'Memory'}
+                                label={t('Memory')}
                                 type={'number'}
                                 suffix={'MiB'}
                             />
                             <InputForm
                                 name={'disk'}
-                                label={'Primary disk'}
+                                label={t('Primary disk')}
                                 type={'number'}
                                 suffix={'MiB'}
                             />
@@ -206,20 +211,22 @@ const ResourcesSection = () => {
                         >
                             <InputForm
                                 name={'bandwidth'}
-                                label={'Bandwidth'}
+                                label={t('Bandwidth')}
                                 type={'number'}
                                 min={-1}
                                 suffix={'MiB'}
-                                description={'-1 for unmetered.'}
+                                description={t('-1 for unmetered.')}
                             />
                             <InputForm
                                 name={'speedLimit'}
-                                label={'Speed limit'}
+                                label={t('Speed limit')}
                                 type={'number'}
                                 min={-1}
                                 step={'any'}
                                 suffix={'MB/s'}
-                                description={'Caps every NIC. -1 for uncapped.'}
+                                description={t(
+                                    'Caps every NIC. -1 for uncapped.'
+                                )}
                             />
                         </div>
 
@@ -228,16 +235,16 @@ const ResourcesSection = () => {
                         >
                             <InputForm
                                 name={'backupCount'}
-                                label={'Backups'}
+                                label={t('Backups')}
                                 type={'number'}
-                                description={'-1 for unlimited.'}
+                                description={t('-1 for unlimited.')}
                             />
                             <InputForm
                                 name={'backupSize'}
-                                label={'Backup storage'}
+                                label={t('Backup storage')}
                                 type={'number'}
                                 suffix={'MiB'}
-                                description={'-1 for unlimited.'}
+                                description={t('-1 for unlimited.')}
                             />
                         </div>
 

@@ -1,8 +1,9 @@
+import { Session as SessionType } from '@/features/account/sessions/api.ts'
 import { IconDeviceLaptop } from '@tabler/icons-react'
 import { formatDistanceToNow } from 'date-fns'
 import { useMemo } from 'react'
 
-import { Session as SessionType } from '@/features/account/sessions/api.ts'
+import { t } from '@/lib/i18n.ts'
 
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
@@ -21,8 +22,7 @@ interface Props {
 
 const Session = ({ session, onRevoke }: Props) => {
     const lastActive = useMemo(
-        () =>
-            formatDistanceToNow(session.lastActiveAt, { addSuffix: true }),
+        () => formatDistanceToNow(session.lastActiveAt, { addSuffix: true }),
         [session.lastActiveAt]
     )
 
@@ -35,20 +35,18 @@ const Session = ({ session, onRevoke }: Props) => {
                 <ItemTitle className={'truncate'}>
                     {session.device}
                     {session.isCurrent && (
-                        <Badge variant={'secondary'}>This device</Badge>
+                        <Badge variant={'secondary'}>{t('This device')}</Badge>
                     )}
                 </ItemTitle>
-                <p className={'text-xs text-muted-foreground'}>
-                    {session.ipAddress ?? 'Unknown IP'} · active {lastActive}
+                <p className={'text-muted-foreground text-xs'}>
+                    {session.ipAddress ?? t('Unknown IP')}{' '}
+                    {t('· active {{lastActive}}', { lastActive })}
                 </p>
             </ItemContent>
             {!session.isCurrent && (
                 <ItemActions>
-                    <Button
-                        variant={'ghost'}
-                        onClick={() => onRevoke(session)}
-                    >
-                        Revoke
+                    <Button variant={'ghost'} onClick={() => onRevoke(session)}>
+                        {t('Revoke')}
                     </Button>
                 </ItemActions>
             )}

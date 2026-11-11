@@ -3,6 +3,8 @@ import { Location } from '@/features/locations/types.ts'
 import { IconCheck, IconMapPin } from '@tabler/icons-react'
 import { Link } from '@tanstack/react-router'
 
+import { t } from '@/lib/i18n.ts'
+
 import { buttonVariants } from '@/components/ui/Button'
 import {
     CollectionErrorState,
@@ -36,8 +38,8 @@ const LocationList = ({ query, page, value, onSelect }: Props) => {
         return (
             <SimpleEmptyState
                 icon={IconMapPin}
-                title={'No locations'}
-                description={'There are no locations available.'}
+                title={t('No locations')}
+                description={t('There are no locations available.')}
                 action={
                     <Link className={buttonVariants()} to={'/admin/locations'}>
                         Add location

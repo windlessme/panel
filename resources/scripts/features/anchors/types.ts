@@ -1,6 +1,8 @@
 import type { PaginatedResult } from '@/utils/http.ts'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 /** A machine that has introduced itself and is waiting to be let in. */
 export type AnchorEnrollmentQueueItem =
     App.Data.Anchor.AnchorEnrollmentQueueData
@@ -30,16 +32,18 @@ export const relaySchema = z.object({
  * reported and is only confirming.
  */
 export const approveNodeSchema = z.object({
-    locationId: z.coerce.number().positive('Location is required'),
+    locationId: z.coerce.number().positive(t('Location is required')),
     memoryOverallocate: z.coerce.number().int().min(0),
     relayId: z.string().default('none'),
 
     fqdn: z.string().min(1).max(191),
     port: z.coerce.number().int().min(1).max(65535),
-    agentPublicUrl: z.url('Enter the address the panel reaches this agent on'),
+    agentPublicUrl: z.url(
+        t('Enter the address the panel reaches this agent on')
+    ),
 
-    tokenId: z.string().min(1, 'Required').max(191),
-    tokenSecret: z.string().min(1, 'Required').max(191),
+    tokenId: z.string().min(1, t('Required')).max(191),
+    tokenSecret: z.string().min(1, t('Required')).max(191),
 
     displayName: z.string().min(1).max(50),
     name: z.string().min(1).max(191),

@@ -10,6 +10,8 @@ import {
 } from '@tabler/icons-react'
 import { Outlet, createFileRoute } from '@tanstack/react-router'
 
+import { t } from '@/lib/i18n.ts'
+
 import AppLayout from '@/components/layouts/AppLayout.tsx'
 
 import { SidebarNav } from '@/components/ui/Navigation/Navigation.types.ts'
@@ -19,7 +21,7 @@ export const Route = createFileRoute('/_app/admin/servers/$serverId')({
         preloadServer(Number(serverId)).catch(processAxiosError),
     component: ServerLayout,
     staticData: {
-        title: 'Server',
+        title: t('Server'),
     },
 })
 
@@ -30,9 +32,9 @@ function ServerLayout() {
 
     const nav: SidebarNav = {
         key: `admin-server:${serverId}`,
-        back: { label: 'Servers', to: '/admin/servers' },
+        back: { label: t('Servers'), to: '/admin/servers' },
         context: {
-            title: server?.name ?? 'Server',
+            title: server?.name ?? t('Server'),
             subtitle: server?.hostname,
             icon: IconServer,
         },
@@ -41,7 +43,7 @@ function ServerLayout() {
                 items: [
                     {
                         icon: IconLayoutGrid,
-                        label: 'Overview',
+                        label: t('Overview'),
                         path: `/admin/servers/${serverId}`,
                         activeOptions: {
                             exact: true,
@@ -50,21 +52,21 @@ function ServerLayout() {
                 ],
             },
             {
-                label: 'Storage',
+                label: t('Storage'),
                 items: [
                     {
                         icon: IconDatabase,
-                        label: 'Disks',
+                        label: t('Disks'),
                         path: `/admin/servers/${serverId}/disks`,
                     },
                 ],
             },
             {
-                label: 'Configuration',
+                label: t('Configuration'),
                 items: [
                     {
                         icon: IconAdjustments,
-                        label: 'Build & limits',
+                        label: t('Build & limits'),
                         path: `/admin/servers/${serverId}/settings`,
                     },
                 ],
@@ -76,11 +78,11 @@ function ServerLayout() {
             ...(server
                 ? [
                       {
-                          label: 'Client',
+                          label: t('Client'),
                           items: [
                               {
                                   icon: IconLayoutDashboard,
-                                  label: 'Client dashboard',
+                                  label: t('Client dashboard'),
                                   path: `/servers/${server.uuid}`,
                               },
                           ],

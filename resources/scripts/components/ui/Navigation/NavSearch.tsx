@@ -1,6 +1,8 @@
 import { IconSearch } from '@tabler/icons-react'
 import { Suspense, lazy, useEffect, useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import type { SidebarNav } from '@/components/ui/Navigation/Navigation.types.ts'
 
@@ -63,10 +65,10 @@ const NavSearch = ({ nav }: Props) => {
             >
                 <span className='flex min-w-0 items-center gap-2'>
                     <IconSearch className='h-4 w-4 shrink-0' />
-                    <span className='truncate'>Search</span>
+                    <span className='truncate'>{t('Search')}</span>
                 </span>
                 <kbd className='bg-muted text-muted-foreground rounded border px-1.5 py-0.5 text-[0.65rem] leading-none font-medium'>
-                    Ctrl K
+                    {t('Ctrl K')}
                 </kbd>
             </Button>
 

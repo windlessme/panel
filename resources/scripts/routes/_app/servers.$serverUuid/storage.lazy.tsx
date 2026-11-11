@@ -3,12 +3,14 @@ import DevicesCard from '@/features/servers/storage/components/DevicesCard.tsx'
 import StorageUsageCard from '@/features/servers/storage/components/StorageUsageCard.tsx'
 import { createLazyFileRoute } from '@tanstack/react-router'
 
+import { t } from '@/lib/i18n.ts'
+
 import Heading from '@/components/ui/Typography/Heading.tsx'
 
 export const Route = createLazyFileRoute('/_app/servers/$serverUuid/storage')({
     component: ServerStorage,
     // @ts-ignore
-    meta: () => [{ title: 'Storage' }],
+    meta: () => [{ title: t('Storage') }],
 })
 
 /**
@@ -20,7 +22,7 @@ function ServerStorage() {
 
     return (
         <>
-            <Heading>Storage</Heading>
+            <Heading>{t('Storage')}</Heading>
             <DevicesCard uuid={serverUuid} />
             <div className={'grid grid-cols-1 gap-2 @md:grid-cols-2 @md:gap-4'}>
                 <StorageUsageCard uuid={serverUuid} />

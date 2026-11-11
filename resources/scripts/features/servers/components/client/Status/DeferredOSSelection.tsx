@@ -1,6 +1,8 @@
 import OSSelectionForm from '@/features/servers/components/client/Rebuild/OSSelectionForm'
 import { Server } from '@/types/server'
 
+import { t } from '@/lib/i18n.ts'
+
 import {
     Card,
     CardContent,
@@ -22,9 +24,13 @@ export default function DeferredOSSelection({
         <div className='flex h-full min-h-[50vh] flex-col items-center justify-center p-4'>
             <Card className='w-full max-w-lg'>
                 <CardHeader>
-                    <CardTitle as='h1'>Operating System Selection</CardTitle>
+                    <CardTitle as='h1'>
+                        {t('Operating System Selection')}
+                    </CardTitle>
                     <CardDescription>
-                        Choose an operating system to install on your server.
+                        {t(
+                            'Choose an operating system to install on your server.'
+                        )}
                     </CardDescription>
                 </CardHeader>
                 <CardContent>

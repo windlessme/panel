@@ -14,6 +14,8 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
 import { Form, FormButton } from '@/components/ui/Form'
 import { SwitchForm } from '@/components/ui/Forms'
@@ -50,7 +52,7 @@ const AccountSettingsPage = () => {
         mutationFn: updateAccountSettings,
         onSuccess: async updated => {
             await mutateSettings(() => updated)
-            toast.add({ title: 'Account settings updated', type: 'success' })
+            toast.add({ title: t('Account settings updated'), type: 'success' })
         },
     })
 
@@ -60,7 +62,7 @@ const AccountSettingsPage = () => {
         } catch (e) {
             handleFormErrors(e, form.setError)
             toast.add({
-                title: 'Failed to update account settings',
+                title: t('Failed to update account settings'),
                 type: 'error',
             })
             console.error(e)
@@ -70,7 +72,7 @@ const AccountSettingsPage = () => {
     if (isLoading) {
         return (
             <>
-                <Heading>Accounts</Heading>
+                <Heading>{t('Accounts')}</Heading>
                 <Skeleton className={'h-64'} />
             </>
         )
@@ -78,12 +80,12 @@ const AccountSettingsPage = () => {
 
     return (
         <div className={'@container space-y-4'}>
-            <Heading>Accounts</Heading>
+            <Heading>{t('Accounts')}</Heading>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(submit)}>
                     <Card>
                         <CardHeader>
-                            <CardTitle>What users can change</CardTitle>
+                            <CardTitle>{t('What users can change')}</CardTitle>
                         </CardHeader>
                         {/* Divided rows rather than a box per switch: four
                             bordered cards nested inside a bordered card spend
@@ -93,40 +95,40 @@ const AccountSettingsPage = () => {
                         <CardContent className={'divide-y'}>
                             <SwitchForm
                                 name={'allowNameChange'}
-                                label={'Display name'}
-                                description={
+                                label={t('Display name')}
+                                description={t(
                                     'Shown on their account and beside their actions in the audit log.'
-                                }
+                                )}
                                 formItemProps={{
                                     className: 'py-3.5 first:pt-0 last:pb-0',
                                 }}
                             />
                             <SwitchForm
                                 name={'allowEmailChange'}
-                                label={'Email address'}
-                                description={
+                                label={t('Email address')}
+                                description={t(
                                     'The address they sign in with. Changing it always requires confirming their identity first.'
-                                }
+                                )}
                                 formItemProps={{
                                     className: 'py-3.5 first:pt-0 last:pb-0',
                                 }}
                             />
                             <SwitchForm
                                 name={'allowAvatarChange'}
-                                label={'Profile picture'}
-                                description={
+                                label={t('Profile picture')}
+                                description={t(
                                     'Shown beside their name. Turning this off also stops them removing one they already have.'
-                                }
+                                )}
                                 formItemProps={{
                                     className: 'py-3.5 first:pt-0 last:pb-0',
                                 }}
                             />
                             <SwitchForm
                                 name={'allowPasswordChange'}
-                                label={'Password'}
-                                description={
+                                label={t('Password')}
+                                description={t(
                                     'There is no password reset flow, so turning this off makes their current password permanent.'
-                                }
+                                )}
                                 formItemProps={{
                                     className: 'py-3.5 first:pt-0 last:pb-0',
                                 }}
@@ -136,7 +138,8 @@ const AccountSettingsPage = () => {
 
                     <div className={'mt-4 flex justify-end'}>
                         <FormButton className={'flex'}>
-                            Save changes <IconCheck className={'size-4'} />
+                            {t('Save changes')}{' '}
+                            <IconCheck className={'size-4'} />
                         </FormButton>
                     </div>
                 </form>

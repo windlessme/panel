@@ -1,3 +1,5 @@
+import { t } from '@/lib/i18n.ts'
+
 /**
  * Mirrors the server rules in App\Rules\PasswordPolicy — the one policy every password goes
  * through, whether a user picks their own or an admin sets one for them: length only, no
@@ -27,7 +29,9 @@ const byteLength = (pwd: string): number => new TextEncoder().encode(pwd).length
 export const evaluatePassword = (pwd: string): PasswordCriterion[] => {
     const criteria: PasswordCriterion[] = [
         {
-            label: `Uses at least ${PASSWORD_MIN_LENGTH} characters`,
+            label: t('Uses at least {{PASSWORD_MIN_LENGTH}} characters', {
+                PASSWORD_MIN_LENGTH,
+            }),
             isFulfilled: pwd.length >= PASSWORD_MIN_LENGTH,
         },
     ]
@@ -36,7 +40,9 @@ export const evaluatePassword = (pwd: string): PasswordCriterion[] => {
     // up front reads as a target rather than a limit.
     if (byteLength(pwd) > PASSWORD_MAX_BYTES) {
         criteria.push({
-            label: `Uses at most ${PASSWORD_MAX_BYTES} bytes`,
+            label: t('Uses at most {{PASSWORD_MAX_BYTES}} bytes', {
+                PASSWORD_MAX_BYTES,
+            }),
             isFulfilled: false,
         })
     }

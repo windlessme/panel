@@ -7,6 +7,8 @@ import {
     useRouter,
 } from '@tanstack/react-router'
 
+import { t } from '@/lib/i18n.ts'
+
 import ErrorPageLayout, {
     ErrorCode,
     ErrorDescription,
@@ -26,11 +28,13 @@ const ErrorComponent = ({ error, reset }: ErrorComponentProps) => {
 
     return (
         <ErrorPageLayout>
-            <ErrorCode>Error</ErrorCode>
-            <ErrorTitle>Something went wrong</ErrorTitle>
+            <ErrorCode>{t('Error')}</ErrorCode>
+            <ErrorTitle>{t('Something went wrong')}</ErrorTitle>
             <ErrorDescription>{error.message}</ErrorDescription>
             <ErrorFooter>
-                <Button onClick={() => router.history.back()}>Go back</Button>
+                <Button onClick={() => router.history.back()}>
+                    {t('Go back')}
+                </Button>
                 <Link
                     to={
                         isAdmin
@@ -41,10 +45,10 @@ const ErrorComponent = ({ error, reset }: ErrorComponentProps) => {
                         variant: 'ghost',
                     })}
                 >
-                    Home
+                    {t('Home')}
                 </Link>
                 <Button onClick={reset} variant={'ghost'}>
-                    Retry
+                    {t('Retry')}
                 </Button>
             </ErrorFooter>
         </ErrorPageLayout>

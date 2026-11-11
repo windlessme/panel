@@ -2,6 +2,8 @@ import { useAttachedNodes } from '@/features/locations/api.ts'
 import { Location } from '@/features/locations/types.ts'
 import { IconServer } from '@tabler/icons-react'
 
+import { t } from '@/lib/i18n.ts'
+
 import {
     CollectionErrorState,
     SimpleEmptyState,
@@ -28,8 +30,8 @@ const AttachedNodesList = ({ location }: Props) => {
         return (
             <SimpleEmptyState
                 icon={IconServer}
-                title={'No nodes'}
-                description={'There are no nodes attached to this location.'}
+                title={t('No nodes')}
+                description={t('There are no nodes attached to this location.')}
             />
         )
     }

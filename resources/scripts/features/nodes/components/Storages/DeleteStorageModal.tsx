@@ -7,6 +7,8 @@ import useAsyncFunction from '@/hooks/use-async-function.ts'
 import useQueryMutator from '@/hooks/use-query-mutator.ts'
 import { Route as StorageRoute } from '@/routes/_app/admin/nodes.$nodeId/storages.tsx'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     ResponsiveDialog,
@@ -41,10 +43,10 @@ const DeleteStorageModal = () => {
                     return data.filter(item => item.id !== currentStorage.id)
                 }, false)
 
-                toast.add({ title: 'Storage deleted', type: 'success' })
+                toast.add({ title: t('Storage deleted'), type: 'success' })
                 close()
             } catch (e) {
-                toast.add({ title: 'Deletion failed', type: 'error' })
+                toast.add({ title: t('Deletion failed'), type: 'error' })
                 throw e
             }
         }
@@ -55,11 +57,12 @@ const DeleteStorageModal = () => {
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        Delete {storage?.displayName ?? storage?.name}
+                        {t('Delete')} {storage?.displayName ?? storage?.name}
                     </ResponsiveDialogTitle>
                     <ResponsiveDialogDescription>
-                        Are you sure you want to delete this storage? This will
-                        not delete the data on the storage.
+                        {t(
+                            'Are you sure you want to delete this storage? This will not delete the data on the storage.'
+                        )}
                     </ResponsiveDialogDescription>
                 </ResponsiveDialogHeader>
                 <ResponsiveDialogFooter className={'mt-4'}>
@@ -72,7 +75,7 @@ const DeleteStorageModal = () => {
                         variant={'destructive'}
                         onClick={() => storage && submit(storage)}
                     >
-                        Delete
+                        {t('Delete')}
                     </Button>
                 </ResponsiveDialogFooter>
             </ResponsiveDialogContent>

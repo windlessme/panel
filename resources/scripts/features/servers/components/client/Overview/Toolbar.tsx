@@ -4,33 +4,38 @@ import PowerActionsExpanded from '@/features/servers/components/client/Overview/
 import { usePowerActionToast } from '@/features/servers/detail/use-power-action-toast.ts'
 import { cn } from '@/utils'
 
+import { t } from '@/lib/i18n.ts'
+
 export const actions = {
     start: {
-        buttonText: 'Start server',
-        toastText: 'Server queued to start',
-        title: 'Start server?',
-        description: 'This action will start your server',
+        buttonText: t('Start server'),
+        toastText: t('Server queued to start'),
+        title: t('Start server?'),
+        description: t('This action will start your server'),
     },
     restart: {
-        buttonText: 'Restart server',
-        toastText: 'Server queued to restart',
-        title: 'Restart server?',
-        description:
-            'Please save your work and close out of any running processes. Any unsaved changes will be lost, and active sessions may be interrupted. Proceed only when it is safe to restart',
+        buttonText: t('Restart server'),
+        toastText: t('Server queued to restart'),
+        title: t('Restart server?'),
+        description: t(
+            'Please save your work and close out of any running processes. Any unsaved changes will be lost, and active sessions may be interrupted. Proceed only when it is safe to restart'
+        ),
     },
     kill: {
-        buttonText: 'Kill server',
-        toastText: 'Server queued to be killed',
-        title: 'Kill server?',
-        description:
-            'This action will immediately stop all processes, resulting in loss of any unsaved data. Ensure that all critical tasks are saved and completed before proceeding',
+        buttonText: t('Kill server'),
+        toastText: t('Server queued to be killed'),
+        title: t('Kill server?'),
+        description: t(
+            'This action will immediately stop all processes, resulting in loss of any unsaved data. Ensure that all critical tasks are saved and completed before proceeding'
+        ),
     },
     shutdown: {
-        buttonText: 'Shutdown server',
-        toastText: 'Server queued to be shutdown',
-        title: 'Shutdown server?',
-        description:
-            'This will power off all services and processes, potentially causing data loss if there are unsaved changes. Please ensure all work is saved and close any active connections before proceeding',
+        buttonText: t('Shutdown server'),
+        toastText: t('Server queued to be shutdown'),
+        title: t('Shutdown server?'),
+        description: t(
+            'This will power off all services and processes, potentially causing data loss if there are unsaved changes. Please ensure all work is saved and close any active connections before proceeding'
+        ),
     },
 }
 

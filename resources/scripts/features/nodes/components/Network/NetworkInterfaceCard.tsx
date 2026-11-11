@@ -5,6 +5,8 @@ import { NetworkInterface, Vlan } from '@/types/network-interface.ts'
 import { cn } from '@/utils'
 import { IconDots, IconPlus } from '@tabler/icons-react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
 import {
@@ -64,9 +66,9 @@ const Actions = ({
             </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align={'end'} className={'w-60'}>
-            <DropdownMenuItem onClick={onEdit}>Edit</DropdownMenuItem>
+            <DropdownMenuItem onClick={onEdit}>{t('Edit')}</DropdownMenuItem>
             <DropdownMenuItem variant={'destructive'} onClick={onDelete}>
-                Delete
+                {t('Delete')}
             </DropdownMenuItem>
         </DropdownMenuContent>
     </DropdownMenu>
@@ -108,20 +110,22 @@ const VlanRow = ({
                 aria-hidden
             />
             <div className={'flex min-w-0 flex-1 flex-wrap items-center gap-2'}>
-                <span className={'font-mono text-sm'}>VLAN {vlan.tag}</span>
+                <span className={'font-mono text-sm'}>
+                    {t('VLAN {{tag}}', { tag: vlan.tag })}
+                </span>
                 {vlan.name && (
                     <span className={'truncate text-sm'}>{vlan.name}</span>
                 )}
                 {isDefault && (
                     <Badge variant={'secondary'} className={'w-fit'}>
-                        Bridge default
+                        {t('Bridge default')}
                     </Badge>
                 )}
                 {!isDeclared && (
                     // Worth marking: it exists only because a server carries
                     // the tag, so it can't be named or removed as it stands.
                     <Badge variant={'outline'} className={'w-fit'}>
-                        Undeclared
+                        {t('Undeclared')}
                     </Badge>
                 )}
             </div>
@@ -134,7 +138,9 @@ const VlanRow = ({
             </div>
             {isDeclared ? (
                 <Actions
-                    label={`Open actions for VLAN ${vlan.tag}`}
+                    label={t('Open actions for VLAN {{tag}}', {
+                        tag: vlan.tag,
+                    })}
                     onEdit={() =>
                         openVlanModal('edit', { networkInterface, vlan })
                     }
@@ -150,7 +156,7 @@ const VlanRow = ({
                         openVlanModal('create', { networkInterface, vlan })
                     }
                 >
-                    Declare
+                    {t('Declare')}
                 </Button>
             )}
         </div>
@@ -168,14 +174,14 @@ const NetworkInterfaceCard = ({ interface: networkInterface }: Props) => {
             </span>
             {networkInterface.isVlanAware ? (
                 <Badge variant={'secondary'} className={'w-fit'}>
-                    Trunk
+                    {t('Trunk')}
                 </Badge>
             ) : (
                 // The common case states itself in muted meta text rather than
                 // a badge: a badge marks an exception, and almost every bridge
                 // is untagged.
                 <span className={'text-muted-foreground text-sm'}>
-                    Untagged
+                    {t('Untagged')}
                 </span>
             )}
             {networkInterface.description && (
@@ -188,7 +194,9 @@ const NetworkInterfaceCard = ({ interface: networkInterface }: Props) => {
 
     const actions = (
         <Actions
-            label={`Open actions for ${networkInterface.name}`}
+            label={t('Open actions for {{name}}', {
+                name: networkInterface.name,
+            })}
             onEdit={() => openModal('edit', networkInterface)}
             onDelete={() => openModal('delete', networkInterface)}
         />
@@ -237,7 +245,7 @@ const NetworkInterfaceCard = ({ interface: networkInterface }: Props) => {
                     ))}
                     {networkInterface.vlans.length === 0 && (
                         <p className={'text-muted-foreground py-1.5 text-sm'}>
-                            No VLANs on this trunk yet.
+                            {t('No VLANs on this trunk yet.')}
                         </p>
                     )}
                     <Button
@@ -251,7 +259,7 @@ const NetworkInterfaceCard = ({ interface: networkInterface }: Props) => {
                             })
                         }
                     >
-                        <IconPlus className={'size-4'} /> Declare VLAN
+                        <IconPlus className={'size-4'} /> {t('Declare VLAN')}
                     </Button>
                 </div>
             </CollapsiblePanel>

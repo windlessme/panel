@@ -1,11 +1,12 @@
+import {
+    preloadAddressBlockGroup,
+    useAddressBlockGroup,
+} from '@/features/ipam/api.ts'
 import useTitle from '@/hooks/use-title.ts'
 import { processAxiosError } from '@/utils/http.ts'
 import { Outlet, createFileRoute } from '@tanstack/react-router'
 
-import {
-    useAddressBlockGroup,
-    preloadAddressBlockGroup,
-} from '@/features/ipam/api.ts'
+import { t } from '@/lib/i18n.ts'
 
 export const Route = createFileRoute(
     '/_app/admin/_dashboard/ipam/$addressBlockGroupId'
@@ -16,8 +17,8 @@ export const Route = createFileRoute(
         ),
     component: BlockGroupsLayout,
     staticData: {
-        title: 'IP Block Group',
-    }
+        title: t('IP Block Group'),
+    },
 })
 
 function BlockGroupsLayout() {

@@ -4,6 +4,8 @@ import {
     IconLayoutSidebarLeftExpand,
 } from '@tabler/icons-react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { SidebarNav } from '@/components/ui/Navigation/Navigation.types.ts'
 import BrandLink from '@/components/ui/Navigation/Sidebar/BrandLink.tsx'
 import SidebarContent from '@/components/ui/Navigation/Sidebar/SidebarContent.tsx'
@@ -36,7 +38,7 @@ const Sidebar = ({ nav }: Props) => {
                 onMouseEnter={() => collapsed && setRailHovered(true)}
                 onMouseLeave={() => setRailHovered(false)}
                 className={cn(
-                    'fixed inset-y-0 left-0 z-50 flex flex-col overflow-hidden border-r bg-sidebar text-sidebar-foreground transition-[width] duration-200',
+                    'bg-sidebar text-sidebar-foreground fixed inset-y-0 left-0 z-50 flex flex-col overflow-hidden border-r transition-[width] duration-200',
                     expanded ? 'w-64' : 'w-14',
                     collapsed && railHovered ? 'shadow-xl' : null
                 )}
@@ -45,7 +47,7 @@ const Sidebar = ({ nav }: Props) => {
                     <BrandLink collapsed={!expanded} />
                 </div>
 
-                <nav className='no-scrollbar flex flex-1 flex-col overflow-y-auto overflow-x-hidden px-2 pb-3'>
+                <nav className='no-scrollbar flex flex-1 flex-col overflow-x-hidden overflow-y-auto px-2 pb-3'>
                     <SidebarContent nav={nav} collapsed={!expanded} />
                 </nav>
 
@@ -53,8 +55,12 @@ const Sidebar = ({ nav }: Props) => {
                     <button
                         type='button'
                         onClick={toggleCollapsed}
-                        title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-                        className='flex h-9 w-full items-center overflow-hidden rounded-md text-sm text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
+                        title={
+                            collapsed
+                                ? t('Expand sidebar')
+                                : t('Collapse sidebar')
+                        }
+                        className='text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground flex h-9 w-full items-center overflow-hidden rounded-md text-sm'
                     >
                         <span className='grid h-9 w-10 shrink-0 place-items-center'>
                             {collapsed ? (
@@ -64,8 +70,10 @@ const Sidebar = ({ nav }: Props) => {
                             )}
                         </span>
                         {expanded ? (
-                            <span className='min-w-0 flex-1 truncate whitespace-nowrap pr-2 text-left'>
-                                {collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+                            <span className='min-w-0 flex-1 truncate pr-2 text-left whitespace-nowrap'>
+                                {collapsed
+                                    ? t('Expand sidebar')
+                                    : t('Collapse sidebar')}
                             </span>
                         ) : null}
                     </button>

@@ -9,6 +9,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 
 import { apiFetch } from '@/lib/api'
+import { t } from '@/lib/i18n.ts'
 
 import useConfirmationStore from '@/components/ui/AlertDialog/use-confirmation-store.ts'
 import { Button } from '@/components/ui/Button'
@@ -24,10 +25,10 @@ const sendPowerCommandRoute =
     ServerController.sendPowerCommand['/api/admin/servers/{server}/power']
 
 const labels: Record<PowerAction, string> = {
-    start: 'Start',
-    restart: 'Restart',
-    shutdown: 'Shutdown',
-    kill: 'Kill',
+    start: t('Start'),
+    restart: t('Restart'),
+    shutdown: t('Shutdown'),
+    kill: t('Kill'),
 }
 
 interface Props {
@@ -44,8 +45,13 @@ const ServerBulkPowerActions = ({ servers, onDone }: Props) => {
 
     const run = async (action: PowerAction) => {
         const confirmed = await confirm({
-            title: `${labels[action]} ${servers.length} server(s)?`,
-            description: `This will ${action} every selected server.`,
+            title: t('{{labels}} {{length}} server(s)?', {
+                labels: labels[action],
+                length: servers.length,
+            }),
+            description: t('This will {{action}} every selected server.', {
+                action,
+            }),
         })
         setTimeout(() => {
             document.body.style.pointerEvents = 'auto'
@@ -71,12 +77,18 @@ const ServerBulkPowerActions = ({ servers, onDone }: Props) => {
         const failed = results.filter(r => r.status === 'rejected').length
         if (failed) {
             toast.add({
-                title: `${failed} of ${servers.length} power actions failed`,
+                title: t('{{failed}} of {{length}} power actions failed', {
+                    failed,
+                    length: servers.length,
+                }),
                 type: 'error',
             })
         } else {
             toast.add({
-                title: `Queued ${action} for ${servers.length} server(s)`,
+                title: t('Queued {{action}} for {{length}} server(s)', {
+                    action,
+                    length: servers.length,
+                }),
                 type: 'success',
             })
         }
@@ -87,7 +99,7 @@ const ServerBulkPowerActions = ({ servers, onDone }: Props) => {
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button variant='outline' loading={pending}>
-                    Power
+                    {t('Power')}
                     <IconChevronDown className='size-4' />
                 </Button>
             </DropdownMenuTrigger>

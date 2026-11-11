@@ -1,3 +1,5 @@
+import { t } from '@/lib/i18n.ts'
+
 /**
  * The wording for every audit event.
  *
@@ -75,25 +77,25 @@ const powerDetail = (properties: AuditProperties): string | null =>
 
 export const AUDIT_EVENT_COPY: Record<AuditEvent, AuditEventCopy> = {
     // Authentication
-    'auth.login.succeeded': { verb: 'signed in', detail: () => null },
+    'auth.login.succeeded': { verb: t('signed in'), detail: () => null },
     'auth.login.failed': {
-        verb: 'failed to sign in',
+        verb: t('failed to sign in'),
         detail: p => pick(p, 'email'),
     },
-    'auth.logout': { verb: 'signed out', detail: () => null },
-    'auth.invite.accepted': { verb: 'accepted their invitation' },
+    'auth.logout': { verb: t('signed out'), detail: () => null },
+    'auth.invite.accepted': { verb: t('accepted their invitation') },
 
     // Account and credentials
     'account.profile.updated': {
-        verb: 'updated their profile',
+        verb: t('updated their profile'),
         detail: changedFields,
     },
     'account.avatar.updated': {
-        verb: 'changed their profile picture',
+        verb: t('changed their profile picture'),
         detail: () => null,
     },
     'account.password.updated': {
-        verb: 'changed their password',
+        verb: t('changed their password'),
         detail: () => null,
     },
     'account.two-factor.enabled': {
@@ -109,12 +111,12 @@ export const AUDIT_EVENT_COPY: Record<AuditEvent, AuditEventCopy> = {
         detail: () => null,
     },
     'account.recovery-codes.regenerated': {
-        verb: 'regenerated their recovery codes',
+        verb: t('regenerated their recovery codes'),
         detail: () => null,
     },
-    'account.passkey.created': { verb: 'added a passkey' },
+    'account.passkey.created': { verb: t('added a passkey') },
     'account.passkey.renamed': {
-        verb: 'renamed a passkey',
+        verb: t('renamed a passkey'),
         detail: p => {
             const from = pick(p, 'from')
             const to = pick(p, 'to')
@@ -122,44 +124,47 @@ export const AUDIT_EVENT_COPY: Record<AuditEvent, AuditEventCopy> = {
             return from && to ? `${from} → ${to}` : to
         },
     },
-    'account.passkey.deleted': { verb: 'removed a passkey' },
-    'account.ssh-key.created': { verb: 'added an SSH key' },
-    'account.ssh-key.deleted': { verb: 'removed an SSH key' },
-    'account.api-key.created': { verb: 'created an API key' },
-    'account.api-key.deleted': { verb: 'revoked an API key' },
+    'account.passkey.deleted': { verb: t('removed a passkey') },
+    'account.ssh-key.created': { verb: t('added an SSH key') },
+    'account.ssh-key.deleted': { verb: t('removed an SSH key') },
+    'account.api-key.created': { verb: t('created an API key') },
+    'account.api-key.deleted': { verb: t('revoked an API key') },
     'account.session.revoked': {
-        verb: 'signed out another session',
+        verb: t('signed out another session'),
         detail: p => pick(p, 'ip'),
     },
     'account.oauth-connection.deleted': {
-        verb: 'disconnected a linked account',
+        verb: t('disconnected a linked account'),
     },
 
     // Server actions
-    'server.power.sent': { verb: 'sent a power command', detail: powerDetail },
-    'server.reinstalled': { verb: 'reinstalled the server' },
+    'server.power.sent': {
+        verb: t('sent a power command'),
+        detail: powerDetail,
+    },
+    'server.reinstalled': { verb: t('reinstalled the server') },
     'server.installation.retried': {
-        verb: 'retried the installation',
+        verb: t('retried the installation'),
         detail: () => null,
     },
-    'server.renamed': { verb: 'renamed the server' },
+    'server.renamed': { verb: t('renamed the server') },
     'server.console.session-created': {
-        verb: 'opened a console session',
+        verb: t('opened a console session'),
         detail: p => pick(p, 'type'),
     },
     'server.console.display-enabled': {
-        verb: 'enabled the display console',
+        verb: t('enabled the display console'),
         detail: () => null,
     },
     'server.console.serial-enabled': {
-        verb: 'enabled the serial console',
+        verb: t('enabled the serial console'),
         detail: () => null,
     },
-    'server.backup.created': { verb: 'created a backup' },
-    'server.backup.deleted': { verb: 'deleted a backup' },
-    'server.backup.restored': { verb: 'restored a backup' },
+    'server.backup.created': { verb: t('created a backup') },
+    'server.backup.deleted': { verb: t('deleted a backup') },
+    'server.backup.restored': { verb: t('restored a backup') },
     'server.firewall.options-updated': {
-        verb: 'changed the firewall policy',
+        verb: t('changed the firewall policy'),
         detail: p => {
             const inbound = pick(p, 'inbound_policy')
             const outbound = pick(p, 'outbound_policy')
@@ -168,19 +173,19 @@ export const AUDIT_EVENT_COPY: Record<AuditEvent, AuditEventCopy> = {
         },
     },
     'server.firewall.rule-created': {
-        verb: 'added a firewall rule',
+        verb: t('added a firewall rule'),
         detail: p => pick(p, 'macro', 'destination_port', 'protocol'),
     },
     'server.firewall.rule-updated': {
-        verb: 'changed a firewall rule',
+        verb: t('changed a firewall rule'),
         detail: p => pick(p, 'macro', 'destination_port', 'protocol'),
     },
     'server.firewall.rule-deleted': {
-        verb: 'deleted a firewall rule',
+        verb: t('deleted a firewall rule'),
         detail: () => null,
     },
     'server.firewall.rule-moved': {
-        verb: 'reordered a firewall rule',
+        verb: t('reordered a firewall rule'),
         detail: p => {
             const from = pick(p, 'from')
             const to = pick(p, 'to')
@@ -189,49 +194,49 @@ export const AUDIT_EVENT_COPY: Record<AuditEvent, AuditEventCopy> = {
         },
     },
     'server.settings.auth-updated': {
-        verb: 'changed the server credentials',
+        verb: t('changed the server credentials'),
         detail: p => pick(p, 'type'),
     },
     'server.settings.boot-order-updated': {
-        verb: 'changed the boot order',
+        verb: t('changed the boot order'),
         detail: () => null,
     },
     'server.settings.network-updated': {
-        verb: 'changed the network settings',
+        verb: t('changed the network settings'),
         detail: () => null,
     },
-    'server.media.mounted': { verb: 'mounted an ISO' },
-    'server.media.unmounted': { verb: 'unmounted an ISO' },
+    'server.media.mounted': { verb: t('mounted an ISO') },
+    'server.media.unmounted': { verb: t('unmounted an ISO') },
 
     // Administrative actions on a server
-    'admin.server.created': { verb: 'created the server' },
+    'admin.server.created': { verb: t('created the server') },
     'admin.server.updated': {
-        verb: 'updated the server',
+        verb: t('updated the server'),
         detail: changedFields,
     },
-    'admin.server.deleted': { verb: 'deleted the server' },
+    'admin.server.deleted': { verb: t('deleted the server') },
     'admin.server.power-sent': {
-        verb: 'sent a power command',
+        verb: t('sent a power command'),
         detail: powerDetail,
     },
     'admin.server.build-updated': {
-        verb: 'changed the resource limits',
+        verb: t('changed the resource limits'),
         detail: changedFields,
     },
     'admin.server.suspended': {
-        verb: 'suspended the server',
+        verb: t('suspended the server'),
         detail: () => null,
     },
     'admin.server.unsuspended': {
-        verb: 'unsuspended the server',
+        verb: t('unsuspended the server'),
         detail: () => null,
     },
     'admin.server.disk-created': {
-        verb: 'added a disk',
+        verb: t('added a disk'),
         detail: p => pick(p, 'size'),
     },
     'admin.server.disk-updated': {
-        verb: 'resized a disk',
+        verb: t('resized a disk'),
         detail: p => {
             const from = pick(p, 'from')
             const to = pick(p, 'to')
@@ -239,9 +244,12 @@ export const AUDIT_EVENT_COPY: Record<AuditEvent, AuditEventCopy> = {
             return from && to ? `${from} → ${to}` : null
         },
     },
-    'admin.server.disk-deleted': { verb: 'removed a disk', detail: () => null },
+    'admin.server.disk-deleted': {
+        verb: t('removed a disk'),
+        detail: () => null,
+    },
     'admin.server.rehomed': {
-        verb: 'moved the server between nodes',
+        verb: t('moved the server between nodes'),
         detail: p => {
             const from = pick(p, 'from')
             const to = pick(p, 'to')
@@ -249,61 +257,64 @@ export const AUDIT_EVENT_COPY: Record<AuditEvent, AuditEventCopy> = {
             return from && to ? `${from} → ${to}` : null
         },
     },
-    'admin.backup.deleted': { verb: 'deleted a backup' },
+    'admin.backup.deleted': { verb: t('deleted a backup') },
 
     // ISO library — panel-wide, so these name no node.
-    'admin.iso.created': { verb: 'added an ISO' },
-    'admin.iso.updated': { verb: 'updated an ISO', detail: changedFields },
-    'admin.iso.deleted': { verb: 'deleted an ISO' },
+    'admin.iso.created': { verb: t('added an ISO') },
+    'admin.iso.updated': { verb: t('updated an ISO'), detail: changedFields },
+    'admin.iso.deleted': { verb: t('deleted an ISO') },
     'admin.iso.uploaded': {
-        verb: 'uploaded an ISO',
+        verb: t('uploaded an ISO'),
         detail: p => (p.sha256 ? String(p.sha256).slice(0, 12) : null),
     },
 
     // Infrastructure
-    'admin.node.created': { verb: 'created a node' },
-    'admin.node.updated': { verb: 'updated a node', detail: changedFields },
-    'admin.node.deleted': { verb: 'deleted a node' },
-    'admin.node.interface-created': { verb: 'added a network interface' },
-    'admin.node.interface-updated': { verb: 'updated a network interface' },
-    'admin.node.interface-deleted': { verb: 'deleted a network interface' },
+    'admin.node.created': { verb: t('created a node') },
+    'admin.node.updated': { verb: t('updated a node'), detail: changedFields },
+    'admin.node.deleted': { verb: t('deleted a node') },
+    'admin.node.interface-created': { verb: t('added a network interface') },
+    'admin.node.interface-updated': { verb: t('updated a network interface') },
+    'admin.node.interface-deleted': { verb: t('deleted a network interface') },
     'admin.node.vlan-created': {
-        verb: 'declared a VLAN',
+        verb: t('declared a VLAN'),
         detail: p => pick(p, 'tag'),
     },
     'admin.node.vlan-updated': {
-        verb: 'updated a VLAN',
+        verb: t('updated a VLAN'),
         detail: p => pick(p, 'tag'),
     },
     'admin.node.vlan-deleted': {
-        verb: 'removed a VLAN',
+        verb: t('removed a VLAN'),
         detail: p => pick(p, 'tag'),
     },
-    'admin.node.storage-created': { verb: 'added a storage' },
-    'admin.node.storage-updated': { verb: 'updated a storage' },
-    'admin.node.storage-deleted': { verb: 'removed a storage' },
+    'admin.node.storage-created': { verb: t('added a storage') },
+    'admin.node.storage-updated': { verb: t('updated a storage') },
+    'admin.node.storage-deleted': { verb: t('removed a storage') },
     'admin.cluster.unflagged': {
-        verb: 'cleared a cluster identity flag',
+        verb: t('cleared a cluster identity flag'),
         detail: defaultDetail,
     },
     'admin.node.storage-backup-order-updated': {
-        verb: 'reordered backup storage',
+        verb: t('reordered backup storage'),
         detail: () => null,
     },
-    'admin.location.created': { verb: 'created a location' },
+    'admin.location.created': { verb: t('created a location') },
     'admin.location.updated': {
-        verb: 'updated a location',
+        verb: t('updated a location'),
         detail: changedFields,
     },
-    'admin.location.deleted': { verb: 'deleted a location' },
-    'admin.relay.created': { verb: 'created a relay' },
-    'admin.relay.updated': { verb: 'updated a relay', detail: changedFields },
-    'admin.relay.deleted': { verb: 'deleted a relay' },
+    'admin.location.deleted': { verb: t('deleted a location') },
+    'admin.relay.created': { verb: t('created a relay') },
+    'admin.relay.updated': {
+        verb: t('updated a relay'),
+        detail: changedFields,
+    },
+    'admin.relay.deleted': { verb: t('deleted a relay') },
     'admin.anchor.enrollment-rotated': {
-        verb: 'rotated an Anchor enrollment secret',
+        verb: t('rotated an Anchor enrollment secret'),
     },
     'admin.anchor.enrollment-key-created': {
-        verb: 'created an Anchor enrollment key',
+        verb: t('created an Anchor enrollment key'),
         // How many machines the key admits is the part worth reading at a
         // glance; an unlimited key is the one you want to notice in a feed.
         detail: p => {
@@ -318,125 +329,125 @@ export const AUDIT_EVENT_COPY: Record<AuditEvent, AuditEventCopy> = {
         },
     },
     'admin.anchor.enrollment-key-revoked': {
-        verb: 'revoked an Anchor enrollment key',
+        verb: t('revoked an Anchor enrollment key'),
     },
     'admin.anchor.enrollment-key-deleted': {
-        verb: 'deleted an Anchor enrollment key',
+        verb: t('deleted an Anchor enrollment key'),
     },
     // No actor on these rows -- a machine presented a key and the panel acted.
     // The feed renders that as the panel itself, which is what happened.
     'admin.anchor.self-enrolled': {
-        verb: 'enrolled itself with an Anchor key',
+        verb: t('enrolled itself with an Anchor key'),
         detail: p => pick(p, 'hostname', 'name'),
     },
     'admin.anchor.approved': {
-        verb: 'approved an Anchor',
+        verb: t('approved an Anchor'),
         detail: p => pick(p, 'hostname', 'name'),
     },
     'admin.anchor.rejected': {
-        verb: 'turned away an Anchor',
+        verb: t('turned away an Anchor'),
         detail: p => pick(p, 'hostname', 'source_ip', 'name'),
     },
 
     // IP address management
-    'admin.address-block-group.created': { verb: 'created an address pool' },
+    'admin.address-block-group.created': { verb: t('created an address pool') },
     'admin.address-block-group.updated': {
-        verb: 'updated an address pool',
+        verb: t('updated an address pool'),
         detail: changedFields,
     },
-    'admin.address-block-group.deleted': { verb: 'deleted an address pool' },
+    'admin.address-block-group.deleted': { verb: t('deleted an address pool') },
     'admin.address-block-group.node-attached': {
-        verb: 'attached a node to an address pool',
+        verb: t('attached a node to an address pool'),
         detail: () => null,
     },
     'admin.address-block-group.node-detached': {
-        verb: 'detached a node from an address pool',
+        verb: t('detached a node from an address pool'),
     },
-    'admin.address-block.created': { verb: 'created an address block' },
+    'admin.address-block.created': { verb: t('created an address block') },
     'admin.address-block.updated': {
-        verb: 'updated an address block',
+        verb: t('updated an address block'),
         detail: changedFields,
     },
-    'admin.address-block.deleted': { verb: 'deleted an address block' },
-    'admin.address.generated': { verb: 'generated addresses' },
-    'admin.address.updated': { verb: 'updated an address' },
-    'admin.address.deleted': { verb: 'deleted an address' },
-    'admin.address.reserved': { verb: 'reserved an address' },
-    'admin.address.unreserved': { verb: 'released a reserved address' },
+    'admin.address-block.deleted': { verb: t('deleted an address block') },
+    'admin.address.generated': { verb: t('generated addresses') },
+    'admin.address.updated': { verb: t('updated an address') },
+    'admin.address.deleted': { verb: t('deleted an address') },
+    'admin.address.reserved': { verb: t('reserved an address') },
+    'admin.address.unreserved': { verb: t('released a reserved address') },
 
     // Users, tokens and panel settings
     'admin.user.created': {
-        verb: 'created a user',
+        verb: t('created a user'),
         detail: p => pick(p, 'email'),
     },
-    'admin.user.updated': { verb: 'updated a user', detail: changedFields },
-    'admin.user.deleted': { verb: 'deleted a user' },
+    'admin.user.updated': { verb: t('updated a user'), detail: changedFields },
+    'admin.user.deleted': { verb: t('deleted a user') },
     'admin.user.sso-token-generated': {
         verb: 'generated a sign-in link for a user',
         detail: () => null,
     },
-    'admin.user.invited': { verb: 'invited a user', detail: () => null },
+    'admin.user.invited': { verb: t('invited a user'), detail: () => null },
     'admin.user.invite-revoked': {
-        verb: 'revoked a user invitation',
+        verb: t('revoked a user invitation'),
         detail: () => null,
     },
-    'admin.token.created': { verb: 'created an application token' },
-    'admin.token.updated': { verb: 'updated an application token' },
-    'admin.token.deleted': { verb: 'revoked an application token' },
+    'admin.token.created': { verb: t('created an application token') },
+    'admin.token.updated': { verb: t('updated an application token') },
+    'admin.token.deleted': { verb: t('revoked an application token') },
     'admin.settings.account-updated': {
-        verb: 'changed the account settings',
+        verb: t('changed the account settings'),
         detail: () => null,
     },
     'admin.settings.anchor-updated': {
-        verb: 'changed the Anchor settings',
+        verb: t('changed the Anchor settings'),
         detail: () => null,
     },
     'admin.settings.bandwidth-updated': {
-        verb: 'changed the bandwidth settings',
+        verb: t('changed the bandwidth settings'),
         detail: p => pick(p, 'overage_action'),
     },
     'admin.settings.mail-updated': {
-        verb: 'changed the mail settings',
+        verb: t('changed the mail settings'),
         detail: p => pick(p, 'host'),
     },
     'admin.settings.mail-tested': {
-        verb: 'sent a test email',
+        verb: t('sent a test email'),
         detail: p => pick(p, 'host'),
     },
 
     // Presets and images
-    'admin.server-preset.created': { verb: 'created a server preset' },
+    'admin.server-preset.created': { verb: t('created a server preset') },
     'admin.server-preset.updated': {
-        verb: 'updated a server preset',
+        verb: t('updated a server preset'),
         detail: changedFields,
     },
-    'admin.server-preset.deleted': { verb: 'deleted a server preset' },
-    'admin.image-group.created': { verb: 'created an image group' },
+    'admin.server-preset.deleted': { verb: t('deleted a server preset') },
+    'admin.image-group.created': { verb: t('created an image group') },
     'admin.image-group.updated': {
-        verb: 'updated an image group',
+        verb: t('updated an image group'),
         detail: changedFields,
     },
-    'admin.image-group.deleted': { verb: 'deleted an image group' },
-    'admin.image.created': { verb: 'created an image' },
+    'admin.image-group.deleted': { verb: t('deleted an image group') },
+    'admin.image.created': { verb: t('created an image') },
     'admin.image.updated': {
-        verb: 'updated an image',
+        verb: t('updated an image'),
         detail: changedFields,
     },
-    'admin.image.deleted': { verb: 'deleted an image' },
+    'admin.image.deleted': { verb: t('deleted an image') },
     'admin.image-version.created': {
-        verb: 'published an image version',
+        verb: t('published an image version'),
         detail: p => (p.version ? String(p.version) : null),
     },
     'admin.image-version.updated': {
-        verb: 'changed an image version',
+        verb: t('changed an image version'),
         detail: p => (p.version ? String(p.version) : null),
     },
     'admin.image-version.deleted': {
-        verb: 'deleted an image version',
+        verb: t('deleted an image version'),
         detail: p => (p.version ? String(p.version) : null),
     },
     'admin.image.uploaded': {
-        verb: 'uploaded a disk image',
+        verb: t('uploaded a disk image'),
         detail: p => (p.sha256 ? String(p.sha256).slice(0, 12) : null),
     },
 }
@@ -449,16 +460,16 @@ export const AUDIT_EVENT_COPY: Record<AuditEvent, AuditEventCopy> = {
  */
 const RETIRED_EVENT_COPY: Record<string, AuditEventCopy | undefined> = {
     // ISOs stopped belonging to a node when the library moved into the panel.
-    'admin.node.iso-created': { verb: 'added an ISO' },
-    'admin.node.iso-updated': { verb: 'updated an ISO' },
-    'admin.node.iso-deleted': { verb: 'deleted an ISO' },
+    'admin.node.iso-created': { verb: t('added an ISO') },
+    'admin.node.iso-updated': { verb: t('updated an ISO') },
+    'admin.node.iso-deleted': { verb: t('deleted an ISO') },
     // Templates became images.
-    'admin.template-group.created': { verb: 'created a template group' },
-    'admin.template-group.updated': { verb: 'updated a template group' },
-    'admin.template-group.deleted': { verb: 'deleted a template group' },
-    'admin.template.created': { verb: 'created a template' },
-    'admin.template.updated': { verb: 'updated a template' },
-    'admin.template.deleted': { verb: 'deleted a template' },
+    'admin.template-group.created': { verb: t('created a template group') },
+    'admin.template-group.updated': { verb: t('updated a template group') },
+    'admin.template-group.deleted': { verb: t('deleted a template group') },
+    'admin.template.created': { verb: t('created a template') },
+    'admin.template.updated': { verb: t('updated a template') },
+    'admin.template.deleted': { verb: t('deleted a template') },
 }
 
 /** The sentence for one entry: what was done, and to what where that adds something. */

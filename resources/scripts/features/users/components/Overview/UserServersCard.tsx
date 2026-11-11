@@ -5,6 +5,8 @@ import { IconServer } from '@tabler/icons-react'
 import { Link } from '@tanstack/react-router'
 import byteSize from 'byte-size'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Badge } from '@/components/ui/Badge.tsx'
 import { buttonVariants } from '@/components/ui/Button'
 import {
@@ -56,7 +58,7 @@ const UserServersCard = ({ userId }: Props) => {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Servers</CardTitle>
+                <CardTitle>{t('Servers')}</CardTitle>
                 {total > 0 && (
                     <CardAction>
                         <Link
@@ -66,7 +68,7 @@ const UserServersCard = ({ userId }: Props) => {
                             })}
                             to={`/admin/users/${userId}/servers` as string}
                         >
-                            View all {total}
+                            {t('View all {{total}}', { total })}
                         </Link>
                     </CardAction>
                 )}
@@ -85,17 +87,17 @@ const UserServersCard = ({ userId }: Props) => {
                 ) : data.items.length === 0 ? (
                     <SimpleEmptyState
                         icon={IconServer}
-                        title={'No servers'}
+                        title={t('No servers')}
                     />
                 ) : (
                     <Table>
                         <TableHeader>
                             <TableRow>
-                                <TableHead>Name</TableHead>
-                                <TableHead>Power</TableHead>
-                                <TableHead>vCPU</TableHead>
-                                <TableHead>Memory</TableHead>
-                                <TableHead>Disk</TableHead>
+                                <TableHead>{t('Name')}</TableHead>
+                                <TableHead>{t('Power')}</TableHead>
+                                <TableHead>{t('vCPU')}</TableHead>
+                                <TableHead>{t('Memory')}</TableHead>
+                                <TableHead>{t('Disk')}</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -122,7 +124,7 @@ const UserServersCard = ({ userId }: Props) => {
                                             </Link>
                                             {server.suspendedAt && (
                                                 <Badge variant={'destructive'}>
-                                                    Suspended
+                                                    {t('Suspended')}
                                                 </Badge>
                                             )}
                                         </span>

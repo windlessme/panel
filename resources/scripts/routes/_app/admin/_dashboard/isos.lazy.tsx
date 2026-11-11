@@ -6,6 +6,8 @@ import { createLazyFileRoute } from '@tanstack/react-router'
 import byteSize from 'byte-size'
 import { useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import useConfirmationStore from '@/components/ui/AlertDialog/use-confirmation-store.ts'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
@@ -36,12 +38,12 @@ function IsoLibrary() {
 
     return (
         <>
-            <Heading>ISOs</Heading>
+            <Heading>{t('ISOs')}</Heading>
 
             <PageToolbar actions={<CreateISOModal />}>
                 <Input
                     className={'max-w-xs'}
-                    placeholder={'Search ISOs'}
+                    placeholder={t('Search ISOs')}
                     value={search}
                     onChange={event => setSearch(event.target.value)}
                 />
@@ -61,10 +63,10 @@ function IsoLibrary() {
                 <Card className={'py-10'}>
                     <SimpleEmptyState
                         icon={IconDisc}
-                        title={'No ISOs yet'}
-                        description={
+                        title={t('No ISOs yet')}
+                        description={t(
                             'Add one and it becomes available on every node — the first node someone mounts it on fetches it.'
-                        }
+                        )}
                     />
                 </Card>
             ) : (
@@ -102,7 +104,7 @@ function IsoLibrary() {
                                     {iso.size ? ` · ${byteSize(iso.size)}` : ''}
                                     {' · '}
                                     {iso.isHosted
-                                        ? 'hosted by Convoy'
+                                        ? t('hosted by Convoy')
                                         : 'linked'}
                                 </p>
                             </div>
@@ -119,14 +121,14 @@ function IsoLibrary() {
                                 }}
                             >
                                 {iso.hidden
-                                    ? 'Show to customers'
-                                    : 'Admin only'}
+                                    ? t('Show to customers')
+                                    : t('Admin only')}
                             </Button>
 
                             <Button
                                 variant={'ghost'}
                                 size={'icon'}
-                                aria-label={'Delete ISO'}
+                                aria-label={t('Delete ISO')}
                                 onClick={async () => {
                                     const ok = await confirm({
                                         title: `Delete ${iso.name}?`,

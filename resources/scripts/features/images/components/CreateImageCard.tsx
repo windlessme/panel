@@ -12,6 +12,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { Form, FormButton } from '@/components/ui/Form'
 import {
@@ -62,7 +64,7 @@ const CreateImageCard = ({ imageGroup, onClose }: Props) => {
             onClose()
         } catch (e) {
             if (handleFormErrors(e, form.setError)) {
-                toast.add({ title: 'Failed to create image', type: 'error' })
+                toast.add({ title: t('Failed to create image'), type: 'error' })
             }
         }
     }
@@ -74,19 +76,22 @@ const CreateImageCard = ({ imageGroup, onClose }: Props) => {
                     className={'space-y-2'}
                     onSubmit={form.handleSubmit(submit as any)}
                 >
-                    <InputForm name={'name'} label={'Name'} />
-                    <TextareaForm name={'description'} label={'Description'} />
+                    <InputForm name={'name'} label={t('Name')} />
+                    <TextareaForm
+                        name={'description'}
+                        label={t('Description')}
+                    />
                     <SelectForm
                         name={'ostype'}
-                        label={'Operating system'}
-                        description={
+                        label={t('Operating system')}
+                        description={t(
                             'Everything else about the hardware follows from this. Change it later only if the guest changes.'
-                        }
+                        )}
                         items={OSTYPE_ITEMS}
                     />
                     <CheckboxItemForm
                         name={'isAdminOnly'}
-                        label={'Admin Only'}
+                        label={t('Admin Only')}
                     />
 
                     <div className={'flex justify-end gap-2'}>
@@ -95,9 +100,9 @@ const CreateImageCard = ({ imageGroup, onClose }: Props) => {
                             onClick={() => onClose()}
                             type={'button'}
                         >
-                            Cancel
+                            {t('Cancel')}
                         </Button>
-                        <FormButton>Create image</FormButton>
+                        <FormButton>{t('Create image')}</FormButton>
                     </div>
                 </form>
             </Form>

@@ -3,6 +3,7 @@ import useTitle from '@/hooks/use-title.ts'
 import { AuthenticatedUser } from '@/types/user.ts'
 import { Outlet, createFileRoute, redirect } from '@tanstack/react-router'
 
+import { t } from '@/lib/i18n.ts'
 import { queryClient } from '@/lib/query-client.ts'
 
 import LogoWithName from '@/components/ui/Branding/LogoWithName.tsx'
@@ -50,7 +51,7 @@ function NotFound() {
     return (
         <div className={'p-6'}>
             <h1 className={'text-xl font-semibold'}>404</h1>
-            <p>Incorrect login flow</p>
+            <p>{t('Incorrect login flow')}</p>
         </div>
     )
 }

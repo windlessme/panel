@@ -3,6 +3,8 @@ import { IconX } from '@tabler/icons-react'
 import { Table } from '@tanstack/react-table'
 import { ReactNode } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 
@@ -36,10 +38,10 @@ const DataTableToolbar = <TData,>({
             <div className='flex min-w-0 flex-1 flex-wrap items-center gap-2'>
                 {searchable && (
                     <Input
-                        placeholder='Search...'
+                        placeholder={t('Search...')}
                         value={table.getState().globalFilter ?? ''}
                         onChange={e => table.setGlobalFilter(e.target.value)}
-                        className='h-8 w-[150px] bg-background lg:w-[250px]'
+                        className='bg-background h-8 w-[150px] lg:w-[250px]'
                     />
                 )}
                 {filterFields.map(({ id, label, options }) => {
@@ -61,7 +63,7 @@ const DataTableToolbar = <TData,>({
                         onClick={reset}
                         className='h-8 px-2 lg:px-3'
                     >
-                        Reset
+                        {t('Reset')}
                         <IconX className={'size-4'} />
                     </Button>
                 )}

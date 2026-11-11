@@ -17,6 +17,8 @@ import { useId, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { SimpleEmptyState } from '@/components/ui/EmptyStates'
 import {
@@ -159,10 +161,10 @@ const CreateStorageModal = () => {
             form.reset()
             setPicked(null)
             setOpen(false)
-            toast.add({ title: 'Storage registered', type: 'success' })
+            toast.add({ title: t('Storage registered'), type: 'success' })
         } catch (e) {
             handleFormErrors(e, form.setError)
-            toast.add({ title: 'Failed to save changes', type: 'error' })
+            toast.add({ title: t('Failed to save changes'), type: 'error' })
             throw e
         }
     }
@@ -178,7 +180,9 @@ const CreateStorageModal = () => {
             />
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
-                    <ResponsiveDialogTitle>Add storage</ResponsiveDialogTitle>
+                    <ResponsiveDialogTitle>
+                        {t('Add storage')}
+                    </ResponsiveDialogTitle>
                 </ResponsiveDialogHeader>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(submit as any)}>
@@ -194,10 +198,10 @@ const CreateStorageModal = () => {
                                 <SimpleEmptyState
                                     className={'py-6'}
                                     icon={IconPlugConnectedX}
-                                    title={'Node unreachable'}
-                                    description={
+                                    title={t('Node unreachable')}
+                                    description={t(
                                         'Convoy could not reach this node, so it cannot list what storage it has.'
-                                    }
+                                    )}
                                 />
                             ) : isLoading ? (
                                 <div className={'flex flex-col gap-2'}>
@@ -219,19 +223,19 @@ const CreateStorageModal = () => {
                                     <SimpleEmptyState
                                         className={'py-6'}
                                         icon={IconDatabase}
-                                        title={'Nothing left to add'}
-                                        description={
+                                        title={t('Nothing left to add')}
+                                        description={t(
                                             'Every storage Proxmox reports on this node is already registered with Convoy.'
-                                        }
+                                        )}
                                     />
                                 ) : (
                                     <SimpleEmptyState
                                         className={'py-6'}
                                         icon={IconDatabase}
-                                        title={'No storage on this node'}
-                                        description={
+                                        title={t('No storage on this node')}
+                                        description={t(
                                             'Proxmox reported none. Create the storage in Proxmox first and it will show up here.'
-                                        }
+                                        )}
                                     />
                                 )
                             ) : (
@@ -255,21 +259,21 @@ const CreateStorageModal = () => {
                                 <div className={'space-y-2'}>
                                     <InputForm
                                         name={'displayName'}
-                                        label={'Display name'}
-                                        description={
+                                        label={t('Display name')}
+                                        description={t(
                                             'Optional. Shown instead of the Proxmox name.'
-                                        }
+                                        )}
                                     />
                                     <InputForm
                                         name={'description'}
-                                        label={'Description'}
+                                        label={t('Description')}
                                     />
                                     <InputForm
                                         name={'reservedBytes'}
-                                        label={'Reserved headroom (MiB)'}
-                                        description={
+                                        label={t('Reserved headroom (MiB)')}
+                                        description={t(
                                             'Free space Convoy will never allocate into. Leave blank for none.'
-                                        }
+                                        )}
                                     />
                                 </div>
                             )}
@@ -280,7 +284,9 @@ const CreateStorageModal = () => {
                                     <Button variant={'outline'}>Cancel</Button>
                                 }
                             />
-                            <FormButton disabled={!picked}>Add</FormButton>
+                            <FormButton disabled={!picked}>
+                                {t('Add')}
+                            </FormButton>
                         </ResponsiveDialogFooter>
                     </form>
                 </Form>

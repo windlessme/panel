@@ -1,6 +1,8 @@
 import { cn } from '@/utils'
 import { useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     FormControl,
@@ -12,7 +14,7 @@ import {
 import { Input } from '@/components/ui/Input'
 
 const PRESETS = [
-    { label: 'None', value: '0' },
+    { label: t('None'), value: '0' },
     { label: '25%', value: '25' },
     { label: '50%', value: '50' },
 ]

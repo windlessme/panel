@@ -7,6 +7,8 @@ import { createLazyFileRoute, useNavigate } from '@tanstack/react-router'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     CardContent,
@@ -30,12 +32,16 @@ const schema = z.object({
         .string()
         .min(
             PASSWORD_MIN_LENGTH,
-            `Password must be at least ${PASSWORD_MIN_LENGTH} characters`
+            t('Password must be at least {{PASSWORD_MIN_LENGTH}} characters', {
+                PASSWORD_MIN_LENGTH,
+            })
         )
         .refine(
             value =>
                 new TextEncoder().encode(value).length <= PASSWORD_MAX_BYTES,
-            `Password must be at most ${PASSWORD_MAX_BYTES} bytes`
+            t('Password must be at most {{PASSWORD_MAX_BYTES}} bytes', {
+                PASSWORD_MAX_BYTES,
+            })
         ),
 })
 
@@ -61,7 +67,7 @@ const AcceptInvite = () => {
         } catch (error) {
             if (!handleFormErrors(error, form.setError)) {
                 toast.add({
-                    title: 'This invitation is no longer valid',
+                    title: t('This invitation is no longer valid'),
                     type: 'error',
                 })
             }
@@ -77,10 +83,11 @@ const AcceptInvite = () => {
         return (
             <>
                 <CardHeader>
-                    <CardTitle>This invitation has expired</CardTitle>
+                    <CardTitle>{t('This invitation has expired')}</CardTitle>
                     <CardDescription>
-                        It may have been used already. Ask an administrator for
-                        a new one.
+                        {t(
+                            'It may have been used already. Ask an administrator for a new one.'
+                        )}
                     </CardDescription>
                 </CardHeader>
                 <CardFooter className={'justify-end'}>
@@ -88,7 +95,7 @@ const AcceptInvite = () => {
                         variant={'outline'}
                         onClick={() => navigate({ to: '/auth/login' })}
                     >
-                        Back to sign in
+                        {t('Back to sign in')}
                     </Button>
                 </CardFooter>
             </>
@@ -98,9 +105,13 @@ const AcceptInvite = () => {
     return (
         <>
             <CardHeader>
-                <CardTitle>Welcome, {invite.name}</CardTitle>
+                <CardTitle>
+                    {t('Welcome, {{name}}', { name: invite.name })}
+                </CardTitle>
                 <CardDescription>
-                    Choose a password for {invite.email}.
+                    {t('Choose a password for {{email}}.', {
+                        email: invite.email,
+                    })}
                 </CardDescription>
             </CardHeader>
             <Form {...form}>
@@ -109,7 +120,7 @@ const AcceptInvite = () => {
                         <FieldGroup>
                             <InputForm
                                 name={'password'}
-                                label={'Password'}
+                                label={t('Password')}
                                 type={'password'}
                                 autoComplete={'new-password'}
                                 autoFocus
@@ -125,7 +136,7 @@ const AcceptInvite = () => {
                         </FieldGroup>
                     </CardContent>
                     <CardFooter className={'justify-end'}>
-                        <FormButton>Set password and sign in</FormButton>
+                        <FormButton>{t('Set password and sign in')}</FormButton>
                     </CardFooter>
                 </form>
             </Form>

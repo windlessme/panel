@@ -12,6 +12,8 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { Form, FormButton } from '@/components/ui/Form'
 import { InputForm } from '@/components/ui/Forms'
@@ -78,12 +80,12 @@ const EditPresetModal = ({ mutate }: Props) => {
                 false
             )
 
-            toast.add({ title: 'Preset updated', type: 'success' })
+            toast.add({ title: t('Preset updated'), type: 'success' })
 
             close()
         } catch (e) {
             handleFormErrors(e, form.setError)
-            toast.add({ title: 'Failed to save changes', type: 'error' })
+            toast.add({ title: t('Failed to save changes'), type: 'error' })
             console.error(e)
         }
     }
@@ -92,19 +94,22 @@ const EditPresetModal = ({ mutate }: Props) => {
         <ResponsiveDialog open={open} onOpenChange={open => !open && close()}>
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
-                    <ResponsiveDialogTitle>Edit preset</ResponsiveDialogTitle>
+                    <ResponsiveDialogTitle>
+                        {t('Edit preset')}
+                    </ResponsiveDialogTitle>
                     <ResponsiveDialogDescription>
-                        The saved settings are unchanged — re-save from the
-                        create form to change those.
+                        {t(
+                            'The saved settings are unchanged — re-save from the create form to change those.'
+                        )}
                     </ResponsiveDialogDescription>
                 </ResponsiveDialogHeader>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(submit)}>
                         <ResponsiveDialogBody className={'space-y-3'}>
-                            <InputForm name={'name'} label={'Name'} />
+                            <InputForm name={'name'} label={t('Name')} />
                             <InputForm
                                 name={'description'}
-                                label={'Description'}
+                                label={t('Description')}
                             />
                         </ResponsiveDialogBody>
                         <ResponsiveDialogFooter className={'mt-4'}>
@@ -115,7 +120,7 @@ const EditPresetModal = ({ mutate }: Props) => {
                                     </Button>
                                 }
                             />
-                            <FormButton>Save changes</FormButton>
+                            <FormButton>{t('Save changes')}</FormButton>
                         </ResponsiveDialogFooter>
                     </form>
                 </Form>

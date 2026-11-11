@@ -1,6 +1,8 @@
 import { usePasskeyLogin } from '@/features/auth/passkeys.ts'
 import { IconKey } from '@tabler/icons-react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 
 interface Props {
@@ -30,7 +32,7 @@ const LoginWithPasskeyButton = ({ redirectTo }: Props) => {
             loading={isPending}
             icon={<IconKey className='size-4' />}
         >
-            Use a passkey
+            {t('Use a passkey')}
         </Button>
     )
 }

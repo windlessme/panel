@@ -5,6 +5,8 @@ import { useQuery } from '@tanstack/react-query'
 import { createLazyFileRoute } from '@tanstack/react-router'
 import { parseAsString, useQueryState } from 'nuqs'
 
+import { t } from '@/lib/i18n.ts'
+
 import { PageToolbar } from '@/components/ui/PageToolbar'
 import {
     Select,
@@ -25,8 +27,8 @@ export const Route = createLazyFileRoute('/_app/admin/users/$userId/activity')({
  * the first; `subject_id` plus the morph type gets the second.
  */
 const VIEWS = [
-    { value: 'by', label: 'Actions by this user' },
-    { value: 'to', label: 'Changes to this account' },
+    { value: 'by', label: t('Actions by this user') },
+    { value: 'to', label: t('Changes to this account') },
 ] as const
 
 /** The morph value Eloquent stores for a User subject — no morph map is registered. */
@@ -56,7 +58,7 @@ function UserActivity() {
 
     return (
         <>
-            <Heading>Activity</Heading>
+            <Heading>{t('Activity')}</Heading>
             <PageToolbar>
                 <Select
                     value={view}
@@ -69,7 +71,7 @@ function UserActivity() {
                 >
                     <SelectTrigger
                         className={'w-64'}
-                        aria-label={'Filter activity'}
+                        aria-label={t('Filter activity')}
                     >
                         <SelectValue>
                             {(value: string) =>
@@ -96,7 +98,7 @@ function UserActivity() {
                 page={page}
                 onPageChange={setPage}
                 showSubject={view === 'by'}
-                emptyTitle={'No activity yet'}
+                emptyTitle={t('No activity yet')}
             />
         </>
     )

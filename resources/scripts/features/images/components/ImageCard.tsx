@@ -17,6 +17,8 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t as translate } from '@/lib/i18n.ts'
+
 import { badgeVariants } from '@/components/ui/Badge.tsx'
 import { Button } from '@/components/ui/Button'
 import {
@@ -93,7 +95,10 @@ const ImageCard = ({ imageGroup, image }: Props) => {
             setIsEditing(false)
         } catch (e) {
             if (!handleFormErrors(e, form.setError)) {
-                toast.add({ title: 'Failed to save changes', type: 'error' })
+                toast.add({
+                    title: translate('Failed to save changes'),
+                    type: 'error',
+                })
             }
         }
     }
@@ -115,35 +120,37 @@ const ImageCard = ({ imageGroup, image }: Props) => {
                         className={'space-y-2'}
                         onSubmit={form.handleSubmit(save)}
                     >
-                        <InputForm name={'name'} label={'Name'} />
+                        <InputForm name={'name'} label={translate('Name')} />
                         <TextareaForm
                             name={'description'}
-                            label={'Description'}
-                            description={'This is visible to non-admins too.'}
+                            label={translate('Description')}
+                            description={translate(
+                                'This is visible to non-admins too.'
+                            )}
                         />
                         <SelectForm
                             name={'ostype'}
-                            label={'Operating system'}
-                            description={
+                            label={translate('Operating system')}
+                            description={translate(
                                 'Proxmox derives the cloud-init drive type from this, so it has to match the guest.'
-                            }
+                            )}
                             items={OSTYPE_ITEMS}
                         />
                         <div className={'space-y-2'}>
                             <GroupHeader
                                 icon={<IconCpu className={'size-4'} />}
-                                title={'Hardware'}
+                                title={translate('Hardware')}
                             />
                             <p className={'text-muted-foreground text-sm'}>
-                                Every field below already has a working value
-                                from the operating system. Change one only if
-                                this image needs something different.
+                                {translate(
+                                    'Every field below already has a working value from the operating system. Change one only if this image needs something different.'
+                                )}
                             </p>
                             <HardwareForm ostype={ostype} />
                         </div>
                         <CheckboxItemForm
                             name={'isAdminOnly'}
-                            label={'Admin Only'}
+                            label={translate('Admin Only')}
                         />
 
                         <div className={'flex justify-end gap-2'}>
@@ -155,9 +162,9 @@ const ImageCard = ({ imageGroup, image }: Props) => {
                                 }}
                                 type={'button'}
                             >
-                                Cancel
+                                {translate('Cancel')}
                             </Button>
-                            <FormButton>Save</FormButton>
+                            <FormButton>{translate('Save')}</FormButton>
                         </div>
                     </form>
                 </Form>
@@ -184,7 +191,8 @@ const ImageCard = ({ imageGroup, image }: Props) => {
                             variant: 'secondary',
                         })} shrink-0`}
                     >
-                        {image.latestVersion?.version ?? 'no version'}
+                        {image.latestVersion?.version ??
+                            translate('no version')}
                     </span>
                 </h3>
                 {image.description && (
@@ -196,7 +204,9 @@ const ImageCard = ({ imageGroup, image }: Props) => {
                 {isDeleting && (
                     <>
                         <p className={'text-destructive text-sm'}>
-                            Are you sure you want to delete this image?
+                            {translate(
+                                'Are you sure you want to delete this image?'
+                            )}
                         </p>
 
                         <div className={'mt-2 flex justify-end gap-2'}>
@@ -205,14 +215,14 @@ const ImageCard = ({ imageGroup, image }: Props) => {
                                 onClick={() => setIsDeleting(false)}
                                 disabled={deleteImageMutation.isMutating}
                             >
-                                Cancel
+                                {translate('Cancel')}
                             </Button>
                             <Button
                                 variant={'destructive'}
                                 onClick={del}
                                 loading={deleteImageMutation.isMutating}
                             >
-                                Delete
+                                {translate('Delete')}
                             </Button>
                         </div>
                     </>
@@ -225,7 +235,7 @@ const ImageCard = ({ imageGroup, image }: Props) => {
                             className={'shrink-0'}
                             size={'icon'}
                             variant={'ghost'}
-                            aria-label={'Open image actions'}
+                            aria-label={translate('Open image actions')}
                         >
                             <IconDots
                                 className={'text-muted-foreground size-4'}
@@ -234,18 +244,18 @@ const ImageCard = ({ imageGroup, image }: Props) => {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align='end' className={'w-60'}>
                         <DropdownMenuItem onClick={() => setIsEditing(true)}>
-                            Edit
+                            {translate('Edit')}
                         </DropdownMenuItem>
                         <DropdownMenuItem
                             onClick={() => setShowingVersions(true)}
                         >
-                            Versions
+                            {translate('Versions')}
                         </DropdownMenuItem>
                         <DropdownMenuItem
                             variant={'destructive'}
                             onClick={() => setIsDeleting(true)}
                         >
-                            Delete
+                            {translate('Delete')}
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>

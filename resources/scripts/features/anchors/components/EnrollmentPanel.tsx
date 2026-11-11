@@ -5,6 +5,8 @@ import { IconCopy } from '@tabler/icons-react'
 import { useMutation } from '@tanstack/react-query'
 import { useEffect, useRef, useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { CardContent } from '@/components/ui/Card'
 import Skeleton from '@/components/ui/Skeleton.tsx'
@@ -82,7 +84,9 @@ const EnrollmentPanel = ({
     subject,
     refresh,
 }: Props) => {
-    const { copy } = useClipboard({ successMessage: 'Install command copied' })
+    const { copy } = useClipboard({
+        successMessage: t('Install command copied'),
+    })
     const enrolled = done
     const issue = useMutation({ mutationFn: issueToken })
     const remaining = useCountdown(issue.data?.expiresAt)
@@ -133,7 +137,7 @@ const EnrollmentPanel = ({
                         size={'sm'}
                         onClick={() => issue.mutate()}
                     >
-                        Try again
+                        {t('Try again')}
                     </Button>
                 </div>
             )}
@@ -164,12 +168,12 @@ const EnrollmentPanel = ({
                         <Button
                             variant={'ghost'}
                             size={'sm'}
-                            aria-label={'Copy install command'}
+                            aria-label={t('Copy install command')}
                             className={'text-muted-foreground shrink-0'}
                             onClick={() => copy(issue.data.command)}
                         >
                             <IconCopy className={'size-3.5'} />
-                            Copy
+                            {t('Copy')}
                         </Button>
                     </div>
 
@@ -191,14 +195,17 @@ const EnrollmentPanel = ({
                             off until it finishes. */}
                         {enrolled && (
                             <span className={'mr-auto'}>
-                                Replaces the current secret. The install stops
-                                working until it re-enrolls.
+                                {t(
+                                    'Replaces the current secret. The install stops working until it re-enrolls.'
+                                )}
                             </span>
                         )}
 
                         {enrolled ? (
                             <span>
-                                <span className={'text-success'}>Enrolled</span>
+                                <span className={'text-success'}>
+                                    {t('Enrolled')}
+                                </span>
                                 {/* The version answers a different question
                                     than "did it work", so it trails the state
                                     as an aside rather than joining it. */}
@@ -213,11 +220,13 @@ const EnrollmentPanel = ({
                             remaining !== null &&
                             (remaining > 0 ? (
                                 <span className={'tabular-nums'}>
-                                    expires in {format(remaining)}
+                                    {t('expires in {{remaining}}', {
+                                        remaining: format(remaining),
+                                    })}
                                 </span>
                             ) : (
                                 <span className={'text-destructive'}>
-                                    Expired. Reload for a new command.
+                                    {t('Expired. Reload for a new command.')}
                                 </span>
                             ))
                         )}

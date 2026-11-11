@@ -6,6 +6,8 @@ import {
     useServerState,
 } from '@/features/servers/detail/api.ts'
 
+import { t } from '@/lib/i18n.ts'
+
 import useConfirmationStore from '@/components/ui/AlertDialog/use-confirmation-store.ts'
 import { Button } from '@/components/ui/Button'
 import {
@@ -37,7 +39,7 @@ const PowerActionsDropdown = () => {
 
             await sendPowerCommand(server!.uuid, action)
         } catch (e) {
-            toast.add({ title: 'Power action failed', type: 'error' })
+            toast.add({ title: t('Power action failed'), type: 'error' })
             throw e
         }
     }
@@ -45,7 +47,9 @@ const PowerActionsDropdown = () => {
     return (
         <DropdownMenu modal={false}>
             <DropdownMenuTrigger asChild>
-                <Button className={'block @sm:hidden'}>Power Actions</Button>
+                <Button className={'block @sm:hidden'}>
+                    {t('Power Actions')}
+                </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
                 <DropdownMenuItem
@@ -54,7 +58,7 @@ const PowerActionsDropdown = () => {
                     }
                     onClick={() => handlePowerAction('start')}
                 >
-                    Start
+                    {t('Start')}
                 </DropdownMenuItem>
                 <DropdownMenuItem
                     disabled={
@@ -62,7 +66,7 @@ const PowerActionsDropdown = () => {
                     }
                     onClick={() => handlePowerAction('restart')}
                 >
-                    Restart
+                    {t('Restart')}
                 </DropdownMenuItem>
                 <DropdownMenuItem
                     variant={'destructive'}
@@ -71,7 +75,7 @@ const PowerActionsDropdown = () => {
                     }
                     onClick={() => handlePowerAction('kill')}
                 >
-                    Kill
+                    {t('Kill')}
                 </DropdownMenuItem>
                 <DropdownMenuItem
                     disabled={
@@ -79,7 +83,7 @@ const PowerActionsDropdown = () => {
                     }
                     onClick={() => handlePowerAction('shutdown')}
                 >
-                    Shutdown
+                    {t('Shutdown')}
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

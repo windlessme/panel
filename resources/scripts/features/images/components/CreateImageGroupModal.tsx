@@ -13,6 +13,8 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { Form, FormButton } from '@/components/ui/Form'
 import { CheckboxForm, InputForm, TextareaForm } from '@/components/ui/Forms'
@@ -60,12 +62,12 @@ const CreateImageGroupModal = () => {
             form.reset()
             setOpen(false)
             toast.add({
-                title: 'Image group created',
+                title: t('Image group created'),
                 type: 'success',
             })
         } catch (e) {
             handleFormErrors(e, form.setError)
-            toast.add({ title: 'Failed to save changes', type: 'error' })
+            toast.add({ title: t('Failed to save changes'), type: 'error' })
             throw e
         }
     }
@@ -82,27 +84,27 @@ const CreateImageGroupModal = () => {
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        New image group
+                        {t('New image group')}
                     </ResponsiveDialogTitle>
                 </ResponsiveDialogHeader>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(submit)}>
                         <ResponsiveDialogBody className={'space-y-4'}>
-                            <InputForm name={'name'} label={'Name'} />
+                            <InputForm name={'name'} label={t('Name')} />
                             <TextareaForm
                                 name={'description'}
-                                label={'Description'}
-                                description={
+                                label={t('Description')}
+                                description={t(
                                     'This is visible to non-admins too.'
-                                }
+                                )}
                             />
                             <ImageIconSelect />
                             <CheckboxForm
                                 name={'isAdminOnly'}
-                                label={'Admin only'}
-                                description={
+                                label={t('Admin only')}
+                                description={t(
                                     'If checked, this image group will only be accessible to admin users.'
-                                }
+                                )}
                             />
                         </ResponsiveDialogBody>
                         <ResponsiveDialogFooter className={'mt-4'}>
@@ -113,7 +115,7 @@ const CreateImageGroupModal = () => {
                                     </Button>
                                 }
                             />
-                            <FormButton>Add image group</FormButton>
+                            <FormButton>{t('Add image group')}</FormButton>
                         </ResponsiveDialogFooter>
                     </form>
                 </Form>

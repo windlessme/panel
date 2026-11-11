@@ -4,6 +4,8 @@ import PasswordChangeDialog from '@/features/account/components/PasswordChangeDi
 import RecoveryCodesContainer from '@/features/account/components/RecoveryCodesContainer.tsx'
 import { useUser } from '@/features/auth/api.ts'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
 
 const AuthenticationCard = () => {
@@ -13,12 +15,13 @@ const AuthenticationCard = () => {
     // only ever a way in to the dialog, so a version of it that opens nothing
     // has nothing left to say. The rest of the card still stands — a locked
     // password does not mean a locked second factor.
-    const canChangePassword = user?.accountCapabilities.canChangePassword ?? true
+    const canChangePassword =
+        user?.accountCapabilities.canChangePassword ?? true
 
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Authentication</CardTitle>
+                <CardTitle>{t('Authentication')}</CardTitle>
             </CardHeader>
             <CardContent className={'flex flex-col gap-3'}>
                 {canChangePassword && <PasswordChangeDialog />}

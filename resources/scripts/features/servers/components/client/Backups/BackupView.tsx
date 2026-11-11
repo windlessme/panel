@@ -12,6 +12,8 @@ import { IconCopy } from '@tabler/icons-react'
 import { useQuery } from '@tanstack/react-query'
 import { useParams } from '@tanstack/react-router'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Card } from '@/components/ui/Card'
 import {
     CollectionErrorState,
@@ -52,20 +54,23 @@ const BackupView = () => {
         // the last of these is an invitation, so only the last gets the action.
         const state = quota?.isUnavailable
             ? {
-                  title: 'Backups are not enabled',
-                  description:
-                      'This server has no backup slots allocated to it. Your administrator can add them.',
+                  title: t('Backups are not enabled'),
+                  description: t(
+                      'This server has no backup slots allocated to it. Your administrator can add them.'
+                  ),
               }
             : quota?.hasNoStorage
               ? {
-                    title: 'Backups are unavailable',
-                    description:
-                        'The node this server runs on has no storage configured for backups. Your administrator will need to add one.',
+                    title: t('Backups are unavailable'),
+                    description: t(
+                        'The node this server runs on has no storage configured for backups. Your administrator will need to add one.'
+                    ),
                 }
               : {
-                    title: 'Backups',
-                    description:
-                        'Backups ensure the safety and availability of your server data by creating copies that can be easily restored in case of data loss or system failures.',
+                    title: t('Backups'),
+                    description: t(
+                        'Backups ensure the safety and availability of your server data by creating copies that can be easily restored in case of data loss or system failures.'
+                    ),
                     canCreate: true,
                 }
 

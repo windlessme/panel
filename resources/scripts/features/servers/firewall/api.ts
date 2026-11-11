@@ -3,6 +3,7 @@ import { keepPreviousData, queryOptions, useQuery } from '@tanstack/react-query'
 import { z } from 'zod'
 
 import { type DataResponse, apiFetch } from '@/lib/api'
+import { t } from '@/lib/i18n.ts'
 
 export type FirewallRule = App.Data.Server.Proxmox.Firewall.FirewallRuleData
 export type FirewallOptions =
@@ -162,7 +163,7 @@ export const ruleFormSchema = z
         {
             // A custom rule matching nothing in particular is almost always a
             // mistake, and Proxmox accepts it silently.
-            message: 'Set a protocol or a port, or choose a service above',
+            message: t('Set a protocol or a port, or choose a service above'),
             path: ['destinationPort'],
         }
     )
@@ -391,8 +392,8 @@ export const updateOptions = async (
  */
 
 export const directionLabels: Record<RuleDirection, string> = {
-    in: 'Inbound',
-    out: 'Outbound',
+    in: t('Inbound'),
+    out: t('Outbound'),
 }
 
 export const rulesInChain = (
@@ -453,9 +454,9 @@ const plural = (count: number, noun: string): string =>
     `${count} ${noun}${count === 1 ? '' : 's'}`
 
 export const policyAdjectives: Record<FirewallPolicy, string> = {
-    ACCEPT: 'Accepted',
-    DROP: 'Dropped',
-    REJECT: 'Rejected',
+    ACCEPT: t('Accepted'),
+    DROP: t('Dropped'),
+    REJECT: t('Rejected'),
 }
 
 /** The count line beside a chain's name: `4 rules · 1 off`. */
@@ -523,9 +524,9 @@ const describeFormTraffic = (values: RuleFormValues): string => {
  */
 export const describeRuleIntent = (values: RuleFormValues): string => {
     const verbs: Record<RuleAction, string> = {
-        ACCEPT: 'Accepts',
-        DROP: 'Drops',
-        REJECT: 'Rejects',
+        ACCEPT: t('Accepts'),
+        DROP: t('Drops'),
+        REJECT: t('Rejects'),
     }
 
     const isInbound = values.direction === 'in'

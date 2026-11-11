@@ -20,6 +20,8 @@ import { cn } from '@/utils'
 import { Link, createLazyFileRoute } from '@tanstack/react-router'
 import { ColumnDef } from '@tanstack/react-table'
 
+import { t } from '@/lib/i18n.ts'
+
 import { buttonVariants } from '@/components/ui/Button'
 import { DataTable } from '@/components/ui/DataTable'
 import {
@@ -62,14 +64,14 @@ function IpamIndex() {
     const renderActions = (group: AddressBlockGroup) => (
         <>
             <DropdownMenuItem onClick={() => openModal('edit', group)}>
-                Edit
+                {t('Edit')}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
                 variant={'destructive'}
                 onClick={() => openModal('delete', group)}
             >
-                Delete
+                {t('Delete')}
             </DropdownMenuItem>
         </>
     )
@@ -165,7 +167,7 @@ function IpamIndex() {
 
     return (
         <>
-            <Heading>IPAM</Heading>
+            <Heading>{t('IPAM')}</Heading>
             <IpamSummaryCards />
             <DataTable
                 data={data}

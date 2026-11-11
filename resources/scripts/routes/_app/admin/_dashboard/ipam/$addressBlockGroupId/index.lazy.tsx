@@ -5,6 +5,8 @@ import AddressPoolCard from '@/features/ipam/components/AddressPoolCard.tsx'
 import EditBlockGroupModal from '@/features/ipam/components/EditBlockGroupModal.tsx'
 import { createLazyFileRoute } from '@tanstack/react-router'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/Tabs'
 import { Heading } from '@/components/ui/Typography'
 
@@ -24,7 +26,7 @@ function GroupBlocks() {
             <Tabs defaultValue={'addressBlocks'}>
                 <TabsList>
                     <TabsTrigger value={'addressBlocks'}>
-                        IP Blocks
+                        {t('IP Blocks')}
                         {/* The count belongs on the tab: switching to a tab to find out how many
                             things are behind it is the trip the label can save. Plain text, not a
                             Badge — a bordered pill is taller than the trigger's own text line and
@@ -41,7 +43,7 @@ function GroupBlocks() {
                         )}
                     </TabsTrigger>
                     <TabsTrigger value={'attachedNodes'}>
-                        Attached Nodes
+                        {t('Attached Nodes')}
                         {group && (
                             <span
                                 className={

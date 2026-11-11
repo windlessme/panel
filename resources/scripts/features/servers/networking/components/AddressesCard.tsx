@@ -8,6 +8,8 @@ import AddressList from '@/features/servers/networking/components/AddressList.ts
 import { AddressVersion } from '@/types/address.ts'
 import { useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import {
     Card,
     CardAction,
@@ -34,14 +36,14 @@ const AddressesCard = ({ uuid }: Props) => {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>IP Addresses</CardTitle>
+                <CardTitle>{t('IP Addresses')}</CardTitle>
                 {/* The count line the list used to draw above itself. A card
                     header states what the card holds; it does not repeat the
                     title in a sentence. */}
                 <CardDescription>
                     {addresses?.length
                         ? summarizeAddresses(addresses)
-                        : 'Addresses allocated to this server.'}
+                        : t('Addresses allocated to this server.')}
                 </CardDescription>
                 {isMixed && (
                     <CardAction>
@@ -58,14 +60,16 @@ const AddressesCard = ({ uuid }: Props) => {
                                 if (value[0])
                                     setFilter(value[0] as VersionFilter)
                             }}
-                            aria-label={'Filter addresses by IP version'}
+                            aria-label={t('Filter addresses by IP version')}
                         >
-                            <ToggleGroupItem value={'all'}>All</ToggleGroupItem>
+                            <ToggleGroupItem value={'all'}>
+                                {t('All')}
+                            </ToggleGroupItem>
                             <ToggleGroupItem value={AddressVersion.IPv4}>
-                                IPv4
+                                {t('IPv4')}
                             </ToggleGroupItem>
                             <ToggleGroupItem value={AddressVersion.IPv6}>
-                                IPv6
+                                {t('IPv6')}
                             </ToggleGroupItem>
                         </ToggleGroup>
                     </CardAction>

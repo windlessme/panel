@@ -1,5 +1,7 @@
 import { IconAlertTriangle } from '@tabler/icons-react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     Card,
@@ -21,16 +23,18 @@ export default function SuspendedServer() {
                         as='h1'
                         className='text-red-700 dark:text-red-400'
                     >
-                        Server Suspended
+                        {t('Server Suspended')}
                     </CardTitle>
                     <CardDescription>
-                        This server has been suspended. Access is restricted.
+                        {t(
+                            'This server has been suspended. Access is restricted.'
+                        )}
                     </CardDescription>
                 </CardHeader>
                 <CardContent className='flex justify-center'>
                     <Button variant='outline' asChild>
                         <a href='#' onClick={e => e.preventDefault()}>
-                            Contact Support
+                            {t('Contact Support')}
                         </a>
                     </Button>
                 </CardContent>

@@ -2,6 +2,8 @@ import useClipboard from '@/hooks/use-clipboard.ts'
 import { cn } from '@/utils'
 import { KeyboardEvent, ReactNode } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 interface Props {
     /** Names the value in the accessible label, e.g. `UUID`. */
     label: string
@@ -21,7 +23,7 @@ interface Props {
  * are all things you copy rather than read.
  */
 const CopyValue = ({ label, value, className, children }: Props) => {
-    const { copy } = useClipboard({ successMessage: 'Copied to clipboard' })
+    const { copy } = useClipboard({ successMessage: t('Copied to clipboard') })
 
     const handleKeyDown = (event: KeyboardEvent) => {
         if (event.key === 'Enter' || event.key === ' ') {
@@ -34,7 +36,10 @@ const CopyValue = ({ label, value, className, children }: Props) => {
         <span
             role={'button'}
             tabIndex={0}
-            aria-label={`Click to copy ${label} ${value}`}
+            aria-label={t('Click to copy {{label}} {{value}}', {
+                label,
+                value,
+            })}
             onClick={() => copy(value)}
             onKeyDown={handleKeyDown}
             className={cn(

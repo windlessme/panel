@@ -1,8 +1,9 @@
+import ApiKeyController from '@/wayfinder/actions/App/Http/Controllers/Client/Account/ApiKeyController'
 import { queryOptions, useQuery } from '@tanstack/react-query'
 import { z } from 'zod'
 
-import { apiFetch, type DataResponse } from '@/lib/api'
-import ApiKeyController from '@/wayfinder/actions/App/Http/Controllers/Client/Account/ApiKeyController'
+import { type DataResponse, apiFetch } from '@/lib/api'
+import { t } from '@/lib/i18n.ts'
 
 export interface ApiKey {
     id: number
@@ -15,18 +16,18 @@ export interface ApiKey {
 export const apiKeyScopes = [
     {
         value: '*',
-        label: 'Full access',
-        description: 'Full access to your account’s resources.',
+        label: t('Full access'),
+        description: t('Full access to your account’s resources.'),
     },
     {
         value: 'servers:*',
-        label: 'Servers — read & write',
-        description: 'View and manage your servers.',
+        label: t('Servers — read & write'),
+        description: t('View and manage your servers.'),
     },
     {
         value: 'servers:read',
-        label: 'Servers — read only',
-        description: 'View your servers without making changes.',
+        label: t('Servers — read only'),
+        description: t('View your servers without making changes.'),
     },
 ] as const
 
@@ -34,7 +35,9 @@ export type ApiKeyScope = (typeof apiKeyScopes)[number]['value']
 
 export const apiKeyCreateSchema = z.object({
     name: z.string().min(1).max(191),
-    scope: z.enum(apiKeyScopes.map(s => s.value) as [ApiKeyScope, ...ApiKeyScope[]]),
+    scope: z.enum(
+        apiKeyScopes.map(s => s.value) as [ApiKeyScope, ...ApiKeyScope[]]
+    ),
 })
 
 export type ApiKeyCreateInput = z.infer<typeof apiKeyCreateSchema>

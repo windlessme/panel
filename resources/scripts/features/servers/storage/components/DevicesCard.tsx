@@ -32,6 +32,8 @@ import { IconAlertTriangle, IconDatabase } from '@tabler/icons-react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Alert, AlertDescription } from '@/components/ui/Alert'
 import { Button } from '@/components/ui/Button'
 import {
@@ -142,7 +144,7 @@ const DevicesCard = ({ uuid }: Props) => {
             queryClient.invalidateQueries({
                 queryKey: storageQueries.all(uuid),
             })
-            toast.add({ title: 'Boot order updated', type: 'success' })
+            toast.add({ title: t('Boot order updated'), type: 'success' })
         },
         onError: e =>
             toast.add({
@@ -216,11 +218,11 @@ const DevicesCard = ({ uuid }: Props) => {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Devices</CardTitle>
+                <CardTitle>{t('Devices')}</CardTitle>
                 <CardDescription>
-                    Everything attached to this server. The firmware tries the
-                    switched-on devices from the top down — drag to change the
-                    order.
+                    {t(
+                        'Everything attached to this server. The firmware tries the switched-on devices from the top down — drag to change the order.'
+                    )}
                 </CardDescription>
             </CardHeader>
 
@@ -234,10 +236,10 @@ const DevicesCard = ({ uuid }: Props) => {
                 ) : rows.length === 0 ? (
                     <SimpleEmptyState
                         icon={IconDatabase}
-                        title={'No devices attached'}
-                        description={
+                        title={t('No devices attached')}
+                        description={t(
                             'This server has no disks or drives on it yet.'
-                        }
+                        )}
                     />
                 ) : (
                     <div className={'flex flex-col gap-3'}>
@@ -248,9 +250,9 @@ const DevicesCard = ({ uuid }: Props) => {
                             >
                                 <IconAlertTriangle className={'size-4'} />
                                 <AlertDescription>
-                                    Nothing is switched on, so this server has
-                                    nothing to boot from and will stop at its
-                                    firmware.
+                                    {t(
+                                        'Nothing is switched on, so this server has nothing to boot from and will stop at its firmware.'
+                                    )}
                                 </AlertDescription>
                             </Alert>
                         )}
@@ -262,10 +264,9 @@ const DevicesCard = ({ uuid }: Props) => {
                             >
                                 <IconAlertTriangle className={'size-4'} />
                                 <AlertDescription>
-                                    Only the cloud-init drive is switched on. It
-                                    holds no operating system, so this server
-                                    will stop at its firmware — switch on a disk
-                                    to boot from.
+                                    {t(
+                                        'Only the cloud-init drive is switched on. It holds no operating system, so this server will stop at its firmware — switch on a disk to boot from.'
+                                    )}
                                 </AlertDescription>
                             </Alert>
                         )}
@@ -274,9 +275,9 @@ const DevicesCard = ({ uuid }: Props) => {
                             <Alert className={'mx-4 w-auto'}>
                                 <IconAlertTriangle className={'size-4'} />
                                 <AlertDescription>
-                                    The boot order changed elsewhere while you
-                                    were editing. Your unsaved order is still
-                                    below; saving replaces the newer one.
+                                    {t(
+                                        'The boot order changed elsewhere while you were editing. Your unsaved order is still below; saving replaces the newer one.'
+                                    )}
                                 </AlertDescription>
                             </Alert>
                         )}
@@ -326,26 +327,26 @@ const DevicesCard = ({ uuid }: Props) => {
                                     <TableRow>
                                         <TableHead className={'w-9 pl-4'}>
                                             <span className={'sr-only'}>
-                                                Reorder
+                                                {t('Reorder')}
                                             </span>
                                         </TableHead>
                                         <TableHead className={'w-8'}>
                                             #
                                         </TableHead>
                                         <TableHead className={'w-12'}>
-                                            Boot
+                                            {t('Boot')}
                                         </TableHead>
                                         <TableHead className={'w-44'}>
-                                            Device
+                                            {t('Device')}
                                         </TableHead>
-                                        <TableHead>Backing</TableHead>
+                                        <TableHead>{t('Backing')}</TableHead>
                                         <TableHead
                                             className={'w-24 text-right'}
                                         >
-                                            Size
+                                            {t('Size')}
                                         </TableHead>
                                         <TableHead className={'w-56'}>
-                                            Options
+                                            {t('Options')}
                                         </TableHead>
                                     </TableRow>
                                 </TableHeader>
@@ -445,8 +446,10 @@ const DevicesCard = ({ uuid }: Props) => {
             <CardFooter className={'text-muted-foreground gap-3 text-xs'}>
                 <span className={'flex-1'}>
                     {isDirty
-                        ? 'Takes effect the next time this server powers on.'
-                        : 'Boot order is applied by the firmware at power on.'}
+                        ? t('Takes effect the next time this server powers on.')
+                        : t(
+                              'Boot order is applied by the firmware at power on.'
+                          )}
                 </span>
                 <Button
                     variant={'outline'}
@@ -454,7 +457,7 @@ const DevicesCard = ({ uuid }: Props) => {
                     disabled={!isDirty || isPending}
                     onClick={() => setDraft(null)}
                 >
-                    Reset
+                    {t('Reset')}
                 </Button>
                 <Button
                     size={'sm'}
@@ -462,7 +465,7 @@ const DevicesCard = ({ uuid }: Props) => {
                     loading={isPending}
                     onClick={() => save()}
                 >
-                    Save changes
+                    {t('Save changes')}
                 </Button>
             </CardFooter>
         </Card>

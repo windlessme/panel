@@ -5,6 +5,8 @@ import useBlockGroupModalStore from '@/features/ipam/hooks/use-block-group-modal
 import { useOpenModal } from '@/hooks/create-modal-store.ts'
 import { AddressBlockGroup } from '@/types/address-block-group.ts'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     Card,
@@ -34,11 +36,11 @@ const AddressPoolCard = ({ group }: Props) => {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Address space</CardTitle>
+                <CardTitle>{t('Address space')}</CardTitle>
                 <CardDescription>
                     {group
                         ? group.description ||
-                          'Address blocks routed to this pool’s nodes.'
+                          t('Address blocks routed to this pool’s nodes.')
                         : ' '}
                 </CardDescription>
                 {group && (
@@ -47,7 +49,7 @@ const AddressPoolCard = ({ group }: Props) => {
                             variant={'outline'}
                             onClick={() => openModal('edit', group)}
                         >
-                            Edit
+                            {t('Edit')}
                         </Button>
                     </CardAction>
                 )}
@@ -69,7 +71,7 @@ const AddressPoolCard = ({ group }: Props) => {
                                 to precede the `dd` it labels. */}
                             <div className={'flex flex-col-reverse'}>
                                 <dt className={'text-muted-foreground text-xs'}>
-                                    Blocks
+                                    {t('Blocks')}
                                 </dt>
                                 <dd className={'text-sm tabular-nums'}>
                                     {group.addressBlocksCount}
@@ -77,7 +79,7 @@ const AddressPoolCard = ({ group }: Props) => {
                             </div>
                             <div className={'flex flex-col-reverse'}>
                                 <dt className={'text-muted-foreground text-xs'}>
-                                    Nodes
+                                    {t('Nodes')}
                                 </dt>
                                 <dd className={'text-sm tabular-nums'}>
                                     {group.nodesCount}
@@ -85,7 +87,7 @@ const AddressPoolCard = ({ group }: Props) => {
                             </div>
                             <div className={'flex flex-col-reverse'}>
                                 <dt className={'text-muted-foreground text-xs'}>
-                                    Assigned
+                                    {t('Assigned')}
                                 </dt>
                                 <dd className={'text-sm'}>
                                     <AddressStateLabel kind={'assigned'}>
@@ -95,7 +97,7 @@ const AddressPoolCard = ({ group }: Props) => {
                             </div>
                             <div className={'flex flex-col-reverse'}>
                                 <dt className={'text-muted-foreground text-xs'}>
-                                    Reserved
+                                    {t('Reserved')}
                                 </dt>
                                 <dd className={'text-sm'}>
                                     <AddressStateLabel kind={'reserved'}>
@@ -105,7 +107,7 @@ const AddressPoolCard = ({ group }: Props) => {
                             </div>
                             <div className={'flex flex-col-reverse'}>
                                 <dt className={'text-muted-foreground text-xs'}>
-                                    System
+                                    {t('System')}
                                 </dt>
                                 <dd className={'text-sm'}>
                                     <AddressStateLabel kind={'system'}>
@@ -115,7 +117,7 @@ const AddressPoolCard = ({ group }: Props) => {
                             </div>
                             <div className={'flex flex-col-reverse'}>
                                 <dt className={'text-muted-foreground text-xs'}>
-                                    Free
+                                    {t('Free')}
                                 </dt>
                                 <dd className={'text-sm'}>
                                     <AddressStateLabel kind={'available'}>

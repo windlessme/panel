@@ -3,6 +3,8 @@ import { evaluatePassword } from '@/utils/password.ts'
 import { IconCheck, IconX } from '@tabler/icons-react'
 import { useMemo } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 interface Props {
     password: string
 }
@@ -45,8 +47,9 @@ const PasswordStrengthIndicator = ({ password }: Props) => {
                 ))}
             </ul>
             <p className={'text-muted-foreground text-sm'}>
-                Length is what matters. Several unrelated words you can remember
-                make a stronger password than a short one with substitutions.
+                {t(
+                    'Length is what matters. Several unrelated words you can remember make a stronger password than a short one with substitutions.'
+                )}
             </p>
         </div>
     )

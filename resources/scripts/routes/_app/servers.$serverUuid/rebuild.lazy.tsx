@@ -3,6 +3,8 @@ import { useServer } from '@/features/servers/detail/api.ts'
 import { createLazyFileRoute } from '@tanstack/react-router'
 import byteSize from 'byte-size'
 
+import { t } from '@/lib/i18n.ts'
+
 import Skeleton from '@/components/ui/Skeleton'
 import { Heading } from '@/components/ui/Typography'
 
@@ -20,14 +22,16 @@ const RebuildServerPage = () => {
         >
             <div>
                 <Heading>
-                    {server ? `Rebuild ${server.name}` : 'Rebuild Server'}
+                    {server
+                        ? t('Rebuild {{name}}', { name: server.name })
+                        : t('Rebuild Server')}
                 </Heading>
                 <p className={'text-muted-foreground mt-1.5 text-sm'}>
-                    Erases the server's{' '}
+                    {t("Erases the server's")}
                     {server
                         ? byteSize(server.disk, { units: 'iec' }).toString()
-                        : ''}{' '}
-                    disk. Backups, ISOs and network settings are kept.
+                        : ''}
+                    {t('disk. Backups, ISOs and network settings are kept.')}
                 </p>
             </div>
 
@@ -48,5 +52,5 @@ const RebuildServerPage = () => {
 export const Route = createLazyFileRoute('/_app/servers/$serverUuid/rebuild')({
     component: RebuildServerPage,
     // @ts-ignore
-    meta: () => [{ title: 'Rebuild' }],
+    meta: () => [{ title: t('Rebuild') }],
 })

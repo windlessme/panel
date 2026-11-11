@@ -16,6 +16,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 import { useEffect, useMemo, useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
 import {
@@ -98,7 +100,7 @@ const SSHKeysCard = ({ uuid }: Props) => {
             const additions = incoming.filter(k => !present.has(k.trim()))
             if (additions.length === 0) {
                 toast.add({
-                    title: 'That key is already on this server',
+                    title: t('That key is already on this server'),
                     type: 'info',
                 })
                 return prev
@@ -112,7 +114,7 @@ const SSHKeysCard = ({ uuid }: Props) => {
             queryClient.invalidateQueries({
                 queryKey: serverSSHKeyQueries.all(uuid),
             })
-            toast.add({ title: 'SSH keys updated', type: 'success' })
+            toast.add({ title: t('SSH keys updated'), type: 'success' })
         },
         onError: e =>
             toast.add({
@@ -125,10 +127,11 @@ const SSHKeysCard = ({ uuid }: Props) => {
         <>
             <Card>
                 <CardHeader>
-                    <CardTitle>SSH Keys</CardTitle>
+                    <CardTitle>{t('SSH Keys')}</CardTitle>
                     <CardDescription>
-                        Public keys allowed to sign in to this server. Add from
-                        your keychain, or paste a one-off key.
+                        {t(
+                            'Public keys allowed to sign in to this server. Add from your keychain, or paste a one-off key.'
+                        )}
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -139,7 +142,7 @@ const SSHKeysCard = ({ uuid }: Props) => {
                     ) : keys.length > 0 ? (
                         <OverflowItemGroup
                             max={4}
-                            title={'SSH Keys'}
+                            title={t('SSH Keys')}
                             rows={keys.map(key => {
                                 const { algorithm, comment } =
                                     describeSSHKey(key)
@@ -200,10 +203,10 @@ const SSHKeysCard = ({ uuid }: Props) => {
                     ) : (
                         <SimpleEmptyState
                             icon={IconKey}
-                            title={'No SSH keys'}
-                            description={
+                            title={t('No SSH keys')}
+                            description={t(
                                 'This server has no authorized SSH keys.'
-                            }
+                            )}
                         />
                     )}
 
@@ -218,13 +221,13 @@ const SSHKeysCard = ({ uuid }: Props) => {
                                     disabled={available.length === 0}
                                 >
                                     <IconPlus className={'size-4'} />
-                                    Add from keychain
+                                    {t('Add from keychain')}
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align={'start'}>
                                 <DropdownMenuGroup>
                                     <DropdownMenuLabel>
-                                        Your keychain
+                                        {t('Your keychain')}
                                     </DropdownMenuLabel>
                                     {available.map(k => (
                                         <DropdownMenuItem
@@ -245,7 +248,7 @@ const SSHKeysCard = ({ uuid }: Props) => {
                             onClick={() => setPasteOpen(true)}
                         >
                             <IconClipboard className={'size-4'} />
-                            Paste a key
+                            {t('Paste a key')}
                         </Button>
                     </div>
                 </CardContent>
@@ -256,10 +259,10 @@ const SSHKeysCard = ({ uuid }: Props) => {
                             onClick={() => serverKeys && setKeys(serverKeys)}
                             disabled={isPending}
                         >
-                            Reset
+                            {t('Reset')}
                         </Button>
                         <Button onClick={() => save()} loading={isPending}>
-                            Save changes
+                            {t('Save changes')}
                         </Button>
                     </CardFooter>
                 )}

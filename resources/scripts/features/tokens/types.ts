@@ -1,4 +1,5 @@
 import type { PaginatedResponse } from '@/lib/api'
+import { t } from '@/lib/i18n.ts'
 
 /** A minted application (panel-wide) API token, as returned by the admin token API. */
 export type ApiKey = App.Data.User.ApiKeyData
@@ -27,14 +28,14 @@ export type ResourceAccess = 'none' | 'read' | 'write'
 
 /** Human labels for each resource, for the ability picker. */
 export const resourceLabels: Record<TokenResource, string> = {
-    'overview': 'Overview',
-    'locations': 'Locations',
-    'nodes': 'Nodes',
-    'servers': 'Servers',
-    'address-block-groups': 'IP address blocks',
-    'template-groups': 'Templates',
-    'users': 'Users',
-    'anchors': 'Anchors',
+    'overview': t('Overview'),
+    'locations': t('Locations'),
+    'nodes': t('Nodes'),
+    'servers': t('Servers'),
+    'address-block-groups': t('IP address blocks'),
+    'template-groups': t('Templates'),
+    'users': t('Users'),
+    'anchors': t('Anchors'),
 }
 
 /**

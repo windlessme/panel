@@ -3,6 +3,7 @@ import { queryOptions, useQuery } from '@tanstack/react-query'
 import { z } from 'zod'
 
 import { type DataResponse, apiFetch } from '@/lib/api'
+import { t } from '@/lib/i18n.ts'
 
 /** The authorized SSH keys currently on the server (full OpenSSH public-key strings). */
 export const getServerSSHKeys = async (uuid: string): Promise<string[]> => {
@@ -37,22 +38,26 @@ export const passwordSchema = z
     .object({
         password: z
             .string()
-            .min(8, 'Password must be at least 8 characters')
-            .max(191, 'Password must be at most 191 characters')
+            .min(8, t('Password must be at least 8 characters'))
+            .max(191, t('Password must be at most 191 characters'))
             .regex(
                 /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/,
-                'Password must contain 1 uppercase, 1 lowercase, 1 number and 1 special character'
+                t(
+                    'Password must contain 1 uppercase, 1 lowercase, 1 number and 1 special character'
+                )
             )
             // The guest gets this password through cloud-init and types it at a console,
             // so it has to stay on the keys a US layout actually has.
             .regex(
                 /^[\x20-\x7F]*$/,
-                'Password must only contain characters from the US keyboard'
+                t('Password must only contain characters from the US keyboard')
             ),
-        passwordConfirmation: z.string().min(1, 'Please confirm the password'),
+        passwordConfirmation: z
+            .string()
+            .min(1, t('Please confirm the password')),
     })
     .refine(data => data.password === data.passwordConfirmation, {
-        message: "Passwords don't match",
+        message: t("Passwords don't match"),
         path: ['passwordConfirmation'],
     })
 

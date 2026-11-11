@@ -10,6 +10,8 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { Form, FormButton } from '@/components/ui/Form'
 import { InputForm } from '@/components/ui/Forms'
@@ -53,11 +55,11 @@ const CreateLocationModal = ({ mutate }: Props) => {
                 }
             }, false)
 
-            toast.add({ title: 'Location created', type: 'success' })
+            toast.add({ title: t('Location created'), type: 'success' })
 
             setOpen(false)
         } catch (e) {
-            toast.add({ title: 'Failed to save changes', type: 'error' })
+            toast.add({ title: t('Failed to save changes'), type: 'error' })
             throw e
         }
     }
@@ -75,7 +77,7 @@ const CreateLocationModal = ({ mutate }: Props) => {
                 <ResponsiveDialogContent>
                     <ResponsiveDialogHeader>
                         <ResponsiveDialogTitle>
-                            New Location
+                            {t('New Location')}
                         </ResponsiveDialogTitle>
                     </ResponsiveDialogHeader>
                     <Form {...form}>
@@ -83,11 +85,11 @@ const CreateLocationModal = ({ mutate }: Props) => {
                             <ResponsiveDialogBody className={'space-y-2'}>
                                 <InputForm
                                     name={'shortCode'}
-                                    label={'Short Code'}
+                                    label={t('Short Code')}
                                 />
                                 <InputForm
                                     name={'description'}
-                                    label={'Description'}
+                                    label={t('Description')}
                                 />
                             </ResponsiveDialogBody>
                             <ResponsiveDialogFooter className={'mt-4'}>
@@ -101,7 +103,7 @@ const CreateLocationModal = ({ mutate }: Props) => {
                                         </Button>
                                     }
                                 />
-                                <FormButton>Add location</FormButton>
+                                <FormButton>{t('Add location')}</FormButton>
                             </ResponsiveDialogFooter>
                         </form>
                     </Form>

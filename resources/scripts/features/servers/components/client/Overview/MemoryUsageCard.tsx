@@ -5,6 +5,8 @@ import useLiveMetrics from '@/features/servers/hooks/use-live-metrics.ts'
 import { IconAirConditioningDisabled } from '@tabler/icons-react'
 import byteSize from 'byte-size'
 
+import { t } from '@/lib/i18n.ts'
+
 import Skeleton from '@/components/ui/Skeleton.tsx'
 
 const MemoryUsageCard = () => {
@@ -26,7 +28,7 @@ const MemoryUsageCard = () => {
 
     return (
         <StatisticCard
-            title={'Memory Usage'}
+            title={t('Memory Usage')}
             icon={IconAirConditioningDisabled}
             /* The total used to hang off the figure as a floated "/ 1 GiB",
                which needed its own absolute positioning to stay out of the

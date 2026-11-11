@@ -20,6 +20,8 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card'
 import { Form, FormButton } from '@/components/ui/Form'
 import { InputForm } from '@/components/ui/Forms'
@@ -86,7 +88,7 @@ function ServerBuildSettings() {
             await mutateServer(() => updatedServer, false)
             await mutateServerLists()
             form.reset(defaultsFromServer(updatedServer))
-            toast.add({ title: 'Server limits updated', type: 'success' })
+            toast.add({ title: t('Server limits updated'), type: 'success' })
         } catch (error) {
             handleFormErrors(error, form.setError, {
                 'backup_count_limit': 'backupCountLimit',
@@ -99,7 +101,7 @@ function ServerBuildSettings() {
                 'overage_penalty.rate': 'overagePenaltyRate',
             })
             toast.add({
-                title: 'Failed to update server limits',
+                title: t('Failed to update server limits'),
                 type: 'error',
             })
             console.error(error)
@@ -109,7 +111,7 @@ function ServerBuildSettings() {
     if (isLoading || !server) {
         return (
             <>
-                <Heading>Build & limits</Heading>
+                <Heading>{t('Build & limits')}</Heading>
                 <Skeleton className={'h-96'} />
             </>
         )
@@ -122,14 +124,14 @@ function ServerBuildSettings() {
 
     return (
         <div className={'@container space-y-4'}>
-            <Heading>Build & limits</Heading>
+            <Heading>{t('Build & limits')}</Heading>
 
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(submit as any)}>
                     <div className={'grid grid-cols-1 gap-4 @xl:grid-cols-2'}>
                         <Card>
                             <CardHeader>
-                                <CardTitle>Resources</CardTitle>
+                                <CardTitle>{t('Resources')}</CardTitle>
                             </CardHeader>
                             <CardContent className={'space-y-4'}>
                                 <InputForm
@@ -145,13 +147,13 @@ function ServerBuildSettings() {
                                 >
                                     <InputForm
                                         name={'memory'}
-                                        label={'Memory (MiB)'}
+                                        label={t('Memory (MiB)')}
                                         type={'number'}
                                         min={16}
                                     />
                                     <InputForm
                                         name={'disk'}
-                                        label={'Primary Disk (MiB)'}
+                                        label={t('Primary Disk (MiB)')}
                                         type={'number'}
                                         min={1}
                                     />
@@ -161,7 +163,7 @@ function ServerBuildSettings() {
 
                         <Card>
                             <CardHeader>
-                                <CardTitle>Backups</CardTitle>
+                                <CardTitle>{t('Backups')}</CardTitle>
                             </CardHeader>
                             <CardContent
                                 className={
@@ -170,24 +172,24 @@ function ServerBuildSettings() {
                             >
                                 <InputForm
                                     name={'backupCountLimit'}
-                                    label={'Backup Count'}
+                                    label={t('Backup Count')}
                                     type={'number'}
                                     min={-1}
-                                    description={'Use -1 for unlimited.'}
+                                    description={t('Use -1 for unlimited.')}
                                 />
                                 <InputForm
                                     name={'backupSizeLimit'}
-                                    label={'Storage Limit (MiB)'}
+                                    label={t('Storage Limit (MiB)')}
                                     type={'number'}
                                     min={-1}
-                                    description={'Use -1 for unlimited.'}
+                                    description={t('Use -1 for unlimited.')}
                                 />
                             </CardContent>
                         </Card>
 
                         <Card className={'@xl:col-span-2'}>
                             <CardHeader>
-                                <CardTitle>Bandwidth</CardTitle>
+                                <CardTitle>{t('Bandwidth')}</CardTitle>
                             </CardHeader>
                             <CardContent className={'space-y-4'}>
                                 <div
@@ -197,26 +199,26 @@ function ServerBuildSettings() {
                                 >
                                     <InputForm
                                         name={'bandwidthLimit'}
-                                        label={'Monthly Quota (MiB)'}
+                                        label={t('Monthly Quota (MiB)')}
                                         type={'number'}
                                         min={-1}
-                                        description={'Use -1 for unlimited.'}
+                                        description={t('Use -1 for unlimited.')}
                                     />
                                     <InputForm
                                         name={'bandwidthUsage'}
-                                        label={'Current Usage (MiB)'}
+                                        label={t('Current Usage (MiB)')}
                                         type={'number'}
                                         min={0}
                                     />
                                     <InputForm
                                         name={'speedLimit'}
-                                        label={'Speed Limit (MB/s)'}
+                                        label={t('Speed Limit (MB/s)')}
                                         type={'number'}
                                         min={-1}
                                         step={'any'}
-                                        description={
+                                        description={t(
                                             'Caps every NIC. Use -1 for uncapped.'
-                                        }
+                                        )}
                                     />
                                 </div>
 
@@ -235,7 +237,8 @@ function ServerBuildSettings() {
                             className={'flex'}
                             disabled={!form.formState.isDirty}
                         >
-                            Save changes <IconCheck className={'size-4'} />
+                            {t('Save changes')}{' '}
+                            <IconCheck className={'size-4'} />
                         </FormButton>
                     </div>
                 </form>

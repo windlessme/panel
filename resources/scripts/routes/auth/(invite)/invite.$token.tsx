@@ -1,6 +1,7 @@
 import { inviteQuery } from '@/features/auth/invites.ts'
 import { createFileRoute } from '@tanstack/react-router'
 
+import { t } from '@/lib/i18n.ts'
 import { queryClient } from '@/lib/query-client.ts'
 
 export const Route = createFileRoute('/auth/(invite)/invite/$token')({
@@ -16,6 +17,6 @@ export const Route = createFileRoute('/auth/(invite)/invite/$token')({
             .ensureQueryData(inviteQuery(params.token))
             .catch(() => null),
     staticData: {
-        title: 'Set your password',
+        title: t('Set your password'),
     },
 })

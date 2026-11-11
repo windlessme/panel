@@ -10,6 +10,8 @@ import { cn } from '@/utils'
 import { Link } from '@tanstack/react-router'
 import byteSize from 'byte-size'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Badge } from '@/components/ui/Badge.tsx'
 import { buttonVariants } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
@@ -98,8 +100,22 @@ const SharedWith = ({ storage }: { storage: NodeStorage }) =>
                 ? // One definition, N physically separate disks: the other
                   // nodes' figures are their own, so the warning would be
                   // exactly backwards here.
-                  `Also on ${storage.sharedWith.map(node => node.name).join(', ')} — separate disks, this node's figures are its own`
-                : `Shared with ${storage.sharedWith.map(node => node.name).join(', ')} — this capacity is not this node's alone`}
+                  t(
+                      "Also on {{join}} — separate disks, this node's figures are its own",
+                      {
+                          join: storage.sharedWith
+                              .map(node => node.name)
+                              .join(', '),
+                      }
+                  )
+                : t(
+                      "Shared with {{join}} — this capacity is not this node's alone",
+                      {
+                          join: storage.sharedWith
+                              .map(node => node.name)
+                              .join(', '),
+                      }
+                  )}
         </StatLabel>
     ) : null
 
@@ -116,9 +132,9 @@ const Capacity = ({ storage }: { storage: NodeStorage }) => {
     if (!view.known) {
         return (
             <>
-                <Badge variant='outline'>Unreadable</Badge>
+                <Badge variant='outline'>{t('Unreadable')}</Badge>
                 <StatLabel className='mt-1 block text-xs'>
-                    Proxmox could not read it — offline or not mounted
+                    {t('Proxmox could not read it — offline or not mounted')}
                 </StatLabel>
                 <SharedWith storage={storage} />
             </>
@@ -135,8 +151,8 @@ const Capacity = ({ storage }: { storage: NodeStorage }) => {
                         {' · '}
                         <span className='font-semibold'>
                             {fmt(view.freeForConvoy)}
-                        </span>{' '}
-                        free
+                        </span>
+                        {t('free')}
                     </>
                 )}
             </div>
@@ -160,14 +176,14 @@ const StorageList = ({ storages }: Props) => {
     const menu = (storage: NodeStorage) => (
         <>
             <DropdownMenuItem onClick={() => openModal('edit', storage)}>
-                Edit
+                {t('Edit')}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
                 variant='destructive'
                 onClick={() => openModal('delete', storage)}
             >
-                Delete
+                {t('Delete')}
             </DropdownMenuItem>
         </>
     )
@@ -193,9 +209,11 @@ const StorageList = ({ storages }: Props) => {
                 <Table>
                     <TableHeader>
                         <TableRow className='hover:bg-transparent'>
-                            <TableHead className='pl-4'>Storage</TableHead>
+                            <TableHead className='pl-4'>
+                                {t('Storage')}
+                            </TableHead>
                             <TableHead className='w-[22rem]'>
-                                Capacity
+                                {t('Capacity')}
                             </TableHead>
                             <TableHead className='w-12 pr-4' />
                         </TableRow>

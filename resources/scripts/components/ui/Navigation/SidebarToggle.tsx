@@ -1,6 +1,8 @@
 import { IconLayoutSidebar } from '@tabler/icons-react'
 import { useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import Logo from '@/components/ui/Branding/Logo.tsx'
 import { Button } from '@/components/ui/Button'
 import { SidebarNav } from '@/components/ui/Navigation/Navigation.types.ts'
@@ -24,15 +26,18 @@ const SidebarToggle = ({ nav }: Props) => {
                     </Button>
                 }
             />
-            <SheetContent side='left' className='w-72 bg-sidebar sm:max-w-xs'>
+            <SheetContent side='left' className='bg-sidebar w-72 sm:max-w-xs'>
                 <div className='mb-3 flex items-center gap-2 px-1'>
-                    <span className='grid h-7 w-7 shrink-0 place-items-center rounded-md bg-primary text-primary-foreground'>
+                    <span className='bg-primary text-primary-foreground grid h-7 w-7 shrink-0 place-items-center rounded-md'>
                         <Logo className='h-4 w-4' />
                     </span>
-                    <span className='text-sm font-semibold'>Convoy</span>
+                    <span className='text-sm font-semibold'>{t('Convoy')}</span>
                 </div>
                 <nav className='flex flex-col'>
-                    <SidebarContent nav={nav} onNavigate={() => setOpen(false)} />
+                    <SidebarContent
+                        nav={nav}
+                        onNavigate={() => setOpen(false)}
+                    />
                 </nav>
             </SheetContent>
         </Sheet>

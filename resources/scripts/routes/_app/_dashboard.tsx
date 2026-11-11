@@ -2,6 +2,8 @@ import useTitle from '@/hooks/use-title.ts'
 import { IconServer, IconShieldLock, IconUser } from '@tabler/icons-react'
 import { Outlet, createFileRoute } from '@tanstack/react-router'
 
+import { t } from '@/lib/i18n.ts'
+
 import AppLayout from '@/components/layouts/AppLayout.tsx'
 
 import { SidebarNav } from '@/components/ui/Navigation/Navigation.types.ts'
@@ -17,7 +19,7 @@ export const Route = createFileRoute('/_app/_dashboard')({
         )
     },
     staticData: {
-        title: 'Dashboard',
+        title: t('Dashboard'),
     },
 })
 
@@ -28,7 +30,7 @@ const nav: SidebarNav = {
             items: [
                 {
                     icon: IconServer,
-                    label: 'Servers',
+                    label: t('Servers'),
                     path: '/',
                     activeOptions: { exact: true },
                 },
@@ -45,17 +47,17 @@ const nav: SidebarNav = {
          * which is the one control both workspaces share.
          */
         {
-            label: 'Account',
+            label: t('Account'),
             items: [
                 {
                     icon: IconUser,
-                    label: 'Profile',
+                    label: t('Profile'),
                     path: '/account',
                     activeOptions: { exact: true },
                 },
                 {
                     icon: IconShieldLock,
-                    label: 'Security',
+                    label: t('Security'),
                     path: '/account/security',
                 },
             ],

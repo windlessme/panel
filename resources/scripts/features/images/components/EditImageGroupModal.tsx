@@ -15,6 +15,8 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { Form, FormButton } from '@/components/ui/Form'
 import { CheckboxForm, InputForm, TextareaForm } from '@/components/ui/Forms'
@@ -57,7 +59,7 @@ const EditImageGroupModal = () => {
 
     const { mutate: trigger } = useMutation({
         mutationFn: (arg: z.infer<typeof imageGroupSchema>) => {
-            if (!modalData) throw new Error('No image group selected')
+            if (!modalData) throw new Error(t('No image group selected'))
 
             return updateImageGroup(modalData.uuid, arg)
         },
@@ -71,13 +73,13 @@ const EditImageGroupModal = () => {
 
             close()
             toast.add({
-                title: 'Image group updated',
+                title: t('Image group updated'),
                 type: 'success',
             })
         },
         onError: e => {
             handleFormErrors(e, form.setError)
-            toast.add({ title: 'Failed to save changes', type: 'error' })
+            toast.add({ title: t('Failed to save changes'), type: 'error' })
         },
     })
 
@@ -90,27 +92,27 @@ const EditImageGroupModal = () => {
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        Edit image group
+                        {t('Edit image group')}
                     </ResponsiveDialogTitle>
                 </ResponsiveDialogHeader>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(submit)}>
                         <ResponsiveDialogBody className={'space-y-4'}>
-                            <InputForm name={'name'} label={'Name'} />
+                            <InputForm name={'name'} label={t('Name')} />
                             <TextareaForm
                                 name={'description'}
-                                label={'Description'}
-                                description={
+                                label={t('Description')}
+                                description={t(
                                     'This is visible to non-admins too.'
-                                }
+                                )}
                             />
                             <ImageIconSelect />
                             <CheckboxForm
                                 name={'isAdminOnly'}
-                                label={'Admin only'}
-                                description={
+                                label={t('Admin only')}
+                                description={t(
                                     'If checked, this image group will only be accessible to admin users.'
-                                }
+                                )}
                             />
                         </ResponsiveDialogBody>
                         <ResponsiveDialogFooter className={'mt-4'}>
@@ -121,7 +123,7 @@ const EditImageGroupModal = () => {
                                     </Button>
                                 }
                             />
-                            <FormButton>Save changes</FormButton>
+                            <FormButton>{t('Save changes')}</FormButton>
                         </ResponsiveDialogFooter>
                     </form>
                 </Form>

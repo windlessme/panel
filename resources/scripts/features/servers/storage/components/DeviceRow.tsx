@@ -12,6 +12,8 @@ import { CSS } from '@dnd-kit/utilities'
 import { IconGripVertical } from '@tabler/icons-react'
 import type { ReactNode } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Badge } from '@/components/ui/Badge.tsx'
 import { Switch } from '@/components/ui/Switch'
 import { TableCell, TableRow } from '@/components/ui/Table'
@@ -46,7 +48,9 @@ const DeviceCells = ({
                     the device has no place in the order, and a column of
                     dashes reads as a rank of its own. Kept for screen readers,
                     which have no switch in view to infer it from. */}
-                {rank ?? <span className={'sr-only'}>Not tried at boot</span>}
+                {rank ?? (
+                    <span className={'sr-only'}>{t('Not tried at boot')}</span>
+                )}
             </TableCell>
 
             <TableCell className={'w-12'}>
@@ -56,8 +60,12 @@ const DeviceCells = ({
                     onCheckedChange={onToggleBoot}
                     aria-label={
                         rank !== null
-                            ? `Stop booting from ${device.interface}`
-                            : `Boot from ${device.interface}`
+                            ? t('Stop booting from {{interface}}', {
+                                  interface: device.interface,
+                              })
+                            : t('Boot from {{interface}}', {
+                                  interface: device.interface,
+                              })
                     }
                 />
             </TableCell>
@@ -77,7 +85,9 @@ const DeviceCells = ({
                 className={'text-muted-foreground max-w-0 truncate font-mono'}
                 title={backing ?? undefined}
             >
-                {backing ?? <span className={'font-sans italic'}>Empty</span>}
+                {backing ?? (
+                    <span className={'font-sans italic'}>{t('Empty')}</span>
+                )}
             </TableCell>
 
             <TableCell className={'w-24 text-right font-mono tabular-nums'}>

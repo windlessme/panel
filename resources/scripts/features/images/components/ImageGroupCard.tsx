@@ -4,6 +4,8 @@ import { useOpenModal } from '@/hooks/create-modal-store.ts'
 import { ImageGroup } from '@/types/image.ts'
 import { IconCopy, IconDots } from '@tabler/icons-react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
 import {
@@ -41,14 +43,16 @@ const ImageGroupCard = ({ group }: Props) => {
                 <ItemTitle className={'max-w-full'}>
                     <button
                         className={'truncate text-left'}
-                        title={`View child definitions for ${group.name}`}
+                        title={t('View child definitions for {{name}}', {
+                            name: group.name,
+                        })}
                         onClick={() => openModal('show', group)}
                     >
                         {group.name}
                     </button>
                     {group.isAdminOnly && (
                         <Badge variant={'secondary'} className={'shrink-0'}>
-                            Admin only
+                            {t('Admin only')}
                         </Badge>
                     )}
                 </ItemTitle>
@@ -64,7 +68,7 @@ const ImageGroupCard = ({ group }: Props) => {
                         <Button
                             size={'icon'}
                             variant={'ghost'}
-                            aria-label={'Open image group actions'}
+                            aria-label={t('Open image group actions')}
                         >
                             <IconDots className={'text-muted-foreground'} />
                         </Button>
@@ -73,18 +77,18 @@ const ImageGroupCard = ({ group }: Props) => {
                         <DropdownMenuItem
                             onClick={() => openModal('edit', group)}
                         >
-                            Edit
+                            {t('Edit')}
                         </DropdownMenuItem>
                         <DropdownMenuItem
                             onClick={() => openModal('show', group)}
                         >
-                            View
+                            {t('View')}
                         </DropdownMenuItem>
                         <DropdownMenuItem
                             variant={'destructive'}
                             onClick={() => openModal('delete', group)}
                         >
-                            Delete
+                            {t('Delete')}
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>

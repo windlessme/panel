@@ -2,6 +2,8 @@ import type { AdminUserDetail } from '@/types/admin/user.ts'
 import { format, formatDistanceToNow } from 'date-fns'
 import { ReactNode } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import {
     Card,
     CardContent,
@@ -24,7 +26,7 @@ const Row = ({ label, children }: { label: string; children: ReactNode }) => (
     </div>
 )
 
-const none = <span className={'text-muted-foreground'}>&mdash;</span>
+const none = <span className={'text-muted-foreground'}>{t('&mdash;')}</span>
 
 /**
  * Eight facts as a definition list rather than eight tiles. Density is the point: this is the card
@@ -33,33 +35,39 @@ const none = <span className={'text-muted-foreground'}>&mdash;</span>
 const AccountCard = ({ user }: Props) => (
     <Card>
         <CardHeader>
-            <CardTitle>Account</CardTitle>
-            <CardDescription>Who this is, and how they sign in.</CardDescription>
+            <CardTitle>{t('Account')}</CardTitle>
+            <CardDescription>
+                {t('Who this is, and how they sign in.')}
+            </CardDescription>
         </CardHeader>
         <CardContent className={'flex-1'}>
             {!user ? (
                 <Skeleton className={'h-48 w-full'} />
             ) : (
                 <dl className={'flex flex-col gap-2'}>
-                    <Row label={'User ID'}>{user.id}</Row>
-                    <Row label={'Role'}>
-                        {user.rootAdmin ? 'Administrator' : 'User'}
+                    <Row label={t('User ID')}>{user.id}</Row>
+                    <Row label={t('Role')}>
+                        {user.rootAdmin ? t('Administrator') : t('User')}
                     </Row>
-                    <Row label={'Created'}>
+                    <Row label={t('Created')}>
                         {user.createdAt
                             ? format(new Date(user.createdAt), 'PP')
                             : none}
                     </Row>
-                    <Row label={'Last sign-in'}>
+                    <Row label={t('Last sign-in')}>
                         {user.lastLoginAt ? (
                             <>
-                                {formatDistanceToNow(new Date(user.lastLoginAt), {
-                                    addSuffix: true,
-                                })}
+                                {formatDistanceToNow(
+                                    new Date(user.lastLoginAt),
+                                    {
+                                        addSuffix: true,
+                                    }
+                                )}
                                 {user.lastLoginIp && (
                                     <span className={'text-muted-foreground'}>
-                                        {' '}
-                                        &middot; {user.lastLoginIp}
+                                        {t('&middot; {{lastLoginIp}}', {
+                                            lastLoginIp: user.lastLoginIp,
+                                        })}
                                     </span>
                                 )}
                             </>
@@ -67,21 +75,21 @@ const AccountCard = ({ user }: Props) => (
                             /* Not "never": the audit log is pruned on a window, so a very old
                                sign-in is indistinguishable from none at all. */
                             <span className={'text-muted-foreground'}>
-                                Not recorded
+                                {t('Not recorded')}
                             </span>
                         )}
                     </Row>
                     <Row label={'Two-factor'}>
                         {user.twoFactorEnabled
-                            ? 'Authenticator app'
+                            ? t('Authenticator app')
                             : user.passkeysCount > 0
-                              ? 'Passkey only'
-                              : 'Off'}
+                              ? t('Passkey only')
+                              : t('Off')}
                     </Row>
-                    <Row label={'Passkeys'}>{user.passkeysCount}</Row>
-                    <Row label={'SSH keys'}>{user.sshKeysCount}</Row>
-                    <Row label={'API keys'}>{user.apiKeysCount}</Row>
-                    <Row label={'Linked logins'}>
+                    <Row label={t('Passkeys')}>{user.passkeysCount}</Row>
+                    <Row label={t('SSH keys')}>{user.sshKeysCount}</Row>
+                    <Row label={t('API keys')}>{user.apiKeysCount}</Row>
+                    <Row label={t('Linked logins')}>
                         {user.oauthConnectionsCount}
                     </Row>
                 </dl>

@@ -4,6 +4,8 @@ import { IconHistory } from '@tabler/icons-react'
 import { useQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 
+import { t } from '@/lib/i18n.ts'
+
 import { buttonVariants } from '@/components/ui/Button'
 import {
     Card,
@@ -41,7 +43,7 @@ const UserActivityCard = ({ userId }: Props) => {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Recent activity</CardTitle>
+                <CardTitle>{t('Recent activity')}</CardTitle>
                 <CardAction>
                     <Link
                         className={buttonVariants({
@@ -50,7 +52,7 @@ const UserActivityCard = ({ userId }: Props) => {
                         })}
                         to={`/admin/users/${userId}/activity` as string}
                     >
-                        View all
+                        {t('View all')}
                     </Link>
                 </CardAction>
             </CardHeader>
@@ -68,7 +70,7 @@ const UserActivityCard = ({ userId }: Props) => {
                 ) : data.items.length === 0 ? (
                     <SimpleEmptyState
                         icon={IconHistory}
-                        title={'Nothing recorded'}
+                        title={t('Nothing recorded')}
                     />
                 ) : (
                     <ItemGroup className={'gap-2'}>

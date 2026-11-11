@@ -8,6 +8,8 @@ import { useNetworkInterfaces } from '@/features/nodes/network-interfaces/api.ts
 import { IconWifiOff } from '@tabler/icons-react'
 import { createLazyFileRoute } from '@tanstack/react-router'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Card } from '@/components/ui/Card'
 import {
     CollectionErrorState,
@@ -31,7 +33,7 @@ function NodeNetwork() {
 
     return (
         <>
-            <Heading>Network</Heading>
+            <Heading>{t('Network')}</Heading>
             {Boolean(interfaces?.length) && (
                 <PageToolbar actions={<CreateNetworkModal />} />
             )}
@@ -54,10 +56,10 @@ function NodeNetwork() {
                 <Card className={'py-6'}>
                     <SimpleEmptyState
                         icon={IconWifiOff}
-                        title={'No network interfaces'}
-                        description={
+                        title={t('No network interfaces')}
+                        description={t(
                             'Add a network interface to connect servers on this node.'
-                        }
+                        )}
                         action={<CreateNetworkModal />}
                     />
                 </Card>

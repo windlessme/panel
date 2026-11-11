@@ -10,6 +10,8 @@ import { cn } from '@/utils'
 import { IconDevices } from '@tabler/icons-react'
 import { useMutation } from '@tanstack/react-query'
 
+import { t } from '@/lib/i18n.ts'
+
 import useConfirmationStore from '@/components/ui/AlertDialog/use-confirmation-store.ts'
 import {
     Card,
@@ -36,16 +38,19 @@ const SessionListCard = () => {
         mutationFn: (session: SessionType) => revokeSession(session.id),
         onSuccess: (_, session) => {
             mutate(list => list?.filter(s => s.id !== session.id))
-            toast.add({ title: 'Session revoked', type: 'success' })
+            toast.add({ title: t('Session revoked'), type: 'success' })
         },
         onError: () =>
-            toast.add({ title: 'Failed to revoke session', type: 'error' }),
+            toast.add({ title: t('Failed to revoke session'), type: 'error' }),
     })
 
     const handleRevoke = async (session: SessionType) => {
         const confirmed = await confirm({
-            title: 'Revoke session',
-            description: `The session on ${session.device} will be signed out immediately.`,
+            title: t('Revoke session'),
+            description: t(
+                'The session on {{device}} will be signed out immediately.',
+                { device: session.device }
+            ),
         })
         if (!confirmed) return
 
@@ -55,10 +60,11 @@ const SessionListCard = () => {
     return (
         <Card className={'flex flex-col'}>
             <CardHeader>
-                <CardTitle>Active Sessions</CardTitle>
+                <CardTitle>{t('Active Sessions')}</CardTitle>
                 <CardDescription>
-                    Devices signed in to your account. Revoke any you don’t
-                    recognize.
+                    {t(
+                        'Devices signed in to your account. Revoke any you don’t recognize.'
+                    )}
                 </CardDescription>
             </CardHeader>
             <CardContent
@@ -73,7 +79,7 @@ const SessionListCard = () => {
                     <Skeleton className={'h-40 w-full'} />
                 ) : sessions.length > 0 ? (
                     <OverflowItemGroup
-                        title={'Active Sessions'}
+                        title={t('Active Sessions')}
                         rows={sessions.map(session => (
                             <Session
                                 key={session.id}
@@ -85,8 +91,8 @@ const SessionListCard = () => {
                 ) : (
                     <SimpleEmptyState
                         icon={IconDevices}
-                        title={'No active sessions'}
-                        description={'There are no other sessions to show.'}
+                        title={t('No active sessions')}
+                        description={t('There are no other sessions to show.')}
                     />
                 )}
             </CardContent>

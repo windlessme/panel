@@ -18,6 +18,8 @@ import {
 } from '@tanstack/react-table'
 import { Fragment, useMemo } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { Checkbox } from '@/components/ui/Checkbox'
 import { CollectionErrorState } from '@/components/ui/EmptyStates'
@@ -56,7 +58,7 @@ const selectionColumn = <TData,>(): ColumnDef<TData> => ({
             checked={table.getIsAllPageRowsSelected()}
             indeterminate={table.getIsSomePageRowsSelected()}
             onCheckedChange={value => table.toggleAllPageRowsSelected(!!value)}
-            aria-label='Select all'
+            aria-label={t('Select all')}
             className='translate-y-[2px]'
         />
     ),
@@ -64,7 +66,7 @@ const selectionColumn = <TData,>(): ColumnDef<TData> => ({
         <Checkbox
             checked={row.getIsSelected()}
             onCheckedChange={value => row.toggleSelected(!!value)}
-            aria-label='Select row'
+            aria-label={t('Select row')}
             className='translate-y-[2px]'
         />
     ),
@@ -139,7 +141,8 @@ const DataTable = <TData,>({
             prop: _rowSelection,
             defaultProp: {},
             onChange: _setRowSelection as
-                ((state: RowSelectionState) => void) | undefined,
+                | ((state: RowSelectionState) => void)
+                | undefined,
         })
 
     const [columnVisibility, setColumnVisibility] =
@@ -147,7 +150,8 @@ const DataTable = <TData,>({
             prop: _columnVisibility,
             defaultProp: {},
             onChange: _setColumnVisibility as
-                ((state: VisibilityState) => void) | undefined,
+                | ((state: VisibilityState) => void)
+                | undefined,
         })
 
     const [columnFilters, setColumnFilters] =
@@ -155,7 +159,8 @@ const DataTable = <TData,>({
             prop: _columnFilters,
             defaultProp: [],
             onChange: _setColumnFilters as
-                ((state: ColumnFiltersState) => void) | undefined,
+                | ((state: ColumnFiltersState) => void)
+                | undefined,
         })
 
     const resolvedColumns = useMemo(
@@ -318,8 +323,10 @@ const DataTable = <TData,>({
                             showBulkBar && 'pointer-events-auto'
                         )}
                     >
-                        <span className='text-sm font-medium tabular-nums whitespace-nowrap'>
-                            {selectedRows.length} selected
+                        <span className='text-sm font-medium whitespace-nowrap tabular-nums'>
+                            {t('{{length}} selected', {
+                                length: selectedRows.length,
+                            })}
                         </span>
                         <span
                             aria-hidden
@@ -337,7 +344,7 @@ const DataTable = <TData,>({
                             size='icon'
                             className='size-8 shrink-0 rounded-full'
                             onClick={() => table.resetRowSelection()}
-                            aria-label='Clear selection'
+                            aria-label={t('Clear selection')}
                         >
                             <IconX className='size-4' />
                         </Button>
@@ -430,7 +437,7 @@ const DataTable = <TData,>({
                                         >
                                             {noRowsContent ?? (
                                                 <div className='text-muted-foreground flex h-24 items-center justify-center text-center'>
-                                                    No results.
+                                                    {t('No results.')}
                                                 </div>
                                             )}
                                         </TableCell>
@@ -499,7 +506,7 @@ const DataTable = <TData,>({
                                 size={'sm'}
                                 className='text-muted-foreground justify-center'
                             >
-                                No results.
+                                {t('No results.')}
                             </Item>
                         )
                     ) : (

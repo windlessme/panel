@@ -10,6 +10,8 @@ import { Route } from '@/routes/_app/admin/nodes.$nodeId/network.tsx'
 import { NetworkInterface } from '@/types/network-interface.ts'
 import { AxiosError } from 'axios'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     ResponsiveDialog,
@@ -49,7 +51,7 @@ const DeleteNetworkInterfaceModal = () => {
                 }, false)
 
                 toast.add({
-                    title: 'Network interface deleted',
+                    title: t('Network interface deleted'),
                     type: 'success',
                 })
                 close()
@@ -72,10 +74,12 @@ const DeleteNetworkInterfaceModal = () => {
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        Delete {networkInterface?.name}
+                        {t('Delete {{name}}', { name: networkInterface?.name })}
                     </ResponsiveDialogTitle>
                     <ResponsiveDialogDescription>
-                        Are you sure you want to delete this network interface?
+                        {t(
+                            'Are you sure you want to delete this network interface?'
+                        )}
                     </ResponsiveDialogDescription>
                 </ResponsiveDialogHeader>
                 <ResponsiveDialogFooter className={'mt-4'}>
@@ -90,7 +94,7 @@ const DeleteNetworkInterfaceModal = () => {
                             networkInterface && submit(networkInterface)
                         }
                     >
-                        Delete
+                        {t('Delete')}
                     </Button>
                 </ResponsiveDialogFooter>
             </ResponsiveDialogContent>

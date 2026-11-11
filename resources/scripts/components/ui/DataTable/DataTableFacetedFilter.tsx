@@ -3,6 +3,8 @@ import { cn } from '@/utils'
 import { IconCheck, IconCirclePlus } from '@tabler/icons-react'
 import { Column } from '@tanstack/react-table'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
 import {
@@ -38,10 +40,7 @@ const DataTableFacetedFilter = <TData, TValue>({
     return (
         <Popover>
             <PopoverTrigger asChild>
-                <Button
-                    variant='outline'
-                    className='border-dashed'
-                >
+                <Button variant='outline' className='border-dashed'>
                     <IconCirclePlus />
                     {title}
                     {selectedValues?.size > 0 && (
@@ -62,7 +61,9 @@ const DataTableFacetedFilter = <TData, TValue>({
                                         variant='secondary'
                                         className='rounded-sm px-1 font-normal'
                                     >
-                                        {selectedValues.size} selected
+                                        {t('{{size}} selected', {
+                                            size: selectedValues.size,
+                                        })}
                                     </Badge>
                                 ) : (
                                     options
@@ -88,7 +89,7 @@ const DataTableFacetedFilter = <TData, TValue>({
                 <Command>
                     <CommandInput placeholder={title} />
                     <CommandList>
-                        <CommandEmpty>No results found.</CommandEmpty>
+                        <CommandEmpty>{t('No results found.')}</CommandEmpty>
                         <CommandGroup>
                             {options.map(option => {
                                 const isSelected = selectedValues.has(
@@ -116,7 +117,7 @@ const DataTableFacetedFilter = <TData, TValue>({
                                     >
                                         <div
                                             className={cn(
-                                                'mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary',
+                                                'border-primary mr-2 flex h-4 w-4 items-center justify-center rounded-sm border',
                                                 isSelected
                                                     ? 'bg-primary text-primary-foreground'
                                                     : 'opacity-50 [&_svg]:invisible'
@@ -125,7 +126,7 @@ const DataTableFacetedFilter = <TData, TValue>({
                                             <IconCheck />
                                         </div>
                                         {option.icon && (
-                                            <option.icon className='mr-2 h-4 w-4 text-muted-foreground' />
+                                            <option.icon className='text-muted-foreground mr-2 h-4 w-4' />
                                         )}
                                         <span>{option.label}</span>
                                         {facets?.get(option.value) && (
@@ -147,7 +148,7 @@ const DataTableFacetedFilter = <TData, TValue>({
                                         }
                                         className='justify-center text-center'
                                     >
-                                        Clear filters
+                                        {t('Clear filters')}
                                     </CommandItem>
                                 </CommandGroup>
                             </>

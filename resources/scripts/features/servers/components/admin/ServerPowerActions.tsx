@@ -6,6 +6,8 @@ import {
 import { Server } from '@/types/server.ts'
 import { useQuery } from '@tanstack/react-query'
 
+import { t } from '@/lib/i18n.ts'
+
 import useConfirmationStore from '@/components/ui/AlertDialog/use-confirmation-store.ts'
 import { DropdownMenuItem } from '@/components/ui/DropdownMenu'
 import { toast } from '@/components/ui/Toast'
@@ -15,31 +17,34 @@ const actions: Record<
     { label: string; toastText: string; title: string; description: string }
 > = {
     start: {
-        label: 'Start',
-        toastText: 'Server queued to start',
-        title: 'Start server?',
-        description: 'This action will start the server.',
+        label: t('Start'),
+        toastText: t('Server queued to start'),
+        title: t('Start server?'),
+        description: t('This action will start the server.'),
     },
     restart: {
-        label: 'Restart',
-        toastText: 'Server queued to restart',
-        title: 'Restart server?',
-        description:
-            'This will restart the server. Any unsaved work on the guest may be lost.',
+        label: t('Restart'),
+        toastText: t('Server queued to restart'),
+        title: t('Restart server?'),
+        description: t(
+            'This will restart the server. Any unsaved work on the guest may be lost.'
+        ),
     },
     shutdown: {
-        label: 'Shutdown',
-        toastText: 'Server queued to shut down',
-        title: 'Shutdown server?',
-        description:
-            'This will gracefully power off the server. Unsaved work on the guest may be lost.',
+        label: t('Shutdown'),
+        toastText: t('Server queued to shut down'),
+        title: t('Shutdown server?'),
+        description: t(
+            'This will gracefully power off the server. Unsaved work on the guest may be lost.'
+        ),
     },
     kill: {
-        label: 'Kill',
-        toastText: 'Server queued to be killed',
-        title: 'Kill server?',
-        description:
-            'This immediately stops the server without a graceful shutdown, which can cause data loss.',
+        label: t('Kill'),
+        toastText: t('Server queued to be killed'),
+        title: t('Kill server?'),
+        description: t(
+            'This immediately stops the server without a graceful shutdown, which can cause data loss.'
+        ),
     },
 }
 
@@ -78,7 +83,7 @@ const ServerPowerActions = ({ server }: Props) => {
             await mutateAsync(action)
             toast.add({ title: actions[action].toastText, type: 'success' })
         } catch (e) {
-            toast.add({ title: 'Power action failed', type: 'error' })
+            toast.add({ title: t('Power action failed'), type: 'error' })
             throw e
         }
     }
@@ -88,8 +93,8 @@ const ServerPowerActions = ({ server }: Props) => {
             {pending && (
                 <DropdownMenuItem disabled>
                     {actions[pending.command as PowerAction]?.label ??
-                        'Power action'}{' '}
-                    in progress…
+                        t('Power action')}
+                    {t('in progress…')}
                 </DropdownMenuItem>
             )}
             {(Object.keys(actions) as PowerAction[]).map(action => (

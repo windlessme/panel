@@ -12,6 +12,8 @@ import { PaginatedAddresses } from '@/types/address.ts'
 import { Mutator } from '@/types/query.ts'
 import { ReactNode } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     Card,
@@ -84,7 +86,7 @@ const AddressBlockCard = ({
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Address space</CardTitle>
+                <CardTitle>{t('Address space')}</CardTitle>
                 <CardDescription>{description()}</CardDescription>
                 {block && (
                     <CardAction className={'flex items-center gap-2'}>
@@ -106,13 +108,15 @@ const AddressBlockCard = ({
                                             value[0] as AddressBlockView
                                         )
                                 }}
-                                aria-label={'Show addresses as a map or a list'}
+                                aria-label={t(
+                                    'Show addresses as a map or a list'
+                                )}
                             >
                                 <ToggleGroupItem value={'map'}>
-                                    Map
+                                    {t('Map')}
                                 </ToggleGroupItem>
                                 <ToggleGroupItem value={'list'}>
-                                    List
+                                    {t('List')}
                                 </ToggleGroupItem>
                             </ToggleGroup>
                         )}
@@ -120,7 +124,7 @@ const AddressBlockCard = ({
                             variant={'outline'}
                             onClick={() => openModal('edit', block)}
                         >
-                            Edit block
+                            {t('Edit block')}
                         </Button>
                     </CardAction>
                 )}
@@ -142,7 +146,7 @@ const AddressBlockCard = ({
                                 to precede the `dd` it labels. */}
                             <div className={'flex flex-col-reverse'}>
                                 <dt className={'text-muted-foreground text-xs'}>
-                                    Usable
+                                    {t('Usable')}
                                 </dt>
                                 <dd className={'font-mono text-sm'}>
                                     {capacity.usable === null
@@ -152,7 +156,7 @@ const AddressBlockCard = ({
                             </div>
                             <div className={'flex flex-col-reverse'}>
                                 <dt className={'text-muted-foreground text-xs'}>
-                                    Assigned
+                                    {t('Assigned')}
                                 </dt>
                                 <dd className={'text-sm'}>
                                     <AddressStateLabel kind={'assigned'}>
@@ -162,7 +166,7 @@ const AddressBlockCard = ({
                             </div>
                             <div className={'flex flex-col-reverse'}>
                                 <dt className={'text-muted-foreground text-xs'}>
-                                    Reserved
+                                    {t('Reserved')}
                                 </dt>
                                 <dd className={'text-sm'}>
                                     <AddressStateLabel kind={'reserved'}>
@@ -172,7 +176,7 @@ const AddressBlockCard = ({
                             </div>
                             <div className={'flex flex-col-reverse'}>
                                 <dt className={'text-muted-foreground text-xs'}>
-                                    System
+                                    {t('System')}
                                 </dt>
                                 <dd className={'text-sm'}>
                                     <AddressStateLabel kind={'system'}>
@@ -182,7 +186,7 @@ const AddressBlockCard = ({
                             </div>
                             <div className={'flex flex-col-reverse'}>
                                 <dt className={'text-muted-foreground text-xs'}>
-                                    Free
+                                    {t('Free')}
                                 </dt>
                                 <dd className={'text-sm'}>
                                     <AddressStateLabel kind={'available'}>
@@ -227,15 +231,24 @@ const AddressBlockCard = ({
                     {!capacity
                         ? ''
                         : capacity.isSparse
-                          ? 'Addresses are minted as they are allocated'
+                          ? t('Addresses are minted as they are allocated')
                           : capacity.ungenerated > 0
-                            ? `${capacity.ungenerated.toLocaleString()} of ${(capacity.total ?? 0).toLocaleString()} not generated yet`
-                            : `All ${(capacity.total ?? 0).toLocaleString()} addresses generated`}
+                            ? t('{{value}} of {{value2}} not generated yet', {
+                                  value: capacity.ungenerated.toLocaleString(),
+                                  value2: (
+                                      capacity.total ?? 0
+                                  ).toLocaleString(),
+                              })
+                            : t('All {{value}} addresses generated', {
+                                  value: (capacity.total ?? 0).toLocaleString(),
+                              })}
                 </span>
                 {selectedIds.length > 0 && view === 'map' ? (
                     <span className={'flex items-center gap-2'}>
                         <span className={'text-sm font-medium tabular-nums'}>
-                            {selectedIds.length.toLocaleString()} selected
+                            {t('{{value}} selected', {
+                                value: selectedIds.length.toLocaleString(),
+                            })}
                         </span>
                         {bulkActions}
                         <Button
@@ -243,7 +256,7 @@ const AddressBlockCard = ({
                             size={'sm'}
                             onClick={() => onSelectedIdsChange([])}
                         >
-                            Clear
+                            {t('Clear')}
                         </Button>
                     </span>
                 ) : (

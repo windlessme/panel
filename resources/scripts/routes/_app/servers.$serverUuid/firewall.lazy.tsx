@@ -3,6 +3,8 @@ import FirewallLedger from '@/features/servers/firewall/components/FirewallLedge
 import FirewallLogCard from '@/features/servers/firewall/components/FirewallLogCard.tsx'
 import { createLazyFileRoute } from '@tanstack/react-router'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Badge } from '@/components/ui/Badge.tsx'
 import Heading from '@/components/ui/Typography/Heading.tsx'
 
@@ -19,12 +21,12 @@ const ServerFirewall = () => {
                 }
             >
                 <div className={'min-w-0'}>
-                    <Heading>Firewall</Heading>
+                    <Heading>{t('Firewall')}</Heading>
                 </div>
 
                 {options && !options.isEnabled && (
                     <Badge variant={'secondary'} className={'mt-1.5'}>
-                        Not enforced
+                        {t('Not enforced')}
                     </Badge>
                 )}
             </div>
@@ -40,5 +42,5 @@ const ServerFirewall = () => {
 export const Route = createLazyFileRoute('/_app/servers/$serverUuid/firewall')({
     component: ServerFirewall,
     // @ts-ignore
-    meta: () => [{ title: 'Firewall' }],
+    meta: () => [{ title: t('Firewall') }],
 })

@@ -2,6 +2,8 @@ import { cn } from '@/utils'
 import { Toast as ToastPrimitive } from '@base-ui/react/toast'
 import { IconX } from '@tabler/icons-react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 
 const ToastClose = ({
@@ -12,7 +14,7 @@ const ToastClose = ({
 }: ToastPrimitive.Close.Props) => (
     <ToastPrimitive.Close
         data-slot={'toast-close'}
-        aria-label={'Close toast'}
+        aria-label={t('Close toast')}
         render={render}
         // The pseudo-element widens the hit target past the 28px button without
         // pushing the row layout around.

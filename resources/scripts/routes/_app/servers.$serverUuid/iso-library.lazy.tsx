@@ -1,6 +1,7 @@
+import ISOLibraryCard from '@/features/servers/media/components/ISOLibraryCard.tsx'
 import { createLazyFileRoute } from '@tanstack/react-router'
 
-import ISOLibraryCard from '@/features/servers/media/components/ISOLibraryCard.tsx'
+import { t } from '@/lib/i18n.ts'
 
 import Heading from '@/components/ui/Typography/Heading.tsx'
 
@@ -9,7 +10,7 @@ export const Route = createLazyFileRoute(
 )({
     component: ServerISOLibrary,
     // @ts-ignore
-    meta: () => [{ title: 'ISO Library' }],
+    meta: () => [{ title: t('ISO Library') }],
 })
 
 function ServerISOLibrary() {
@@ -17,7 +18,7 @@ function ServerISOLibrary() {
 
     return (
         <>
-            <Heading>ISO Library</Heading>
+            <Heading>{t('ISO Library')}</Heading>
             <ISOLibraryCard uuid={serverUuid} />
         </>
     )

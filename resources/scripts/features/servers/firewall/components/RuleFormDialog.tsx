@@ -22,6 +22,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { type ReactElement, useEffect, useMemo } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     Collapsible,
@@ -53,8 +55,8 @@ import { TabsTrigger } from '@/components/ui/Tabs'
 import { toast } from '@/components/ui/Toast'
 
 const logLevelItems: SelectFormItem[] = [
-    { value: '', label: "Don't log" },
-    { value: 'info', label: 'Log matches' },
+    { value: '', label: t("Don't log") },
+    { value: 'info', label: t('Log matches') },
 ]
 
 // Only the levels a rule realistically needs. The nine syslog severities are a
@@ -122,15 +124,18 @@ const RuleFormDialog = ({
             // The opening value, and a real answer rather than a placeholder:
             // a rule that constrains only its source ("block everything from
             // this address") is both valid and common.
-            { value: '', label: 'Any traffic' },
+            { value: '', label: t('Any traffic') },
             // Second, above the presets: it is the other general answer, not a
             // footnote to the list. It is still not the *initial* value, which
             // is what used to open the form in its most complex state.
-            { value: CUSTOM_MACRO, label: 'Custom — set protocol and port' },
+            { value: CUSTOM_MACRO, label: t('Custom — set protocol and port') },
             ...(macros ?? []).map(item => ({
                 value: item.name,
                 label: item.description
-                    ? `${item.name} — ${item.description}`
+                    ? t('{{name}} — {{description}}', {
+                          name: item.name,
+                          description: item.description,
+                      })
                     : item.name,
             })),
         ],
@@ -154,7 +159,7 @@ const RuleFormDialog = ({
                 queryKey: firewallQueries.all(uuid),
             })
             toast.add({
-                title: isEditing ? 'Rule updated' : 'Rule added',
+                title: isEditing ? t('Rule updated') : t('Rule added'),
                 type: 'success',
             })
             onOpenChange(false)
@@ -186,7 +191,9 @@ const RuleFormDialog = ({
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        {isEditing ? `Edit ${chain} rule` : `New ${chain} rule`}
+                        {isEditing
+                            ? t('Edit {{chain}} rule', { chain })
+                            : t('New {{chain}} rule', { chain })}
                     </ResponsiveDialogTitle>
                     {/* The description is the preview. It used to be a static
                         sentence that read the same however the form was filled
@@ -224,13 +231,15 @@ const RuleFormDialog = ({
                                 <FieldGroup>
                                     <TabForm
                                         name={'action'}
-                                        label={'Action'}
+                                        label={t('Action')}
                                         // Shown only for the option it explains.
                                         // Permanently on screen it was the second
                                         // thing read, for a choice made once.
                                         description={
                                             values.action === 'REJECT'
-                                                ? 'Sends a refusal back, so the sender fails immediately. Drop stays silent and lets it time out.'
+                                                ? t(
+                                                      'Sends a refusal back, so the sender fails immediately. Drop stays silent and lets it time out.'
+                                                  )
                                                 : undefined
                                         }
                                         tabsListProps={{
@@ -241,23 +250,23 @@ const RuleFormDialog = ({
                                         {/* Named as Proxmox names them, and as the
                                         rules table renders them. */}
                                         <TabsTrigger value={'ACCEPT'}>
-                                            Accept
+                                            {t('Accept')}
                                         </TabsTrigger>
                                         <TabsTrigger value={'DROP'}>
-                                            Drop
+                                            {t('Drop')}
                                         </TabsTrigger>
                                         <TabsTrigger value={'REJECT'}>
-                                            Reject
+                                            {t('Reject')}
                                         </TabsTrigger>
                                     </TabForm>
 
                                     <SelectForm
                                         name={'macro'}
-                                        label={'Service'}
+                                        label={t('Service')}
                                         items={macroItems}
-                                        description={
+                                        description={t(
                                             'A preset fills in the protocol and ports. Choose Custom to set them yourself.'
-                                        }
+                                        )}
                                     />
 
                                     {/* A macro already carries these, and the API
@@ -268,13 +277,13 @@ const RuleFormDialog = ({
                                         >
                                             <InputForm
                                                 name={'protocol'}
-                                                label={'Protocol'}
+                                                label={t('Protocol')}
                                                 placeholder={'tcp'}
                                             />
                                             <InputForm
                                                 name={'destinationPort'}
-                                                label={'Port'}
-                                                placeholder={'443 or 80:85'}
+                                                label={t('Port')}
+                                                placeholder={t('443 or 80:85')}
                                             />
                                         </div>
                                     )}
@@ -284,30 +293,32 @@ const RuleFormDialog = ({
                                     {isOutbound ? (
                                         <SourceField
                                             name={'destinationAddress'}
-                                            label={'Destination'}
+                                            label={t('Destination')}
                                             groups={groups}
                                         />
                                     ) : (
                                         <SourceField
                                             name={'sourceAddress'}
-                                            label={'Source'}
+                                            label={t('Source')}
                                             groups={groups}
                                         />
                                     )}
 
                                     <InputForm
                                         name={'comment'}
-                                        label={'Comment'}
-                                        placeholder={'What is this rule for?'}
+                                        label={t('Comment')}
+                                        placeholder={t(
+                                            'What is this rule for?'
+                                        )}
                                     />
 
                                     {isEditing && (
                                         <SwitchForm
                                             name={'enabled'}
-                                            label={'Rule is on'}
-                                            description={
+                                            label={t('Rule is on')}
+                                            description={t(
                                                 'Turn off to keep the rule without enforcing it.'
-                                            }
+                                            )}
                                         />
                                     )}
 
@@ -315,7 +326,7 @@ const RuleFormDialog = ({
 
                                     <Collapsible>
                                         <CollapsibleTrigger>
-                                            Advanced
+                                            {t('Advanced')}
                                         </CollapsibleTrigger>
                                         {/* The panel is `overflow-hidden` so it
                                             can animate its height, which also
@@ -337,40 +348,40 @@ const RuleFormDialog = ({
                                                 answered this. */}
                                                 <TabForm
                                                     name={'direction'}
-                                                    label={'Direction'}
+                                                    label={t('Direction')}
                                                     tabsListProps={{
                                                         className:
                                                             'grid w-full grid-cols-2',
                                                     }}
                                                 >
                                                     <TabsTrigger value={'in'}>
-                                                        Inbound
+                                                        {t('Inbound')}
                                                     </TabsTrigger>
                                                     <TabsTrigger value={'out'}>
-                                                        Outbound
+                                                        {t('Outbound')}
                                                     </TabsTrigger>
                                                 </TabForm>
 
                                                 {isOutbound ? (
                                                     <InputForm
                                                         name={'sourceAddress'}
-                                                        label={'Source'}
-                                                        placeholder={'Any'}
+                                                        label={t('Source')}
+                                                        placeholder={t('Any')}
                                                     />
                                                 ) : (
                                                     <InputForm
                                                         name={
                                                             'destinationAddress'
                                                         }
-                                                        label={'Destination'}
-                                                        placeholder={'Any'}
+                                                        label={t('Destination')}
+                                                        placeholder={t('Any')}
                                                     />
                                                 )}
 
                                                 <InputForm
                                                     name={'sourcePort'}
-                                                    label={'Source port'}
-                                                    placeholder={'Any'}
+                                                    label={t('Source port')}
+                                                    placeholder={t('Any')}
                                                 />
                                                 {/* Proxmox rejects the rule outright
                                                 if this is set on a non-ICMP
@@ -378,7 +389,7 @@ const RuleFormDialog = ({
                                                 {isIcmp && (
                                                     <InputForm
                                                         name={'icmpType'}
-                                                        label={'ICMP type'}
+                                                        label={t('ICMP type')}
                                                         placeholder={
                                                             'echo-request'
                                                         }
@@ -386,17 +397,19 @@ const RuleFormDialog = ({
                                                 )}
                                                 <InputForm
                                                     name={'interface'}
-                                                    label={'Network interface'}
-                                                    placeholder={
+                                                    label={t(
+                                                        'Network interface'
+                                                    )}
+                                                    placeholder={t(
                                                         'All interfaces'
-                                                    }
-                                                    description={
+                                                    )}
+                                                    description={t(
                                                         'Restrict to one device, e.g. net0.'
-                                                    }
+                                                    )}
                                                 />
                                                 <SelectForm
                                                     name={'logLevel'}
-                                                    label={'Logging'}
+                                                    label={t('Logging')}
                                                     items={logLevelItems}
                                                 />
                                             </FieldGroup>
@@ -414,7 +427,7 @@ const RuleFormDialog = ({
                                 }
                             />
                             <FormButton>
-                                {isEditing ? 'Save rule' : 'Add rule'}
+                                {isEditing ? t('Save rule') : t('Add rule')}
                             </FormButton>
                         </ResponsiveDialogFooter>
                     </form>

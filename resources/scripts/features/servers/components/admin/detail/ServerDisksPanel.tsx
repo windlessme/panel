@@ -12,6 +12,8 @@ import { AxiosError } from 'axios'
 import byteSize from 'byte-size'
 import { useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import useConfirmationStore from '@/components/ui/AlertDialog/use-confirmation-store.ts'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
@@ -61,14 +63,14 @@ const ServerDisksPanel = ({ serverId }: Props) => {
 
     const handleRemove = async (disk: ServerDisk) => {
         const confirmed = await confirm({
-            title: 'Remove disk',
+            title: t('Remove disk'),
             description: `This detaches ${disk.interface ?? 'the disk'} and permanently destroys its data on Proxmox. This cannot be undone.`,
         })
         if (!confirmed) return
 
         try {
             await remove.mutateAsync(disk.id)
-            toast.add({ title: 'Disk removed', type: 'success' })
+            toast.add({ title: t('Disk removed'), type: 'success' })
         } catch (e) {
             toast.add({
                 title: errorMessage(e, 'Failed to remove disk'),
@@ -83,13 +85,13 @@ const ServerDisksPanel = ({ serverId }: Props) => {
         return (
             <>
                 <DropdownMenuItem onClick={() => setResizeDisk(disk)}>
-                    Resize
+                    {t('Resize')}
                 </DropdownMenuItem>
                 <DropdownMenuItem
                     variant={'destructive'}
                     onClick={() => void handleRemove(disk)}
                 >
-                    Remove
+                    {t('Remove')}
                 </DropdownMenuItem>
             </>
         )
@@ -97,32 +99,34 @@ const ServerDisksPanel = ({ serverId }: Props) => {
 
     const columns: ColumnDef<ServerDisk>[] = [
         {
-            header: 'Interface',
+            header: t('Interface'),
             accessorKey: 'interface',
             cell: ({ row }) => (
                 <span className='font-mono text-xs'>
                     {row.original.interface ?? (
-                        <span className='text-muted-foreground'>pending</span>
+                        <span className='text-muted-foreground'>
+                            {t('pending')}
+                        </span>
                     )}
                 </span>
             ),
         },
         {
-            header: 'Type',
+            header: t('Type'),
             accessorKey: 'isPrimary',
             cell: ({ row }) => (
                 <Badge variant={row.original.isPrimary ? 'default' : 'outline'}>
-                    {row.original.isPrimary ? 'Primary' : 'Data'}
+                    {row.original.isPrimary ? t('Primary') : t('Data')}
                 </Badge>
             ),
         },
         {
-            header: 'Storage',
+            header: t('Storage'),
             accessorKey: 'storageName',
             cell: ({ row }) => row.original.storageName ?? '—',
         },
         {
-            header: 'Size',
+            header: t('Size'),
             accessorKey: 'size',
             cell: ({ row }) => formatBytes(row.original.size),
         },
@@ -132,7 +136,7 @@ const ServerDisksPanel = ({ serverId }: Props) => {
             cell: ({ row }) =>
                 row.original.isPrimary ? (
                     <span className='text-muted-foreground text-xs'>
-                        Managed
+                        {t('Managed')}
                     </span>
                 ) : (
                     <Actions>{renderActions(row.original)}</Actions>
@@ -143,13 +147,13 @@ const ServerDisksPanel = ({ serverId }: Props) => {
     const addButton = (
         <Button onClick={() => setAddOpen(true)} disabled={!server}>
             <IconPlus className='size-4' />
-            Add disk
+            {t('Add disk')}
         </Button>
     )
 
     return (
         <>
-            <Heading>Disks</Heading>
+            <Heading>{t('Disks')}</Heading>
 
             <DataTable
                 toolbar

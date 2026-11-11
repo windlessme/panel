@@ -2,6 +2,8 @@ import { cn } from '@/utils'
 import { DotsHorizontalIcon } from '@radix-ui/react-icons'
 import { ComponentProps } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 const PaginationEllipsis = ({
     className,
     ...props
@@ -12,7 +14,7 @@ const PaginationEllipsis = ({
         {...props}
     >
         <DotsHorizontalIcon className='h-4 w-4' />
-        <span className='sr-only'>More pages</span>
+        <span className='sr-only'>{t('More pages')}</span>
     </span>
 )
 PaginationEllipsis.displayName = 'PaginationEllipsis'

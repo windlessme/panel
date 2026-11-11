@@ -2,6 +2,8 @@ import { useServer, useServerResources } from '@/features/servers/detail/api.ts'
 import { IconAlertTriangle, IconDatabase } from '@tabler/icons-react'
 import byteSize from 'byte-size'
 
+import { t } from '@/lib/i18n.ts'
+
 import LinearProgressBar from '@/components/ui/Progress/LinearProgressBar.tsx'
 import Skeleton from '@/components/ui/Skeleton.tsx'
 import {
@@ -66,7 +68,7 @@ const StorageUsageCard = () => {
                         {usedPercent.toFixed(0)}%
                     </>
                 ) : (
-                    'Disk limit • guest agent offline'
+                    t('Disk limit • guest agent offline')
                 )
             }
             meter={

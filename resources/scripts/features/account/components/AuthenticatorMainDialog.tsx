@@ -8,6 +8,8 @@ import RecoveryCodesRevealDialog from '@/features/account/components/RecoveryCod
 import { useOpenModal } from '@/hooks/create-modal-store.ts'
 import { useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import AuthDialog from '@/components/ui/Dialog/AuthDialog.tsx'
 import {
@@ -50,11 +52,14 @@ const AuthenticatorMainDialog = () => {
             />
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
-                    <ResponsiveDialogTitle>Authenticator</ResponsiveDialogTitle>
+                    <ResponsiveDialogTitle>
+                        {t('Authenticator')}
+                    </ResponsiveDialogTitle>
 
                     <ResponsiveDialogDescription>
-                        Use an authenticator app to generate time-based
-                        verification codes.
+                        {t(
+                            'Use an authenticator app to generate time-based verification codes.'
+                        )}
                     </ResponsiveDialogDescription>
                 </ResponsiveDialogHeader>
 
@@ -74,11 +79,11 @@ const AuthenticatorMainDialog = () => {
                             variant={'destructive'}
                             onClick={() => openModal('disable')}
                         >
-                            Disable
+                            {t('Disable')}
                         </Button>
                     ) : (
                         <Button onClick={() => openModal('enable')}>
-                            Enable
+                            {t('Enable')}
                         </Button>
                     )}
                 </ResponsiveDialogFooter>

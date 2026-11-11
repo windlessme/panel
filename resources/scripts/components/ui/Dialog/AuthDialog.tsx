@@ -16,6 +16,8 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { useShallow } from 'zustand/react/shallow'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { Form, FormButton } from '@/components/ui/Form'
 import { InputForm } from '@/components/ui/Forms'
@@ -159,10 +161,10 @@ const AuthDialog = ({ onCancel }: Props) => {
             <ResponsiveDialogContent className={'max-h-[50vh]'}>
                 <ResponsiveDialogHeader className={'overflow-x-hidden'}>
                     <ResponsiveDialogTitle className={'truncate'}>
-                        Authorization Required
+                        {t('Authorization Required')}
                     </ResponsiveDialogTitle>
                     <ResponsiveDialogDescription>
-                        Please enter your credentials to continue
+                        {t('Please enter your credentials to continue')}
                     </ResponsiveDialogDescription>
                 </ResponsiveDialogHeader>
 
@@ -187,19 +189,19 @@ const AuthDialog = ({ onCancel }: Props) => {
                                         <TabsTrigger
                                             value={ConfirmationType.Password}
                                         >
-                                            Password
+                                            {t('Password')}
                                         </TabsTrigger>
                                         <TabsTrigger
                                             value={ConfirmationType.Passkey}
                                         >
-                                            Passkey
+                                            {t('Passkey')}
                                         </TabsTrigger>
                                     </TabsList>
                                 </div>
                                 <TabsContent value={ConfirmationType.Password}>
                                     <InputForm
                                         name={'password'}
-                                        label={'Password'}
+                                        label={t('Password')}
                                         type={'password'}
                                     />
                                 </TabsContent>
@@ -225,8 +227,10 @@ const AuthDialog = ({ onCancel }: Props) => {
                                             }
                                         >
                                             {form.formState.isSubmitting
-                                                ? 'Waiting for your passkey…'
-                                                : 'Your browser will ask for your fingerprint, face, or security key. Select Confirm to try again.'}
+                                                ? t('Waiting for your passkey…')
+                                                : t(
+                                                      'Your browser will ask for your fingerprint, face, or security key. Select Confirm to try again.'
+                                                  )}
                                         </p>
                                     </div>
                                 </TabsContent>
@@ -240,7 +244,7 @@ const AuthDialog = ({ onCancel }: Props) => {
                                     </Button>
                                 }
                             />
-                            <FormButton>Confirm</FormButton>
+                            <FormButton>{t('Confirm')}</FormButton>
                         </ResponsiveDialogFooter>
                     </form>
                 </Form>

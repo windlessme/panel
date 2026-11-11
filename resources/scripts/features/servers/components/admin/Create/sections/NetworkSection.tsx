@@ -4,6 +4,8 @@ import VlanPicker from '@/features/servers/components/admin/Create/pickers/VlanP
 import { useEffect } from 'react'
 import { useFormContext, useWatch } from 'react-hook-form'
 
+import { t } from '@/lib/i18n.ts'
+
 import {
     Card,
     CardContent,
@@ -63,10 +65,11 @@ const NetworkSection = () => {
     return (
         <Card className={'@container'}>
             <CardHeader>
-                <CardTitle>Network</CardTitle>
+                <CardTitle>{t('Network')}</CardTitle>
                 <CardDescription>
-                    The bridge this server attaches to, and what it is allocated
-                    on creation.
+                    {t(
+                        'The bridge this server attaches to, and what it is allocated on creation.'
+                    )}
                 </CardDescription>
             </CardHeader>
             <CardContent className={'space-y-4'}>
@@ -92,12 +95,12 @@ const NetworkSection = () => {
                         >
                             <InputForm
                                 name={'addressesIpv4Count'}
-                                label={'IPv4 addresses'}
+                                label={t('IPv4 addresses')}
                                 type={'number'}
                             />
                             <InputForm
                                 name={'addressesIpv6Count'}
-                                label={'IPv6 addresses'}
+                                label={t('IPv6 addresses')}
                                 type={'number'}
                             />
                         </div>

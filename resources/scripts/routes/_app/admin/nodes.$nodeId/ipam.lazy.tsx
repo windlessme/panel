@@ -8,6 +8,8 @@ import { cn } from '@/utils'
 import { Link, createLazyFileRoute } from '@tanstack/react-router'
 import { ColumnDef } from '@tanstack/react-table'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Badge } from '@/components/ui/Badge.tsx'
 import { buttonVariants } from '@/components/ui/Button'
 import { DataTable } from '@/components/ui/DataTable'
@@ -43,7 +45,7 @@ function NodeIpam() {
 
     const columns: ColumnDef<AddressBlockGroup>[] = [
         {
-            header: 'IP Block Group',
+            header: t('IP Block Group'),
             accessorKey: 'name',
             enableHiding: false,
             meta: {
@@ -62,14 +64,14 @@ function NodeIpam() {
             ),
         },
         {
-            header: 'Description',
+            header: t('Description'),
             accessorKey: 'description',
             meta: {
                 skeletonWidth: '10rem',
             },
         },
         {
-            header: 'IP Blocks',
+            header: t('IP Blocks'),
             accessorKey: 'addressBlocksCount',
             meta: {
                 skeletonWidth: '1rem',
@@ -82,7 +84,7 @@ function NodeIpam() {
             ),
         },
         {
-            header: 'Nodes',
+            header: t('Nodes'),
             accessorKey: 'nodesCount',
             meta: {
                 skeletonWidth: '1rem',
@@ -98,7 +100,7 @@ function NodeIpam() {
 
     return (
         <>
-            <Heading>IPAM</Heading>
+            <Heading>{t('IPAM')}</Heading>
             <DataTable
                 paginated
                 searchable

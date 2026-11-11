@@ -1,5 +1,7 @@
 import { useFormContext, useWatch } from 'react-hook-form'
 
+import { t } from '@/lib/i18n.ts'
+
 import { InputForm, SelectForm } from '@/components/ui/Forms'
 
 /**
@@ -15,22 +17,26 @@ const PenaltyActionFields = () => {
         <div className={'space-y-3'}>
             <SelectForm
                 name={'overagePenaltyAction'}
-                label={'Action'}
+                label={t('Action')}
                 items={[
                     { value: 'throttle', label: 'Throttle to rate' },
                     { value: 'disconnect', label: 'Disconnect NIC' },
                 ]}
                 description={
                     action === 'disconnect'
-                        ? 'The guest keeps its NIC but loses carrier until the quota resets. Reversible, but it drops all traffic.'
-                        : 'Caps every NIC on the server at the rate below once its quota is used up.'
+                        ? t(
+                              'The guest keeps its NIC but loses carrier until the quota resets. Reversible, but it drops all traffic.'
+                          )
+                        : t(
+                              'Caps every NIC on the server at the rate below once its quota is used up.'
+                          )
                 }
             />
 
             {action === 'throttle' && (
                 <InputForm
                     name={'overagePenaltyRate'}
-                    label={'Rate (MB/s)'}
+                    label={t('Rate (MB/s)')}
                     type={'number'}
                     inputMode={'numeric'}
                 />

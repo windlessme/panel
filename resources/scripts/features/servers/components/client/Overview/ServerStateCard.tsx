@@ -8,6 +8,8 @@ import {
 } from '@tabler/icons-react'
 import { format, formatDistanceToNowStrict, subSeconds } from 'date-fns'
 
+import { t } from '@/lib/i18n.ts'
+
 import Skeleton from '@/components/ui/Skeleton.tsx'
 
 const ServerStateCard = () => {
@@ -22,7 +24,7 @@ const ServerStateCard = () => {
 
     return (
         <StatisticCard
-            title={'Server State'}
+            title={t('Server State')}
             icon={IconPlaystationCircle}
             /* A stopped guest reports no uptime, and nothing says when it
                stopped -- so there is nothing truthful to put here. */
@@ -69,7 +71,7 @@ const ServerStateCard = () => {
                             }
                         />
                     )}
-                    {isRunning ? 'Running' : 'Stopped'}
+                    {isRunning ? t('Running') : t('Stopped')}
                 </p>
             ) : (
                 <Skeleton className={'h-7 w-full @sm:h-8'} />

@@ -10,6 +10,8 @@ import useCredentialRevocation from '@/features/users/hooks/use-credential-revoc
 import { IconKey } from '@tabler/icons-react'
 import { formatDistanceToNow } from 'date-fns'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Badge } from '@/components/ui/Badge'
 
 interface Props {
@@ -28,25 +30,25 @@ const UserApiKeysCard = ({ userId }: Props) => {
     const revoke = useCredentialRevocation<ApiKey>({
         queryKey: userCredentialQueries.apiKeys(userId).queryKey,
         remove: key => revokeUserApiKey(userId, key.id),
-        question: 'Revoke API key?',
-        successTitle: 'API key revoked',
-        errorTitle: 'Failed to revoke API key',
+        question: t('Revoke API key?'),
+        successTitle: t('API key revoked'),
+        errorTitle: t('Failed to revoke API key'),
         nameOf: key => `The key “${key.name}”`,
-        consequence: 'Anything using it will start getting 401s.',
+        consequence: t('Anything using it will start getting 401s.'),
     })
 
     return (
         <CredentialCard
-            title={'Issued keys'}
-            description={
+            title={t('Issued keys')}
+            description={t(
                 'Tokens this account created for itself. Panel-wide application tokens live under API Tokens.'
-            }
+            )}
             icon={IconKey}
             isLoading={isLoading}
             isError={isError}
             onRetry={refetch}
-            emptyTitle={'No API keys'}
-            emptyDescription={'This account has not issued a token.'}
+            emptyTitle={t('No API keys')}
+            emptyDescription={t('This account has not issued a token.')}
             rows={keys?.map(key => (
                 <CredentialRow
                     key={key.id}

@@ -14,6 +14,9 @@ import { ColumnDef } from '@tanstack/react-table'
 import byteSize from 'byte-size'
 import { formatDistanceToNowStrict } from 'date-fns'
 
+import { t } from '@/lib/i18n.ts'
+import { queryClient } from '@/lib/query-client.ts'
+
 import { buttonVariants } from '@/components/ui/Button'
 import { DataTable } from '@/components/ui/DataTable'
 import { DropdownMenuItem } from '@/components/ui/DropdownMenu'
@@ -28,7 +31,6 @@ import {
 import Actions, { actionsColumn } from '@/components/ui/Table/Actions.tsx'
 import { toast } from '@/components/ui/Toast'
 import { Heading } from '@/components/ui/Typography'
-import { queryClient } from '@/lib/query-client.ts'
 
 export const Route = createLazyFileRoute('/_app/admin/_dashboard/anchors/')({
     component: EnrollmentQueueIndex,
@@ -68,14 +70,17 @@ function EnrollmentQueueIndex() {
     const reject = useMutation({
         mutationFn: rejectEnrollment,
         onSuccess: async () => {
-            toast.add({ title: 'Machine turned away', type: 'success' })
+            toast.add({ title: t('Machine turned away'), type: 'success' })
             await queryClient.invalidateQueries({
                 queryKey: enrollmentQueries.all(),
             })
         },
         onError: e =>
             toast.add({
-                title: getApiErrorMessage(e, 'Could not turn this machine away'),
+                title: getApiErrorMessage(
+                    e,
+                    'Could not turn this machine away'
+                ),
                 type: 'error',
             }),
     })
@@ -86,14 +91,14 @@ function EnrollmentQueueIndex() {
                 variant={'destructive'}
                 onClick={() => reject.mutate(item.id)}
             >
-                Turn away
+                {t('Turn away')}
             </DropdownMenuItem>
         </>
     )
 
     const columns: ColumnDef<AnchorEnrollmentQueueItem>[] = [
         {
-            header: 'Machine',
+            header: t('Machine'),
             accessorKey: 'name',
             enableHiding: false,
             cell: ({ row }) => (
@@ -107,19 +112,19 @@ function EnrollmentQueueIndex() {
             ),
         },
         {
-            header: 'Role',
+            header: t('Role'),
             accessorKey: 'mode',
             cell: ({ cell }) => (
                 <span className={'capitalize'}>{cell.getValue<string>()}</span>
             ),
         },
         {
-            header: 'Reported',
+            header: t('Reported'),
             id: 'reported',
             cell: ({ row }) => reported(row.original),
         },
         {
-            header: 'Waiting since',
+            header: t('Waiting since'),
             accessorKey: 'enrolledAt',
             cell: ({ cell }) => {
                 const value = cell.getValue<string | null>()
@@ -132,7 +137,7 @@ function EnrollmentQueueIndex() {
             },
         },
         {
-            header: 'Agent',
+            header: t('Agent'),
             id: 'agent',
             cell: ({ row }) => <AnchorStatusCell anchor={row.original} />,
         },
@@ -143,7 +148,7 @@ function EnrollmentQueueIndex() {
 
     return (
         <>
-            <Heading>Anchors</Heading>
+            <Heading>{t('Anchors')}</Heading>
             <DataTable
                 paginated
                 searchable

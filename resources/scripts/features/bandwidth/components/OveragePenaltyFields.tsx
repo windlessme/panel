@@ -1,10 +1,11 @@
-import { useFormContext, useWatch } from 'react-hook-form'
-
 import PenaltyActionFields from '@/features/bandwidth/components/PenaltyActionFields.tsx'
 import {
     OveragePenalty,
     describePenalty,
 } from '@/features/bandwidth/overage-penalty.ts'
+import { useFormContext, useWatch } from 'react-hook-form'
+
+import { t } from '@/lib/i18n.ts'
 
 import {
     FormControl,
@@ -69,9 +70,14 @@ const OveragePenaltyFields = ({ inheritedFrom, inheritedLabel }: Props) => {
             />
 
             {mode === 'inherit' ? (
-                <p className={'text-sm text-muted-foreground'}>
-                    Effective: {describePenalty(inheritedFrom)} (from{' '}
-                    {inheritedLabel})
+                <p className={'text-muted-foreground text-sm'}>
+                    {t(
+                        'Effective: {{describePenalty}} (from {{inheritedLabel}})',
+                        {
+                            describePenalty: describePenalty(inheritedFrom),
+                            inheritedLabel,
+                        }
+                    )}
                 </p>
             ) : (
                 <PenaltyActionFields />

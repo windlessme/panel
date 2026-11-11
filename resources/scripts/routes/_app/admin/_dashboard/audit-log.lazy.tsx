@@ -5,6 +5,8 @@ import { useQuery } from '@tanstack/react-query'
 import { createLazyFileRoute } from '@tanstack/react-router'
 import { parseAsString, useQueryState } from 'nuqs'
 
+import { t } from '@/lib/i18n.ts'
+
 import { PageToolbar } from '@/components/ui/PageToolbar'
 import {
     Select,
@@ -20,17 +22,17 @@ import { Heading } from '@/components/ui/Typography'
  * entry here covers every event in that area without listing them.
  */
 const AREAS = [
-    { value: 'all', label: 'All activity' },
-    { value: 'auth', label: 'Authentication' },
-    { value: 'account', label: 'Accounts' },
-    { value: 'server', label: 'Server actions' },
-    { value: 'admin.server', label: 'Admin: servers' },
-    { value: 'admin.node', label: 'Admin: nodes' },
-    { value: 'admin.user', label: 'Admin: users' },
-    { value: 'admin.token', label: 'Admin: tokens' },
-    { value: 'admin.address', label: 'Admin: addressing' },
-    { value: 'admin.image', label: 'Admin: definitions' },
-    { value: 'admin.settings', label: 'Admin: settings' },
+    { value: 'all', label: t('All activity') },
+    { value: 'auth', label: t('Authentication') },
+    { value: 'account', label: t('Accounts') },
+    { value: 'server', label: t('Server actions') },
+    { value: 'admin.server', label: t('Admin: servers') },
+    { value: 'admin.node', label: t('Admin: nodes') },
+    { value: 'admin.user', label: t('Admin: users') },
+    { value: 'admin.token', label: t('Admin: tokens') },
+    { value: 'admin.address', label: t('Admin: addressing') },
+    { value: 'admin.image', label: t('Admin: definitions') },
+    { value: 'admin.settings', label: t('Admin: settings') },
 ] as const
 
 function AdminAuditLog() {
@@ -52,7 +54,7 @@ function AdminAuditLog() {
 
     return (
         <>
-            <Heading>Audit Log</Heading>
+            <Heading>{t('Audit Log')}</Heading>
             <PageToolbar>
                 <Select
                     value={area}
@@ -65,7 +67,7 @@ function AdminAuditLog() {
                 >
                     <SelectTrigger
                         className={'w-56'}
-                        aria-label={'Filter activity'}
+                        aria-label={t('Filter activity')}
                     >
                         {/* Base UI renders the raw value unless given a formatter, which would
                             show "admin.node" where the reader expects "Admin: nodes". */}
@@ -93,7 +95,7 @@ function AdminAuditLog() {
                 page={page}
                 onPageChange={setPage}
                 showSubject
-                emptyTitle={'Nothing recorded yet'}
+                emptyTitle={t('Nothing recorded yet')}
             />
         </>
     )

@@ -3,6 +3,8 @@
 import { IconSettings } from '@tabler/icons-react'
 import { Table } from '@tanstack/react-table'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     DropdownMenu,
@@ -24,17 +26,14 @@ const DataTableViewOptions = <TData,>({
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button
-                    variant='outline'
-                    className='hidden lg:flex'
-                >
+                <Button variant='outline' className='hidden lg:flex'>
                     <IconSettings className={'size-4'} />
-                    View
+                    {t('View')}
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align='end' className='w-[150px]'>
                 <DropdownMenuGroup>
-                    <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
+                    <DropdownMenuLabel>{t('Toggle columns')}</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     {table
                         .getAllColumns()

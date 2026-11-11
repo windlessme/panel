@@ -1,6 +1,8 @@
 import { PASSWORD_MAX_BYTES, PASSWORD_MIN_LENGTH } from '@/utils/password.ts'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 /**
  * Mirrors App\Rules\PasswordPolicy: length only, no character composition. The breach check runs
  * server-side (it needs the network), so it arrives as a field error on submit rather than as a
@@ -10,16 +12,20 @@ const password = z
     .string()
     .min(
         PASSWORD_MIN_LENGTH,
-        `Password must be at least ${PASSWORD_MIN_LENGTH} characters`
+        t('Password must be at least {{PASSWORD_MIN_LENGTH}} characters', {
+            PASSWORD_MIN_LENGTH,
+        })
     )
     .refine(
         value => new TextEncoder().encode(value).length <= PASSWORD_MAX_BYTES,
-        `Password must be at most ${PASSWORD_MAX_BYTES} bytes`
+        t('Password must be at most {{PASSWORD_MAX_BYTES}} bytes', {
+            PASSWORD_MAX_BYTES,
+        })
     )
 
 const baseUserSchema = z.object({
-    name: z.string().min(1, 'A name is required').max(191),
-    email: z.email('Enter a valid email address').max(191),
+    name: z.string().min(1, t('A name is required')).max(191),
+    email: z.email(t('Enter a valid email address')).max(191),
     rootAdmin: z.boolean(),
 })
 

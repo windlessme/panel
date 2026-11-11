@@ -1,5 +1,7 @@
 import type { ComponentProps, ReactNode } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/Dialog'
 
 import { Command } from '.'
@@ -14,7 +16,9 @@ const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
     return (
         <Dialog {...props}>
             <DialogContent className='overflow-hidden p-0'>
-                <DialogTitle className='sr-only'>Command menu</DialogTitle>
+                <DialogTitle className='sr-only'>
+                    {t('Command menu')}
+                </DialogTitle>
                 <Command>{children}</Command>
             </DialogContent>
         </Dialog>

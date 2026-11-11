@@ -5,6 +5,8 @@ import useAsyncFunction from '@/hooks/use-async-function.ts'
 import { PaginatedAddressBlocks } from '@/types/address-block.ts'
 import { Mutator } from '@/types/query.ts'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     ResponsiveDialog,
@@ -46,10 +48,10 @@ const DeleteAddressBlockModal = ({ addressBlockGroupId, mutate }: Props) => {
                 }
             }, false)
 
-            toast.add({ title: 'Address block deleted', type: 'success' })
+            toast.add({ title: t('Address block deleted'), type: 'success' })
             close()
         } catch (e) {
-            toast.add({ title: 'Deletion failed', type: 'error' })
+            toast.add({ title: t('Deletion failed'), type: 'error' })
             throw e
         }
     })
@@ -59,11 +61,12 @@ const DeleteAddressBlockModal = ({ addressBlockGroupId, mutate }: Props) => {
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        Delete {addressBlock?.name || 'Address Block'}
+                        {t('Delete')} {addressBlock?.name || t('Address Block')}
                     </ResponsiveDialogTitle>
                     <ResponsiveDialogDescription>
-                        Are you sure you want to delete this address block? This
-                        action cannot be undone.
+                        {t(
+                            'Are you sure you want to delete this address block? This action cannot be undone.'
+                        )}
                     </ResponsiveDialogDescription>
                 </ResponsiveDialogHeader>
                 <ResponsiveDialogFooter className={'mt-4'}>
@@ -76,7 +79,7 @@ const DeleteAddressBlockModal = ({ addressBlockGroupId, mutate }: Props) => {
                         variant={'destructive'}
                         onClick={submit}
                     >
-                        Delete
+                        {t('Delete')}
                     </Button>
                 </ResponsiveDialogFooter>
             </ResponsiveDialogContent>

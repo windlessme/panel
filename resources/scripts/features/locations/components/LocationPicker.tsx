@@ -1,9 +1,10 @@
+import { getLocations, useLocation } from '@/features/locations/api.ts'
 import { Location } from '@/features/locations/types.ts'
 import { cn } from '@/utils'
 import { IconCheck, IconMapPin } from '@tabler/icons-react'
 import { useController } from 'react-hook-form'
 
-import { getLocations, useLocation } from '@/features/locations/api.ts'
+import { t } from '@/lib/i18n.ts'
 
 import { ResourceComboboxForm } from '@/components/ui/Forms'
 import Skeleton from '@/components/ui/Skeleton.tsx'
@@ -35,7 +36,7 @@ const LocationPicker = () => {
                     <dl className={'flex grow flex-col overflow-hidden'}>
                         <dt className={'truncate'}>{location.shortCode}</dt>
                         <dd
-                            className={'truncate text-xs text-muted-foreground'}
+                            className={'text-muted-foreground truncate text-xs'}
                         >
                             {location.description}
                         </dd>
@@ -52,7 +53,7 @@ const LocationPicker = () => {
             renderTrigger={() => (
                 <>
                     {isLoadingSelection ? (
-                        <Skeleton className={'w-24 h-3'} />
+                        <Skeleton className={'h-3 w-24'} />
                     ) : selectedLocation ? (
                         selectedLocation.shortCode
                     ) : (
@@ -62,8 +63,8 @@ const LocationPicker = () => {
                     <IconMapPin className={'ml-auto size-4 opacity-50'} />
                 </>
             )}
-            label={'Location'}
-            searchPlaceholder={'Search locations...'}
+            label={t('Location')}
+            searchPlaceholder={t('Search locations...')}
         />
     )
 }

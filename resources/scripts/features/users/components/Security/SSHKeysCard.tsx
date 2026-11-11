@@ -11,6 +11,8 @@ import useCredentialRevocation from '@/features/users/hooks/use-credential-revoc
 import { IconKeyFilled } from '@tabler/icons-react'
 import { format } from 'date-fns'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Badge } from '@/components/ui/Badge'
 
 interface Props {
@@ -23,24 +25,27 @@ const SSHKeysCard = ({ userId }: Props) => {
     const revoke = useCredentialRevocation<SSHKey>({
         queryKey: userCredentialQueries.sshKeys(userId).queryKey,
         remove: key => revokeUserSSHKey(userId, key.id),
-        question: 'Revoke SSH key?',
-        successTitle: 'SSH key revoked',
-        errorTitle: 'Failed to revoke SSH key',
+        question: t('Revoke SSH key?'),
+        successTitle: t('SSH key revoked'),
+        errorTitle: t('Failed to revoke SSH key'),
         nameOf: key => `The key “${key.name}”`,
-        consequence:
-            'Any server it was injected into keeps it until the server is rebuilt.',
+        consequence: t(
+            'Any server it was injected into keeps it until the server is rebuilt.'
+        ),
     })
 
     return (
         <CredentialCard
-            title={'SSH keychain'}
-            description={'Public keys this account injects into its servers.'}
+            title={t('SSH keychain')}
+            description={t(
+                'Public keys this account injects into its servers.'
+            )}
             icon={IconKeyFilled}
             isLoading={isLoading}
             isError={isError}
             onRetry={refetch}
-            emptyTitle={'No SSH keys'}
-            emptyDescription={'This account has not added a public key.'}
+            emptyTitle={t('No SSH keys')}
+            emptyDescription={t('This account has not added a public key.')}
             rows={keys?.map(key => (
                 <CredentialRow
                     key={key.id}
@@ -52,7 +57,9 @@ const SSHKeysCard = ({ userId }: Props) => {
                         <>
                             <Badge
                                 variant={'secondary'}
-                                className={'shrink-0 font-mono whitespace-nowrap'}
+                                className={
+                                    'shrink-0 font-mono whitespace-nowrap'
+                                }
                             >
                                 {sshKeyAlgorithm(key.publicKey)}
                             </Badge>

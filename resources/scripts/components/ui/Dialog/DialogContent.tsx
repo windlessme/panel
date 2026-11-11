@@ -14,6 +14,8 @@ import {
     useState,
 } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { DialogOverlay, DialogPortal } from '@/components/ui/Dialog'
 
 type DialogPopupProps = ComponentProps<typeof DialogPrimitive.Popup>
@@ -83,8 +85,10 @@ const DialogContent = ({
     }, [dialogId, frontmostHeight, parentReporter])
 
     const stackStyle = {
-        '--dialog-height': `${ownHeight}px`,
-        '--frontmost-dialog-height': `${frontmostHeight}px`,
+        '--dialog-height': t('{{ownHeight}}px', { ownHeight }),
+        '--frontmost-dialog-height': t('{{frontmostHeight}}px', {
+            frontmostHeight,
+        }),
         ...style,
     } as DialogStackStyle
 
@@ -120,7 +124,7 @@ const DialogContent = ({
                     // scroll its own body, which keeps the header and footer
                     // pinned. This is the backstop under that, so nothing can
                     // ever be unreachable when it does not.
-                    'dialog-popup bg-popover text-popover-foreground ring-foreground/10 fixed left-1/2 z-50 grid max-h-[calc(100dvh-2rem)] w-full max-w-[calc(100%-2rem)] grid-cols-[minmax(0,1fr)] -translate-x-1/2 -translate-y-1/2 gap-4 overflow-y-auto rounded-xl p-4 text-sm ring-1 outline-none sm:max-w-lg',
+                    'dialog-popup bg-popover text-popover-foreground ring-foreground/10 fixed left-1/2 z-50 grid max-h-[calc(100dvh-2rem)] w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 grid-cols-[minmax(0,1fr)] gap-4 overflow-y-auto rounded-xl p-4 text-sm ring-1 outline-none sm:max-w-lg',
                     // A nested dialog has no backdrop of its own, so tint the
                     // measured and offset parent to make the stack legible.
                     'after:bg-foreground/5 after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:opacity-0 after:transition-opacity after:duration-100 data-nested-dialog-open:after:opacity-100',
@@ -142,7 +146,7 @@ const DialogContent = ({
                     }
                 >
                     <IconX className={'size-4'} />
-                    <span className={'sr-only'}>Close</span>
+                    <span className={'sr-only'}>{t('Close')}</span>
                 </DialogPrimitive.Close>
             </DialogPrimitive.Popup>
         </DialogPortal>

@@ -13,6 +13,8 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { Form, FormButton } from '@/components/ui/Form'
 import { CheckboxForm, InputForm, TextareaForm } from '@/components/ui/Forms'
@@ -67,10 +69,13 @@ const CreateNetworkModal = () => {
 
             form.reset()
             setOpen(false)
-            toast.add({ title: 'Network interface created', type: 'success' })
+            toast.add({
+                title: t('Network interface created'),
+                type: 'success',
+            })
         } catch (e) {
             handleFormErrors(e, form.setError)
-            toast.add({ title: 'Failed to save changes', type: 'error' })
+            toast.add({ title: t('Failed to save changes'), type: 'error' })
             throw e
         }
     }
@@ -87,7 +92,7 @@ const CreateNetworkModal = () => {
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        New Network Interface
+                        {t('New Network Interface')}
                     </ResponsiveDialogTitle>
                 </ResponsiveDialogHeader>
                 <Form {...form}>
@@ -95,30 +100,30 @@ const CreateNetworkModal = () => {
                         <ResponsiveDialogBody className={'space-y-2'}>
                             <InputForm
                                 name={'name'}
-                                label={'Name'}
+                                label={t('Name')}
                                 autoComplete={'off'}
                             />
                             <TextareaForm
                                 name={'description'}
-                                label={'Description'}
+                                label={t('Description')}
                             />
                             <CheckboxForm
                                 name={'isVlanAware'}
                                 label={'VLAN-aware bridge'}
-                                description={
+                                description={t(
                                     'Enable this only when the Proxmox bridge has VLAN awareness enabled.'
-                                }
+                                )}
                             />
                             <InputForm
                                 name={'vlanTag'}
-                                label={'Default VLAN tag'}
+                                label={t('Default VLAN tag')}
                                 type={'number'}
                                 min={1}
                                 max={4094}
                                 disabled={!isVlanAware}
-                                description={
+                                description={t(
                                     'Optional. Servers on this interface inherit this tag unless they set an override.'
-                                }
+                                )}
                             />
                         </ResponsiveDialogBody>
                         <ResponsiveDialogFooter className={'mt-4'}>
@@ -129,7 +134,7 @@ const CreateNetworkModal = () => {
                                     </Button>
                                 }
                             />
-                            <FormButton>Add network</FormButton>
+                            <FormButton>{t('Add network')}</FormButton>
                         </ResponsiveDialogFooter>
                     </form>
                 </Form>

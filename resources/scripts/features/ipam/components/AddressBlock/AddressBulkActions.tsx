@@ -8,6 +8,7 @@ import { PaginatedAddresses } from '@/types/address.ts'
 import { Mutator } from '@/types/query.ts'
 import { useMutation } from '@tanstack/react-query'
 
+import { t } from '@/lib/i18n.ts'
 import { queryClient } from '@/lib/query-client.ts'
 
 import { Button } from '@/components/ui/Button'
@@ -33,9 +34,9 @@ interface Props {
 }
 
 const VERBS: Record<AddressBulkAction, { done: string; none: string }> = {
-    reserve: { done: 'reserved', none: 'None of those could be reserved' },
-    release: { done: 'released', none: 'None of those could be released' },
-    delete: { done: 'deleted', none: 'None of those could be deleted' },
+    reserve: { done: 'reserved', none: t('None of those could be reserved') },
+    release: { done: 'released', none: t('None of those could be released') },
+    delete: { done: 'deleted', none: t('None of those could be deleted') },
 }
 
 /**
@@ -81,13 +82,16 @@ const AddressBulkActions = ({
                 // them leaves the operator counting rows to work out what happened.
                 description:
                     result.skipped > 0
-                        ? `${result.skipped.toLocaleString()} skipped — assigned or reserved by the panel.`
+                        ? t(
+                              '{{value}} skipped — assigned or reserved by the panel.',
+                              { value: result.skipped.toLocaleString() }
+                          )
                         : undefined,
                 type: result.affected > 0 ? 'success' : 'info',
             })
         },
         onError: () =>
-            toast.add({ title: 'Bulk action failed', type: 'error' }),
+            toast.add({ title: t('Bulk action failed'), type: 'error' }),
     })
 
     const canReserve = selection.some(entry => entry.kind === 'available')
@@ -103,8 +107,10 @@ const AddressBulkActions = ({
         return (
             <span className={'text-muted-foreground text-sm'}>
                 {selection.length > 0
-                    ? 'Nothing to do — unassign these from their servers first.'
-                    : 'Nothing selected.'}
+                    ? t(
+                          'Nothing to do — unassign these from their servers first.'
+                      )
+                    : t('Nothing selected.')}
             </span>
         )
     }
@@ -118,7 +124,7 @@ const AddressBulkActions = ({
                     loading={isPending}
                     onClick={() => run({ action: 'reserve' })}
                 >
-                    Reserve
+                    {t('Reserve')}
                 </Button>
             )}
             {canRelease && (
@@ -128,7 +134,7 @@ const AddressBulkActions = ({
                     loading={isPending}
                     onClick={() => run({ action: 'release' })}
                 >
-                    Release
+                    {t('Release')}
                 </Button>
             )}
             {canDelete && (
@@ -138,7 +144,7 @@ const AddressBulkActions = ({
                     loading={isPending}
                     onClick={() => run({ action: 'delete' })}
                 >
-                    Delete
+                    {t('Delete')}
                 </Button>
             )}
         </>

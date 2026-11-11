@@ -4,6 +4,8 @@ import { IconChevronRight } from '@tabler/icons-react'
 import { Link } from '@tanstack/react-router'
 import byteSize from 'byte-size'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Badge } from '@/components/ui/Badge'
 import {
     Item,
@@ -21,8 +23,8 @@ const ServerCard = ({ server }: Props) => {
     const disk = byteSize(server.disk, { units: 'iec', precision: 0 })
     const specs = [
         { label: 'CPU', value: `${server.cpu} vCPU` },
-        { label: 'Memory', value: `${memory.value} ${memory.unit}` },
-        { label: 'Disk', value: `${disk.value} ${disk.unit}` },
+        { label: t('Memory'), value: `${memory.value} ${memory.unit}` },
+        { label: t('Disk'), value: `${disk.value} ${disk.unit}` },
     ]
 
     return (
@@ -40,7 +42,7 @@ const ServerCard = ({ server }: Props) => {
                sit between the rail and the ring as a white seam, and clipping is
                what gives the rail the row's own corner. */
             className={
-                'relative overflow-hidden border-0 bg-card pl-5 ring-1 ring-foreground/10 transition-[background-color,box-shadow] duration-100 hover:bg-accent/50 hover:ring-foreground/20'
+                'bg-card ring-foreground/10 hover:bg-accent/50 hover:ring-foreground/20 relative overflow-hidden border-0 pl-5 ring-1 transition-[background-color,box-shadow] duration-100'
             }
         >
             <PowerStateRail state={server.powerState} />
@@ -77,7 +79,7 @@ const ServerCard = ({ server }: Props) => {
                         server that is also mid-install shows both facts. */}
                     {server.suspendedAt && (
                         <Badge variant={'destructive'} className={'shrink-0'}>
-                            Suspended
+                            {t('Suspended')}
                         </Badge>
                     )}
                 </ItemTitle>

@@ -6,6 +6,8 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { Form, FormButton } from '@/components/ui/Form'
 import { InputForm } from '@/components/ui/Forms'
@@ -21,7 +23,7 @@ import {
 import { toast } from '@/components/ui/Toast'
 
 const addDiskSchema = z.object({
-    storageId: z.string({ error: 'Storage is required.' }).min(1),
+    storageId: z.string({ error: t('Storage is required.') }).min(1),
     // GiB — PVE allocates data disks in whole GiB.
     size: z.coerce.number().min(1),
 })
@@ -58,7 +60,7 @@ const AddServerDiskModal = ({
                 storageId: Number(data.storageId),
                 size: data.size * 1024 * 1024 * 1024,
             })
-            toast.add({ title: 'Disk added', type: 'success' })
+            toast.add({ title: t('Disk added'), type: 'success' })
             onOpenChange(false)
         } catch (e) {
             const handled = handleFormErrors(e, form.setError, {
@@ -66,7 +68,7 @@ const AddServerDiskModal = ({
                 size: 'size',
             })
             if (!handled)
-                toast.add({ title: 'Failed to add disk', type: 'error' })
+                toast.add({ title: t('Failed to add disk'), type: 'error' })
         }
     }
 
@@ -74,7 +76,9 @@ const AddServerDiskModal = ({
         <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
-                    <ResponsiveDialogTitle>Add a disk</ResponsiveDialogTitle>
+                    <ResponsiveDialogTitle>
+                        {t('Add a disk')}
+                    </ResponsiveDialogTitle>
                 </ResponsiveDialogHeader>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(submit as never)}>
@@ -85,7 +89,7 @@ const AddServerDiskModal = ({
                             />
                             <InputForm
                                 name={'size'}
-                                label={'Size (GiB)'}
+                                label={t('Size (GiB)')}
                                 type={'number'}
                                 min={1}
                             />
@@ -98,7 +102,7 @@ const AddServerDiskModal = ({
                                     </Button>
                                 }
                             />
-                            <FormButton>Add disk</FormButton>
+                            <FormButton>{t('Add disk')}</FormButton>
                         </ResponsiveDialogFooter>
                     </form>
                 </Form>

@@ -2,6 +2,8 @@ import Passkey from '@/features/account/components/Passkey.tsx'
 import { usePasskeys } from '@/features/account/passkeys/api.ts'
 import { IconKey } from '@tabler/icons-react'
 
+import { t } from '@/lib/i18n.ts'
+
 import {
     CollectionErrorState,
     SimpleEmptyState,
@@ -29,8 +31,10 @@ const PasskeyList = () => {
         return (
             <SimpleEmptyState
                 icon={IconKey}
-                title={'No passkeys'}
-                description={'You have not added any passkeys to your account.'}
+                title={t('No passkeys')}
+                description={t(
+                    'You have not added any passkeys to your account.'
+                )}
             />
         )
     }

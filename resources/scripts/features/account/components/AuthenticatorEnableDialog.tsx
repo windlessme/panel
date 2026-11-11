@@ -20,6 +20,8 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     Form,
@@ -49,7 +51,7 @@ import Skeleton from '@/components/ui/Skeleton.tsx'
 import { toast } from '@/components/ui/Toast'
 
 const schema = z.object({
-    code: z.string().length(6, 'Enter the 6-digit code from your app'),
+    code: z.string().length(6, t('Enter the 6-digit code from your app')),
 })
 
 interface Props {
@@ -154,7 +156,7 @@ const AuthenticatorEnableDialog = ({ onEnabled }: Props) => {
                 queryKey: recoveryCodeQueries.all(),
             })
 
-            toast.add({ title: 'Authenticator enabled', type: 'success' })
+            toast.add({ title: t('Authenticator enabled'), type: 'success' })
 
             // Reveal the codes only if this flow is what created them; an
             // account that already had a passkey already has (and has saved)
@@ -195,12 +197,12 @@ const AuthenticatorEnableDialog = ({ onEnabled }: Props) => {
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        Enable Authenticator
+                        {t('Enable Authenticator')}
                     </ResponsiveDialogTitle>
                     <ResponsiveDialogDescription>
-                        Scan the QR code with your authenticator app, then enter
-                        the code it generates to finish enabling two factor
-                        authentication.
+                        {t(
+                            'Scan the QR code with your authenticator app, then enter the code it generates to finish enabling two factor authentication.'
+                        )}
                     </ResponsiveDialogDescription>
                 </ResponsiveDialogHeader>
 
@@ -236,7 +238,7 @@ const AuthenticatorEnableDialog = ({ onEnabled }: Props) => {
                             {isSetupVisible ? (
                                 <>
                                     <p className={'text-center'}>
-                                        <strong>Secret Key:</strong>{' '}
+                                        <strong>{t('Secret Key:')}</strong>{' '}
                                         {setup!.secretKey}
                                     </p>
                                     <FormField
@@ -327,7 +329,7 @@ const AuthenticatorEnableDialog = ({ onEnabled }: Props) => {
                                 }
                             />
                             <FormButton disabled={!isSetupVisible}>
-                                Verify
+                                {t('Verify')}
                             </FormButton>
                         </ResponsiveDialogFooter>
                     </form>

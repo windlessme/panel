@@ -14,6 +14,8 @@ import {
 import { useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     ResponsiveDialog,
@@ -61,7 +63,7 @@ const TestConnectionButton = ({ nodeId }: { nodeId?: number }) => {
                 )
             }
         } catch (e) {
-            toast.add({ title: 'Failed to test connection', type: 'error' })
+            toast.add({ title: t('Failed to test connection'), type: 'error' })
             console.error(e)
         }
     })
@@ -86,14 +88,14 @@ const TestConnectionButton = ({ nodeId }: { nodeId?: number }) => {
                                 />
 
                                 <p className={'text-muted-foreground text-sm'}>
-                                    Connection succeeded
+                                    {t('Connection succeeded')}
                                 </p>
                             </>
                         ) : (
                             <>
                                 <IconX className={'text-destructive size-5'} />
                                 <p className={'text-destructive text-sm'}>
-                                    Connection failed
+                                    {t('Connection failed')}
                                 </p>
                             </>
                         )}
@@ -107,7 +109,7 @@ const TestConnectionButton = ({ nodeId }: { nodeId?: number }) => {
                     icon={<IconPlugConnected className={'size-4'} />}
                     loading={state.loading}
                 >
-                    Test connection
+                    {t('Test connection')}
                 </Button>
             </div>
 
@@ -133,7 +135,7 @@ const TestConnectionButton = ({ nodeId }: { nodeId?: number }) => {
                                         'size-3.5 transition-transform group-open/details:rotate-90'
                                     }
                                 />
-                                Technical details
+                                {t('Technical details')}
                             </summary>
                             <p
                                 className={
@@ -148,7 +150,7 @@ const TestConnectionButton = ({ nodeId }: { nodeId?: number }) => {
                         <ResponsiveDialogClose
                             render={<Button variant={'outline'}>Close</Button>}
                         />
-                        <Button onClick={askChatGPT}>Ask ChatGPT</Button>
+                        <Button onClick={askChatGPT}>{t('Ask ChatGPT')}</Button>
                     </ResponsiveDialogFooter>
                 </ResponsiveDialogContent>
             </ResponsiveDialog>

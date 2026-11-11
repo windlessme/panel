@@ -9,6 +9,8 @@ import { IconAlertTriangle, IconPlus, IconServer } from '@tabler/icons-react'
 import { Link, createLazyFileRoute } from '@tanstack/react-router'
 import { ColumnDef } from '@tanstack/react-table'
 
+import { t } from '@/lib/i18n.ts'
+
 import { buttonVariants } from '@/components/ui/Button'
 import { Checkbox } from '@/components/ui/Checkbox'
 import { DataTable } from '@/components/ui/DataTable'
@@ -42,7 +44,7 @@ const ServersIndex = () => {
             enableHiding: false,
             enableSorting: true,
             header: ({ column }) => (
-                <DataTableColumnHeader column={column} title='Name' />
+                <DataTableColumnHeader column={column} title={t('Name')} />
             ),
             meta: {
                 skeletonWidth: '5rem',
@@ -66,7 +68,7 @@ const ServersIndex = () => {
                                 </TooltipTrigger>
                                 <TooltipContent className='max-w-72'>
                                     {cell.row.original.flagReason ??
-                                        'Flagged for review.'}
+                                        t('Flagged for review.')}
                                 </TooltipContent>
                             </Tooltip>
                         </TooltipProvider>
@@ -75,14 +77,14 @@ const ServersIndex = () => {
             ),
         },
         {
-            header: 'Hostname',
+            header: t('Hostname'),
             accessorKey: 'hostname',
             meta: {
                 skeletonWidth: '4rem',
             },
         },
         {
-            header: 'Power',
+            header: t('Power'),
             accessorKey: 'powerState',
             cell: ({ row }) => (
                 <PowerStateBadge state={row.original.powerState} />
@@ -98,7 +100,7 @@ const ServersIndex = () => {
 
     return (
         <>
-            <Heading>Servers</Heading>
+            <Heading>{t('Servers')}</Heading>
             <DataTable
                 paginated
                 searchable

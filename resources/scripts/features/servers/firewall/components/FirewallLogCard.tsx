@@ -15,6 +15,8 @@ import {
 } from '@tabler/icons-react'
 import { useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import { SimpleEmptyState } from '@/components/ui/EmptyStates'
@@ -180,7 +182,7 @@ const FirewallLogCard = ({ uuid }: Props) => {
                     'flex flex-wrap items-center gap-x-3 gap-y-2 px-4 py-3'
                 }
             >
-                <h3 className={'font-medium'}>Recent activity</h3>
+                <h3 className={'font-medium'}>{t('Recent activity')}</h3>
                 <span className={'text-muted-foreground text-xs'}>
                     {status}
                 </span>
@@ -196,7 +198,7 @@ const FirewallLogCard = ({ uuid }: Props) => {
                             saveOptions(withLogging(options, 'in', true))
                         }
                     >
-                        Log dropped inbound traffic
+                        {t('Log dropped inbound traffic')}
                     </Button>
                 ) : (
                     <>
@@ -205,7 +207,7 @@ const FirewallLogCard = ({ uuid }: Props) => {
                                 'text-muted-foreground flex items-center gap-2 text-xs'
                             }
                         >
-                            Live
+                            {t('Live')}
                             <Switch
                                 checked={autoRefresh}
                                 onCheckedChange={setAutoRefresh}
@@ -219,7 +221,7 @@ const FirewallLogCard = ({ uuid }: Props) => {
                             loading={isFetching}
                             icon={<IconRefresh className={'size-4'} />}
                         >
-                            Refresh
+                            {t('Refresh')}
                         </Button>
                     </>
                 )}
@@ -242,10 +244,10 @@ const FirewallLogCard = ({ uuid }: Props) => {
                         ) : (
                             <SimpleEmptyState
                                 icon={IconLogs}
-                                title={'Nothing logged yet'}
-                                description={
+                                title={t('Nothing logged yet')}
+                                description={t(
                                     'Packets will appear here as the firewall logs them.'
-                                }
+                                )}
                             />
                         )}
                     </div>
@@ -258,8 +260,14 @@ const FirewallLogCard = ({ uuid }: Props) => {
                         >
                             <span>
                                 {isLive
-                                    ? `Latest ${entries?.length ?? 0} entries`
-                                    : `Entries ${start + 1}–${start + (entries?.length ?? 0)}`}
+                                    ? t('Latest {{value}} entries', {
+                                          value: entries?.length ?? 0,
+                                      })
+                                    : t('Entries {{value}}–{{value2}}', {
+                                          value: start + 1,
+                                          value2:
+                                              start + (entries?.length ?? 0),
+                                      })}
                             </span>
                             <span className={'flex-1'} />
                             <Button
@@ -270,7 +278,7 @@ const FirewallLogCard = ({ uuid }: Props) => {
                                     setStart(Math.max(start - PAGE_SIZE, 0))
                                 }
                             >
-                                Newer
+                                {t('Newer')}
                             </Button>
                             <Button
                                 variant={'outline'}
@@ -278,7 +286,7 @@ const FirewallLogCard = ({ uuid }: Props) => {
                                 disabled={(entries?.length ?? 0) < PAGE_SIZE}
                                 onClick={() => setStart(start + PAGE_SIZE)}
                             >
-                                Older
+                                {t('Older')}
                             </Button>
                         </div>
                     )}

@@ -23,6 +23,7 @@ import { useParams } from '@tanstack/react-router'
 import { z } from 'zod'
 
 import { type DataResponse, type PaginatedResponse, apiFetch } from '@/lib/api'
+import { t } from '@/lib/i18n.ts'
 import { queryClient } from '@/lib/query-client.ts'
 import {
     rawDataToConnectionResult,
@@ -36,22 +37,22 @@ export type NodeQueryParams = QueryBuilderParams<
 export const nodeSchema = z.object({
     displayName: z
         .string()
-        .min(1, 'Display name is required')
-        .max(50, "Display name can't exceed 50 characters"),
-    locationId: z.coerce.number().positive('Location is required'),
+        .min(1, t('Display name is required'))
+        .max(50, t("Display name can't exceed 50 characters")),
+    locationId: z.coerce.number().positive(t('Location is required')),
     fqdn: hostname().min(1).max(191),
-    port: z.coerce.number().int().min(1, 'Invalid').max(65535, 'Invalid'),
+    port: z.coerce.number().int().min(1, t('Invalid')).max(65535, t('Invalid')),
     name: z.string().min(1).max(191),
     verifyTls: z.boolean(),
     tokenId: z.string().min(1).max(191),
     tokenSecret: z.string().min(1).max(191),
     rootPrivileges: z.literal(true),
     privilegeSeparationDisabled: z.literal(true),
-    socketCount: z.coerce.number().int().min(1, 'Invalid'),
-    coreCount: z.coerce.number().int().min(1, 'Invalid'),
-    cpuCount: z.coerce.number().int().min(1, 'Invalid'),
-    memory: z.coerce.number().int().min(1, 'Invalid'),
-    memoryOverallocate: z.coerce.number().int().min(0, 'Invalid'),
+    socketCount: z.coerce.number().int().min(1, t('Invalid')),
+    coreCount: z.coerce.number().int().min(1, t('Invalid')),
+    cpuCount: z.coerce.number().int().min(1, t('Invalid')),
+    memory: z.coerce.number().int().min(1, t('Invalid')),
+    memoryOverallocate: z.coerce.number().int().min(0, t('Invalid')),
     anchorId: z.string().default('none'),
 })
 

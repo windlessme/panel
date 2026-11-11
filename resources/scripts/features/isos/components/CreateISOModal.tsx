@@ -13,6 +13,8 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { Form, FormButton } from '@/components/ui/Form'
 import { CheckboxForm, InputForm } from '@/components/ui/Forms'
@@ -89,7 +91,7 @@ const CreateISOModal = () => {
                 form.setValue('fileName', uploaded.fileName)
             }
         } catch {
-            toast.add({ title: 'Failed to upload the ISO', type: 'error' })
+            toast.add({ title: t('Failed to upload the ISO'), type: 'error' })
         } finally {
             setUploading(false)
         }
@@ -102,10 +104,10 @@ const CreateISOModal = () => {
 
             form.reset()
             setOpen(false)
-            toast.add({ title: 'ISO added', type: 'success' })
+            toast.add({ title: t('ISO added'), type: 'success' })
         } catch (e) {
             if (!handleFormErrors(e, form.setError)) {
-                toast.add({ title: 'Failed to add the ISO', type: 'error' })
+                toast.add({ title: t('Failed to add the ISO'), type: 'error' })
             }
         }
     }
@@ -121,26 +123,29 @@ const CreateISOModal = () => {
             />
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
-                    <ResponsiveDialogTitle>Add an ISO</ResponsiveDialogTitle>
+                    <ResponsiveDialogTitle>
+                        {t('Add an ISO')}
+                    </ResponsiveDialogTitle>
                 </ResponsiveDialogHeader>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(submit)}>
                         <ResponsiveDialogBody className={'space-y-4'}>
                             <InputForm
                                 name={'name'}
-                                label={'Name'}
-                                description={'What customers will see.'}
+                                label={t('Name')}
+                                description={t('What customers will see.')}
                             />
 
                             {path ? (
                                 <p className={'text-muted-foreground text-sm'}>
-                                    Uploaded. Convoy will serve this file to
-                                    your nodes.
+                                    {t(
+                                        'Uploaded. Convoy will serve this file to your nodes.'
+                                    )}
                                 </p>
                             ) : (
                                 <>
                                     <div className={'space-y-1.5'}>
-                                        <Label>Link</Label>
+                                        <Label>{t('Link')}</Label>
                                         <Input
                                             placeholder={
                                                 'https://…/debian-12.iso'
@@ -161,12 +166,12 @@ const CreateISOModal = () => {
                                                 'text-muted-foreground text-xs'
                                             }
                                         >
-                                            Any URL your nodes can reach.
+                                            {t('Any URL your nodes can reach.')}
                                         </p>
                                     </div>
 
                                     <div className={'space-y-1.5'}>
-                                        <Label>Or upload one</Label>
+                                        <Label>{t('Or upload one')}</Label>
                                         <Input
                                             type={'file'}
                                             accept={'.iso'}
@@ -183,8 +188,11 @@ const CreateISOModal = () => {
                                                     'text-muted-foreground text-xs'
                                                 }
                                             >
-                                                Uploading…{' '}
-                                                {Math.round(progress * 100)}%
+                                                {t('Uploading… {{round}}%', {
+                                                    round: Math.round(
+                                                        progress * 100
+                                                    ),
+                                                })}
                                             </p>
                                         )}
                                     </div>
@@ -193,22 +201,22 @@ const CreateISOModal = () => {
 
                             <InputForm
                                 name={'fileName'}
-                                label={'File name'}
-                                description={
+                                label={t('File name')}
+                                description={t(
                                     'What this is called on every node that fetches it.'
-                                }
+                                )}
                             />
                             <CheckboxForm
                                 name={'hidden'}
-                                label={'Admin only'}
-                                description={
+                                label={t('Admin only')}
+                                description={t(
                                     'Keeps it out of the list customers see.'
-                                }
+                                )}
                             />
                         </ResponsiveDialogBody>
                         <ResponsiveDialogFooter>
                             <FormButton disabled={uploading}>
-                                Add ISO
+                                {t('Add ISO')}
                             </FormButton>
                         </ResponsiveDialogFooter>
                     </form>

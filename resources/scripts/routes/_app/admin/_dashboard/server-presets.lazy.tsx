@@ -14,6 +14,8 @@ import { IconPlus, IconStack2 } from '@tabler/icons-react'
 import { Link, createLazyFileRoute } from '@tanstack/react-router'
 import { ColumnDef } from '@tanstack/react-table'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Badge } from '@/components/ui/Badge.tsx'
 import { buttonVariants } from '@/components/ui/Button'
 import { DataTable } from '@/components/ui/DataTable'
@@ -52,24 +54,24 @@ const ServerPresetsIndex = () => {
     const renderActions = (preset: ServerPreset) => (
         <>
             <DropdownMenuItem onClick={() => openModal('show', preset)}>
-                View settings
+                {t('View settings')}
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => openModal('edit', preset)}>
-                Edit
+                {t('Edit')}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
                 variant={'destructive'}
                 onClick={() => openModal('delete', preset)}
             >
-                Delete
+                {t('Delete')}
             </DropdownMenuItem>
         </>
     )
 
     const columns: ColumnDef<ServerPreset>[] = [
         {
-            header: 'Name',
+            header: t('Name'),
             accessorKey: 'name',
             enableHiding: false,
             meta: { skeletonWidth: '6rem' },
@@ -83,12 +85,12 @@ const ServerPresetsIndex = () => {
             ),
         },
         {
-            header: 'Description',
+            header: t('Description'),
             accessorKey: 'description',
             meta: { skeletonWidth: '10rem' },
         },
         {
-            header: 'Build',
+            header: t('Build'),
             id: 'build',
             meta: { skeletonWidth: '10rem' },
             cell: ({ row }) => (
@@ -98,7 +100,7 @@ const ServerPresetsIndex = () => {
             ),
         },
         {
-            header: 'Scope',
+            header: t('Scope'),
             id: 'scope',
             meta: { skeletonWidth: '4rem', align: 'center' },
             cell: ({ row }) =>
@@ -106,9 +108,9 @@ const ServerPresetsIndex = () => {
                 // and bridge, so it only applies cleanly there — worth saying
                 // in the list rather than only inside the detail modal.
                 row.original.settings.nodeId != null ? (
-                    <Badge variant={'secondary'}>Node-specific</Badge>
+                    <Badge variant={'secondary'}>{t('Node-specific')}</Badge>
                 ) : (
-                    <Badge variant={'outline'}>Any node</Badge>
+                    <Badge variant={'outline'}>{t('Any node')}</Badge>
                 ),
             maxSize: 60,
         },
@@ -117,7 +119,7 @@ const ServerPresetsIndex = () => {
 
     return (
         <>
-            <Heading>Server Presets</Heading>
+            <Heading>{t('Server Presets')}</Heading>
             <DataTable
                 data={data}
                 columns={columns}

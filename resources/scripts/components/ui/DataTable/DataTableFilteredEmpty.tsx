@@ -1,5 +1,7 @@
 import { IconSearch } from '@tabler/icons-react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import { SimpleEmptyState } from '@/components/ui/EmptyStates'
 
@@ -16,8 +18,8 @@ interface Props {
 const DataTableFilteredEmpty = ({ onClear }: Props) => (
     <SimpleEmptyState
         icon={IconSearch}
-        title={'No matching results'}
-        description={'No records match your current search or filters.'}
+        title={t('No matching results')}
+        description={t('No records match your current search or filters.')}
         action={
             <Button variant={'outline'} onClick={onClear}>
                 Clear filters

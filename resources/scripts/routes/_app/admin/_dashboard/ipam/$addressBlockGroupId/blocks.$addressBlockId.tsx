@@ -1,34 +1,35 @@
+import {
+    preloadAddressBlock,
+    useAddressBlock,
+} from '@/features/ipam/blocks/api.ts'
 import useTitle from '@/hooks/use-title.ts'
 import { processAxiosError } from '@/utils/http.ts'
 import { Outlet, createFileRoute } from '@tanstack/react-router'
 
-import {
-  useAddressBlock,
-  preloadAddressBlock,
-} from '@/features/ipam/blocks/api.ts'
+import { t } from '@/lib/i18n.ts'
 
 export const Route = createFileRoute(
-  '/_app/admin/_dashboard/ipam/$addressBlockGroupId/blocks/$addressBlockId',
+    '/_app/admin/_dashboard/ipam/$addressBlockGroupId/blocks/$addressBlockId'
 )({
-  loader: ({ params: { addressBlockGroupId, addressBlockId } }) =>
-    preloadAddressBlock(
-      Number(addressBlockGroupId),
-      Number(addressBlockId),
-    ).catch(processAxiosError),
-  component: AddressBlockLayout,
+    loader: ({ params: { addressBlockGroupId, addressBlockId } }) =>
+        preloadAddressBlock(
+            Number(addressBlockGroupId),
+            Number(addressBlockId)
+        ).catch(processAxiosError),
+    component: AddressBlockLayout,
     staticData: {
-      title: 'IP Block',
-    }
+        title: t('IP Block'),
+    },
 })
 
 function AddressBlockLayout() {
-  const { data: block } = useAddressBlock()
+    const { data: block } = useAddressBlock()
 
-  useTitle(block?.name ?? `${block?.baseIp}/${block?.prefixLengthFrom}`)
+    useTitle(block?.name ?? `${block?.baseIp}/${block?.prefixLengthFrom}`)
 
-  return (
-    <>
-      <Outlet />
-    </>
-  )
+    return (
+        <>
+            <Outlet />
+        </>
+    )
 }
