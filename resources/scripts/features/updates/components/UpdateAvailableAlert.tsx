@@ -29,7 +29,7 @@ const UpdateAvailableAlert = () => {
             <AlertDescription className={'text-muted-foreground'}>
                 {t('This panel is running {{currentVersion}}.', {
                     currentVersion: status.currentVersion,
-                })}
+                })}{' '}
                 <Link
                     to={'/admin/settings/updates'}
                     className={'underline underline-offset-4'}

@@ -114,7 +114,7 @@ class AvatarService
 
         if ($info === false) {
             throw ValidationException::withMessages([
-                'avatar' => 'That file is not an image the panel can read.',
+                'avatar' => __('That file is not an image the panel can read.'),
             ]);
         }
 
@@ -122,7 +122,7 @@ class AvatarService
 
         if ($width * $height > self::MAX_SOURCE_PIXELS) {
             throw ValidationException::withMessages([
-                'avatar' => 'That image is too large to process. Use one under 50 megapixels.',
+                'avatar' => __('That image is too large to process. Use one under 50 megapixels.'),
             ]);
         }
 
@@ -136,7 +136,7 @@ class AvatarService
 
         if (! $image instanceof GdImage) {
             throw ValidationException::withMessages([
-                'avatar' => 'That image format is not supported. Use a JPEG, PNG, WebP or GIF.',
+                'avatar' => __('That image format is not supported. Use a JPEG, PNG, WebP or GIF.'),
             ]);
         }
 

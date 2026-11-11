@@ -30,7 +30,8 @@ const OAuthConnectionsCard = ({ userId }: Props) => {
         question: t('Unlink this login?'),
         successTitle: t('Login unlinked'),
         errorTitle: t('Failed to unlink login'),
-        nameOf: connection => `The ${connection.label} login`,
+        nameOf: connection =>
+            t('The {{provider}} login', { provider: connection.label }),
         consequence: t(
             'The account can still sign in with its password, and can link the provider again.'
         ),
@@ -54,13 +55,15 @@ const OAuthConnectionsCard = ({ userId }: Props) => {
                     key={connection.id}
                     icon={IconPlugConnected}
                     name={connection.label}
-                    revokeLabel={`Unlink ${connection.label}`}
+                    revokeLabel={t('Unlink {{provider}}', {
+                        provider: connection.label,
+                    })}
                     onRevoke={() => revoke(connection)}
                     meta={
                         <span
                             className={'text-muted-foreground truncate text-xs'}
                         >
-                            {connection.email ?? connection.name ?? 'Linked'}
+                            {connection.email ?? connection.name ?? t('Linked')}
                             {connection.lastUsedAt
                                 ? ` · used ${formatDistanceToNow(connection.lastUsedAt, { addSuffix: true })}`
                                 : ''}

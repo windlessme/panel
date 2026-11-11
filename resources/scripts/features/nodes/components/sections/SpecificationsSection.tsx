@@ -50,7 +50,7 @@ const MemoryAmountField = () => {
             name={'memory'}
             render={({ field }) => (
                 <FormItem>
-                    <FormLabel>Amount</FormLabel>
+                    <FormLabel>{t('Amount')}</FormLabel>
                     <InputGroup>
                         <FormControl>
                             <InputGroupInput
@@ -89,7 +89,7 @@ const MemoryAmountField = () => {
                                     const next = value[0]
                                     if (next) setUnit(next as MemoryUnit)
                                 }}
-                                aria-label={'Memory unit'}
+                                aria-label={t('Memory unit')}
                             >
                                 {(['MiB', 'GiB'] as const).map(u => (
                                     <ToggleGroupItem
@@ -158,13 +158,13 @@ const MemoryResult = () => {
                     <span className={'text-muted-foreground text-xs'}>
                         {hasMemory
                             ? t('{{unit}} usable', { unit: usable.unit })
-                            : 'usable'}
+                            : t('usable')}
                     </span>
                 </p>
                 <p className={'text-muted-foreground text-xs'}>
                     {hasMemory
-                        ? t('{{value}} {{unit}} physical', {
-                              value: physical.value,
+                        ? t('{{amount}} {{unit}} physical', {
+                              amount: physical.value,
                               unit: physical.unit,
                           })
                         : ''}

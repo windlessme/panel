@@ -176,7 +176,7 @@ class UserCredentialController
     {
         if ($user->is($request->user())) {
             throw new BadRequestHttpException(
-                'Manage your own credentials from your account security page.',
+                __('Manage your own credentials from your account security page.'),
             );
         }
     }

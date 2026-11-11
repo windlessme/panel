@@ -1,7 +1,5 @@
 import { Column } from '@tanstack/react-table'
 
-import { t } from '@/lib/i18n.ts'
-
 export function getCommonPinningStyles<TData>({
     column,
     withBorder = false,
@@ -22,9 +20,9 @@ export function getCommonPinningStyles<TData>({
     return {
         boxShadow: withBorder
             ? isLastLeftPinnedColumn
-                ? t('-4px 0 4px -4px var(--border) inset')
+                ? '-4px 0 4px -4px var(--border) inset'
                 : isFirstRightPinnedColumn
-                  ? t('4px 0 4px -4px var(--border) inset')
+                  ? '4px 0 4px -4px var(--border) inset'
                   : undefined
             : undefined,
         left: isPinned === 'left' ? `${column.getStart('left')}px` : undefined,

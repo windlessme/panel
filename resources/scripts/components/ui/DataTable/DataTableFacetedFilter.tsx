@@ -61,8 +61,8 @@ const DataTableFacetedFilter = <TData, TValue>({
                                         variant='secondary'
                                         className='rounded-sm px-1 font-normal'
                                     >
-                                        {t('{{size}} selected', {
-                                            size: selectedValues.size,
+                                        {t('{{count}} selected', {
+                                            count: selectedValues.size,
                                         })}
                                     </Badge>
                                 ) : (

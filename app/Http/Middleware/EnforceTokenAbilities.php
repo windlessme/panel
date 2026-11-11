@@ -34,7 +34,9 @@ class EnforceTokenAbilities
             $required = $vocabulary::requiredFor($request);
 
             if (! $vocabulary::grants($token->abilities ?? [], $required)) {
-                throw new AccessDeniedHttpException("This token is missing the required ability: {$required}.");
+                throw new AccessDeniedHttpException(
+                    __('This token is missing the required ability: :ability.', ['ability' => $required]),
+                );
             }
         }
 

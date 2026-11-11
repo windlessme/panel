@@ -48,7 +48,7 @@ const protocols = (token: string) => ['anchor.v1', `anchor.session.${token}`]
 const reason = (error: unknown) =>
     error instanceof AxiosError && error.response?.data?.message
         ? (error.response.data.message as string)
-        : 'The console session could not be created.'
+        : t('The console session could not be created.')
 
 /**
  * What we can say when the console dies without explaining itself.
@@ -62,10 +62,10 @@ type Failure = { message: string; code?: number; keepOutput?: boolean }
 // Close codes worth translating. A console that exits on its own closes
 // cleanly, so "clean" here means the process ended, not that all is well.
 const closeCodes: Record<number, string> = {
-    1000: 'the console process exited',
-    1005: 'the console process exited without a status',
-    1006: 'the connection dropped without a close frame',
-    1011: 'the agent reported an internal error',
+    1000: t('the console process exited'),
+    1005: t('the console process exited without a status'),
+    1006: t('the connection dropped without a close frame'),
+    1011: t('the agent reported an internal error'),
 }
 
 /**
@@ -80,10 +80,10 @@ const closeCodes: Record<number, string> = {
  * as if the key were physically down.
  */
 const modifierKeys = [
-    { label: t('Ctrl'), keysym: 0xffe3, code: 'ControlLeft' },
-    { label: t('Alt'), keysym: 0xffe9, code: 'AltLeft' },
-    { label: t('Shift'), keysym: 0xffe1, code: 'ShiftLeft' },
-    { label: t('Super'), keysym: 0xffeb, code: 'MetaLeft' },
+    { label: 'Ctrl', keysym: 0xffe3, code: 'ControlLeft' },
+    { label: 'Alt', keysym: 0xffe9, code: 'AltLeft' },
+    { label: 'Shift', keysym: 0xffe1, code: 'ShiftLeft' },
+    { label: 'Super', keysym: 0xffeb, code: 'MetaLeft' },
 ] as const
 
 /**
@@ -129,8 +129,8 @@ const typeText = async (
 
 /** Sent as a full press and release, with whatever modifiers are held. */
 const tapKeys = [
-    { label: t('Esc'), keysym: 0xff1b, code: 'Escape' },
-    { label: t('Tab'), keysym: 0xff09, code: 'Tab' },
+    { label: 'Esc', keysym: 0xff1b, code: 'Escape' },
+    { label: 'Tab', keysym: 0xff09, code: 'Tab' },
     ...Array.from({ length: 12 }, (_, index) => ({
         label: `F${index + 1}`,
         keysym: 0xffbe + index,
@@ -141,14 +141,16 @@ const tapKeys = [
 // A serial console can only attach to a serial device the VM actually has, with
 // something listening on it inside the guest. Both are invisible from here, so
 // the terminal fails by going quiet — say what to check rather than spin.
-const serialHint =
+const serialHint = t(
     'A serial console needs a serial device on the VM (serial0) and a login prompt bound to it inside the guest. The display console does not.'
+)
 
 // The display console has no equivalent prerequisite — every VM has a VGA
 // device — so once the agent has accepted the session, all that is left is the
 // RFB handshake, and noVNC keeps its own account of that.
-const displayHint =
+const displayHint = t(
     'The agent accepted the session but the VNC handshake never finished, which usually means the one-time password was refused. noVNC logs the step it stopped on to the browser console.'
+)
 
 /** How a console's WebSocket ended, as far as the browser can tell. */
 type Closure = { code: number; reason: string }
@@ -418,7 +420,9 @@ const ConsoleView = ({
                     // the guest with a newline it never asked for. Reconnecting
                     // mid-command, that keystroke would run whatever was typed.
                     terminal?.writeln(
-                        '\x1b[2mConnected. This screen stays blank until the server writes to the serial port; press Enter to prompt it.\x1b[0m'
+                        `\x1b[2m${t(
+                            'Connected. This screen stays blank until the server writes to the serial port; press Enter to prompt it.'
+                        )}\x1b[0m`
                     )
                 })
                 socket.addEventListener('message', event => {
@@ -553,10 +557,9 @@ const ConsoleView = ({
 
         if (text.length > typingLimit)
             toast.add({
-                title: t(
-                    'Only the first {{typingLimit}} characters will be typed',
-                    { typingLimit }
-                ),
+                title: t('Only the first {{limit}} characters will be typed', {
+                    limit: typingLimit,
+                }),
                 type: 'error',
             })
 
@@ -611,7 +614,10 @@ const ConsoleView = ({
         <div className='flex flex-col items-center gap-3 rounded-md border border-white/10 bg-zinc-900/60 p-3'>
             <p className='text-sm text-zinc-300'>
                 {displayStatus.restartRequired
-                    ? `${server?.name ?? 'This server'} has a display from its next boot onwards. Restart it to use this console.`
+                    ? t(
+                          '{{name}} has a display from its next boot onwards. Restart it to use this console.',
+                          { name: server?.name ?? t('This server') }
+                      )
                     : t(
                           "This server's display is set to {{display}}, so there is no screen to show. Giving it one takes a restart, and leaves the serial console as it is.",
                           { display: displayStatus.display }
@@ -732,9 +738,7 @@ const ConsoleView = ({
                             {key.label}
                         </KeyButton>
                     ))}
-                    <KeyButton onClick={sendCtrlAltDel}>
-                        {t('Ctrl+Alt+Del')}
-                    </KeyButton>
+                    <KeyButton onClick={sendCtrlAltDel}>Ctrl+Alt+Del</KeyButton>
                     <span className='mx-1 h-5 w-px bg-white/10' />
                     <KeyButton
                         onClick={pasteClipboard}
@@ -753,7 +757,7 @@ const ConsoleView = ({
                     >
                         {typing === null
                             ? t('Type')
-                            : t('Typing {{typing}}', { typing })}
+                            : t('Typing {{count}}', { count: typing })}
                     </KeyButton>
                     {guestClipboard !== '' && (
                         <KeyButton

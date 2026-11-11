@@ -33,7 +33,9 @@ const MailNotConfiguredAlert = ({ children }: Props) => {
         <Alert>
             <IconAlertTriangle className={'size-4'} />
             <AlertDescription>
-                {t("Mail isn't set up. {{children}}", { children })}
+                {t("Mail isn't set up. {{consequence}}", {
+                    consequence: children,
+                })}{' '}
                 <Link
                     to={'/admin/settings/mail'}
                     className={'underline underline-offset-4'}

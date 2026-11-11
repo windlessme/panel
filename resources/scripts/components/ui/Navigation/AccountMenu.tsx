@@ -6,7 +6,7 @@ import { cn } from '@/utils'
 import { useQueryClient } from '@tanstack/react-query'
 import { Link, useLocation, useRouter } from '@tanstack/react-router'
 
-import { t } from '@/lib/i18n.ts'
+import { type Locale, locale, locales, setLocale, t } from '@/lib/i18n.ts'
 
 import { Button } from '@/components/ui/Button'
 import {
@@ -24,6 +24,12 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/DropdownMenu'
 import UserAvatar from '@/components/ui/UserAvatar.tsx'
+
+const themeLabels = {
+    light: t('Light'),
+    dark: t('Dark'),
+    system: t('System'),
+} as const
 
 const AccountMenu = () => {
     const { theme, setTheme } = useTheme()
@@ -139,12 +145,8 @@ const AccountMenu = () => {
                 <DropdownMenuSub>
                     <DropdownMenuSubTrigger>
                         <span className={'flex-1'}>{t('Theme')}</span>
-                        <span
-                            className={
-                                'text-muted-foreground text-xs capitalize'
-                            }
-                        >
-                            {theme}
+                        <span className={'text-muted-foreground text-xs'}>
+                            {themeLabels[theme]}
                         </span>
                     </DropdownMenuSubTrigger>
                     <DropdownMenuSubContent>
@@ -153,14 +155,39 @@ const AccountMenu = () => {
                             onValueChange={setTheme}
                         >
                             <DropdownMenuRadioItem value={'light'}>
-                                {t('Light')}
+                                {themeLabels.light}
                             </DropdownMenuRadioItem>
                             <DropdownMenuRadioItem value={'dark'}>
-                                {t('Dark')}
+                                {themeLabels.dark}
                             </DropdownMenuRadioItem>
                             <DropdownMenuRadioItem value={'system'}>
-                                {t('System')}
+                                {themeLabels.system}
                             </DropdownMenuRadioItem>
+                        </DropdownMenuRadioGroup>
+                    </DropdownMenuSubContent>
+                </DropdownMenuSub>
+                <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>
+                        <span className={'flex-1'}>{t('Language')}</span>
+                        <span className={'text-muted-foreground text-xs'}>
+                            {locales[locale].label}
+                        </span>
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuSubContent>
+                        <DropdownMenuRadioGroup
+                            value={locale}
+                            onValueChange={value => setLocale(value as Locale)}
+                        >
+                            {(
+                                Object.entries(locales) as [
+                                    Locale,
+                                    (typeof locales)[Locale],
+                                ][]
+                            ).map(([code, { label }]) => (
+                                <DropdownMenuRadioItem key={code} value={code}>
+                                    {label}
+                                </DropdownMenuRadioItem>
+                            ))}
                         </DropdownMenuRadioGroup>
                     </DropdownMenuSubContent>
                 </DropdownMenuSub>

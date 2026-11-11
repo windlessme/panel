@@ -14,11 +14,10 @@ class ServerFlaggedException extends ConflictHttpException implements HasErrorCo
 {
     public function __construct(Server $server)
     {
-        parent::__construct(sprintf(
-            'Server %s is flagged: %s Resolve the flag before retrying.',
-            $server->uuid_short,
-            rtrim((string) $server->flag_reason, '.').'.',
-        ));
+        parent::__construct(__('Server :server is flagged: :reason Resolve the flag before retrying.', [
+            'server' => $server->uuid_short,
+            'reason' => rtrim((string) $server->flag_reason, '.').'.',
+        ]));
     }
 
     public function errorCode(): string

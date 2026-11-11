@@ -97,7 +97,7 @@ class ServerController
                     $this->cloudinitService->setHostname($server, $request->hostname);
                 } catch (RequestException) {
                     throw new ServiceUnavailableHttpException(
-                        message: "Server {$server->uuid} failed to sync hostname.",
+                        message: __('Server :server failed to sync hostname.', ['server' => $server->uuid]),
                     );
                 }
             }

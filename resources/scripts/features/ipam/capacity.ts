@@ -106,7 +106,7 @@ export const addressCapacity = (
  * a bar here and a badge there.
  */
 export const addressCapacityReason = (view: AddressCapacityView): string =>
-    view.isSparse ? 'sparse · minted on demand' : 'no addresses generated'
+    view.isSparse ? t('sparse · minted on demand') : t('no addresses generated')
 
 /**
  * The "in use" cell: taken against what can ever be handed out.
@@ -116,5 +116,5 @@ export const addressCapacityReason = (view: AddressCapacityView): string =>
  */
 export const addressInUseLabel = (view: AddressCapacityView): string =>
     view.usable === null
-        ? `${view.inUse.toLocaleString()} assigned`
+        ? t('{{number}} assigned', { number: view.inUse.toLocaleString() })
         : `${view.inUse.toLocaleString()} / ${view.usable.toLocaleString()}`

@@ -55,7 +55,7 @@ const DeleteBlockGroupModal = ({ mutate }: Props) => {
                 if (e.response.status === 403) {
                     // If there's a specific message about servers being attached
                     const message =
-                        e.response.data.message || 'Deletion not authorized'
+                        e.response.data.message || t('Deletion not authorized')
                     toast.add({ title: message, type: 'error' })
                 } else {
                     toast.add({ title: t('Deletion failed'), type: 'error' })
@@ -83,7 +83,9 @@ const DeleteBlockGroupModal = ({ mutate }: Props) => {
                 </ResponsiveDialogHeader>
                 <ResponsiveDialogFooter className={'mt-4'}>
                     <ResponsiveDialogClose
-                        render={<Button variant={'outline'}>Cancel</Button>}
+                        render={
+                            <Button variant={'outline'}>{t('Cancel')}</Button>
+                        }
                     />
                     <Button
                         autoFocus

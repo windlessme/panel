@@ -150,7 +150,9 @@ const VlanFormModal = ({ mode }: { mode: 'create' | 'edit' }) => {
                         <ResponsiveDialogFooter className={'mt-4'}>
                             <ResponsiveDialogClose
                                 render={
-                                    <Button variant={'outline'}>Cancel</Button>
+                                    <Button variant={'outline'}>
+                                        {t('Cancel')}
+                                    </Button>
                                 }
                             />
                             <FormButton>

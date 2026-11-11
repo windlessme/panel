@@ -144,10 +144,10 @@ function UserServers() {
                 emptyState={
                     <SimpleEmptyState
                         icon={IconServer}
-                        title={'No servers'}
-                        description={
+                        title={t('No servers')}
+                        description={t(
                             'Servers created for this account will be listed here.'
-                        }
+                        )}
                     />
                 }
                 mobileRow={row => {
@@ -170,7 +170,7 @@ function UserServers() {
                                     />
                                     {server.suspendedAt && (
                                         <Badge variant={'destructive'}>
-                                            Suspended
+                                            {t('Suspended')}
                                         </Badge>
                                     )}
                                 </ItemTitle>

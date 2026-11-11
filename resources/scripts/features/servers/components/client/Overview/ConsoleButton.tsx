@@ -57,6 +57,7 @@ const consoles = [
     {
         type: 'novnc',
         label: t('Display'),
+        openLabel: t('Open display'),
         icon: IconDeviceDesktop,
         description: t(
             'Graphical output with mouse and keyboard. Use this for installers and boot screens.'
@@ -65,6 +66,7 @@ const consoles = [
     {
         type: 'xtermjs',
         label: t('Serial terminal'),
+        openLabel: t('Open serial terminal'),
         icon: IconTerminal2,
         description: t(
             'Text only, with copy and paste. Holds up over a slow connection.'
@@ -73,6 +75,7 @@ const consoles = [
 ] satisfies {
     type: ConsoleType
     label: string
+    openLabel: string
     icon: typeof IconTerminal2
     description: string
 }[]
@@ -154,16 +157,14 @@ const ConsoleControls = ({ server }: { server: Server }) => {
                     {/* The menu takes the trigger's width by default, and the
                         trigger here is a 28px chevron. */}
                     <DropdownMenuContent align={'end'} className={'w-56'}>
-                        {consoles.map(({ type, label, icon: Icon }) => (
+                        {consoles.map(({ type, openLabel, icon: Icon }) => (
                             <DropdownMenuItem key={type} asChild>
                                 <Link
                                     {...consoleLink(type)}
                                     onClick={launched(type)}
                                 >
                                     <Icon />
-                                    {t('Open {{toLowerCase}}', {
-                                        toLowerCase: label.toLowerCase(),
-                                    })}
+                                    {openLabel}
                                 </Link>
                             </DropdownMenuItem>
                         ))}
@@ -388,6 +389,12 @@ const DisplayOutputNotice = ({
 
     if (isPending || !display || display.enabled) return null
 
+    // One sentence for translators; the marker is where the <code> goes.
+    const [beforeDisplay, afterDisplay] = t(
+        "This server's display is set to {{display}}, so it has no screen for the display console to show. Giving it one takes a restart, and does not affect the serial console.",
+        { display: '\u0000' }
+    ).split('\u0000')
+
     return (
         <div
             className={
@@ -404,11 +411,9 @@ const DisplayOutputNotice = ({
             ) : (
                 <>
                     <p>
-                        {t("This server's display is set to")}
+                        {beforeDisplay}
                         <code>{display.display}</code>
-                        {t(
-                            ', so it has no screen for the display console to show. Giving it one takes a restart, and does not affect the serial console.'
-                        )}
+                        {afterDisplay}
                     </p>
                     <Button
                         variant={'outline'}

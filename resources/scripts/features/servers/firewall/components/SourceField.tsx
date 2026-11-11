@@ -1,6 +1,8 @@
 import type { FirewallRef } from '@/features/servers/firewall/api.ts'
 import { IconChevronDown } from '@tabler/icons-react'
 
+import { t } from '@/lib/i18n.ts'
+
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -50,21 +52,21 @@ const SourceField = ({ name, label, groups }: Props) => (
                     {groups.length === 0 ? (
                         <Input
                             {...field}
-                            placeholder={'Anywhere'}
+                            placeholder={t('Anywhere')}
                             disabled={formState.isSubmitting}
                         />
                     ) : (
                         <InputGroup>
                             <InputGroupInput
                                 {...field}
-                                placeholder={'Anywhere'}
+                                placeholder={t('Anywhere')}
                                 disabled={formState.isSubmitting}
                             />
                             <InputGroupAddon align={'inline-end'}>
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
                                         <InputGroupButton>
-                                            Groups
+                                            {t('Groups')}
                                             <IconChevronDown />
                                         </InputGroupButton>
                                     </DropdownMenuTrigger>
@@ -73,7 +75,7 @@ const SourceField = ({ name, label, groups }: Props) => (
                                         className={'max-w-72'}
                                     >
                                         <DropdownMenuLabel>
-                                            Datacenter groups
+                                            {t('Datacenter groups')}
                                         </DropdownMenuLabel>
                                         {groups.map(group => (
                                             <DropdownMenuItem
@@ -117,8 +119,12 @@ const SourceField = ({ name, label, groups }: Props) => (
                 </FormControl>
                 <FormDescription>
                     {groups.length === 0
-                        ? 'An address or range, like 10.0.0.0/8. Leave blank for any.'
-                        : 'An address or range, or a group your host has defined.'}
+                        ? t(
+                              'An address or range, like 10.0.0.0/8. Leave blank for any.'
+                          )
+                        : t(
+                              'An address or range, or a group your host has defined.'
+                          )}
                 </FormDescription>
                 <FormMessage />
             </FormItem>

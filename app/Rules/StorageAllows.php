@@ -45,7 +45,7 @@ class StorageAllows implements ValidationRule
         $storage = Storage::find($value);
 
         if (! $storage) {
-            $fail("The selected storage for {$attribute} is invalid.");
+            $fail(__('The selected storage for :attribute is invalid.'));
 
             return;
         }
@@ -59,7 +59,7 @@ class StorageAllows implements ValidationRule
                 // Generate a user-friendly name using the Enum case name (e.g., 'KVM').
                 $friendlyContentTypeName = Str::headline($contentTypeEnum->name);
 
-                $fail("The storage selected for {$attribute} cannot store: {$friendlyContentTypeName}.");
+                $fail(__('The storage selected for :attribute cannot store: :type.', ['type' => $friendlyContentTypeName]));
 
                 return; // No need to check further content types for this storage ID
             }

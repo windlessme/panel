@@ -96,7 +96,7 @@ const KeychainCard = () => {
                             )}
                             action={
                                 <Button onClick={() => setCreateOpen(true)}>
-                                    Add Key
+                                    {t('Add Key')}
                                 </Button>
                             }
                         />
@@ -116,7 +116,10 @@ const KeychainCard = () => {
                 onClose={() => setKeyToRemove(null)}
                 title={t('Remove SSH key')}
                 description={key =>
-                    `“${key.name}” will be removed from your keychain. Servers it was already added to are unaffected.`
+                    t(
+                        '“{{name}}” will be removed from your keychain. Servers it was already added to are unaffected.',
+                        { name: key.name }
+                    )
                 }
                 confirmText={t('Remove')}
                 onConfirm={remove}

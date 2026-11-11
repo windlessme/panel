@@ -151,7 +151,7 @@ const CreateTokenModal = ({ mutate }: Props) => {
                         </ResponsiveDialogBody>
                         <ResponsiveDialogFooter>
                             <ResponsiveDialogClose
-                                render={<Button>Done</Button>}
+                                render={<Button>{t('Done')}</Button>}
                             />
                         </ResponsiveDialogFooter>
                     </>
@@ -198,9 +198,9 @@ const CreateTokenModal = ({ mutate }: Props) => {
                                     <TextareaForm
                                         name={'allowedNetworks'}
                                         label={t('Network access')}
-                                        placeholder={t(
+                                        placeholder={
                                             '203.0.113.10\n2001:db8::/48'
-                                        )}
+                                        }
                                         rows={5}
                                         description={t(
                                             'Optional. Enter one IPv4 or IPv6 address or CIDR range per line. Leave empty to allow this token from any address.'
@@ -214,7 +214,7 @@ const CreateTokenModal = ({ mutate }: Props) => {
                                                 variant={'outline'}
                                                 type={'button'}
                                             >
-                                                Cancel
+                                                {t('Cancel')}
                                             </Button>
                                         }
                                     />

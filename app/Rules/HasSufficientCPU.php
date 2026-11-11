@@ -31,7 +31,7 @@ class HasSufficientCPU implements DataAwareRule, ValidationRule
         }
 
         if ($value > $node->cpu_count) {
-            $fail('The node does not have enough CPU cores available.');
+            $fail(__('The node does not have enough CPU cores available.'));
         }
     }
 }

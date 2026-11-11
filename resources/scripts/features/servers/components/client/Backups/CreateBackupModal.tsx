@@ -112,7 +112,7 @@ const CreateBackupModal = ({
         } catch (e) {
             handleFormErrors(e, form.setError)
             toast.add({
-                title: errorMessage(e, 'Failed to create backup'),
+                title: errorMessage(e, t('Failed to create backup')),
                 type: 'error',
             })
             throw e
@@ -151,7 +151,8 @@ const CreateBackupModal = ({
                 render={
                     (trigger as ReactElement) ?? (
                         <Button>
-                            <IconPlus className={'size-4'} /> Create backup
+                            <IconPlus className={'size-4'} />{' '}
+                            {t('Create backup')}
                         </Button>
                     )
                 }
@@ -221,7 +222,7 @@ const CreateBackupModal = ({
                             <ResponsiveDialogClose
                                 render={
                                     <Button variant={'outline'} type={'button'}>
-                                        Cancel
+                                        {t('Cancel')}
                                     </Button>
                                 }
                             />

@@ -174,7 +174,8 @@ const ImageVersionsModal = ({
                                 <div className={'min-w-0 grow'}>
                                     <p className={'font-semibold'}>
                                         {version.version}
-                                        {!version.isActive && t(' · retired')}
+                                        {!version.isActive &&
+                                            ` · ${t('retired')}`}
                                     </p>
                                     <p
                                         className={
@@ -225,7 +226,9 @@ const ImageVersionsModal = ({
                                             await refresh()
                                         } catch {
                                             toast.add({
-                                                title: 'Servers were built from this version — retire it instead.',
+                                                title: t(
+                                                    'Servers were built from this version — retire it instead.'
+                                                ),
                                                 type: 'error',
                                             })
                                         }
@@ -384,8 +387,8 @@ const DiskRow = ({
                 />
                 {uploading && (
                     <p className={'text-muted-foreground text-xs'}>
-                        {t('Uploading… {{round}}%', {
-                            round: Math.round(progress * 100),
+                        {t('Uploading… {{percent}}%', {
+                            percent: Math.round(progress * 100),
                         })}
                     </p>
                 )}

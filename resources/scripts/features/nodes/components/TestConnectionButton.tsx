@@ -148,7 +148,11 @@ const TestConnectionButton = ({ nodeId }: { nodeId?: number }) => {
                     </ResponsiveDialogBody>
                     <ResponsiveDialogFooter>
                         <ResponsiveDialogClose
-                            render={<Button variant={'outline'}>Close</Button>}
+                            render={
+                                <Button variant={'outline'}>
+                                    {t('Close')}
+                                </Button>
+                            }
                         />
                         <Button onClick={askChatGPT}>{t('Ask ChatGPT')}</Button>
                     </ResponsiveDialogFooter>

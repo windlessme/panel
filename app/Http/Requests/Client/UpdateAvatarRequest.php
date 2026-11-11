@@ -46,8 +46,8 @@ class UpdateAvatarRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'avatar.max' => 'Pictures must be under 10 MB.',
-            'avatar.mimes' => 'Use a JPEG, PNG, WebP or GIF.',
+            'avatar.max' => __('Pictures must be under 10 MB.'),
+            'avatar.mimes' => __('Use a JPEG, PNG, WebP or GIF.'),
         ];
     }
 }

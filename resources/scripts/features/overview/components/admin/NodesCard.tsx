@@ -112,8 +112,8 @@ const NodeStorage = ({ node }: { node: NodeSummary }) => {
         return (
             <Usage
                 usage={node.resources.disk}
-                label={t('Root filesystem used on {{displayName}}', {
-                    displayName: node.displayName,
+                label={t('Root filesystem used on {{name}}', {
+                    name: node.displayName,
                 })}
                 sub={t('Root filesystem — no datastores reported')}
             />
@@ -123,19 +123,27 @@ const NodeStorage = ({ node }: { node: NodeSummary }) => {
     return (
         <Usage
             usage={storage}
-            label={t('Storage used on {{displayName}}', {
-                displayName: node.displayName,
+            label={t('Storage used on {{name}}', {
+                name: node.displayName,
             })}
             sub={
-                `Across ${num(datastoreCount)} datastore${datastoreCount === 1 ? '' : 's'}` +
+                t('Across {{count, number}} datastores', {
+                    count: datastoreCount,
+                }) +
                 // Naming the excluded stores matters: without it the total looks
                 // like the whole picture when part of it could not be read.
                 (unreadableDatastores > 0
-                    ? ` · ${num(unreadableDatastores)} unreadable`
+                    ? ` · ${t('{{count, number}} unreadable', { count: unreadableDatastores })}`
                     : '')
             }
         />
     )
+}
+
+const statusLabel: Record<NodeSummary['status'], string> = {
+    online: t('Online'),
+    unreachable: t('Unreachable'),
+    unknown: t('Unknown'),
 }
 
 const statusText: Record<NodeSummary['status'], string> = {
@@ -157,7 +165,7 @@ const StatusMarker = ({ node }: { node: NodeSummary }) =>
         <span
             className={`shrink-0 text-xs capitalize ${statusText[node.status]}`}
         >
-            {node.status}
+            {statusLabel[node.status]}
         </span>
     )
 
@@ -181,7 +189,7 @@ const SnapshotMeta = ({ node }: { node: NodeSummary }) =>
             </TooltipTrigger>
             <TooltipContent className='max-w-64'>
                 {t(
-                    'Couldn&apos;t fetch resource usage from this node. Memory and storage figures are unknown until it reports again.'
+                    "Couldn't fetch resource usage from this node. Memory and storage figures are unknown until it reports again."
                 )}
             </TooltipContent>
         </Tooltip>
@@ -191,8 +199,7 @@ const ServerCount = ({ node }: { node: NodeSummary }) => (
     <>
         {num(node.servers)}{' '}
         <span className='text-label font-normal'>
-            {t('server')}
-            {node.servers === 1 ? '' : 's'}
+            {t('servers', { count: node.servers })}
         </span>
     </>
 )
@@ -202,8 +209,7 @@ const NodesCard = ({ nodes }: { nodes: NodeSummary[] }) => (
         <CardHeader className='flex flex-row items-center justify-between space-y-0 p-5 pb-2'>
             <CardTitle className='text-base'>{t('Nodes')}</CardTitle>
             <StatLabel as='span' className='text-xs'>
-                {t('{{num}} host', { num: num(nodes.length) })}
-                {nodes.length === 1 ? '' : 's'}
+                {t('{{count, number}} hosts', { count: nodes.length })}
             </StatLabel>
         </CardHeader>
         <CardContent className='p-5 pt-2'>
@@ -215,7 +221,7 @@ const NodesCard = ({ nodes }: { nodes: NodeSummary[] }) => (
                     description={t('Add a node to start provisioning servers.')}
                     action={
                         <Link className={buttonVariants()} to='/admin/nodes'>
-                            Add node
+                            {t('Add node')}
                         </Link>
                     }
                 />
@@ -275,10 +281,9 @@ const NodesCard = ({ nodes }: { nodes: NodeSummary[] }) => (
                                                         node.resources.memory
                                                     }
                                                     label={t(
-                                                        'Memory used on {{displayName}}',
+                                                        'Memory used on {{name}}',
                                                         {
-                                                            displayName:
-                                                                node.displayName,
+                                                            name: node.displayName,
                                                         }
                                                     )}
                                                     sub={t(
@@ -362,10 +367,9 @@ const NodesCard = ({ nodes }: { nodes: NodeSummary[] }) => (
                                                         node.resources.memory
                                                     }
                                                     label={t(
-                                                        'Memory used on {{displayName}}',
+                                                        'Memory used on {{name}}',
                                                         {
-                                                            displayName:
-                                                                node.displayName,
+                                                            name: node.displayName,
                                                         }
                                                     )}
                                                     sub={t(

@@ -45,12 +45,12 @@ const ServerBulkPowerActions = ({ servers, onDone }: Props) => {
 
     const run = async (action: PowerAction) => {
         const confirmed = await confirm({
-            title: t('{{labels}} {{length}} server(s)?', {
-                labels: labels[action],
-                length: servers.length,
+            title: t('{{action}} {{count}} servers?', {
+                action: labels[action],
+                count: servers.length,
             }),
             description: t('This will {{action}} every selected server.', {
-                action,
+                action: labels[action].toLowerCase(),
             }),
         })
         setTimeout(() => {
@@ -77,17 +77,17 @@ const ServerBulkPowerActions = ({ servers, onDone }: Props) => {
         const failed = results.filter(r => r.status === 'rejected').length
         if (failed) {
             toast.add({
-                title: t('{{failed}} of {{length}} power actions failed', {
+                title: t('{{failed}} of {{count}} power actions failed', {
                     failed,
-                    length: servers.length,
+                    count: servers.length,
                 }),
                 type: 'error',
             })
         } else {
             toast.add({
-                title: t('Queued {{action}} for {{length}} server(s)', {
-                    action,
-                    length: servers.length,
+                title: t('Queued {{action}} for {{count}} servers', {
+                    action: labels[action].toLowerCase(),
+                    count: servers.length,
                 }),
                 type: 'success',
             })

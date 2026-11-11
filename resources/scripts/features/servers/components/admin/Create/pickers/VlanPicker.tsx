@@ -48,8 +48,10 @@ const VlanPicker = ({ networkInterface }: Props) => {
     const disabled = !isTrunk || vlans.length === 0
 
     const inheritLabel = networkInterface?.vlanTag
-        ? `Inherit bridge default (VLAN ${networkInterface.vlanTag})`
-        : 'No VLAN'
+        ? t('Inherit bridge default (VLAN {{tag}})', {
+              tag: networkInterface.vlanTag,
+          })
+        : t('No VLAN')
 
     // Passed to `Select` as well as rendered: Base UI resolves the trigger's
     // label from this list, and without it the raw value (the sentinel) shows.
@@ -71,14 +73,19 @@ const VlanPicker = ({ networkInterface }: Props) => {
     ]
 
     const description = !networkInterface
-        ? 'Select a network interface first.'
+        ? t('Select a network interface first.')
         : !isTrunk
-          ? `${networkInterface.name} is not VLAN-aware, so servers on it are untagged.`
+          ? t('{{name}} is not VLAN-aware, so servers on it are untagged.', {
+                name: networkInterface.name,
+            })
           : vlans.length === 0
             ? // The dead end the strict rule creates: a freshly configured trunk
               // has nothing to choose from until someone declares a VLAN.
-              `No VLANs declared on ${networkInterface.name}. Declare one on the node's Network page first.`
-            : 'Optional. Leave on the default to inherit the bridge.'
+              t(
+                  "No VLANs declared on {{name}}. Declare one on the node's Network page first.",
+                  { name: networkInterface.name }
+              )
+            : t('Optional. Leave on the default to inherit the bridge.')
 
     return (
         <FormField

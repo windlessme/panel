@@ -11,7 +11,7 @@ class InvalidAuthenticatorAttestationResponse extends BadRequestHttpException im
     public function __construct(Throwable $exception)
     {
         parent::__construct(
-            'The given passkey could not be validated. Please check the format and try again.',
+            __('The given passkey could not be validated. Please check the format and try again.'),
             $exception,
         );
     }

@@ -28,9 +28,6 @@ const Sub = ({ children }: { children: ReactNode }) => (
     <span className={'text-muted-foreground block text-sm'}>{children}</span>
 )
 
-const countOf = (count: number, noun: string) =>
-    `${count.toLocaleString()} ${noun}${count === 1 ? '' : 's'}`
-
 /**
  * What the whole install's address space looks like, above the list of pools.
  *
@@ -53,7 +50,10 @@ const IpamSummaryCards = () => {
                     view?.known ? (
                         <SegmentedProgressBar
                             segments={view.segments}
-                            aria-label={`${view.percent!.toFixed(0)}% of usable addresses are in use`}
+                            aria-label={t(
+                                '{{percent}}% of usable addresses are in use',
+                                { percent: view.percent!.toFixed(0) }
+                            )}
                         />
                     ) : undefined
                 }
@@ -64,15 +64,14 @@ const IpamSummaryCards = () => {
                         <Sub>
                             {view.usable === null
                                 ? t('assigned or held')
-                                : t('of {{value}} usable{{value2}}', {
-                                      value: view.usable.toLocaleString(),
-                                      value2:
-                                          view.percent === null
-                                              ? ''
-                                              : ` · ${view.percent.toFixed(0)}%`,
+                                : t('of {{usable}} usable', {
+                                      usable: view.usable.toLocaleString(),
                                   })}
+                            {view.usable !== null &&
+                                view.percent !== null &&
+                                ` · ${view.percent.toFixed(0)}%`}
                             {view.sparseBlockCount > 0 &&
-                                ` · ${countOf(view.sparseBlockCount, 'block')} minted on demand`}
+                                ` · ${t('{{count, number}} blocks minted on demand', { count: view.sparseBlockCount })}`}
                         </Sub>
                     </p>
                 ) : (
@@ -90,11 +89,17 @@ const IpamSummaryCards = () => {
                         <Value>{view.free.toLocaleString()}</Value>
                         <Sub>
                             {view.free > 0
-                                ? `ready to hand out across ${countOf(summary.poolsCount, 'pool')}`
+                                ? t(
+                                      'ready to hand out across {{count, number}} pools',
+                                      { count: summary.poolsCount }
+                                  )
                                 : view.ungenerated > 0
-                                  ? t('{{value}} units not generated yet', {
-                                        value: view.ungenerated.toLocaleString(),
-                                    })
+                                  ? t(
+                                        '{{count, number}} units not generated yet',
+                                        {
+                                            count: view.ungenerated,
+                                        }
+                                    )
                                   : t('nothing left to hand out')}
                         </Sub>
                     </p>
@@ -144,7 +149,12 @@ const IpamSummaryCards = () => {
                                     {summary.fullestBlock.percent}%
                                 </Link>
                             ) : (
-                                `${countOf(summary.blocksCount, 'block')} with room to spare`
+                                t(
+                                    '{{count, number}} blocks with room to spare',
+                                    {
+                                        count: summary.blocksCount,
+                                    }
+                                )
                             )}
                         </Sub>
                     </p>

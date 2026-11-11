@@ -33,10 +33,22 @@ interface Props {
     mutate: Mutator<PaginatedAddresses>
 }
 
-const VERBS: Record<AddressBulkAction, { done: string; none: string }> = {
-    reserve: { done: 'reserved', none: t('None of those could be reserved') },
-    release: { done: 'released', none: t('None of those could be released') },
-    delete: { done: 'deleted', none: t('None of those could be deleted') },
+const VERBS: Record<
+    AddressBulkAction,
+    { done: (count: number) => string; none: string }
+> = {
+    reserve: {
+        done: count => t('{{count, number}} addresses reserved', { count }),
+        none: t('None of those could be reserved'),
+    },
+    release: {
+        done: count => t('{{count, number}} addresses released', { count }),
+        none: t('None of those could be released'),
+    },
+    delete: {
+        done: count => t('{{count, number}} addresses deleted', { count }),
+        none: t('None of those could be deleted'),
+    },
 }
 
 /**
@@ -75,7 +87,7 @@ const AddressBulkActions = ({
             toast.add({
                 title:
                     result.affected > 0
-                        ? `${result.affected.toLocaleString()} ${result.affected === 1 ? 'address' : 'addresses'} ${verb.done}`
+                        ? verb.done(result.affected)
                         : verb.none,
                 // Skipped rows are the normal case, not an error: a selection dragged over a table
                 // will contain system reservations and assigned addresses, and saying nothing about
@@ -83,8 +95,8 @@ const AddressBulkActions = ({
                 description:
                     result.skipped > 0
                         ? t(
-                              '{{value}} skipped — assigned or reserved by the panel.',
-                              { value: result.skipped.toLocaleString() }
+                              '{{skipped}} skipped — assigned or reserved by the panel.',
+                              { skipped: result.skipped.toLocaleString() }
                           )
                         : undefined,
                 type: result.affected > 0 ? 'success' : 'info',

@@ -17,9 +17,9 @@ interface Props {
 // Friendly labels for the client-safe error codes. The raw errorMessage (admin
 // only) is appended when present for the extra detail.
 const BACKUP_ERROR_LABELS: Record<BackupErrorCode, string> = {
-    [BackupErrorCode.StorageExceeded]: 'Storage quota exceeded',
-    [BackupErrorCode.Timeout]: 'Backup timed out',
-    [BackupErrorCode.Other]: 'Backup failed',
+    [BackupErrorCode.StorageExceeded]: t('Storage quota exceeded'),
+    [BackupErrorCode.Timeout]: t('Backup timed out'),
+    [BackupErrorCode.Other]: t('Backup failed'),
 }
 
 const BackupCard = ({ backup }: Props) => {

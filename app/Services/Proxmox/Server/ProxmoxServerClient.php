@@ -70,7 +70,7 @@ class ProxmoxServerClient extends ProxmoxClient
 
         $bootSlot = $hardware['boot_disk_slot'] ?? 'scsi0';
         $system = $volids[ImageDiskRole::SYSTEM->value]
-            ?? throw new ConflictHttpException('This image version has no system disk to import.');
+            ?? throw new ConflictHttpException(__('This image version has no system disk to import.'));
 
         $payload = array_merge(OsProfiles::proxmoxKeys($hardware), [
             'vmid' => $server->vmid,

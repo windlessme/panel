@@ -56,7 +56,7 @@ const AnchorProtocol = ({
                     </TooltipTrigger>
                     <TooltipContent className='max-w-64'>
                         {t(
-                            'This anchor hasn&apos;t told the panel which protocol versions it speaks. It reports that on its first heartbeat after enrolling.'
+                            "This anchor hasn't told the panel which protocol versions it speaks. It reports that on its first heartbeat after enrolling."
                         )}
                     </TooltipContent>
                 </Tooltip>

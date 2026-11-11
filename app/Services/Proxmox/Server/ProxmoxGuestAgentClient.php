@@ -300,11 +300,11 @@ class ProxmoxGuestAgentClient extends ProxmoxClient
 
             if (is_string($message)) {
                 if (str_contains($message, 'QEMU guest agent is not running')) {
-                    throw new GuestAgentUnavailableException('The QEMU Guest Agent is not running on this server. Please ensure it is installed and running.', $e);
+                    throw new GuestAgentUnavailableException(__('The QEMU Guest Agent is not running on this server. Please ensure it is installed and running.'), $e);
                 }
 
                 if (preg_match('/VM \d+ is not running/', $message)) {
-                    throw new GuestAgentUnavailableException('The server is not running. Please start the server to perform this action.', $e);
+                    throw new GuestAgentUnavailableException(__('The server is not running. Please start the server to perform this action.'), $e);
                 }
             }
 

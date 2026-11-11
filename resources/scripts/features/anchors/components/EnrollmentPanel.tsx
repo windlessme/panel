@@ -129,7 +129,7 @@ const EnrollmentPanel = ({
                     <p className={'text-destructive text-sm'}>
                         {getApiErrorMessage(
                             issue.error,
-                            'Could not create an install command.'
+                            t('Could not create an install command.')
                         )}
                     </p>
                     <Button

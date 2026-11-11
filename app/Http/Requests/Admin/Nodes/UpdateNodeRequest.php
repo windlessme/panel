@@ -33,7 +33,7 @@ class UpdateNodeRequest extends BaseApiRequest
                 if ($memory < $node->memory_allocated) {
                     $validator->errors()->add(
                         'memory',
-                        'The memory value is lower than what\'s allocated.',
+                        __('The memory value is lower than what\'s allocated.'),
                     );
                 }
             },

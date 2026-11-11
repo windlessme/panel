@@ -29,7 +29,7 @@ import {
     OverflowItemGroup,
 } from '@/components/ui/Item'
 
-import { bytes, num } from './overview-helpers'
+import { bytes } from './overview-helpers'
 
 type OverviewData = App.Data.Admin.Overview.OverviewData
 
@@ -104,7 +104,9 @@ const deriveAttention = (
             id: 'failed-servers',
             tone: 'alert',
             icon: IconAlertTriangle,
-            title: `${num(summary.failedServers)} server${summary.failedServers === 1 ? '' : 's'} failed to install`,
+            title: t('{{count, number}} servers failed to install', {
+                count: summary.failedServers,
+            }),
             description: t('Review provisioning logs on the affected nodes.'),
             action: <ActionLink to='/admin/servers'>{t('Review')}</ActionLink>,
         })
@@ -115,7 +117,9 @@ const deriveAttention = (
             id: 'flagged-clusters',
             tone: 'alert',
             icon: IconNetwork,
-            title: `${num(summary.flaggedClusters)} cluster identit${summary.flaggedClusters === 1 ? 'y' : 'ies'} flagged`,
+            title: t('{{count, number}} cluster identities flagged', {
+                count: summary.flaggedClusters,
+            }),
             description: t(
                 'A cluster reported members that share nothing with what Convoy recorded.'
             ),
@@ -128,7 +132,9 @@ const deriveAttention = (
             id: 'flagged-servers',
             tone: 'alert',
             icon: IconAlertTriangle,
-            title: `${num(servers.flagged)} server${servers.flagged === 1 ? '' : 's'} flagged`,
+            title: t('{{count, number}} servers flagged', {
+                count: servers.flagged,
+            }),
             description: t(
                 'Placement could not be reconciled automatically — a guest moved somewhere Convoy cannot follow.'
             ),
@@ -141,7 +147,9 @@ const deriveAttention = (
             id: 'failed-backups',
             tone: 'alert',
             icon: IconDatabaseExclamation,
-            title: `${num(backups.failed)} backup${backups.failed === 1 ? '' : 's'} failed`,
+            title: t('{{count, number}} backups failed', {
+                count: backups.failed,
+            }),
             description: t('Backups that did not complete successfully.'),
             action: <ActionLink to='/admin/servers'>{t('View')}</ActionLink>,
         })
@@ -175,8 +183,8 @@ const deriveAttention = (
                 id: `node-capacity-${node.id}`,
                 tone: 'neutral',
                 icon: IconServerBolt,
-                title: t('{{displayName}} near memory capacity', {
-                    displayName: node.displayName,
+                title: t('{{name}} near memory capacity', {
+                    name: node.displayName,
                 }),
                 description: t('Allocated {{percent}}% of {{total}}.', {
                     percent: node.memory.percent,
@@ -191,7 +199,9 @@ const deriveAttention = (
             id: 'suspended-servers',
             tone: 'neutral',
             icon: IconPlayerPause,
-            title: `${num(servers.suspended)} server${servers.suspended === 1 ? '' : 's'} suspended`,
+            title: t('{{count, number}} servers suspended', {
+                count: servers.suspended,
+            }),
             description: t('Suspended servers are not running.'),
             action: <ActionLink to='/admin/servers'>{t('View')}</ActionLink>,
         })
@@ -207,9 +217,10 @@ const deriveSetup = (data: OverviewData): AttentionItem[] => [
         tone: 'setup',
         icon: IconServerBolt,
         title: t('Add another node'),
-        description: t('You have {{num}}. More nodes, more capacity.', {
-            num: num(data.summary.nodes),
-        }),
+        description: t(
+            'You have {{count, number}} nodes. More nodes, more capacity.',
+            { count: data.summary.nodes }
+        ),
         action: <ActionLink to='/admin/nodes'>{t('Add node')}</ActionLink>,
     },
     {
@@ -251,7 +262,7 @@ const NeedsAttentionCard = ({ data, isFresh }: Props) => {
     const { data: update } = useUpdateStatus()
 
     const items = isFresh ? deriveSetup(data) : deriveAttention(data, update)
-    const title = isFresh ? 'Finish setup' : 'Needs attention'
+    const title = isFresh ? t('Finish setup') : t('Needs attention')
 
     return (
         <Card className='flex flex-col'>

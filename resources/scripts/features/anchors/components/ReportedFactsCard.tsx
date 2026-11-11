@@ -84,9 +84,9 @@ const ReportedFactsCard = ({ enrollment, onEdit, editing }: Props) => {
                     ) : null}
                     {cpu.threads ? (
                         <Row label={'CPU'}>
-                            {`${cpu.threads} threads`}
+                            {t('{{count}} threads', { count: cpu.threads })}
                             {cpu.sockets
-                                ? ` · ${cpu.sockets} socket${cpu.sockets === 1 ? '' : 's'}`
+                                ? ` · ${t('{{count}} sockets', { count: cpu.sockets })}`
                                 : ''}
                         </Row>
                     ) : null}

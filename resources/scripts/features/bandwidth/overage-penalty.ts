@@ -50,8 +50,8 @@ export const refineOveragePenalty = <T extends z.ZodTypeAny>(schema: T) =>
             ctx.addIssue({
                 code: z.ZodIssueCode.custom,
                 path: ['overagePenaltyRate'],
-                message: t('Must be at least {{MIN_RATE_MB}} MB/s', {
-                    MIN_RATE_MB,
+                message: t('Must be at least {{min}} MB/s', {
+                    min: MIN_RATE_MB,
                 }),
             })
         }
@@ -92,9 +92,11 @@ export const overagePenaltyPayload = (values: {
 
 /** Human summary of a resolved penalty, e.g. "Throttle to 10 MB/s". */
 export const describePenalty = (penalty: OveragePenalty | null): string => {
-    if (!penalty) return 'Not configured'
-    if (penalty.action === 'disconnect') return 'Disconnect the NIC'
-    if (penalty.rate == null) return 'Throttle'
+    if (!penalty) return t('Not configured')
+    if (penalty.action === 'disconnect') return t('Disconnect the NIC')
+    if (penalty.rate == null) return t('Throttle')
 
-    return `Throttle to ${penalty.rate / BYTES_PER_MB} MB/s`
+    return t('Throttle to {{rate}} MB/s', {
+        rate: penalty.rate / BYTES_PER_MB,
+    })
 }

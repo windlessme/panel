@@ -19,7 +19,7 @@ class VMIDIsAvailable implements ValidationRule
         }
 
         if (Server::where('vmid', $value)->where('node_id', $this->nodeId)->exists()) {
-            $fail('The specified VMID is already in use on this node.');
+            $fail(__('The specified VMID is already in use on this node.'));
 
             return;
         }
@@ -31,7 +31,7 @@ class VMIDIsAvailable implements ValidationRule
 
         $client = app(ProxmoxAllocationClient::class)->setNode($node);
         if (! $client->isVMIDAvailable((int) $value)) {
-            $fail('The specified VMID is not available for use on Proxmox.');
+            $fail(__('The specified VMID is not available for use on Proxmox.'));
         }
     }
 }

@@ -69,7 +69,10 @@ const changedFields = (properties: AuditProperties): string | null => {
 
     if (fields.length === 1) return fields[0]
 
-    return `${fields.slice(0, -1).join(', ')} and ${fields[fields.length - 1]}`
+    return t('{{fields}} and {{last}}', {
+        fields: fields.slice(0, -1).join(', '),
+        last: fields[fields.length - 1],
+    })
 }
 
 const powerDetail = (properties: AuditProperties): string | null =>
@@ -99,15 +102,15 @@ export const AUDIT_EVENT_COPY: Record<AuditEvent, AuditEventCopy> = {
         detail: () => null,
     },
     'account.two-factor.enabled': {
-        verb: 'started setting up two-factor authentication',
+        verb: t('started setting up two-factor authentication'),
         detail: () => null,
     },
     'account.two-factor.confirmed': {
-        verb: 'enabled two-factor authentication',
+        verb: t('enabled two-factor authentication'),
         detail: () => null,
     },
     'account.two-factor.disabled': {
-        verb: 'disabled two-factor authentication',
+        verb: t('disabled two-factor authentication'),
         detail: () => null,
     },
     'account.recovery-codes.regenerated': {
@@ -169,7 +172,9 @@ export const AUDIT_EVENT_COPY: Record<AuditEvent, AuditEventCopy> = {
             const inbound = pick(p, 'inbound_policy')
             const outbound = pick(p, 'outbound_policy')
 
-            return inbound && outbound ? `in ${inbound}, out ${outbound}` : null
+            return inbound && outbound
+                ? t('in {{inbound}}, out {{outbound}}', { inbound, outbound })
+                : null
         },
     },
     'server.firewall.rule-created': {
@@ -321,8 +326,8 @@ export const AUDIT_EVENT_COPY: Record<AuditEvent, AuditEventCopy> = {
             const maxUses = p.max_uses
             const limit =
                 typeof maxUses === 'number'
-                    ? `${maxUses} use${maxUses === 1 ? '' : 's'}`
-                    : 'unlimited uses'
+                    ? t('{{count}} uses', { count: maxUses })
+                    : t('unlimited uses')
             const name = pick(p, 'name')
 
             return name ? `${name} — ${limit}` : limit
@@ -383,7 +388,7 @@ export const AUDIT_EVENT_COPY: Record<AuditEvent, AuditEventCopy> = {
     'admin.user.updated': { verb: t('updated a user'), detail: changedFields },
     'admin.user.deleted': { verb: t('deleted a user') },
     'admin.user.sso-token-generated': {
-        verb: 'generated a sign-in link for a user',
+        verb: t('generated a sign-in link for a user'),
         detail: () => null,
     },
     'admin.user.invited': { verb: t('invited a user'), detail: () => null },

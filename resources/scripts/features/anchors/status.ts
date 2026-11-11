@@ -42,8 +42,8 @@ export interface AnchorLike {
 
 const anchorStatus = (anchor: AnchorLike): AnchorStatus => {
     const lastSeen = anchor.lastSeenAt
-        ? `Last seen ${relative(anchor.lastSeenAt)}`
-        : 'Has never reported in'
+        ? t('Last seen {{time}}', { time: relative(anchor.lastSeenAt) })
+        : t('Has never reported in')
 
     switch (anchor.compatibility) {
         case 'compatible':

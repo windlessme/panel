@@ -166,21 +166,27 @@ const InstallingServer = ({ server }: InstallingServerProps) => {
         : null
 
     const title = () => {
-        if (isDeleting) return 'Deleting server'
-        if (isRestoring) return 'Restoring backup'
+        if (isDeleting) return t('Deleting server')
+        if (isRestoring) return t('Restoring backup')
         if (isFailed)
             return imageLabel
-                ? `Could not install ${imageLabel}`
-                : 'Installation failed'
-        return imageLabel ? `Installing ${imageLabel}` : 'Installing server'
+                ? t('Could not install {{image}}', { image: imageLabel })
+                : t('Installation failed')
+        return imageLabel
+            ? t('Installing {{image}}', { image: imageLabel })
+            : t('Installing server')
     }
 
     const subtitle = () => {
-        if (!deployment) return 'Waiting for the node to pick it up'
+        if (!deployment) return t('Waiting for the node to pick it up')
         if (isFailed)
-            return 'The rebuild stopped. Your disk was left as the failed step found it.'
+            return t(
+                'The rebuild stopped. Your disk was left as the failed step found it.'
+            )
         if (deployment.requestedAt)
-            return `Started ${formatDistanceToNowStrict(deployment.requestedAt)} ago`
+            return t('Started {{duration}} ago', {
+                duration: formatDistanceToNowStrict(deployment.requestedAt),
+            })
         return null
     }
 
@@ -211,7 +217,7 @@ const InstallingServer = ({ server }: InstallingServerProps) => {
         failedStep ??
         steps.find(step => step.status === DeploymentStatus.Pending)
     const headlinePercent = () => {
-        if (isFailed) return 'Failed'
+        if (isFailed) return t('Failed')
         if (allComplete) return '100%'
         if (
             runningStep &&
@@ -224,21 +230,26 @@ const InstallingServer = ({ server }: InstallingServerProps) => {
     }
 
     const headlineDetail = () => {
-        if (isFailed) return 'Nothing after this step ran'
+        if (isFailed) return t('Nothing after this step ran')
         if (allComplete)
             return deployment?.startOnCompletion
-                ? 'Starting the server'
-                : 'The server is ready and stays powered off'
-        if (!runningStep) return 'Waiting for the node to pick it up'
+                ? t('Starting the server')
+                : t('The server is ready and stays powered off')
+        if (!runningStep) return t('Waiting for the node to pick it up')
         if (
             runningStep.progressTotal > 0 &&
             stepIsBytes(runningStep.name) &&
             runningStep.progressMode === ProgressMode.Determinate
         ) {
-            return `${bytes(runningStep.progressCurrent)} of ${bytes(runningStep.progressTotal)}`
+            return t('{{used}} of {{limit}}', {
+                used: bytes(runningStep.progressCurrent),
+                limit: bytes(runningStep.progressTotal),
+            })
         }
         if (runningStep.startedAt) {
-            return `Running for ${formatStepDuration(runningStep.startedAt, now)}`
+            return t('Running for {{duration}}', {
+                duration: formatStepDuration(runningStep.startedAt, now),
+            })
         }
         return null
     }
@@ -278,8 +289,8 @@ const InstallingServer = ({ server }: InstallingServerProps) => {
                             <IconAlertTriangle className={'size-4'} />
                             <AlertTitle>
                                 {failedStep
-                                    ? t('{{stepLabel}} failed', {
-                                          stepLabel: stepLabel(failedStep.name),
+                                    ? t('{{step}} failed', {
+                                          step: stepLabel(failedStep.name),
                                       })
                                     : t('The installation failed')}
                             </AlertTitle>
@@ -369,7 +380,12 @@ const InstallingServer = ({ server }: InstallingServerProps) => {
                                         <span>
                                             {remaining === 0
                                                 ? t('Last step')
-                                                : `${remaining} step${remaining === 1 ? '' : 's'} after this`}
+                                                : t(
+                                                      '{{count}} steps after this',
+                                                      {
+                                                          count: remaining,
+                                                      }
+                                                  )}
                                         </span>
                                     )}
                                 </div>
@@ -389,8 +405,8 @@ const InstallingServer = ({ server }: InstallingServerProps) => {
                                             'size-3.5 transition-transform group-open/steps:rotate-90'
                                         }
                                     />
-                                    {t('All {{length}} steps', {
-                                        length: steps.length,
+                                    {t('All {{count}} steps', {
+                                        count: steps.length,
                                     })}
                                 </summary>
                                 <ol className={'flex flex-col pt-2'}>

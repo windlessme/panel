@@ -23,14 +23,14 @@ class ServerInstalled
 
         if (! $server instanceof Server) {
             throw new NotFoundHttpException(
-                'No server resource was located in the request parameters.',
+                __('No server resource was located in the request parameters.'),
             );
         }
 
         if (! $server->isInstalled()) {
             throw new HttpException(
                 Response::HTTP_FORBIDDEN,
-                'Access to this resource is not allowed due to the current installation state.',
+                __('Access to this resource is not allowed due to the current installation state.'),
             );
         }
 

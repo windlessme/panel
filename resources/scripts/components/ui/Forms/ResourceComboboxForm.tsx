@@ -5,6 +5,8 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 import { CommandLoading } from 'cmdk'
 import { ReactNode, useId, useState } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import {
     Command,
@@ -129,10 +131,11 @@ const ResourceComboboxForm = <T,>({
                                     value={query}
                                     onValueChange={setQuery}
                                     placeholder={
-                                        searchPlaceholder ?? 'Search...'
+                                        searchPlaceholder ?? t('Search...')
                                     }
                                     aria-label={
-                                        searchPlaceholder ?? `Search ${label}`
+                                        searchPlaceholder ??
+                                        t('Search {{label}}', { label })
                                     }
                                 />
                                 <CommandList>
@@ -153,7 +156,7 @@ const ResourceComboboxForm = <T,>({
                                             isEmpty && (
                                                 <CommandEmpty>
                                                     {nothingFoundMessage ??
-                                                        'No results found'}
+                                                        t('No results found')}
                                                 </CommandEmpty>
                                             )
                                         )}

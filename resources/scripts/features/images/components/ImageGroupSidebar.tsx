@@ -97,7 +97,7 @@ const ImageGroupSidebar = () => {
                                                 <IconPlus
                                                     className={'size-4'}
                                                 />{' '}
-                                                New image
+                                                {t('New image')}
                                             </Button>
                                         }
                                     />

@@ -36,7 +36,7 @@ class ImageUploadController
 
         if (! in_array($extension, ['qcow2', 'img', 'raw'], true)) {
             throw new UnprocessableEntityHttpException(
-                'A disk image must be a .qcow2, .img or .raw file.',
+                __('A disk image must be a .qcow2, .img or .raw file.'),
             );
         }
 

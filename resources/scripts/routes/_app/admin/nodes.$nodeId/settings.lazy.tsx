@@ -142,14 +142,14 @@ function NodeSettings() {
                                             form.reset(defaultsFromNode(node))
                                         }
                                     >
-                                        Discard
+                                        {t('Discard')}
                                     </Button>
                                 )}
                                 <FormButton
                                     className={'flex'}
                                     disabled={!isDirty}
                                 >
-                                    Save changes{' '}
+                                    {t('Save changes')}{' '}
                                     <IconCheck className={'size-4'} />
                                 </FormButton>
                             </>
@@ -171,7 +171,7 @@ function NodeSettings() {
                             <CardContent>
                                 <OveragePenaltyFields
                                     inheritedFrom={node.defaultOveragePenalty}
-                                    inheritedLabel={'global'}
+                                    inheritedLabel={t('global')}
                                 />
                             </CardContent>
                         </Card>

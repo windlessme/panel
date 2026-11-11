@@ -9,7 +9,7 @@ class OAuthAccountNotProvisionedException extends AccessDeniedHttpException impl
 {
     public function __construct()
     {
-        parent::__construct('No Convoy account is linked to that identity. Ask an administrator to create your account or connect the provider from your account settings first.');
+        parent::__construct(__('No Convoy account is linked to that identity. Ask an administrator to create your account or connect the provider from your account settings first.'));
     }
 
     public function errorCode(): string

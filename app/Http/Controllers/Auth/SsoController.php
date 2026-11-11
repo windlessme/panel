@@ -26,13 +26,13 @@ class SsoController
         $nonce = (string) $request->query('nonce');
 
         if ($nonce === '' || ! Cache::add("sso-nonce:{$nonce}", true, now()->addSeconds(config('sso.link_ttl') + 60))) {
-            throw new UnauthorizedHttpException('', 'This single sign-on link has already been used or is invalid.');
+            throw new UnauthorizedHttpException('', __('This single sign-on link has already been used or is invalid.'));
         }
 
         $user = User::where('uuid', '=', $uuid)->first();
 
         if (! $user instanceof User) {
-            throw new UnauthorizedHttpException('', 'The single sign-on link references an unknown user.');
+            throw new UnauthorizedHttpException('', __('The single sign-on link references an unknown user.'));
         }
 
         Auth::loginUsingId($user->id);

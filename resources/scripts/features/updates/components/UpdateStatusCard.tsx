@@ -54,7 +54,7 @@ const UpdateStatusCard = () => {
             toast.add({
                 title: getApiErrorMessage(
                     error,
-                    'Could not reach GitHub to check for updates'
+                    t('Could not reach GitHub to check for updates')
                 ),
                 type: 'error',
             })

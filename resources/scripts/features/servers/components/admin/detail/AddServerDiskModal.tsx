@@ -98,7 +98,7 @@ const AddServerDiskModal = ({
                             <ResponsiveDialogClose
                                 render={
                                     <Button variant={'outline'} type={'button'}>
-                                        Cancel
+                                        {t('Cancel')}
                                     </Button>
                                 }
                             />

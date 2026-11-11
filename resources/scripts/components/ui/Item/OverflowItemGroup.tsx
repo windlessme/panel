@@ -54,9 +54,7 @@ const OverflowItemGroup = ({ rows, max = 3, title, className }: Props) => {
                         className='mt-auto w-full'
                         onClick={() => setOpen(true)}
                     >
-                        {t('Show all {{length}} &rarr;', {
-                            length: rows.length,
-                        })}
+                        {t('Show all {{count}}', { count: rows.length })} &rarr;
                     </Button>
                 )}
             </div>

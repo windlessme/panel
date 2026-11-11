@@ -118,7 +118,7 @@ const SSHKeysCard = ({ uuid }: Props) => {
         },
         onError: e =>
             toast.add({
-                title: errorMessage(e, 'Failed to update keys'),
+                title: errorMessage(e, t('Failed to update keys')),
                 type: 'error',
             }),
     })
@@ -164,10 +164,10 @@ const SSHKeysCard = ({ uuid }: Props) => {
                                             <ItemTitle className={'truncate'}>
                                                 {named?.name ??
                                                     comment ??
-                                                    'One-off key'}
+                                                    t('One-off key')}
                                                 {!named && (
                                                     <Badge variant={'outline'}>
-                                                        One-off
+                                                        {t('One-off')}
                                                     </Badge>
                                                 )}
                                             </ItemTitle>
@@ -182,7 +182,7 @@ const SSHKeysCard = ({ uuid }: Props) => {
                                             <Button
                                                 variant={'ghost'}
                                                 size={'icon'}
-                                                aria-label={'Remove SSH key'}
+                                                aria-label={t('Remove SSH key')}
                                                 onClick={() =>
                                                     setKeys(prev =>
                                                         prev.filter(

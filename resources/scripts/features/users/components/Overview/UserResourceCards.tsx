@@ -24,9 +24,6 @@ const format = (bytes: number) => {
     return `${size.value} ${size.unit}`
 }
 
-const countOf = (count: number, noun: string) =>
-    `${count} ${noun}${count === 1 ? '' : 's'}`
-
 /** The figure, in the type the statistic row uses everywhere else. */
 const Value = ({ children }: { children: React.ReactNode }) => (
     <span
@@ -78,8 +75,12 @@ const UserResourceCards = ({ resources }: Props) => {
      * both, so they are listed rather than summed into one "not healthy" number.
      */
     const serverNotes = [
-        resources.suspendedCount > 0 && `${resources.suspendedCount} suspended`,
-        resources.unbuiltCount > 0 && `${resources.unbuiltCount} not built`,
+        resources.suspendedCount > 0 &&
+            t('{{suspended}} suspended', {
+                suspended: resources.suspendedCount,
+            }),
+        resources.unbuiltCount > 0 &&
+            t('{{unbuilt}} not built', { unbuilt: resources.unbuiltCount }),
     ].filter(Boolean) as string[]
 
     return (
@@ -106,8 +107,10 @@ const UserResourceCards = ({ resources }: Props) => {
                     <Value>{resources.cpu}</Value>
                     <Sub>
                         {resources.nodesCount > 0
-                            ? `allocated across ${countOf(resources.nodesCount, 'node')}`
-                            : 'allocated'}
+                            ? t('allocated across {{count}} nodes', {
+                                  count: resources.nodesCount,
+                              })
+                            : t('allocated')}
                     </Sub>
                 </p>
             </StatisticCard>
@@ -140,7 +143,10 @@ const UserResourceCards = ({ resources }: Props) => {
                     !isUnmetered && (
                         <LinearProgressBar
                             value={usedPercent}
-                            aria-label={`${usedPercent.toFixed(0)}% of the summed bandwidth allowance is used`}
+                            aria-label={t(
+                                '{{percent}}% of the summed bandwidth allowance is used',
+                                { percent: usedPercent.toFixed(0) }
+                            )}
                         />
                     )
                 }
@@ -150,8 +156,8 @@ const UserResourceCards = ({ resources }: Props) => {
                     <Sub>
                         {isUnmetered
                             ? t('used · at least one server unmetered')
-                            : t('of {{value}} this period', {
-                                  value: format(resources.bandwidthLimit ?? 0),
+                            : t('of {{limit}} this period', {
+                                  limit: format(resources.bandwidthLimit ?? 0),
                               })}
                     </Sub>
                 </p>

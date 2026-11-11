@@ -85,7 +85,7 @@ class LocationController
 
         if ($location->nodes_count > 0) {
             throw new BadRequestHttpException(
-                'The location cannot be deleted with nodes still associated.',
+                __('The location cannot be deleted with nodes still associated.'),
             );
         }
 

@@ -25,7 +25,7 @@ class UpdateAddressRequest extends BaseApiRequest
                     // A reserved address is fully locked — it must be unreserved before it can be
                     // assigned to a server.
                     if ($address->state === AddressState::Reserved) {
-                        $fail('This address is reserved. Unreserve it before assigning it to a server.');
+                        $fail(__('This address is reserved. Unreserve it before assigning it to a server.'));
 
                         return;
                     }
@@ -47,7 +47,7 @@ class UpdateAddressRequest extends BaseApiRequest
                         ->exists();
 
                     if (! $nodeHasCompatibleInterface) {
-                        $fail("This address cannot be assigned to the server because the server's node does not have a network interface assigned to the address block group.");
+                        $fail(__('This address cannot be assigned to the server because the server\'s node does not have a network interface assigned to the address block group.'));
                     }
                 },
             ],

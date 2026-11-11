@@ -60,7 +60,7 @@ const RebuildConfirmDialog = ({
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        {t('Rebuild {{serverName}}?', { serverName })}
+                        {t('Rebuild {{name}}?', { name: serverName })}
                     </ResponsiveDialogTitle>
                     <ResponsiveDialogDescription>
                         {t(
@@ -80,14 +80,19 @@ const RebuildConfirmDialog = ({
                                 className={'text-destructive mt-0.5 size-4'}
                             />
                             <span>
-                                {byteSize(disk, { units: 'iec' }).toString()}
-                                {t('disk erased')}
+                                {t('{{size}} disk erased', {
+                                    size: byteSize(disk, {
+                                        units: 'iec',
+                                    }).toString(),
+                                })}
                             </span>
                         </li>
                         <li className={'flex items-start gap-2'}>
                             <IconCheck className={'mt-0.5 size-4'} />
                             <span>
-                                {t('{{imageLabel}} installed', { imageLabel })}
+                                {t('{{image}} installed', {
+                                    image: imageLabel,
+                                })}
                             </span>
                         </li>
                         <li className={'flex items-start gap-2'}>
@@ -122,7 +127,7 @@ const RebuildConfirmDialog = ({
                                 type={'button'}
                                 disabled={isPending}
                             >
-                                Cancel
+                                {t('Cancel')}
                             </Button>
                         }
                     />

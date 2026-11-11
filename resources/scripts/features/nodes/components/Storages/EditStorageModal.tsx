@@ -121,7 +121,9 @@ const EditStorageModal = () => {
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        {t('Editing')} {storage?.displayName ?? storage?.name}
+                        {t('Editing {{name}}', {
+                            name: storage?.displayName ?? storage?.name,
+                        })}
                     </ResponsiveDialogTitle>
                 </ResponsiveDialogHeader>
                 <Form {...form}>
@@ -153,7 +155,7 @@ const EditStorageModal = () => {
                             <ResponsiveDialogClose
                                 render={
                                     <Button variant={'outline'} type={'button'}>
-                                        Cancel
+                                        {t('Cancel')}
                                     </Button>
                                 }
                             />

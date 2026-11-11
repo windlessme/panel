@@ -69,21 +69,33 @@ const qualifier = (
     view: StorageCapacityView
 ): string | null => {
     if (view.isThin) {
-        const why =
-            storage.pveType === 'pbs'
-                ? 'deduplicated on the server'
-                : 'thin, so more may be promised than written'
+        const size = fmt(view.committed)
+
+        if (storage.pveType === 'pbs') {
+            return view.committed > 0
+                ? t('{{size}} committed — deduplicated on the server', { size })
+                : t('Deduplicated on the server')
+        }
 
         return view.committed > 0
-            ? `${fmt(view.committed)} committed — ${why}`
-            : why.charAt(0).toUpperCase() + why.slice(1)
+            ? t(
+                  '{{size}} committed — thin, so more may be promised than written',
+                  {
+                      size,
+                  }
+              )
+            : t('Thin, so more may be promised than written')
     }
 
     if (view.untracked) {
-        return `${fmt(view.untracked)} untracked — on disk, but not Convoy's`
+        return t("{{size}} untracked — on disk, but not Convoy's", {
+            size: fmt(view.untracked),
+        })
     }
 
-    return view.committed > 0 ? `${fmt(view.committed)} committed` : null
+    return view.committed > 0
+        ? t('{{size}} committed', { size: fmt(view.committed) })
+        : null
 }
 
 /**
@@ -101,17 +113,17 @@ const SharedWith = ({ storage }: { storage: NodeStorage }) =>
                   // nodes' figures are their own, so the warning would be
                   // exactly backwards here.
                   t(
-                      "Also on {{join}} — separate disks, this node's figures are its own",
+                      "Also on {{nodes}} — separate disks, this node's figures are its own",
                       {
-                          join: storage.sharedWith
+                          nodes: storage.sharedWith
                               .map(node => node.name)
                               .join(', '),
                       }
                   )
                 : t(
-                      "Shared with {{join}} — this capacity is not this node's alone",
+                      "Shared with {{nodes}} — this capacity is not this node's alone",
                       {
-                          join: storage.sharedWith
+                          nodes: storage.sharedWith
                               .map(node => node.name)
                               .join(', '),
                       }
@@ -151,7 +163,7 @@ const Capacity = ({ storage }: { storage: NodeStorage }) => {
                         {' · '}
                         <span className='font-semibold'>
                             {fmt(view.freeForConvoy)}
-                        </span>
+                        </span>{' '}
                         {t('free')}
                     </>
                 )}

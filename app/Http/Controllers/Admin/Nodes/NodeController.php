@@ -95,7 +95,7 @@ class NodeController
 
         if ($node->servers_count > 0) {
             throw new AccessDeniedHttpException(
-                'This node cannot be deleted with servers still associated.',
+                __('This node cannot be deleted with servers still associated.'),
             );
         }
 

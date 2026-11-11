@@ -10,7 +10,7 @@ class AddressInUseException extends BadRequestHttpException implements HasErrorC
     public function __construct(int $addressId)
     {
         parent::__construct(
-            sprintf('Address %d is currently in use by another server.', $addressId),
+            __('Address :id is currently in use by another server.', ['id' => $addressId]),
         );
     }
 

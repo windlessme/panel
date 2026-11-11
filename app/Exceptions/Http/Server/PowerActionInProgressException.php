@@ -11,7 +11,7 @@ class PowerActionInProgressException extends ConflictHttpException implements Ha
     public function __construct(?Throwable $previous = null)
     {
         parent::__construct(
-            'A power action is already in progress for this server, please wait for it to finish.',
+            __('A power action is already in progress for this server, please wait for it to finish.'),
             $previous,
         );
     }

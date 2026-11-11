@@ -103,14 +103,17 @@ const LogRow = ({ entry }: { entry: FirewallLogEntry }) => {
     )
 }
 
-/** Which directions are recording, for the bar's status line. */
+/** Which directions are recording, as the bar's status line. */
 const describeLoggedDirections = (options: FirewallOptions): string => {
     const inbound = isLogging(options.inboundLogLevel)
     const outbound = isLogging(options.outboundLogLevel)
 
-    if (inbound && outbound) return 'inbound and outbound'
+    if (inbound && outbound)
+        return t('Logging unmatched inbound and outbound traffic')
 
-    return inbound ? 'inbound' : 'outbound'
+    return inbound
+        ? t('Logging unmatched inbound traffic')
+        : t('Logging unmatched outbound traffic')
 }
 
 interface Props {
@@ -167,10 +170,10 @@ const FirewallLogCard = ({ uuid }: Props) => {
         !isLoggingUnmatched
 
     const status = isDormant
-        ? 'Nothing is being logged'
+        ? t('Nothing is being logged')
         : options && isLoggingUnmatched
-          ? `Logging unmatched ${describeLoggedDirections(options)} traffic`
-          : 'Logged by individual rules'
+          ? describeLoggedDirections(options)
+          : t('Logged by individual rules')
 
     return (
         <Card>
@@ -260,13 +263,12 @@ const FirewallLogCard = ({ uuid }: Props) => {
                         >
                             <span>
                                 {isLive
-                                    ? t('Latest {{value}} entries', {
-                                          value: entries?.length ?? 0,
+                                    ? t('Latest {{count}} entries', {
+                                          count: entries?.length ?? 0,
                                       })
-                                    : t('Entries {{value}}–{{value2}}', {
-                                          value: start + 1,
-                                          value2:
-                                              start + (entries?.length ?? 0),
+                                    : t('Entries {{from}}–{{to}}', {
+                                          from: start + 1,
+                                          to: start + (entries?.length ?? 0),
                                       })}
                             </span>
                             <span className={'flex-1'} />

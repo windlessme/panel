@@ -3,13 +3,14 @@ import { enUS, zhTW as dateFnsZhTW } from 'date-fns/locale'
 import i18next from 'i18next'
 import { z } from 'zod'
 
+import en from '@/locales/en.json'
 import zhTW from '@/locales/zh-TW.json'
 
-// Keys are the English source strings themselves, so `en` needs no catalog:
-// a missing translation falls back to the key, which is already the English
-// copy. Only non-English locales ship a JSON file.
+// Keys are the English source strings themselves, so `en` only carries plural
+// overrides (`<key>_one`): a missing entry falls back to the key, which is
+// already the English copy. Every other locale translates every key.
 export const locales = {
-    'en': { label: 'English', resources: {} as Record<string, string> },
+    'en': { label: 'English', resources: en as Record<string, string> },
     'zh-TW': { label: '繁體中文', resources: zhTW as Record<string, string> },
 } as const
 
@@ -55,6 +56,7 @@ void i18next.init({
     returnEmptyString: false,
     interpolation: { escapeValue: false },
     initAsync: false,
+    showSupportNotice: false,
 })
 
 document.documentElement.lang = locale

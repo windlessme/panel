@@ -78,7 +78,7 @@ const DeleteImageGroupModal = () => {
                                 type={'button'}
                                 disabled={isMutating}
                             >
-                                Cancel
+                                {t('Cancel')}
                             </Button>
                         }
                     />

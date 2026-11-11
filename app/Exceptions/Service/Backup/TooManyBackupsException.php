@@ -10,7 +10,7 @@ class TooManyBackupsException extends BadRequestHttpException implements HasErro
     public function __construct(int $backupLimit)
     {
         parent::__construct(
-            sprintf('Cannot create a new backup, this server has reached its limit of %d backups.', $backupLimit),
+            __('Cannot create a new backup, this server has reached its limit of :limit backups.', ['limit' => $backupLimit]),
         );
     }
 

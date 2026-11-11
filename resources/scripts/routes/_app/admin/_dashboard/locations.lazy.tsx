@@ -159,13 +159,17 @@ function LocationsIndex() {
                                         variant={'secondary'}
                                         className={'font-mono'}
                                     >
-                                        {location.nodesCount} nodes
+                                        {t('{{count}} nodes', {
+                                            count: location.nodesCount,
+                                        })}
                                     </Badge>
                                     <Badge
                                         variant={'secondary'}
                                         className={'font-mono'}
                                     >
-                                        {location.serversCount} servers
+                                        {t('{{count}} servers', {
+                                            count: location.serversCount,
+                                        })}
                                     </Badge>
                                 </div>
                             </ItemContent>

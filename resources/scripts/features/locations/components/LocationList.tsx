@@ -42,7 +42,7 @@ const LocationList = ({ query, page, value, onSelect }: Props) => {
                 description={t('There are no locations available.')}
                 action={
                     <Link className={buttonVariants()} to={'/admin/locations'}>
-                        Add location
+                        {t('Add location')}
                     </Link>
                 }
             />

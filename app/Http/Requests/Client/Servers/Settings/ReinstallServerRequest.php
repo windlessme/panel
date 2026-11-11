@@ -33,7 +33,7 @@ class ReinstallServerRequest extends BaseApiRequest
         // DEFERRED_OS_SELECTION has nothing to erase, and gating its first install would
         // stop a brand-new account from reaching a usable server at all.
         if ($server->isReady() && ! IdentityConfirmation::isConfirmed($this->session())) {
-            throw new AccessDeniedHttpException('Your identity must be confirmed to rebuild a server.');
+            throw new AccessDeniedHttpException(__('Your identity must be confirmed to rebuild a server.'));
         }
 
         return $server->isReady() || $server->lifecycle === ServerLifecycle::DEFERRED_OS_SELECTION;
@@ -89,7 +89,7 @@ class ReinstallServerRequest extends BaseApiRequest
                 // hide what is inside it -- otherwise an admin-only OS is one
                 // guessed uuid away from anyone.
                 if ($image && ($image->is_admin_only || $image->group->is_admin_only) && ! $this->user()->root_admin) {
-                    $validator->errors()->add('image_uuid', 'You are not authorized to use this image.');
+                    $validator->errors()->add('image_uuid', __('You are not authorized to use this image.'));
                 }
             },
         ];

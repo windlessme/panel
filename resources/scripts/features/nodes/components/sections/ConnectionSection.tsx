@@ -91,15 +91,15 @@ const ConnectionSection = ({ mode, nodeId }: Props) => {
                         labelAction={
                             <HintPopover>
                                 <p className={'text-sm'}>
-                                    The Proxmox Node Name is the unique
-                                    identifier for your Proxmox server. It is
-                                    usually the hostname of the server.
+                                    {t(
+                                        'The Proxmox Node Name is the unique identifier for your Proxmox server. It is usually the hostname of the server.'
+                                    )}
                                 </p>
                                 <img
                                     className={'mt-3 rounded-md'}
-                                    alt={
+                                    alt={t(
                                         'Proxmox VE interface with the node ‘us-southeast-2’ selected under Datacenter (cluster01).'
-                                    }
+                                    )}
                                     src={ProxmoxNodeName}
                                 />
                             </HintPopover>
@@ -116,13 +116,9 @@ const ConnectionSection = ({ mode, nodeId }: Props) => {
                         labelAction={
                             <HintPopover>
                                 <p className={'text-sm'}>
-                                    Proxmox API tokens provide secure,
-                                    token-based access to your Proxmox VE
-                                    installation. They consist of a Token ID and
-                                    a Token Secret, which let you authenticate
-                                    API requests without your account password.
-                                    Generate and manage these in your Proxmox
-                                    interface and keep them confidential.
+                                    {t(
+                                        'Proxmox API tokens provide secure, token-based access to your Proxmox VE installation. They consist of a Token ID and a Token Secret, which let you authenticate API requests without your account password. Generate and manage these in your Proxmox interface and keep them confidential.'
+                                    )}
                                 </p>
                             </HintPopover>
                         }

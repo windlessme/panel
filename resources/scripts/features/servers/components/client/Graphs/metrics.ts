@@ -94,7 +94,8 @@ export const METRICS: Metric[] = [
         tickFractions: [0.25, 0.5, 0.75, 1],
         fromTimepoint: point => [point.cpuUsed * 100],
         fromState: state => [state.cpuUsed * 100],
-        caption: server => (server ? `${server.cpu} vCPU` : ''),
+        caption: server =>
+            server ? t('{{count}} vCPU', { count: server.cpu }) : '',
     },
     {
         key: 'memory',
@@ -107,7 +108,8 @@ export const METRICS: Metric[] = [
         tickFractions: [0.25, 0.5, 0.75, 1],
         fromTimepoint: point => [point.memoryUsed],
         fromState: state => [state.memoryUsed],
-        caption: server => (server ? `of ${bytes(server.memory, 0)}` : ''),
+        caption: server =>
+            server ? t('of {{limit}}', { limit: bytes(server.memory, 0) }) : '',
     },
     {
         key: 'disk',
@@ -117,7 +119,7 @@ export const METRICS: Metric[] = [
         format: rate,
         formatShort: rateShort,
         fromTimepoint: point => [point.disk.read, point.disk.write],
-        caption: () => 'read / write',
+        caption: () => t('read / write'),
     },
     {
         key: 'network',
@@ -127,7 +129,7 @@ export const METRICS: Metric[] = [
         format: rate,
         formatShort: rateShort,
         fromTimepoint: point => [point.network.in, point.network.out],
-        caption: () => 'in / out',
+        caption: () => t('in / out'),
     },
 ]
 

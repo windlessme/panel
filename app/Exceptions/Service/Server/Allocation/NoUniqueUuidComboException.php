@@ -9,7 +9,7 @@ class NoUniqueUuidComboException extends BadRequestHttpException implements HasE
 {
     public function __construct()
     {
-        parent::__construct('There is no available VMID to use.');
+        parent::__construct(__('There is no available VMID to use.'));
     }
 
     public function errorCode(): string

@@ -84,7 +84,7 @@ class RelayController
         $relay->loadCount('nodes');
 
         if ($relay->nodes_count > 0) {
-            throw new BadRequestHttpException('Move these nodes off this relay before deleting it.');
+            throw new BadRequestHttpException(__('Move these nodes off this relay before deleting it.'));
         }
 
         $name = $relay->name;

@@ -88,13 +88,13 @@ const GenerateAddressesModal = ({ block, mutate }: Props) => {
             }
 
             toast.add({
-                title: t('Generated {{value}} addresses', {
-                    value: result.createdCount.toLocaleString(),
+                title: t('Generated {{count, number}} addresses', {
+                    count: result.createdCount,
                 }),
                 description: result.isComplete
                     ? t('Every address in this block now exists.')
-                    : t('{{value}} left — run it again to continue.', {
-                          value: result.remaining.toLocaleString(),
+                    : t('{{remaining}} left — run it again to continue.', {
+                          remaining: result.remaining.toLocaleString(),
                       }),
                 type: 'success',
             })
@@ -123,7 +123,7 @@ const GenerateAddressesModal = ({ block, mutate }: Props) => {
                         icon={<IconPlus className={'size-4'} />}
                         disabled={nothingToDo}
                     >
-                        Generate addresses
+                        {t('Generate addresses')}
                     </Button>
                 }
             />
@@ -139,23 +139,17 @@ const GenerateAddressesModal = ({ block, mutate }: Props) => {
                 <ResponsiveDialogBody className={'flex flex-col gap-4'}>
                     <p className={'text-sm'}>
                         <span className={'font-mono'}>{cidr}</span>{' '}
-                        {t('handed out as')}
-                        <span className={'font-mono'}>
-                            /{block.prefixLengthTo}
-                        </span>
-                        {t('covers')}
-                        <b>
-                            {t('{{value}} addresses', {
-                                value: (view.total ?? 0).toLocaleString(),
-                            })}
-                        </b>
-                        .{' '}
+                        {t(
+                            'handed out as /{{prefix}} covers {{count, number}} addresses.',
+                            {
+                                prefix: block.prefixLengthTo,
+                                count: view.total ?? 0,
+                            }
+                        )}{' '}
                         {view.total === view.ungenerated
                             ? t('None exist yet.')
-                            : t('{{value}} exist so far.', {
-                                  value: (
-                                      view.total! - view.ungenerated
-                                  ).toLocaleString(),
+                            : t('{{count, number}} exist so far.', {
+                                  count: view.total! - view.ungenerated,
                               })}
                     </p>
                     <Alert>
@@ -201,7 +195,7 @@ const GenerateAddressesModal = ({ block, mutate }: Props) => {
                     <ResponsiveDialogClose
                         render={
                             <Button variant={'outline'} type={'button'}>
-                                Cancel
+                                {t('Cancel')}
                             </Button>
                         }
                     />

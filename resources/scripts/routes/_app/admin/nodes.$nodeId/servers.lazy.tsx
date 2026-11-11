@@ -2,7 +2,7 @@ import { ServerQueryParams, useServers } from '@/features/servers/admin/api.ts'
 import PowerStateBadge from '@/features/servers/components/PowerStateBadge.tsx'
 import ServerPowerActions from '@/features/servers/components/admin/ServerPowerActions.tsx'
 import useDataTable from '@/hooks/use-data-table.ts'
-import { Server } from '@/types/server.ts'
+import { Server, ServerLifecycle } from '@/types/server.ts'
 import { cn } from '@/utils'
 import { IconPlus } from '@tabler/icons-react'
 import { Link, createLazyFileRoute } from '@tanstack/react-router'
@@ -28,8 +28,18 @@ export const Route = createLazyFileRoute('/_app/admin/nodes/$nodeId/servers')({
     component: NodeServers,
 })
 
+const LIFECYCLE_LABELS: Record<ServerLifecycle, string> = {
+    [ServerLifecycle.Ready]: t('Ready'),
+    [ServerLifecycle.DeferredOsSelection]: t('Deferred OS selection'),
+    [ServerLifecycle.Installing]: t('Installing'),
+    [ServerLifecycle.InstallFailed]: t('Install failed'),
+    [ServerLifecycle.RestoringBackup]: t('Restoring backup'),
+    [ServerLifecycle.Deleting]: t('Deleting'),
+    [ServerLifecycle.DeletionFailed]: t('Deletion failed'),
+}
+
 const lifecycleLabel = (lifecycle: Server['lifecycle']) =>
-    lifecycle.replace(/_/g, ' ')
+    LIFECYCLE_LABELS[lifecycle] ?? lifecycle.replace(/_/g, ' ')
 
 function NodeServers() {
     const { nodeId } = Route.useParams()
@@ -151,7 +161,7 @@ function NodeServers() {
                                             variant={'destructive'}
                                             className={'w-fit'}
                                         >
-                                            Suspended
+                                            {t('Suspended')}
                                         </Badge>
                                     )}
                                 </div>
@@ -170,7 +180,7 @@ function NodeServers() {
                         to='/admin/servers/create'
                     >
                         <IconPlus className={'size-4'} />
-                        Add server
+                        {t('Add server')}
                     </Link>
                 }
                 {...tableProps}

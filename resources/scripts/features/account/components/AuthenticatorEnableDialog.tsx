@@ -124,7 +124,7 @@ const AuthenticatorEnableDialog = ({ onEnabled }: Props) => {
                 toast.add({
                     title: getApiErrorMessage(
                         e,
-                        'Could not start authenticator setup'
+                        t('Could not start authenticator setup')
                     ),
                     type: 'error',
                 })
@@ -176,7 +176,7 @@ const AuthenticatorEnableDialog = ({ onEnabled }: Props) => {
             toast.add({
                 title: getApiErrorMessage(
                     e,
-                    'Could not verify that code. Please try again.'
+                    t('Could not verify that code. Please try again.')
                 ),
                 type: 'error',
             })
@@ -253,9 +253,9 @@ const AuthenticatorEnableDialog = ({ onEnabled }: Props) => {
                                                 >
                                                     <FormControl>
                                                         <InputOTP
-                                                            aria-label={
+                                                            aria-label={t(
                                                                 'Authenticator code'
-                                                            }
+                                                            )}
                                                             {...field}
                                                             onChange={value =>
                                                                 form.setValue(
@@ -324,7 +324,7 @@ const AuthenticatorEnableDialog = ({ onEnabled }: Props) => {
                             <ResponsiveDialogClose
                                 render={
                                     <Button variant={'outline'} type={'button'}>
-                                        Cancel
+                                        {t('Cancel')}
                                     </Button>
                                 }
                             />

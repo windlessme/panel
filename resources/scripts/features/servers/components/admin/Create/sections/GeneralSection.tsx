@@ -57,7 +57,9 @@ const GeneralSection = () => {
 
                 <FieldFold
                     fields={['vmid']}
-                    summary={`VM ID · ${vmid ? vmid : 'next free on the node'}`}
+                    summary={t('VM ID · {{vmid}}', {
+                        vmid: vmid ? vmid : t('next free on the node'),
+                    })}
                 >
                     <InputForm
                         name={'vmid'}

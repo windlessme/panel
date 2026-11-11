@@ -37,6 +37,12 @@ const StorageUsageCard = ({ uuid }: Props) => {
         ? Math.min(100, Math.round((usage.usedBytes / usage.totalBytes) * 100))
         : 0
 
+    // One sentence for translators; the marker is where the <code> goes.
+    const [agentHintBefore, agentHintAfter] = t(
+        'The guest agent isn’t answering, so there’s nothing to report on how full the filesystem is. Install and start {{agent}} inside the server to see usage here.',
+        { agent: '\u0000' }
+    ).split('\u0000')
+
     return (
         <Card>
             <CardHeader>
@@ -51,13 +57,11 @@ const StorageUsageCard = ({ uuid }: Props) => {
                 ) : isError || !hasUsage ? (
                     <div className={'flex flex-col gap-3 text-sm'}>
                         <p className={'text-muted-foreground'}>
-                            {t(
-                                'The guest agent isn’t answering, so there’s nothing to report on how full the filesystem is. Install and start'
-                            )}
+                            {agentHintBefore}
                             <code className={'font-mono'}>
-                                {t('qemu-guest-agent')}
+                                qemu-guest-agent
                             </code>
-                            {t('inside the server to see usage here.')}
+                            {agentHintAfter}
                         </p>
                         {provisioned > 0 && (
                             <Row

@@ -35,12 +35,12 @@ const MemoryUsageCard = () => {
                way and still collided with the figure on a narrow tile. Same
                denominator, on the line every other tile keeps it. */
             context={
-                state ? (
-                    <>
-                        of {total.value} {total.unit} &#x2022;{' '}
-                        {usedPercent.toFixed(0)}%
-                    </>
-                ) : undefined
+                state
+                    ? t('of {{limit}} • {{percent}}%', {
+                          limit: `${total.value} ${total.unit}`,
+                          percent: usedPercent.toFixed(0),
+                      })
+                    : undefined
             }
             /* See CpuUsageCard: reserved from the first paint so the tile
                does not grow when the first reading arrives. */

@@ -9,7 +9,7 @@ class AddressReservedBySystemException extends ConflictHttpException implements 
 {
     public function __construct()
     {
-        parent::__construct('This address is reserved by the system and cannot be unreserved.');
+        parent::__construct(__('This address is reserved by the system and cannot be unreserved.'));
     }
 
     public function errorCode(): string

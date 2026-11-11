@@ -6,7 +6,6 @@ import {
     createRule,
     datacenterRefs,
     describeRuleIntent,
-    directionLabels,
     firewallQueries,
     ruleFormDefaults,
     ruleFormSchema,
@@ -132,10 +131,7 @@ const RuleFormDialog = ({
             ...(macros ?? []).map(item => ({
                 value: item.name,
                 label: item.description
-                    ? t('{{name}} — {{description}}', {
-                          name: item.name,
-                          description: item.description,
-                      })
+                    ? `${item.name} — ${item.description}`
                     : item.name,
             })),
         ],
@@ -175,26 +171,29 @@ const RuleFormDialog = ({
                 title: getApiErrorMessage(
                     e,
                     isEditing
-                        ? 'Failed to update the rule'
-                        : 'Failed to add the rule'
+                        ? t('Failed to update the rule')
+                        : t('Failed to add the rule')
                 ),
                 type: 'error',
             })
         }
     }
 
-    const chain = directionLabels[values.direction ?? 'in'].toLowerCase()
+    const isInbound = (values.direction ?? 'in') === 'in'
+    const title = isEditing
+        ? isInbound
+            ? t('Edit inbound rule')
+            : t('Edit outbound rule')
+        : isInbound
+          ? t('New inbound rule')
+          : t('New outbound rule')
 
     return (
         <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
             {trigger && <ResponsiveDialogTrigger render={trigger} />}
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
-                    <ResponsiveDialogTitle>
-                        {isEditing
-                            ? t('Edit {{chain}} rule', { chain })
-                            : t('New {{chain}} rule', { chain })}
-                    </ResponsiveDialogTitle>
+                    <ResponsiveDialogTitle>{title}</ResponsiveDialogTitle>
                     {/* The description is the preview. It used to be a static
                         sentence that read the same however the form was filled
                         in; saying the rule back is the one thing the form could
@@ -422,7 +421,7 @@ const RuleFormDialog = ({
                             <ResponsiveDialogClose
                                 render={
                                     <Button variant={'outline'} type={'button'}>
-                                        Cancel
+                                        {t('Cancel')}
                                     </Button>
                                 }
                             />

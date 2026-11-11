@@ -6,6 +6,8 @@ import {
 import { getApiErrorMessage } from '@/utils/http.ts'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
+import { t } from '@/lib/i18n.ts'
+
 import { toast } from '@/components/ui/Toast'
 
 /**
@@ -50,7 +52,10 @@ const useUpdateFirewallOptions = (uuid: string) => {
         },
         onError: e => {
             toast.add({
-                title: getApiErrorMessage(e, 'Failed to update the firewall'),
+                title: getApiErrorMessage(
+                    e,
+                    t('Failed to update the firewall')
+                ),
                 type: 'error',
             })
 

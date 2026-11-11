@@ -9,7 +9,7 @@ class InvalidISOLinkException extends BadRequestHttpException implements HasErro
 {
     public function __construct()
     {
-        parent::__construct('The ISO link provided is either unreachable or invalid.');
+        parent::__construct(__('The ISO link provided is either unreachable or invalid.'));
     }
 
     public function errorCode(): string

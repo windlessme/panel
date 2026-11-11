@@ -102,7 +102,7 @@ class AnchorEnrollmentKeyController
     public function destroy(AnchorEnrollmentKey $enrollmentKey)
     {
         if ($enrollmentKey->status() === EnrollmentKeyStatus::ACTIVE) {
-            throw new BadRequestHttpException('Revoke this enrollment key before deleting it.');
+            throw new BadRequestHttpException(__('Revoke this enrollment key before deleting it.'));
         }
 
         $properties = ['name' => $enrollmentKey->name, 'uses' => $enrollmentKey->uses];

@@ -31,7 +31,7 @@ class StorageBackupController extends Controller
         // it.
         if ($backup->is_locked) {
             throw ValidationException::withMessages([
-                'backup' => 'That backup is locked. Unlock it before deleting it.',
+                'backup' => __('That backup is locked. Unlock it before deleting it.'),
             ]);
         }
 

@@ -25,9 +25,6 @@ interface Props {
     interface: NetworkInterface
 }
 
-const count = (value: number, noun: string) =>
-    `${value} ${noun}${value === 1 ? '' : 's'}`
-
 /**
  * The right-hand summary every row shares. Pools come before servers because
  * they answer the question that decides whether a bridge is usable at all
@@ -42,11 +39,13 @@ const InterfaceMeta = ({
     <div className={'text-muted-foreground shrink-0 text-sm tabular-nums'}>
         {networkInterface.addressPoolsCount > 0 && (
             <>
-                {count(networkInterface.addressPoolsCount, 'pool')}
+                {t('{{count}} pools', {
+                    count: networkInterface.addressPoolsCount,
+                })}
                 <span className={'mx-1.5'}>·</span>
             </>
         )}
-        {count(networkInterface.serversCount, 'server')}
+        {t('{{count}} servers', { count: networkInterface.serversCount })}
     </div>
 )
 
@@ -134,7 +133,7 @@ const VlanRow = ({
                     'text-muted-foreground shrink-0 text-sm tabular-nums'
                 }
             >
-                {count(vlan.serversCount, 'server')}
+                {t('{{count}} servers', { count: vlan.serversCount })}
             </div>
             {isDeclared ? (
                 <Actions

@@ -50,7 +50,7 @@ class UpdateAddressBlockRequest extends BaseApiRequest
         $criticalFieldValidation = function (string $attribute, mixed $value, \Closure $fail) use ($addressBlock, $hasAttachedAddresses) {
             // If the value is changing and there are attached addresses, fail validation
             if ($value != $addressBlock->{$attribute} && $hasAttachedAddresses) {
-                $fail("The {$attribute} cannot be changed because some IP addresses are attached to servers.");
+                $fail(__('The :attribute cannot be changed because some IP addresses are attached to servers.'));
             }
         };
 
@@ -62,11 +62,11 @@ class UpdateAddressBlockRequest extends BaseApiRequest
                 $version = $addressBlock->version;
 
                 if ($version === AddressVersion::IPv4 && ! filter_var($value, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
-                    $fail('The base IP must be a valid IPv4 address when version is IPv4.');
+                    $fail(__('The base IP must be a valid IPv4 address when version is IPv4.'));
                 } elseif ($version === AddressVersion::IPv6 && ! filter_var($value, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-                    $fail('The base IP must be a valid IPv6 address when version is IPv6.');
+                    $fail(__('The base IP must be a valid IPv6 address when version is IPv6.'));
                 } elseif (! filter_var($value, FILTER_VALIDATE_IP)) {
-                    $fail('The base IP must be a valid IP address.');
+                    $fail(__('The base IP must be a valid IP address.'));
                 }
             },
             $criticalFieldValidation,
@@ -86,11 +86,11 @@ class UpdateAddressBlockRequest extends BaseApiRequest
                 $version = $addressBlock->version;
 
                 if ($version === AddressVersion::IPv4 && ! filter_var($value, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
-                    $fail('The gateway must be a valid IPv4 address when version is IPv4.');
+                    $fail(__('The gateway must be a valid IPv4 address when version is IPv4.'));
                 } elseif ($version === AddressVersion::IPv6 && ! filter_var($value, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-                    $fail('The gateway must be a valid IPv6 address when version is IPv6.');
+                    $fail(__('The gateway must be a valid IPv6 address when version is IPv6.'));
                 } elseif (! filter_var($value, FILTER_VALIDATE_IP)) {
-                    $fail('The gateway must be a valid IP address.');
+                    $fail(__('The gateway must be a valid IP address.'));
                 }
             },
         ];

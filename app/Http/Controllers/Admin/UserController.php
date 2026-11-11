@@ -162,7 +162,7 @@ class UserController
         // just lost. Another admin can still do it, which is the point.
         if ($user->is($request->user()) && $user->root_admin && ! $request->boolean('root_admin')) {
             throw new BadRequestHttpException(
-                'You cannot remove administrator access from your own account.',
+                __('You cannot remove administrator access from your own account.'),
             );
         }
 
@@ -205,7 +205,7 @@ class UserController
     {
         if ($user->is($request->user())) {
             throw new BadRequestHttpException(
-                'You cannot delete the account you are signed in as.',
+                __('You cannot delete the account you are signed in as.'),
             );
         }
 
@@ -213,7 +213,7 @@ class UserController
 
         if ($user->servers_count > 0) {
             throw new BadRequestHttpException(
-                'The user cannot be deleted with servers still associated.',
+                __('The user cannot be deleted with servers still associated.'),
             );
         }
 

@@ -324,8 +324,8 @@ const DataTable = <TData,>({
                         )}
                     >
                         <span className='text-sm font-medium whitespace-nowrap tabular-nums'>
-                            {t('{{length}} selected', {
-                                length: selectedRows.length,
+                            {t('{{count}} selected', {
+                                count: selectedRows.length,
                             })}
                         </span>
                         <span

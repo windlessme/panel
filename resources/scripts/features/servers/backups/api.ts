@@ -130,11 +130,16 @@ export const quotaBlockedReason = (quota?: BackupQuota): string | undefined => {
     if (!quota || quota.isUnavailable) return undefined
 
     if (quota.hasNoStorage) {
-        return 'This node has no storage configured for backups. Your administrator will need to add one.'
+        return t(
+            'This node has no storage configured for backups. Your administrator will need to add one.'
+        )
     }
 
     return quota.isAtCountLimit
-        ? `All ${quota.countLimit} backup slots are in use. Delete a backup to make room.`
+        ? t(
+              'All {{count}} backup slots are in use. Delete a backup to make room.',
+              { count: quota.countLimit }
+          )
         : undefined
 }
 

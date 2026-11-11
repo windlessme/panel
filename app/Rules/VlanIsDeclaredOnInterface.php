@@ -29,13 +29,13 @@ class VlanIsDeclaredOnInterface implements ValidationRule
             : null;
 
         if (! $interface) {
-            $fail('A network interface must be selected before assigning a VLAN.');
+            $fail(__('A network interface must be selected before assigning a VLAN.'));
 
             return;
         }
 
         if (! $interface->is_vlan_aware) {
-            $fail('The selected network interface must be VLAN-aware before assigning a VLAN tag.');
+            $fail(__('The selected network interface must be VLAN-aware before assigning a VLAN tag.'));
 
             return;
         }
@@ -46,7 +46,10 @@ class VlanIsDeclaredOnInterface implements ValidationRule
             ->exists();
 
         if (! $declared) {
-            $fail("VLAN {$value} has not been declared on {$interface->name}. Declare it on the node's Network page first.");
+            $fail(__('VLAN :tag has not been declared on :interface. Declare it on the node\'s Network page first.', [
+                'tag' => $value,
+                'interface' => $interface->name,
+            ]));
         }
     }
 }

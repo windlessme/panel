@@ -22,7 +22,7 @@ const DataTableFilteredEmpty = ({ onClear }: Props) => (
         description={t('No records match your current search or filters.')}
         action={
             <Button variant={'outline'} onClick={onClear}>
-                Clear filters
+                {t('Clear filters')}
             </Button>
         }
     />

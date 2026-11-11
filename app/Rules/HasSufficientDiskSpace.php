@@ -81,7 +81,7 @@ class HasSufficientDiskSpace implements DataAwareRule, ValidationRule
             }
 
             if ($requested > $freeForConvoy) {
-                $fail("The storage \"{$storage->name}\" does not have enough disk space available.");
+                $fail(__('The storage ":storage" does not have enough disk space available.', ['storage' => $storage->name]));
             }
         }
     }

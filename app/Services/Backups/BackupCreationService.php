@@ -37,11 +37,10 @@ class BackupCreationService
                 ->latest('created_at')
                 ->get();
             if ($previous->count() >= $limit) {
-                $message = sprintf(
-                    'Only %d backups may be generated within a %d second span of time.',
-                    $limit,
-                    $period,
-                );
+                $message = __('Only :limit backups may be generated within a :period second span of time.', [
+                    'limit' => $limit,
+                    'period' => $period,
+                ]);
 
                 throw new TooManyRequestsHttpException(
                     (int) CarbonImmutable::now()->diffInSeconds(
@@ -59,7 +58,7 @@ class BackupCreationService
 
         $storage = $server->node->backupStorage();
         if (is_null($storage)) {
-            throw new ConflictHttpException('No backup-capable storage is configured for this node.');
+            throw new ConflictHttpException(__('No backup-capable storage is configured for this node.'));
         }
 
         return $this->connection->transaction(

@@ -9,7 +9,7 @@ class BackupLockedException extends BadRequestHttpException implements HasErrorC
 {
     public function __construct()
     {
-        parent::__construct('Cannot delete a backup that is marked as locked.');
+        parent::__construct(__('Cannot delete a backup that is marked as locked.'));
     }
 
     public function errorCode(): string

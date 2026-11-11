@@ -66,7 +66,7 @@ const RecoveryCodesRevealDialog = ({ codes, onClose }: Props) => {
                         {t('Copy codes')}
                     </Button>
                     <ResponsiveDialogClose
-                        render={<Button>I saved my codes</Button>}
+                        render={<Button>{t('I saved my codes')}</Button>}
                     />
                 </ResponsiveDialogFooter>
             </ResponsiveDialogContent>

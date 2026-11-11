@@ -9,7 +9,7 @@ class InsufficientAddressesException extends BadRequestHttpException implements 
 {
     public function __construct()
     {
-        parent::__construct('There are not enough available IP addresses to satisfy the request.');
+        parent::__construct(__('There are not enough available IP addresses to satisfy the request.'));
     }
 
     public function errorCode(): string

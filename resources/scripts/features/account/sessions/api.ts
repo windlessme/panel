@@ -1,7 +1,8 @@
+import SessionRecordController from '@/wayfinder/actions/App/Http/Controllers/Client/Account/SessionRecordController'
 import { queryOptions, useQuery } from '@tanstack/react-query'
 
-import { apiFetch, type DataResponse } from '@/lib/api'
-import SessionRecordController from '@/wayfinder/actions/App/Http/Controllers/Client/Account/SessionRecordController'
+import { type DataResponse, apiFetch } from '@/lib/api'
+import { t } from '@/lib/i18n.ts'
 
 export interface Session {
     id: number
@@ -13,25 +14,33 @@ export interface Session {
 
 /** Best-effort "Browser on OS" label from a user-agent string, for display only. */
 export const deviceLabel = (userAgent: string | null): string => {
-    if (!userAgent) return 'Unknown device'
+    if (!userAgent) return t('Unknown device')
 
-    const browser =
-        /Edg/.test(userAgent) ? 'Edge'
-        : /OPR|Opera/.test(userAgent) ? 'Opera'
-        : /Firefox/.test(userAgent) ? 'Firefox'
-        : /Chrome/.test(userAgent) ? 'Chrome'
-        : /Safari/.test(userAgent) ? 'Safari'
-        : 'Browser'
+    const browser = /Edg/.test(userAgent)
+        ? 'Edge'
+        : /OPR|Opera/.test(userAgent)
+          ? 'Opera'
+          : /Firefox/.test(userAgent)
+            ? 'Firefox'
+            : /Chrome/.test(userAgent)
+              ? 'Chrome'
+              : /Safari/.test(userAgent)
+                ? 'Safari'
+                : t('Browser')
 
-    const os =
-        /Windows/.test(userAgent) ? 'Windows'
-        : /Mac OS X|Macintosh/.test(userAgent) ? 'macOS'
-        : /Android/.test(userAgent) ? 'Android'
-        : /iPhone|iPad|iOS/.test(userAgent) ? 'iOS'
-        : /Linux/.test(userAgent) ? 'Linux'
-        : null
+    const os = /Windows/.test(userAgent)
+        ? 'Windows'
+        : /Mac OS X|Macintosh/.test(userAgent)
+          ? 'macOS'
+          : /Android/.test(userAgent)
+            ? 'Android'
+            : /iPhone|iPad|iOS/.test(userAgent)
+              ? 'iOS'
+              : /Linux/.test(userAgent)
+                ? 'Linux'
+                : null
 
-    return os ? `${browser} on ${os}` : browser
+    return os ? t('{{browser}} on {{os}}', { browser, os }) : browser
 }
 
 const rawDataToSession = (data: App.Data.User.SessionRecordData): Session => ({

@@ -9,7 +9,7 @@ class InvalidPasskeyJson extends BadRequestHttpException implements HasErrorCode
 {
     public function __construct()
     {
-        parent::__construct('The given passkey should be formatted as json. Please check the format and try again.');
+        parent::__construct(__('The given passkey should be formatted as json. Please check the format and try again.'));
     }
 
     public function errorCode(): string

@@ -41,7 +41,7 @@ const OveragePenaltyFields = ({ inheritedFrom, inheritedLabel }: Props) => {
                 name={'overagePenaltyMode'}
                 render={({ field }) => (
                     <FormItem>
-                        <FormLabel>Overage penalty</FormLabel>
+                        <FormLabel>{t('Overage penalty')}</FormLabel>
                         <FormControl>
                             <ToggleGroup
                                 variant={'outline'}
@@ -54,13 +54,13 @@ const OveragePenaltyFields = ({ inheritedFrom, inheritedLabel }: Props) => {
                                     // so one segment is always active.
                                     if (value[0]) field.onChange(value[0])
                                 }}
-                                aria-label={'Overage penalty mode'}
+                                aria-label={t('Overage penalty mode')}
                             >
                                 <ToggleGroupItem value={'inherit'}>
-                                    Inherit
+                                    {t('Inherit')}
                                 </ToggleGroupItem>
                                 <ToggleGroupItem value={'custom'}>
-                                    Custom
+                                    {t('Custom')}
                                 </ToggleGroupItem>
                             </ToggleGroup>
                         </FormControl>
@@ -71,13 +71,10 @@ const OveragePenaltyFields = ({ inheritedFrom, inheritedLabel }: Props) => {
 
             {mode === 'inherit' ? (
                 <p className={'text-muted-foreground text-sm'}>
-                    {t(
-                        'Effective: {{describePenalty}} (from {{inheritedLabel}})',
-                        {
-                            describePenalty: describePenalty(inheritedFrom),
-                            inheritedLabel,
-                        }
-                    )}
+                    {t('Effective: {{penalty}} (from {{source}})', {
+                        penalty: describePenalty(inheritedFrom),
+                        source: inheritedLabel,
+                    })}
                 </p>
             ) : (
                 <PenaltyActionFields />

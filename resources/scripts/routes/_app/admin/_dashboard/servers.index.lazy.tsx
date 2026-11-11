@@ -120,23 +120,23 @@ const ServersIndex = () => {
                         to='/admin/servers/create'
                     >
                         <IconPlus className={'size-4'} />
-                        Add server
+                        {t('Add server')}
                     </Link>
                 }
                 emptyState={
                     <SimpleEmptyState
                         icon={IconServer}
-                        title={'No servers'}
-                        description={
+                        title={t('No servers')}
+                        description={t(
                             'Servers you provision across your nodes appear here.'
-                        }
+                        )}
                         action={
                             <Link
                                 className={buttonVariants()}
                                 to='/admin/servers/create'
                             >
                                 <IconPlus className={'size-4'} />
-                                Add server
+                                {t('Add server')}
                             </Link>
                         }
                     />
@@ -155,7 +155,9 @@ const ServersIndex = () => {
                                     onCheckedChange={value =>
                                         row.toggleSelected(!!value)
                                     }
-                                    aria-label={`Select ${server.name}`}
+                                    aria-label={t('Select {{name}}', {
+                                        name: server.name,
+                                    })}
                                 />
                             </ItemMedia>
                             <ItemContent className={'min-w-0'}>

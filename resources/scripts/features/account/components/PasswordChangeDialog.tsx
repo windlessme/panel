@@ -32,16 +32,15 @@ const schema = z
             .string()
             .min(
                 PASSWORD_MIN_LENGTH,
-                t(
-                    'Password must be at least {{PASSWORD_MIN_LENGTH}} characters',
-                    { PASSWORD_MIN_LENGTH }
-                )
+                t('Password must be at least {{min}} characters', {
+                    min: PASSWORD_MIN_LENGTH,
+                })
             )
             .refine(
                 pwd =>
                     new TextEncoder().encode(pwd).length <= PASSWORD_MAX_BYTES,
-                t('Password must be at most {{PASSWORD_MAX_BYTES}} bytes', {
-                    PASSWORD_MAX_BYTES,
+                t('Password must be at most {{max}} bytes', {
+                    max: PASSWORD_MAX_BYTES,
                 })
             ),
         passwordConfirmation: z
@@ -85,8 +84,8 @@ const PasswordChangeDialog = () => {
             <ResponsiveDialogTrigger
                 render={
                     <AuthSetting
-                        title={'Password'}
-                        description={'Change your account password'}
+                        title={t('Password')}
+                        description={t('Change your account password')}
                         onClick={() => {}}
                     />
                 }
@@ -124,7 +123,7 @@ const PasswordChangeDialog = () => {
                             <ResponsiveDialogClose
                                 render={
                                     <Button variant={'outline'} type={'button'}>
-                                        Cancel
+                                        {t('Cancel')}
                                     </Button>
                                 }
                             />

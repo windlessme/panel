@@ -188,8 +188,8 @@ const CreateISOModal = () => {
                                                     'text-muted-foreground text-xs'
                                                 }
                                             >
-                                                {t('Uploading… {{round}}%', {
-                                                    round: Math.round(
+                                                {t('Uploading… {{percent}}%', {
+                                                    percent: Math.round(
                                                         progress * 100
                                                     ),
                                                 })}

@@ -45,7 +45,7 @@ class ImageFitsStorage implements DataAwareRule, ValidationRule
         }
 
         if ($version->minimumDiskSize() > $diskLimit) {
-            $fail('The selected image requires more storage than allocated to the server.');
+            $fail(__('The selected image requires more storage than allocated to the server.'));
         }
     }
 }

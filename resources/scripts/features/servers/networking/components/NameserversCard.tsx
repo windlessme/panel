@@ -66,7 +66,7 @@ const NameserversCard = ({ uuid }: Props) => {
         },
         onError: e =>
             toast.add({
-                title: errorMessage(e, 'Failed to update nameservers'),
+                title: errorMessage(e, t('Failed to update nameservers')),
                 type: 'error',
             }),
     })
@@ -105,8 +105,8 @@ const NameserversCard = ({ uuid }: Props) => {
                                     variant={'ghost'}
                                     size={'icon'}
                                     aria-label={t(
-                                        'Remove nameserver {{value}}',
-                                        { value: index + 1 }
+                                        'Remove nameserver {{number}}',
+                                        { number: index + 1 }
                                     )}
                                     className={'shrink-0'}
                                     onClick={() =>

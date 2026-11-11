@@ -16,7 +16,7 @@ class DiskResizeFailedException extends ServiceUnavailableHttpException implemen
 {
     public function __construct(public readonly string $reason)
     {
-        parent::__construct(null, "Proxmox could not resize the disk: {$reason}");
+        parent::__construct(null, __('Proxmox could not resize the disk: :reason', ['reason' => $reason]));
     }
 
     public function errorCode(): string

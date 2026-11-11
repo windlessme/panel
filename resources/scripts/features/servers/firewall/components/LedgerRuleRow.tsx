@@ -220,7 +220,7 @@ const LedgerRuleRow = ({ rule, ordinal, ...cells }: Props) => {
                     <button
                         type={'button'}
                         className={gripClasses}
-                        aria-label={`Reorder rule ${ordinal}`}
+                        aria-label={t('Reorder rule {{ordinal}}', { ordinal })}
                         {...attributes}
                         {...listeners}
                     >

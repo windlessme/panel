@@ -107,8 +107,9 @@ const EditAddressBlockModal = ({ addressBlockGroupId, mutate }: Props) => {
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        {t('Editing')}{' '}
-                        {addressBlock?.name || t('Address Block')}
+                        {t('Editing {{name}}', {
+                            name: addressBlock?.name || t('Address Block'),
+                        })}
                     </ResponsiveDialogTitle>
                 </ResponsiveDialogHeader>
                 <Form {...form}>
@@ -146,7 +147,7 @@ const EditAddressBlockModal = ({ addressBlockGroupId, mutate }: Props) => {
                             <ResponsiveDialogClose
                                 render={
                                     <Button variant={'outline'} type={'button'}>
-                                        Cancel
+                                        {t('Cancel')}
                                     </Button>
                                 }
                             />

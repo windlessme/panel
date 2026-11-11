@@ -51,11 +51,11 @@ class StoreAddressBlockRequest extends BaseApiRequest
                 $version = request()->input('version');
 
                 if ($version === 'ipv4' && ! filter_var($value, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
-                    $fail('The base IP must be a valid IPv4 address when version is IPv4.');
+                    $fail(__('The base IP must be a valid IPv4 address when version is IPv4.'));
                 } elseif ($version === 'ipv6' && ! filter_var($value, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-                    $fail('The base IP must be a valid IPv6 address when version is IPv6.');
+                    $fail(__('The base IP must be a valid IPv6 address when version is IPv6.'));
                 } elseif (! filter_var($value, FILTER_VALIDATE_IP)) {
-                    $fail('The base IP must be a valid IP address.');
+                    $fail(__('The base IP must be a valid IP address.'));
                 }
             },
         ];
@@ -70,11 +70,11 @@ class StoreAddressBlockRequest extends BaseApiRequest
                 $version = request()->input('version');
 
                 if ($version === 'ipv4' && ! filter_var($value, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
-                    $fail('The gateway must be a valid IPv4 address when version is IPv4.');
+                    $fail(__('The gateway must be a valid IPv4 address when version is IPv4.'));
                 } elseif ($version === 'ipv6' && ! filter_var($value, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-                    $fail('The gateway must be a valid IPv6 address when version is IPv6.');
+                    $fail(__('The gateway must be a valid IPv6 address when version is IPv6.'));
                 } elseif (! filter_var($value, FILTER_VALIDATE_IP)) {
-                    $fail('The gateway must be a valid IP address.');
+                    $fail(__('The gateway must be a valid IP address.'));
                 }
             },
         ];

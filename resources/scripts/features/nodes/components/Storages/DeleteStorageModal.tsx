@@ -57,7 +57,9 @@ const DeleteStorageModal = () => {
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        {t('Delete')} {storage?.displayName ?? storage?.name}
+                        {t('Delete {{name}}', {
+                            name: storage?.displayName ?? storage?.name,
+                        })}
                     </ResponsiveDialogTitle>
                     <ResponsiveDialogDescription>
                         {t(
@@ -67,7 +69,9 @@ const DeleteStorageModal = () => {
                 </ResponsiveDialogHeader>
                 <ResponsiveDialogFooter className={'mt-4'}>
                     <ResponsiveDialogClose
-                        render={<Button variant={'outline'}>Cancel</Button>}
+                        render={
+                            <Button variant={'outline'}>{t('Cancel')}</Button>
+                        }
                     />
                     <Button
                         autoFocus

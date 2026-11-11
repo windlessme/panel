@@ -59,7 +59,7 @@ const NodePicker = () => {
                     ) : selected ? (
                         selected.displayName
                     ) : (
-                        'Select a node'
+                        t('Select a node')
                     )}
 
                     <IconServer className={'ml-auto size-4 opacity-50'} />
@@ -71,8 +71,10 @@ const NodePicker = () => {
                 <div className='p-2'>
                     <SimpleEmptyState
                         icon={IconServer}
-                        title='No Nodes'
-                        description='There are no nodes available matching your criteria.'
+                        title={t('No Nodes')}
+                        description={t(
+                            'There are no nodes available matching your criteria.'
+                        )}
                     />
                 </div>
             }

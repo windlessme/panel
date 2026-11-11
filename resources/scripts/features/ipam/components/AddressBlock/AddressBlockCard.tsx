@@ -71,13 +71,20 @@ const AddressBlockCard = ({
 
         const geometry =
             capacity.total === null
-                ? `Hands out /${block.prefixLengthTo} on demand`
-                : `Hands out /${block.prefixLengthTo} · ${capacity.total.toLocaleString()} units`
+                ? t('Hands out /{{prefix}} on demand', {
+                      prefix: block.prefixLengthTo,
+                  })
+                : t('Hands out /{{prefix}} · {{count, number}} units', {
+                      prefix: block.prefixLengthTo,
+                      count: capacity.total,
+                  })
 
         return [
             block.name || block.description,
             geometry,
-            block.gateway ? `gateway ${block.gateway}` : null,
+            block.gateway
+                ? t('gateway {{gateway}}', { gateway: block.gateway })
+                : null,
         ]
             .filter(Boolean)
             .join(' · ')
@@ -233,21 +240,25 @@ const AddressBlockCard = ({
                         : capacity.isSparse
                           ? t('Addresses are minted as they are allocated')
                           : capacity.ungenerated > 0
-                            ? t('{{value}} of {{value2}} not generated yet', {
-                                  value: capacity.ungenerated.toLocaleString(),
-                                  value2: (
-                                      capacity.total ?? 0
-                                  ).toLocaleString(),
-                              })
-                            : t('All {{value}} addresses generated', {
-                                  value: (capacity.total ?? 0).toLocaleString(),
+                            ? t(
+                                  '{{ungenerated}} of {{total}} not generated yet',
+                                  {
+                                      ungenerated:
+                                          capacity.ungenerated.toLocaleString(),
+                                      total: (
+                                          capacity.total ?? 0
+                                      ).toLocaleString(),
+                                  }
+                              )
+                            : t('All {{total}} addresses generated', {
+                                  total: (capacity.total ?? 0).toLocaleString(),
                               })}
                 </span>
                 {selectedIds.length > 0 && view === 'map' ? (
                     <span className={'flex items-center gap-2'}>
                         <span className={'text-sm font-medium tabular-nums'}>
-                            {t('{{value}} selected', {
-                                value: selectedIds.length.toLocaleString(),
+                            {t('{{selected}} selected', {
+                                selected: selectedIds.length.toLocaleString(),
                             })}
                         </span>
                         {bulkActions}

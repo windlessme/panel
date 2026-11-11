@@ -22,7 +22,7 @@ const SidebarToggle = ({ nav }: Props) => {
                 render={
                     <Button size='icon' variant='outline' className='sm:hidden'>
                         <IconLayoutSidebar className='h-5 w-5' />
-                        <span className='sr-only'>Toggle Menu</span>
+                        <span className='sr-only'>{t('Toggle menu')}</span>
                     </Button>
                 }
             />
@@ -31,7 +31,7 @@ const SidebarToggle = ({ nav }: Props) => {
                     <span className='bg-primary text-primary-foreground grid h-7 w-7 shrink-0 place-items-center rounded-md'>
                         <Logo className='h-4 w-4' />
                     </span>
-                    <span className='text-sm font-semibold'>{t('Convoy')}</span>
+                    <span className='text-sm font-semibold'>Convoy</span>
                 </div>
                 <nav className='flex flex-col'>
                     <SidebarContent

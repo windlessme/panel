@@ -8,6 +8,10 @@
         "build": "vite build",
         "dev": "vite --host 0.0.0.0",
         "tc": "tsc --noEmit --project ./",
+        "i18n:sync": "node scripts/i18n.mjs sync",
+        "i18n:todo": "node scripts/i18n.mjs todo",
+        "i18n:check": "node scripts/i18n.mjs check",
+        "i18n:lint": "node scripts/i18n.mjs lint",
         "mail": "npm --prefix emails ci && npm --prefix emails run build"
     },
     "dependencies": {

@@ -1,12 +1,13 @@
+import { oauthProviders, oauthRedirectUrl } from '@/features/auth/oauth.ts'
 import {
+    type Icon,
     IconBrandGithub,
     IconBrandGitlab,
     IconBrandGoogle,
     IconLogin2,
-    type Icon,
 } from '@tabler/icons-react'
 
-import { oauthProviders, oauthRedirectUrl } from '@/features/auth/oauth.ts'
+import { t } from '@/lib/i18n.ts'
 
 import { Button } from '@/components/ui/Button'
 
@@ -23,7 +24,10 @@ const ICONS: Record<string, Icon> = {
     gitlab: IconBrandGitlab,
 }
 
-const OAuthProviderButtons = ({ redirectTo, verb = 'Continue with' }: Props) => {
+const OAuthProviderButtons = ({
+    redirectTo,
+    verb = t('Continue with'),
+}: Props) => {
     const providers = oauthProviders()
 
     if (providers.length === 0) {
@@ -32,7 +36,7 @@ const OAuthProviderButtons = ({ redirectTo, verb = 'Continue with' }: Props) => 
 
     return (
         <div className='flex w-full flex-col space-y-2'>
-            {providers.map((provider) => {
+            {providers.map(provider => {
                 const ProviderIcon = ICONS[provider.id] ?? IconLogin2
 
                 return (

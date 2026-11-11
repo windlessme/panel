@@ -361,13 +361,11 @@ const ChainSection = ({
                 >
                     <SelectTrigger
                         className={'h-8'}
-                        aria-label={t(
-                            'Default policy for {{toLowerCase}} traffic',
-                            {
-                                toLowerCase:
-                                    directionLabels[direction].toLowerCase(),
-                            }
-                        )}
+                        aria-label={
+                            direction === 'in'
+                                ? t('Default policy for inbound traffic')
+                                : t('Default policy for outbound traffic')
+                        }
                     >
                         <SelectValue />
                     </SelectTrigger>

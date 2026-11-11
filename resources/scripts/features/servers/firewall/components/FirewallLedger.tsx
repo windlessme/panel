@@ -100,7 +100,7 @@ const FirewallLedger = ({ uuid }: Props) => {
             setOptimisticRules(null)
 
             toast.add({
-                title: getApiErrorMessage(e, 'Failed to reorder the rules'),
+                title: getApiErrorMessage(e, t('Failed to reorder the rules')),
                 type: 'error',
             })
         },
@@ -170,7 +170,7 @@ const FirewallLedger = ({ uuid }: Props) => {
             }
 
             toast.add({
-                title: getApiErrorMessage(e, 'Failed to update the rule'),
+                title: getApiErrorMessage(e, t('Failed to update the rule')),
                 type: 'error',
             })
         },
@@ -185,7 +185,7 @@ const FirewallLedger = ({ uuid }: Props) => {
         },
         onError: e =>
             toast.add({
-                title: getApiErrorMessage(e, 'Failed to delete the rule'),
+                title: getApiErrorMessage(e, t('Failed to delete the rule')),
                 type: 'error',
             }),
         onSettled: refreshConfig,

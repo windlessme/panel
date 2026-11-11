@@ -26,7 +26,7 @@ class SshPublicKey implements ValidationRule
 
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        $invalid = fn () => $fail('The :attribute is not a valid SSH public key.');
+        $invalid = fn () => $fail(__('The :attribute is not a valid SSH public key.'));
 
         if (! is_string($value)) {
             $invalid();

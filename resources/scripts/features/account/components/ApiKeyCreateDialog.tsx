@@ -125,7 +125,7 @@ const ApiKeyCreateDialog = ({ open, onOpenChange }: Props) => {
 
                         <ResponsiveDialogFooter>
                             <ResponsiveDialogClose
-                                render={<Button>Done</Button>}
+                                render={<Button>{t('Done')}</Button>}
                             />
                         </ResponsiveDialogFooter>
                     </>
@@ -170,7 +170,7 @@ const ApiKeyCreateDialog = ({ open, onOpenChange }: Props) => {
                                                 variant={'outline'}
                                                 type={'button'}
                                             >
-                                                Cancel
+                                                {t('Cancel')}
                                             </Button>
                                         }
                                     />

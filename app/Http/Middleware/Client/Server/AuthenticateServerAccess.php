@@ -31,11 +31,11 @@ class AuthenticateServerAccess
         $server = $request->route()->parameter('server');
 
         if (! $server instanceof Server) {
-            throw new NotFoundHttpException('Server not found');
+            throw new NotFoundHttpException(__('Server not found'));
         }
 
         if ($user->id !== $server->user_id && ! $user->root_admin) {
-            throw new NotFoundHttpException('Server not found');
+            throw new NotFoundHttpException(__('Server not found'));
         }
 
         // Both axes, spelled out. Suspension used to be a lifecycle value, so `isReady()`

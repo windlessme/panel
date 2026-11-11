@@ -44,7 +44,7 @@ interface Props {
  * stopped".
  */
 const PowerStateRail = ({ state, className }: Props) => {
-    const label = state ? labels[state] : 'Unknown'
+    const label = state ? labels[state] : t('Unknown')
 
     return (
         <span

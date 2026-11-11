@@ -66,7 +66,9 @@ const AuthenticatorDisableDialog = () => {
                 </ResponsiveDialogHeader>
                 <ResponsiveDialogFooter>
                     <ResponsiveDialogClose
-                        render={<Button variant={'outline'}>Cancel</Button>}
+                        render={
+                            <Button variant={'outline'}>{t('Cancel')}</Button>
+                        }
                     />
                     <Button
                         loading={state.loading}

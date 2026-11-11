@@ -48,7 +48,7 @@ const DeleteVlanModal = () => {
                 toast.add({ title: t('VLAN deleted'), type: 'success' })
                 close()
             } catch (e) {
-                let message = 'Deletion failed'
+                let message = t('Deletion failed')
 
                 if (e instanceof AxiosError && e.response?.data.message) {
                     message = e.response.data.message
@@ -63,8 +63,6 @@ const DeleteVlanModal = () => {
 
     const servers = vlan?.serversCount ?? 0
     const inUse = servers > 0
-    const subject =
-        servers === 1 ? 'The 1 server keeps' : `All ${servers} servers keep`
 
     return (
         <ResponsiveDialog open={open} onOpenChange={open => !open && close()}>
@@ -80,8 +78,8 @@ const DeleteVlanModal = () => {
                                  servers, so nothing about their networking
                                  changes. Only the name goes away. */
                               t(
-                                  'This only removes the name. {{subject}} tag {{tag}}, and the VLAN stays listed as undeclared.',
-                                  { subject, tag: vlan?.tag }
+                                  'This only removes the name. All {{count}} servers keep tag {{tag}}, and the VLAN stays listed as undeclared.',
+                                  { count: servers, tag: vlan?.tag }
                               )
                             : t(
                                   'Nothing is using this VLAN. It will disappear from the list.'
@@ -90,7 +88,9 @@ const DeleteVlanModal = () => {
                 </ResponsiveDialogHeader>
                 <ResponsiveDialogFooter className={'mt-4'}>
                     <ResponsiveDialogClose
-                        render={<Button variant={'outline'}>Cancel</Button>}
+                        render={
+                            <Button variant={'outline'}>{t('Cancel')}</Button>
+                        }
                     />
                     <Button
                         autoFocus

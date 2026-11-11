@@ -128,7 +128,7 @@ class ImageResidencyService
     private function storageFor(Node $node)
     {
         return $node->importStorage() ?? throw new ConflictHttpException(
-            "No storage on {$node->name} accepts disk images. Add `Import` to a storage's content types in Proxmox.",
+            __('No storage on :node accepts disk images. Add `Import` to a storage\'s content types in Proxmox.', ['node' => $node->name]),
         );
     }
 }

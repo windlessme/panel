@@ -56,7 +56,7 @@ const DeleteNetworkInterfaceModal = () => {
                 })
                 close()
             } catch (e) {
-                let message = 'Deletion failed'
+                let message = t('Deletion failed')
 
                 if (e instanceof AxiosError && e.response?.data.message) {
                     message = e.response.data.message
@@ -84,7 +84,9 @@ const DeleteNetworkInterfaceModal = () => {
                 </ResponsiveDialogHeader>
                 <ResponsiveDialogFooter className={'mt-4'}>
                     <ResponsiveDialogClose
-                        render={<Button variant={'outline'}>Cancel</Button>}
+                        render={
+                            <Button variant={'outline'}>{t('Cancel')}</Button>
+                        }
                     />
                     <Button
                         autoFocus

@@ -104,7 +104,7 @@ const EditTokenNetworksModal = ({ token, onClose, mutate }: Props) => {
                             <TextareaForm
                                 name={'allowedNetworks'}
                                 label={t('Allowed addresses and ranges')}
-                                placeholder={t('203.0.113.10\n2001:db8::/48')}
+                                placeholder={'203.0.113.10\n2001:db8::/48'}
                                 rows={7}
                                 description={t(
                                     'Enter one IPv4 or IPv6 address or CIDR range per line. Leave empty to make the token unrestricted.'
@@ -115,7 +115,7 @@ const EditTokenNetworksModal = ({ token, onClose, mutate }: Props) => {
                             <ResponsiveDialogClose
                                 render={
                                     <Button variant={'outline'} type={'button'}>
-                                        Cancel
+                                        {t('Cancel')}
                                     </Button>
                                 }
                             />

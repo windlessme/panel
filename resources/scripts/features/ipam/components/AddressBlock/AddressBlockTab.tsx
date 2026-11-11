@@ -47,8 +47,8 @@ const handsOut = (block: AddressBlock) => {
     const { total } = addressCapacity(block.capacity)
 
     return total === null
-        ? `/${block.prefixLengthTo} · on demand`
-        : `/${block.prefixLengthTo} · ${total.toLocaleString()} units`
+        ? `/${block.prefixLengthTo} · ${t('on demand')}`
+        : `/${block.prefixLengthTo} · ${t('{{count, number}} units', { count: total })}`
 }
 
 /**
@@ -100,7 +100,7 @@ const AddressBlockTab = () => {
 
     const columns: ColumnDef<AddressBlock>[] = [
         {
-            header: nowrap('IP Block'),
+            header: nowrap(t('IP Block')),
             accessorKey: 'baseIp',
             enableHiding: false,
             meta: {
@@ -139,7 +139,7 @@ const AddressBlockTab = () => {
         },
         {
             id: 'inUse',
-            header: nowrap('In use'),
+            header: nowrap(t('In use')),
             meta: {
                 skeletonWidth: '4rem',
                 align: 'right',
@@ -152,7 +152,7 @@ const AddressBlockTab = () => {
         },
         {
             id: 'utilisation',
-            header: nowrap('Utilisation'),
+            header: nowrap(t('Utilisation')),
             meta: {
                 skeletonWidth: '8rem',
             },

@@ -55,10 +55,10 @@ const contentSummary = (storage: StorageProxmox) =>
     [
         storage.storesKvm && 'KVM',
         storage.storesLxc && 'LXC',
-        storage.storesLxcTemplates && 'LXC templates',
-        storage.storesBackups && 'Backups',
+        storage.storesLxcTemplates && t('LXC templates'),
+        storage.storesBackups && t('Backups'),
         storage.storesIso && 'ISO',
-        storage.storesSnippets && 'Snippets',
+        storage.storesSnippets && t('Snippets'),
     ]
         .filter(Boolean)
         .join(' · ')
@@ -281,7 +281,9 @@ const CreateStorageModal = () => {
                         <ResponsiveDialogFooter>
                             <ResponsiveDialogClose
                                 render={
-                                    <Button variant={'outline'}>Cancel</Button>
+                                    <Button variant={'outline'}>
+                                        {t('Cancel')}
+                                    </Button>
                                 }
                             />
                             <FormButton disabled={!picked}>

@@ -58,7 +58,7 @@ const UserPicker = () => {
                     ) : selected ? (
                         selected.name
                     ) : (
-                        'Select a user'
+                        t('Select a user')
                     )}
 
                     <IconUser className={'ml-auto size-4 opacity-50'} />

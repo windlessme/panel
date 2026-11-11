@@ -56,7 +56,7 @@ class SessionRecordController
         // Revoking the current session is just a logout; leave that to the logout endpoint so the
         // response can also clear the cookie.
         if ($sessionRecord->session_id === $request->session()->getId()) {
-            abort(422, 'You cannot revoke the session you are currently using; log out instead.');
+            abort(422, __('You cannot revoke the session you are currently using; log out instead.'));
         }
 
         // Kill the actual session in the store (Redis) so the other device is logged out, and drop

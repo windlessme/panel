@@ -74,7 +74,9 @@ const STATE_FILTER: DataTableFilterField<Address> = {
  */
 const systemReservedReason = (address: Address) =>
     addressStateKind(address) === 'system'
-        ? 'Reserved by the panel — the network, broadcast and gateway addresses cannot be released or reassigned'
+        ? t(
+              'Reserved by the panel — the network, broadcast and gateway addresses cannot be released or reassigned'
+          )
         : undefined
 
 export const Route = createLazyFileRoute(

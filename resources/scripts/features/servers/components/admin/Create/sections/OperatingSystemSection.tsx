@@ -33,12 +33,12 @@ const OperatingSystemSection = () => {
     const imageGroupId = useWatch({ name: 'imageGroupId' })
 
     const summary = deferredOsSelection
-        ? 'The owner picks the OS · nothing is installed now'
+        ? t('The owner picks the OS · nothing is installed now')
         : !shouldCreateVm
-          ? 'Recorded in Convoy only · not built on the node'
+          ? t('Recorded in Convoy only · not built on the node')
           : startOnCompletion
-            ? 'Build now · start when the install finishes'
-            : 'Build now · leave it powered off'
+            ? t('Build now · start when the install finishes')
+            : t('Build now · leave it powered off')
 
     return (
         <Card className={'@container'}>

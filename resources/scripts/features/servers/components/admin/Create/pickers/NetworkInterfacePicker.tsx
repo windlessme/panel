@@ -2,6 +2,8 @@ import { useNetworkInterfaces } from '@/features/nodes/network-interfaces/api.ts
 import { IconNetwork } from '@tabler/icons-react'
 import { useFormContext } from 'react-hook-form'
 
+import { t } from '@/lib/i18n.ts'
+
 import SimpleEmptyState from '@/components/ui/EmptyStates/SimpleEmptyState'
 import {
     FormControl,
@@ -27,10 +29,10 @@ const NetworkInterfacePicker = ({ nodeId }: NetworkInterfacePickerProps) => {
     const { data, isLoading } = useNetworkInterfaces(nodeId)
     const items = (data ?? []).map(item => {
         const vlanLabel = item.vlanTag
-            ? `VLAN ${item.vlanTag}`
+            ? t('VLAN {{tag}}', { tag: item.vlanTag })
             : item.isVlanAware
-              ? 'Untagged'
-              : 'No VLAN'
+              ? t('Untagged')
+              : t('No VLAN')
 
         return {
             value: item.id.toString(),
@@ -51,7 +53,7 @@ const NetworkInterfacePicker = ({ nodeId }: NetworkInterfacePickerProps) => {
             name='networkInterfaceId'
             render={({ field }) => (
                 <FormItem>
-                    <FormLabel>Network Interface</FormLabel>
+                    <FormLabel>{t('Network Interface')}</FormLabel>
                     <Select
                         items={items}
                         onValueChange={field.onChange}
@@ -63,7 +65,11 @@ const NetworkInterfacePicker = ({ nodeId }: NetworkInterfacePickerProps) => {
                     >
                         <FormControl>
                             <SelectTrigger className='w-full'>
-                                <SelectValue placeholder='Select a network interface' />
+                                <SelectValue
+                                    placeholder={t(
+                                        'Select a network interface'
+                                    )}
+                                />
                             </SelectTrigger>
                         </FormControl>
                         <SelectContent>
@@ -71,8 +77,10 @@ const NetworkInterfacePicker = ({ nodeId }: NetworkInterfacePickerProps) => {
                                 <div className='p-2'>
                                     <SimpleEmptyState
                                         icon={IconNetwork}
-                                        title='No Network Interfaces'
-                                        description='There are no network interfaces available for this node.'
+                                        title={t('No Network Interfaces')}
+                                        description={t(
+                                            'There are no network interfaces available for this node.'
+                                        )}
                                     />
                                 </div>
                             ) : (

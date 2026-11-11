@@ -53,7 +53,7 @@ function EnrollNodePage() {
                         to={'/admin/nodes'}
                         className={buttonVariants({ variant: 'ghost' })}
                     >
-                        Cancel
+                        {t('Cancel')}
                     </Link>
                 }
             />

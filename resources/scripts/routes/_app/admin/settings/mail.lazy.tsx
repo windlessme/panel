@@ -60,7 +60,7 @@ const transportError = (error: unknown): string => {
         error as { response?: { data?: { message?: string } } } | undefined
     )?.response?.data?.message
 
-    return message || 'The test message could not be sent.'
+    return message || t('The test message could not be sent.')
 }
 
 const MailSettingsPage = () => {
@@ -257,7 +257,7 @@ const MailSettingsPage = () => {
                                     <InputForm
                                         name={'fromName'}
                                         label={t('From name')}
-                                        placeholder={t('Convoy')}
+                                        placeholder={'Convoy'}
                                     />
                                 </div>
                             </FieldGroup>

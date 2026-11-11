@@ -96,7 +96,7 @@ const SSHKeyCreateDialog = ({ open, onOpenChange }: Props) => {
                             <ResponsiveDialogClose
                                 render={
                                     <Button variant={'outline'} type={'button'}>
-                                        Cancel
+                                        {t('Cancel')}
                                     </Button>
                                 }
                             />

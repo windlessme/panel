@@ -78,7 +78,7 @@ function IpamIndex() {
 
     const columns: ColumnDef<AddressBlockGroup>[] = [
         {
-            header: nowrap('IP Block Group'),
+            header: nowrap(t('IP Block Group')),
             accessorKey: 'name',
             enableHiding: false,
             meta: {
@@ -107,7 +107,7 @@ function IpamIndex() {
             ),
         },
         {
-            header: nowrap('Blocks'),
+            header: nowrap(t('Blocks')),
             accessorKey: 'addressBlocksCount',
             meta: {
                 skeletonWidth: '1rem',
@@ -121,7 +121,7 @@ function IpamIndex() {
         },
         {
             id: 'inUse',
-            header: nowrap('In use'),
+            header: nowrap(t('In use')),
             meta: {
                 skeletonWidth: '4rem',
                 align: 'right',
@@ -134,7 +134,7 @@ function IpamIndex() {
         },
         {
             id: 'utilisation',
-            header: nowrap('Utilisation'),
+            header: nowrap(t('Utilisation')),
             meta: {
                 skeletonWidth: '8rem',
             },
@@ -148,7 +148,7 @@ function IpamIndex() {
             ),
         },
         {
-            header: nowrap('Nodes'),
+            header: nowrap(t('Nodes')),
             accessorKey: 'nodesCount',
             meta: {
                 skeletonWidth: '1rem',
@@ -209,7 +209,7 @@ function IpamIndex() {
                                 <ItemDescription
                                     className={'block truncate text-nowrap'}
                                 >
-                                    {group.description || 'No description'}
+                                    {group.description || t('No description')}
                                 </ItemDescription>
                                 {/* The one place a bar reads better than a number:
                                     at this width the counts would wrap before the

@@ -30,7 +30,7 @@ class AnchorSessionService
         $agent = $server->node;
 
         if (! $agent->hasAnchor()) {
-            throw new ConflictHttpException('This server\'s node does not have an Anchor agent installed.');
+            throw new ConflictHttpException(__('This server\'s node does not have an Anchor agent installed.'));
         }
 
         $agent->loadMissing('relay');
@@ -110,7 +110,7 @@ class AnchorSessionService
     private function websocketUrl(Node|Relay $anchor): string
     {
         return $anchor->anchorWebsocketUrl() ?? throw new ConflictHttpException(
-            "Anchor {$anchor->anchorName()} has no address for the panel to reach it on.",
+            __('Anchor :anchor has no address for the panel to reach it on.', ['anchor' => $anchor->anchorName()]),
         );
     }
 
@@ -130,7 +130,7 @@ class AnchorSessionService
 
         if ($compatibility !== AnchorCompatibility::COMPATIBLE) {
             throw new ConflictHttpException(
-                "Anchor {$anchor->anchorName()} is not online with a compatible protocol version.",
+                __('Anchor :anchor is not online with a compatible protocol version.', ['anchor' => $anchor->anchorName()]),
             );
         }
     }

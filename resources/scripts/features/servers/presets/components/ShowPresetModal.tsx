@@ -39,7 +39,7 @@ const Row = ({ label, children }: RowProps) => (
     </div>
 )
 
-const unlimited = (value: number) => (value === -1 ? 'Unlimited' : null)
+const unlimited = (value: number) => (value === -1 ? t('Unlimited') : null)
 
 /**
  * What a preset will fill in, in the operator's terms rather than the database's
@@ -61,14 +61,15 @@ const PresetSettings = ({ settings }: { settings: ServerPresetSettings }) => {
     const storageName = (id: number) => {
         const storage = storages?.find(item => item.id === id)
 
-        if (!storage) return `Storage #${id}`
+        if (!storage) return t('Storage #{{id}}', { id })
 
         return storage.displayName || storage.name
     }
 
     const interfaceName =
         interfaces?.find(item => item.id === settings.networkInterfaceId)
-            ?.name ?? `Interface #${settings.networkInterfaceId}`
+            ?.name ??
+        t('Interface #{{id}}', { id: settings.networkInterfaceId })
 
     const imageName =
         definitions?.find(image => image.uuid === settings.imageUuid)?.name ??
@@ -79,7 +80,7 @@ const PresetSettings = ({ settings }: { settings: ServerPresetSettings }) => {
             {settings.nodeId != null && (
                 <Row label={t('Node')}>
                     {node?.displayName ??
-                        t('Node #{{nodeId}}', { nodeId: settings.nodeId })}
+                        t('Node #{{id}}', { id: settings.nodeId })}
                 </Row>
             )}
             {settings.storageId != null && (
@@ -97,11 +98,11 @@ const PresetSettings = ({ settings }: { settings: ServerPresetSettings }) => {
             {settings.disks?.map((disk, index) => (
                 <Row
                     key={index}
-                    label={t('Extra disk {{value}}', { value: index + 1 })}
+                    label={t('Extra disk {{number}}', { number: index + 1 })}
                 >
-                    {t('{{value}} on {{storageName}}', {
-                        value: byteSize(disk.size * GIBIBYTE, iec).toString(),
-                        storageName: storageName(disk.storageId),
+                    {t('{{size}} on {{storage}}', {
+                        size: byteSize(disk.size * GIBIBYTE, iec).toString(),
+                        storage: storageName(disk.storageId),
                     })}
                 </Row>
             ))}
@@ -114,9 +115,7 @@ const PresetSettings = ({ settings }: { settings: ServerPresetSettings }) => {
                 <Row label={t('Speed limit')}>
                     {settings.speedLimit === -1
                         ? t('Uncapped')
-                        : t('{{speedLimit}} MB/s', {
-                              speedLimit: settings.speedLimit,
-                          })}
+                        : `${settings.speedLimit} MB/s`}
                 </Row>
             )}
             {settings.backupCount != null && (

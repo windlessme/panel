@@ -68,7 +68,7 @@ class StorageController extends Controller
         abort_if(
             $cluster === null,
             422,
-            'Convoy could not reach this node to determine which cluster it is in. Check connectivity and try again.',
+            __('Convoy could not reach this node to determine which cluster it is in. Check connectivity and try again.'),
         );
 
         $storage = $this->connection->transaction(function () use ($request, $node, $reported, $cluster) {

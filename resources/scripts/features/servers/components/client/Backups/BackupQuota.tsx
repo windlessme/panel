@@ -26,7 +26,7 @@ const formatBytes = (bytes: number) => {
     return `${value} ${unit}`
 }
 
-const plural = (count: number) => (count === 1 ? 'backup' : 'backups')
+const plural = (count: number) => t('backups', { count })
 
 /**
  * The trigger says the one figure that gates the action — how many backups are
@@ -46,14 +46,20 @@ const summary = (quota: BackupQuota): [string, string] => {
     // against its noun, and splitting a plain phrase across the same two tones
     // just makes one of its words look arbitrarily grey.
     if (quota.isUnavailable && quota.count === 0) {
-        return ['No quota allocated', '']
+        return [t('No quota allocated'), '']
     }
 
     if (quota.isCountUnlimited) {
         return [`${quota.count}`, plural(quota.count)]
     }
 
-    return [`${quota.count} of ${quota.countLimit}`, plural(quota.count)]
+    return [
+        t('{{used}} of {{limit}}', {
+            used: quota.count,
+            limit: quota.countLimit,
+        }),
+        plural(quota.count),
+    ]
 }
 
 /**
@@ -62,26 +68,28 @@ const summary = (quota: BackupQuota): [string, string] => {
  * and the limit is already sitting inline next to the figure.
  */
 const countNote = (quota: BackupQuota): string | undefined => {
-    if (quota.isCountUnlimited) return 'No limit on this server'
+    if (quota.isCountUnlimited) return t('No limit on this server')
 
     if (!quota.hasCountLimit) {
-        return 'Your administrator can allocate backup slots to this server.'
+        return t('Your administrator can allocate backup slots to this server.')
     }
 
     const free = Math.max(0, quota.countLimit - quota.count)
 
     return free === 0
-        ? 'No slots free — delete a backup to make room'
-        : `${free} ${free === 1 ? 'slot' : 'slots'} free`
+        ? t('No slots free — delete a backup to make room')
+        : t('{{count}} slots free', { count: free })
 }
 
 const sizeNote = (quota: BackupQuota): string | undefined => {
-    if (quota.isSizeUnlimited) return 'No limit on this server'
+    if (quota.isSizeUnlimited) return t('No limit on this server')
     if (!quota.hasSizeLimit) return undefined
 
     const free = quota.sizeLimit - quota.size
 
-    return free <= 0 ? 'No storage free' : `${formatBytes(free)} free`
+    return free <= 0
+        ? t('No storage free')
+        : t('{{size}} free', { size: formatBytes(free) })
 }
 
 interface DetailProps {
@@ -165,7 +173,10 @@ const BackupQuota = () => {
                     <Button
                         variant={'outline'}
                         className={'h-auto flex-col items-start gap-1 py-1.5'}
-                        aria-label={`Backup quota: ${figure} ${unit}. Open for detail.`}
+                        aria-label={t(
+                            'Backup quota: {{figure}} {{unit}}. Open for detail.',
+                            { figure, unit }
+                        )}
                     >
                         <span className={'text-xs tabular-nums'}>
                             <span
@@ -213,8 +224,8 @@ const BackupQuota = () => {
                         }
                         of={
                             quota.hasCountLimit
-                                ? t('of {{countLimit}}', {
-                                      countLimit: quota.countLimit,
+                                ? t('of {{limit}}', {
+                                      limit: quota.countLimit,
                                   })
                                 : null
                         }
@@ -234,8 +245,8 @@ const BackupQuota = () => {
                         }
                         of={
                             quota.hasSizeLimit
-                                ? t('of {{sizeLimit}}', {
-                                      sizeLimit: formatBytes(quota.sizeLimit),
+                                ? t('of {{limit}}', {
+                                      limit: formatBytes(quota.sizeLimit),
                                   })
                                 : null
                         }

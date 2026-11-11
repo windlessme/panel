@@ -98,7 +98,7 @@ class ISOController
                 $storages->stores(StorageContentType::ISO);
             })
             ->first() ?? throw new ConflictHttpException(
-                'No node has ISO storage, so Convoy cannot inspect that link.',
+                __('No node has ISO storage, so Convoy cannot inspect that link.'),
             );
 
         return FileMetaData::from(

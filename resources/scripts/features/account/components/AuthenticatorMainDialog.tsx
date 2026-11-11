@@ -43,10 +43,10 @@ const AuthenticatorMainDialog = () => {
             <ResponsiveDialogTrigger
                 render={
                     <AuthSetting
-                        title={'Authenticator'}
-                        description={
+                        title={t('Authenticator')}
+                        description={t(
                             'Time-based verification codes using an app'
-                        }
+                        )}
                     />
                 }
             />
@@ -72,7 +72,9 @@ const AuthenticatorMainDialog = () => {
                     with hand-rolled spacing. */}
                 <ResponsiveDialogFooter>
                     <ResponsiveDialogClose
-                        render={<Button variant={'outline'}>Close</Button>}
+                        render={
+                            <Button variant={'outline'}>{t('Close')}</Button>
+                        }
                     />
                     {isEnabled ? (
                         <Button

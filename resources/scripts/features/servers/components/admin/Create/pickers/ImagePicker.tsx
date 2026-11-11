@@ -1,6 +1,8 @@
 import { useImageDefinitions } from '@/features/images/definitions/api.ts'
 import { useFormContext } from 'react-hook-form'
 
+import { t } from '@/lib/i18n.ts'
+
 import {
     FormControl,
     FormField,
@@ -34,7 +36,7 @@ const ImagePicker = ({ imageGroupId }: ImagePickerProps) => {
             name='imageUuid'
             render={({ field }) => (
                 <FormItem>
-                    <FormLabel>Version</FormLabel>
+                    <FormLabel>{t('Version')}</FormLabel>
                     <Select
                         items={items}
                         onValueChange={field.onChange}
@@ -46,7 +48,9 @@ const ImagePicker = ({ imageGroupId }: ImagePickerProps) => {
                     >
                         <FormControl>
                             <SelectTrigger className='w-full'>
-                                <SelectValue placeholder='Select a version' />
+                                <SelectValue
+                                    placeholder={t('Select a version')}
+                                />
                             </SelectTrigger>
                         </FormControl>
                         <SelectContent>

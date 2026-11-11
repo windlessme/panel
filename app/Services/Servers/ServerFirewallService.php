@@ -305,7 +305,7 @@ class ServerFirewallService
         $rule = $this->getRules($server)->firstWhere('position', $position);
 
         if (! $rule instanceof FirewallRuleData) {
-            throw new NotFoundHttpException('Firewall rule not found');
+            throw new NotFoundHttpException(__('Firewall rule not found'));
         }
 
         return $rule;

@@ -38,7 +38,7 @@ class StoreISORequest extends BaseApiRequest
                 if (ISO::where('file_name', $this->string('file_name'))->exists()) {
                     $validator->errors()->add(
                         'file_name',
-                        __('validation.unique', ['attribute' => 'file name']),
+                        __('validation.unique', ['attribute' => __('file name')]),
                     );
                 }
             },

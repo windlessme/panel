@@ -14,6 +14,9 @@ set -euo pipefail
 CONVOY_DIR="${CONVOY_DIR:-/opt/convoy}"
 CONVOY_VERSION="${CONVOY_VERSION:-latest}"
 CONVOY_REPO="${CONVOY_REPO:-https://raw.githubusercontent.com/ConvoyPanel/panel}"
+# Set to run a fork's image (for example ghcr.io/<owner>/panel); persisted to .env
+# so `convoyctl upgrade` keeps pulling from it.
+CONVOY_IMAGE="${CONVOY_IMAGE:-}"
 DOMAIN=""
 ADMIN_EMAIL=""
 ASSUME_YES=0
@@ -151,6 +154,7 @@ set_env APP_DOMAIN "$DOMAIN"
 set_env APP_URL "$scheme://$DOMAIN"
 set_env CONVOY_AUTO_HTTPS "$AUTO_HTTPS"
 set_env CONVOY_VERSION "$CONVOY_VERSION"
+if [[ -n "$CONVOY_IMAGE" ]]; then set_env CONVOY_IMAGE "$CONVOY_IMAGE"; fi
 set_env DB_PASSWORD "$db_password"
 set_env MAIL_FROM_ADDRESS "convoy@$DOMAIN"
 

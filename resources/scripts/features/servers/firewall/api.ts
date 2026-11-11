@@ -450,9 +450,6 @@ export const appendPosition = (
 
 // ─── display helpers ────────────────────────────────────────────────────────
 
-const plural = (count: number, noun: string): string =>
-    `${count} ${noun}${count === 1 ? '' : 's'}`
-
 export const policyAdjectives: Record<FirewallPolicy, string> = {
     ACCEPT: t('Accepted'),
     DROP: t('Dropped'),
@@ -461,13 +458,14 @@ export const policyAdjectives: Record<FirewallPolicy, string> = {
 
 /** The count line beside a chain's name: `4 rules · 1 off`. */
 export const describeChain = (rules: FirewallRule[]): string => {
-    if (rules.length === 0) return 'No rules'
+    if (rules.length === 0) return t('No rules')
 
     const off = rules.filter(rule => !rule.isEnabled).length
+    const count = t('{{count}} rules', { count: rules.length })
 
     return off === 0
-        ? plural(rules.length, 'rule')
-        : `${plural(rules.length, 'rule')} · ${off} off`
+        ? count
+        : t('{{rules}} · {{off}} off', { rules: count, off })
 }
 
 /**
@@ -478,9 +476,13 @@ export const describePolicyRow = (
     direction: RuleDirection,
     hasRules: boolean
 ): string =>
-    hasRules
-        ? `Unmatched ${directionLabels[direction].toLowerCase()} traffic is`
-        : `All ${directionLabels[direction].toLowerCase()} traffic is`
+    direction === 'in'
+        ? hasRules
+            ? t('Unmatched inbound traffic is')
+            : t('All inbound traffic is')
+        : hasRules
+          ? t('Unmatched outbound traffic is')
+          : t('All outbound traffic is')
 
 /**
  * The aliases and IP sets worth offering in a rule.
@@ -510,9 +512,9 @@ const describeFormTraffic = (values: RuleFormValues): string => {
 
     if (protocol && port) return `${protocol}/${port}`
     if (protocol) return protocol
-    if (port) return `port ${port}`
+    if (port) return t('port {{port}}', { port })
 
-    return 'all traffic'
+    return t('all traffic')
 }
 
 /**
@@ -534,9 +536,31 @@ export const describeRuleIntent = (values: RuleFormValues): string => {
         isInbound ? values.sourceAddress : values.destinationAddress
     )
 
-    return `${verbs[values.action]} ${describeFormTraffic(values)} ${
-        isInbound ? 'from' : 'to'
-    } ${peer === '' ? 'anywhere' : peer}.`
+    const traffic = describeFormTraffic(values)
+
+    if (peer === '') {
+        return isInbound
+            ? t('{{verb}} {{traffic}} from anywhere.', {
+                  verb: verbs[values.action],
+                  traffic,
+              })
+            : t('{{verb}} {{traffic}} to anywhere.', {
+                  verb: verbs[values.action],
+                  traffic,
+              })
+    }
+
+    return isInbound
+        ? t('{{verb}} {{traffic}} from {{peer}}.', {
+              verb: verbs[values.action],
+              traffic,
+              peer,
+          })
+        : t('{{verb}} {{traffic}} to {{peer}}.', {
+              verb: verbs[values.action],
+              traffic,
+              peer,
+          })
 }
 
 /**
@@ -551,7 +575,8 @@ export const describeRuleTraffic = (rule: FirewallRule): string | null => {
     if (protocol && rule.destinationPort)
         return `${protocol}/${rule.destinationPort}`
     if (protocol) return protocol
-    if (rule.destinationPort) return `port ${rule.destinationPort}`
+    if (rule.destinationPort)
+        return t('port {{port}}', { port: rule.destinationPort })
 
     return null
 }

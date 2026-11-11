@@ -36,21 +36,22 @@ const BandwidthUsageCard = () => {
             context={
                 server ? (
                     <>
-                        {isUnlimited ? (
-                            'of an unlimited allowance'
-                        ) : (
-                            <>
-                                of {limit.value} {limit.unit} &#x2022;{' '}
-                                {bandwidthUsedPercent.toFixed(0)}%
-                            </>
-                        )}
+                        {isUnlimited
+                            ? t('of an unlimited allowance')
+                            : t('of {{limit}} • {{percent}}%', {
+                                  limit: `${limit.value} ${limit.unit}`,
+                                  percent: bandwidthUsedPercent.toFixed(0),
+                              })}
                         {/* Only when there is one to report: an uncapped
                             link is the default, and saying so cost the line
                             more width than the fact was worth. Held back to
                             @6xl for the same reason -- see ServerStateCard. */}
                         {speedLimit !== null && (
                             <span className={'hidden @6xl:inline'}>
-                                {' • '}capped at {speed.value} {speed.unit}/s
+                                {' • '}
+                                {t('capped at {{speed}}/s', {
+                                    speed: `${speed.value} ${speed.unit}`,
+                                })}
                             </span>
                         )}
                     </>
@@ -62,7 +63,10 @@ const BandwidthUsageCard = () => {
                 !isUnlimited && (
                     <LinearProgressBar
                         value={bandwidthUsedPercent}
-                        aria-label={`${bandwidthUsedPercent.toFixed(2)}% of your bandwidth allowance is used`}
+                        aria-label={t(
+                            '{{percent}}% of your bandwidth allowance is used',
+                            { percent: bandwidthUsedPercent.toFixed(2) }
+                        )}
                     />
                 )
             }

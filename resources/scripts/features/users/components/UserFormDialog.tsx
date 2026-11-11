@@ -98,7 +98,7 @@ const UserFormDialog = ({ user, currentUserId, close, refresh }: Props) => {
             }
 
             toast.add({
-                title: `User ${current ? 'updated' : 'created'}`,
+                title: current ? t('User updated') : t('User created'),
                 type: 'success',
             })
             close()
@@ -156,8 +156,8 @@ const UserFormDialog = ({ user, currentUserId, close, refresh }: Props) => {
                             />
                         </div>
                         <p className={'text-muted-foreground text-sm'}>
-                            {t('Single use. Expires {{value}}.', {
-                                value: new Date(
+                            {t('Single use. Expires {{date}}.', {
+                                date: new Date(
                                     invite.expiresAt
                                 ).toLocaleDateString(),
                             })}
@@ -263,7 +263,7 @@ const UserFormDialog = ({ user, currentUserId, close, refresh }: Props) => {
                             <ResponsiveDialogClose
                                 render={
                                     <Button variant={'outline'} type={'button'}>
-                                        Cancel
+                                        {t('Cancel')}
                                     </Button>
                                 }
                             />

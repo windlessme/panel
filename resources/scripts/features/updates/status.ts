@@ -24,7 +24,7 @@ const relative = (value: string) =>
 
 /** "3 hours ago", or a plain admission when no check has ever completed. */
 export const lastChecked = (status: UpdateStatus) =>
-    status.checkedAt ? relative(status.checkedAt) : 'Never'
+    status.checkedAt ? relative(status.checkedAt) : t('Never')
 
 /** "4.6.1 · 9 August 2026" — the release, dated, on one line. */
 export const releaseLine = (status: UpdateStatus) =>

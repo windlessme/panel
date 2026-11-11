@@ -42,7 +42,7 @@ const useCredentialRevocation = <T extends { id: number }>({
     errorTitle,
     nameOf,
     consequence,
-    confirmText = 'Revoke',
+    confirmText = t('Revoke'),
 }: Args<T>) => {
     const confirm = useConfirmationStore(state => state.confirm)
     const mutateCache = useQueryMutator<T[]>(queryKey)
@@ -62,8 +62,8 @@ const useCredentialRevocation = <T extends { id: number }>({
         const confirmed = await confirm({
             title: question,
             description: t(
-                '{{nameOf}} will stop working immediately. {{consequence}}',
-                { nameOf: nameOf(item), consequence }
+                '{{subject}} will stop working immediately. {{consequence}}',
+                { subject: nameOf(item), consequence }
             ),
             confirmText,
             confirmButton: { variant: 'destructive' },

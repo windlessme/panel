@@ -92,9 +92,11 @@ const ServerPowerActions = ({ server }: Props) => {
         <>
             {pending && (
                 <DropdownMenuItem disabled>
-                    {actions[pending.command as PowerAction]?.label ??
-                        t('Power action')}
-                    {t('in progress…')}
+                    {t('{{action}} in progress…', {
+                        action:
+                            actions[pending.command as PowerAction]?.label ??
+                            t('Power action'),
+                    })}
                 </DropdownMenuItem>
             )}
             {(Object.keys(actions) as PowerAction[]).map(action => (

@@ -145,7 +145,9 @@ const AuthDialog = ({ onCancel }: Props) => {
             if (handleFormErrors(e, form.setError)) return
 
             const message =
-                e instanceof Error ? e.message : 'An unexpected error occurred'
+                e instanceof Error
+                    ? e.message
+                    : t('An unexpected error occurred')
 
             toast.add({ title: message, type: 'error' })
 
@@ -240,7 +242,7 @@ const AuthDialog = ({ onCancel }: Props) => {
                             <ResponsiveDialogClose
                                 render={
                                     <Button variant={'outline'} type={'button'}>
-                                        Cancel
+                                        {t('Cancel')}
                                     </Button>
                                 }
                             />

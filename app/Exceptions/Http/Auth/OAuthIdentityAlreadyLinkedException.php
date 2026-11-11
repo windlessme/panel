@@ -9,7 +9,7 @@ class OAuthIdentityAlreadyLinkedException extends ConflictHttpException implemen
 {
     public function __construct()
     {
-        parent::__construct('That single sign-on identity is already linked to a different Convoy account.');
+        parent::__construct(__('That single sign-on identity is already linked to a different Convoy account.'));
     }
 
     public function errorCode(): string

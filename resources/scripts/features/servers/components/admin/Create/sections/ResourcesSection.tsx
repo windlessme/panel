@@ -49,33 +49,36 @@ const useResourceSummary = () => {
 
     const parts: string[] = []
 
-    if (Number(cpu) > 0) parts.push(`${Number(cpu)} vCPU`)
+    if (Number(cpu) > 0) parts.push(t('{{count}} vCPU', { count: Number(cpu) }))
 
     const ram = fromMib(memory)
     if (ram) parts.push(ram)
 
     const primary = fromMib(disk)
-    if (primary) parts.push(`${primary} disk`)
+    if (primary) parts.push(t('{{size}} disk', { size: primary }))
 
     if (Array.isArray(disks) && disks.length > 0) {
-        parts.push(
-            `+${disks.length} ${disks.length === 1 ? 'volume' : 'volumes'}`
-        )
+        parts.push(t('+{{count}} volumes', { count: disks.length }))
     }
 
     if (Number(bandwidth) === -1) {
-        parts.push('unmetered')
+        parts.push(t('unmetered'))
     } else {
         const transfer = fromMib(bandwidth)
-        parts.push(transfer ? `${transfer} transfer` : 'no transfer')
+        parts.push(
+            transfer
+                ? t('{{size}} transfer', { size: transfer })
+                : t('no transfer')
+        )
     }
 
-    if (Number(speedLimit) > 0) parts.push(`${speedLimit} MB/s cap`)
+    if (Number(speedLimit) > 0)
+        parts.push(t('{{speed}} MB/s cap', { speed: speedLimit }))
 
     const backups = Number(backupCount)
-    if (backups === -1) parts.push('unlimited backups')
-    else if (backups > 0) parts.push(`${backups} backups`)
-    else parts.push('no backups')
+    if (backups === -1) parts.push(t('unlimited backups'))
+    else if (backups > 0) parts.push(t('{{count}} backups', { count: backups }))
+    else parts.push(t('no backups'))
 
     return parts.join(' · ')
 }

@@ -29,7 +29,11 @@ trait ValidatesBlockGeometry
                 if ($value > $max) {
                     $validator->errors()->add(
                         $attribute,
-                        "The {$attribute} may not be greater than {$max} for an {$version->value} block.",
+                        __('The :attribute may not be greater than :max for an :version block.', [
+                            'attribute' => $attribute,
+                            'max' => $max,
+                            'version' => $version->value,
+                        ]),
                     );
                 }
             }
@@ -41,7 +45,7 @@ trait ValidatesBlockGeometry
             if ($to < $from) {
                 $validator->errors()->add(
                     'prefix_length_to',
-                    'The output prefix length must be at least the source prefix length — a block cannot hand out units larger than itself.',
+                    __('The output prefix length must be at least the source prefix length — a block cannot hand out units larger than itself.'),
                 );
 
                 return;
@@ -77,7 +81,7 @@ trait ValidatesBlockGeometry
         if ($block->containsAddress($gateway)) {
             $validator->errors()->add(
                 'gateway',
-                'The gateway falls inside the block\'s only allocatable unit, which leaves nothing to allocate. Widen the output prefix length or move the gateway outside this block.',
+                __('The gateway falls inside the block\'s only allocatable unit, which leaves nothing to allocate. Widen the output prefix length or move the gateway outside this block.'),
             );
         }
     }

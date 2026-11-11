@@ -9,7 +9,7 @@ class ISOAlreadyMountedException extends BadRequestHttpException implements HasE
 {
     public function __construct()
     {
-        parent::__construct('The requested ISO is already mounted');
+        parent::__construct(__('The requested ISO is already mounted'));
     }
 
     public function errorCode(): string

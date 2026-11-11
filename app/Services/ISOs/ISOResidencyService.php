@@ -94,7 +94,7 @@ class ISOResidencyService
     {
         if (! $iso->isHosted()) {
             return $iso->url ?? throw new ConflictHttpException(
-                'This ISO has neither a URL nor an uploaded file.',
+                __('This ISO has neither a URL nor an uploaded file.'),
             );
         }
 
@@ -107,7 +107,7 @@ class ISOResidencyService
     private function storageFor(Node $node): Storage
     {
         return $node->isoStorage() ?? throw new ConflictHttpException(
-            "No storage on {$node->name} accepts ISOs.",
+            __('No storage on :node accepts ISOs.', ['node' => $node->name]),
         );
     }
 }

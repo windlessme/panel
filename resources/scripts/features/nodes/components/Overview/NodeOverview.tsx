@@ -138,7 +138,7 @@ const NodeOverview = ({ nodeId }: NodeOverviewProps) => {
                             {node.clusterFlagReason ??
                                 t(
                                     'The cluster reported members that share nothing with what Convoy has recorded.'
-                                )}
+                                )}{' '}
                             {t(
                                 'Storage adoption and server placement reconciliation are paused for this cluster until the flag is cleared.'
                             )}
@@ -153,12 +153,14 @@ const NodeOverview = ({ nodeId }: NodeOverviewProps) => {
                                 unflagCluster.mutate(node.clusterId, {
                                     onSuccess: () =>
                                         toast.add({
-                                            title: 'Cluster flag cleared',
+                                            title: t('Cluster flag cleared'),
                                             type: 'success',
                                         }),
                                     onError: () =>
                                         toast.add({
-                                            title: 'Failed to clear the flag',
+                                            title: t(
+                                                'Failed to clear the flag'
+                                            ),
                                             type: 'error',
                                         }),
                                 })

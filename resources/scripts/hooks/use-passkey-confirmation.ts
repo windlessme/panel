@@ -1,3 +1,8 @@
+import {
+    type IdentityStatus,
+    confirmIdentity,
+    getPasskeyAuthenticationOptions,
+} from '@/features/auth/identity/api.ts'
 import { getApiErrorMessage } from '@/utils/http.ts'
 import { startAuthentication } from '@simplewebauthn/browser'
 import {
@@ -6,12 +11,7 @@ import {
 } from '@simplewebauthn/browser'
 import { useState } from 'react'
 
-import {
-    type IdentityStatus,
-    confirmIdentity,
-    getPasskeyAuthenticationOptions,
-} from '@/features/auth/identity/api.ts'
-
+import { t } from '@/lib/i18n.ts'
 
 const usePasskeyConfirmation = () => {
     const [loading, setLoading] = useState(false)
@@ -26,7 +26,10 @@ const usePasskeyConfirmation = () => {
             setLoading(false)
 
             throw Error(
-                getApiErrorMessage(e, 'Failed to get passkey authentication options')
+                getApiErrorMessage(
+                    e,
+                    t('Failed to get passkey authentication options')
+                )
             )
         }
 
@@ -36,7 +39,7 @@ const usePasskeyConfirmation = () => {
         } catch (e) {
             setLoading(false)
 
-            throw Error('Authentication failed')
+            throw Error(t('Authentication failed'))
         }
 
         let status: IdentityStatus
@@ -47,7 +50,9 @@ const usePasskeyConfirmation = () => {
 
             // The server distinguishes an unrecognised passkey from one that
             // belongs to another account; don't flatten that back to one string.
-            throw Error(getApiErrorMessage(e, 'Invalid passkey. Please try again.'))
+            throw Error(
+                getApiErrorMessage(e, t('Invalid passkey. Please try again.'))
+            )
         }
 
         setLoading(false)

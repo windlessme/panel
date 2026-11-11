@@ -51,8 +51,8 @@ const AddressCapacityMeter = ({
             <SegmentedProgressBar
                 segments={view.segments}
                 className={size === 'md' ? 'h-2' : 'h-1.5'}
-                aria-label={t('{{toFixed}}% of usable addresses are in use', {
-                    toFixed: view.percent!.toFixed(0),
+                aria-label={t('{{percent}}% of usable addresses are in use', {
+                    percent: view.percent!.toFixed(0),
                 })}
             />
             {subline && (
@@ -67,21 +67,21 @@ const AddressCapacityMeter = ({
                         {view.percent!.toFixed(1)}%
                     </span>
                     <span className={'whitespace-nowrap'}>
-                        {t('· {{value}} free', {
-                            value: view.free.toLocaleString(),
+                        {t('· {{free}} free', {
+                            free: view.free.toLocaleString(),
                         })}
                     </span>
                     {view.ungenerated > 0 && (
                         <span className={'whitespace-nowrap'}>
-                            {t('· {{value}} not generated', {
-                                value: view.ungenerated.toLocaleString(),
+                            {t('· {{ungenerated}} not generated', {
+                                ungenerated: view.ungenerated.toLocaleString(),
                             })}
                         </span>
                     )}
                     {view.sparseBlockCount > 0 && (
                         <span className={'whitespace-nowrap'}>
-                            {t('· {{sparseBlockCount}} on demand', {
-                                sparseBlockCount: view.sparseBlockCount,
+                            {t('· {{count}} on demand', {
+                                count: view.sparseBlockCount,
                             })}
                         </span>
                     )}

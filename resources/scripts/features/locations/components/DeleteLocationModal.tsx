@@ -88,7 +88,9 @@ const DeleteLocationModal = ({ mutate }: Props) => {
                 </ResponsiveDialogBody>
                 <ResponsiveDialogFooter className={'mt-4'}>
                     <ResponsiveDialogClose
-                        render={<Button variant={'outline'}>Cancel</Button>}
+                        render={
+                            <Button variant={'outline'}>{t('Cancel')}</Button>
+                        }
                     />
                     <Button
                         autoFocus

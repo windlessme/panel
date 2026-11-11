@@ -105,7 +105,7 @@ function IsoLibrary() {
                                     {' · '}
                                     {iso.isHosted
                                         ? t('hosted by Convoy')
-                                        : 'linked'}
+                                        : t('linked')}
                                 </p>
                             </div>
 
@@ -131,10 +131,13 @@ function IsoLibrary() {
                                 aria-label={t('Delete ISO')}
                                 onClick={async () => {
                                     const ok = await confirm({
-                                        title: `Delete ${iso.name}?`,
-                                        description:
-                                            'It disappears from the library. Copies nodes already fetched are left alone, and Proxmox treats them as cache.',
-                                        confirmText: 'Delete ISO',
+                                        title: t('Delete {{name}}?', {
+                                            name: iso.name,
+                                        }),
+                                        description: t(
+                                            'It disappears from the library. Copies nodes already fetched are left alone, and Proxmox treats them as cache.'
+                                        ),
+                                        confirmText: t('Delete ISO'),
                                         confirmButton: {
                                             variant: 'destructive',
                                         },
@@ -146,12 +149,14 @@ function IsoLibrary() {
                                         await deleteISO(iso.uuid)
                                         await refresh()
                                         toast.add({
-                                            title: 'ISO deleted',
+                                            title: t('ISO deleted'),
                                             type: 'success',
                                         })
                                     } catch {
                                         toast.add({
-                                            title: 'Failed to delete the ISO',
+                                            title: t(
+                                                'Failed to delete the ISO'
+                                            ),
                                             type: 'error',
                                         })
                                     }

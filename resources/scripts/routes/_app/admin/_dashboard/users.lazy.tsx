@@ -30,9 +30,6 @@ import {
 import Actions, { actionsColumn } from '@/components/ui/Table/Actions.tsx'
 import { Heading } from '@/components/ui/Typography'
 
-const countOf = (count: number, noun: string) =>
-    `${count} ${noun}${count === 1 ? '' : 's'}`
-
 const RoleBadge = ({ user }: { user: AdminUser }) =>
     user.rootAdmin ? (
         <Badge variant={'secondary'}>{t('Administrator')}</Badge>
@@ -167,10 +164,10 @@ const UsersIndex = () => {
                 emptyState={
                     <SimpleEmptyState
                         icon={IconUsers}
-                        title={'No users'}
-                        description={
+                        title={t('No users')}
+                        description={t(
                             'Everyone who can sign in to the panel appears here.'
-                        }
+                        )}
                         action={addButton}
                     />
                 }
@@ -195,7 +192,9 @@ const UsersIndex = () => {
                                     {user.email}
                                 </ItemDescription>
                                 <ItemDescription>
-                                    {countOf(user.serversCount ?? 0, 'server')}
+                                    {t('{{count}} servers', {
+                                        count: user.serversCount ?? 0,
+                                    })}
                                 </ItemDescription>
                             </ItemContent>
                             <ItemActions>

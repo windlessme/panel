@@ -9,7 +9,7 @@ class AddressNotReservedException extends ConflictHttpException implements HasEr
 {
     public function __construct()
     {
-        parent::__construct('This address is not reserved.');
+        parent::__construct(__('This address is not reserved.'));
     }
 
     public function errorCode(): string

@@ -26,7 +26,7 @@ class NetworkInterfaceRequest extends BaseApiRequest
                 if ($this->filled('vlan_tag') && ! $isVlanAware) {
                     $validator->errors()->add(
                         'vlan_tag',
-                        'The network interface must be marked VLAN-aware before assigning a VLAN tag.',
+                        __('The network interface must be marked VLAN-aware before assigning a VLAN tag.'),
                     );
                 }
             },

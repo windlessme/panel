@@ -10,7 +10,7 @@ class CannotModifyPrimaryDiskException extends BadRequestHttpException implement
     public function __construct()
     {
         parent::__construct(
-            'The primary disk cannot be added, resized, or removed here — use the server build settings.',
+            __('The primary disk cannot be added, resized, or removed here — use the server build settings.'),
         );
     }
 

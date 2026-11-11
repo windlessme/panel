@@ -56,8 +56,8 @@ export const allowedNetworksSchema = z.string().superRefine((value, ctx) => {
         ctx.addIssue({
             code: 'custom',
             message: t(
-                'Line {{value}} must be a valid IPv4 or IPv6 address or CIDR range.',
-                { value: invalid + 1 }
+                'Line {{line}} must be a valid IPv4 or IPv6 address or CIDR range.',
+                { line: invalid + 1 }
             ),
         })
     }

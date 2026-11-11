@@ -146,10 +146,10 @@ const CreateServerPage = () => {
                                         variant: 'ghost',
                                     })}
                                 >
-                                    Cancel
+                                    {t('Cancel')}
                                 </Link>
                                 <FormButton className={'flex'}>
-                                    Add server{' '}
+                                    {t('Add server')}{' '}
                                     <IconCheck className={'size-4'} />
                                 </FormButton>
                             </>

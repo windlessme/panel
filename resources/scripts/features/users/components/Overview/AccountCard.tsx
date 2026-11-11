@@ -26,7 +26,7 @@ const Row = ({ label, children }: { label: string; children: ReactNode }) => (
     </div>
 )
 
-const none = <span className={'text-muted-foreground'}>{t('&mdash;')}</span>
+const none = <span className={'text-muted-foreground'}>&mdash;</span>
 
 /**
  * Eight facts as a definition list rather than eight tiles. Density is the point: this is the card
@@ -65,9 +65,8 @@ const AccountCard = ({ user }: Props) => (
                                 )}
                                 {user.lastLoginIp && (
                                     <span className={'text-muted-foreground'}>
-                                        {t('&middot; {{lastLoginIp}}', {
-                                            lastLoginIp: user.lastLoginIp,
-                                        })}
+                                        {' '}
+                                        &middot; {user.lastLoginIp}
                                     </span>
                                 )}
                             </>
@@ -79,7 +78,7 @@ const AccountCard = ({ user }: Props) => (
                             </span>
                         )}
                     </Row>
-                    <Row label={'Two-factor'}>
+                    <Row label={t('Two-factor')}>
                         {user.twoFactorEnabled
                             ? t('Authenticator app')
                             : user.passkeysCount > 0

@@ -86,18 +86,18 @@ class StoreServerRequest extends BaseApiRequest
                     $address = Address::with('addressBlock.addressBlockGroup.networkInterfaces')->find($value);
 
                     if (! $address) {
-                        $fail("The address with ID {$value} could not be found.");
+                        $fail(__('The address with ID :id could not be found.', ['id' => $value]));
 
                         return;
                     }
 
                     if ($address->server_id) {
-                        $fail("The address with ID {$value} is already allocated to another server.");
+                        $fail(__('The address with ID :id is already allocated to another server.', ['id' => $value]));
                     }
 
                     $networkInterfaceId = $this->input('limits.network_interface_id');
                     if (! $address->addressBlock->addressBlockGroup->networkInterfaces->contains('id', $networkInterfaceId)) {
-                        $fail("The address with ID {$value} does not belong to the selected network interface.");
+                        $fail(__('The address with ID :id does not belong to the selected network interface.', ['id' => $value]));
                     }
                 },
             ],

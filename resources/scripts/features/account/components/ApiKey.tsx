@@ -26,8 +26,12 @@ const ApiKey = ({ apiKey, onDelete }: Props) => {
     const lastUsed = useMemo(
         () =>
             apiKey.lastUsedAt
-                ? `Last used ${formatDistanceToNow(apiKey.lastUsedAt, { addSuffix: true })}`
-                : 'Never used',
+                ? t('Last used {{time}}', {
+                      time: formatDistanceToNow(apiKey.lastUsedAt, {
+                          addSuffix: true,
+                      }),
+                  })
+                : t('Never used'),
         [apiKey.lastUsedAt]
     )
 

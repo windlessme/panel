@@ -78,8 +78,8 @@ const PasskeysMainDialog = () => {
             // "Registration failed" left the user with nothing to act on.
             const message =
                 e instanceof Error && e.name === 'InvalidStateError'
-                    ? 'This authenticator is already registered'
-                    : getApiErrorMessage(e, 'Registration failed')
+                    ? t('This authenticator is already registered')
+                    : getApiErrorMessage(e, t('Registration failed'))
 
             toast.add({ title: message, type: 'error' })
             throw e
@@ -103,10 +103,10 @@ const PasskeysMainDialog = () => {
             <ResponsiveDialogTrigger
                 render={
                     <AuthSetting
-                        title={'Passkeys'}
-                        description={
+                        title={t('Passkeys')}
+                        description={t(
                             'Securely sign in with fingerprint, face, screen lock, or security key'
-                        }
+                        )}
                     />
                 }
             />
@@ -142,7 +142,9 @@ const PasskeysMainDialog = () => {
                 </ResponsiveDialogBody>
                 <ResponsiveDialogFooter>
                     <ResponsiveDialogClose
-                        render={<Button variant={'outline'}>Close</Button>}
+                        render={
+                            <Button variant={'outline'}>{t('Close')}</Button>
+                        }
                     />
 
                     {/* No "Recovery codes" button here any more: they are not a

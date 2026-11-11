@@ -1,6 +1,8 @@
 import useAsyncFunction from '@/hooks/use-async-function.ts'
 import { type ReactNode, useRef } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 import AuthDialog from '@/components/ui/Dialog/AuthDialog.tsx'
 import {
@@ -74,7 +76,9 @@ const ConfirmWithAuthDialog = <T,>({
                 </ResponsiveDialogHeader>
                 <ResponsiveDialogFooter className={'mt-4'}>
                     <ResponsiveDialogClose
-                        render={<Button variant={'outline'}>Cancel</Button>}
+                        render={
+                            <Button variant={'outline'}>{t('Cancel')}</Button>
+                        }
                     />
                     <Button
                         loading={state.loading}

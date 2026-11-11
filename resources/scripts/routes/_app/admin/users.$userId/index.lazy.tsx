@@ -75,13 +75,13 @@ function UserOverview() {
                             disabled={!user}
                             onClick={() => user && confirmAndDelete(user)}
                         >
-                            Delete
+                            {t('Delete')}
                         </Button>
                         <Button
                             disabled={!user}
                             onClick={() => setEditing(true)}
                         >
-                            Edit user
+                            {t('Edit user')}
                         </Button>
                     </>
                 }

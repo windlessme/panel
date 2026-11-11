@@ -126,7 +126,7 @@ const EditNetworkInterfaceModal = () => {
                             />
                             <CheckboxForm
                                 name={'isVlanAware'}
-                                label={'VLAN-aware bridge'}
+                                label={t('VLAN-aware bridge')}
                                 description={t(
                                     'Enable this only when the Proxmox bridge has VLAN awareness enabled.'
                                 )}
@@ -147,7 +147,7 @@ const EditNetworkInterfaceModal = () => {
                             <ResponsiveDialogClose
                                 render={
                                     <Button variant={'outline'} type={'button'}>
-                                        Cancel
+                                        {t('Cancel')}
                                     </Button>
                                 }
                             />

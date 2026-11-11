@@ -64,7 +64,10 @@ const ServerDisksPanel = ({ serverId }: Props) => {
     const handleRemove = async (disk: ServerDisk) => {
         const confirmed = await confirm({
             title: t('Remove disk'),
-            description: `This detaches ${disk.interface ?? 'the disk'} and permanently destroys its data on Proxmox. This cannot be undone.`,
+            description: t(
+                'This detaches {{disk}} and permanently destroys its data on Proxmox. This cannot be undone.',
+                { disk: disk.interface ?? t('the disk') }
+            ),
         })
         if (!confirmed) return
 
@@ -73,7 +76,7 @@ const ServerDisksPanel = ({ serverId }: Props) => {
             toast.add({ title: t('Disk removed'), type: 'success' })
         } catch (e) {
             toast.add({
-                title: errorMessage(e, 'Failed to remove disk'),
+                title: errorMessage(e, t('Failed to remove disk')),
                 type: 'error',
             })
         }
@@ -169,8 +172,10 @@ const ServerDisksPanel = ({ serverId }: Props) => {
                         <CardContent>
                             <SimpleEmptyState
                                 icon={IconDatabaseOff}
-                                title='No attached disks'
-                                description='Add a disk to expand this server’s storage.'
+                                title={t('No attached disks')}
+                                description={t(
+                                    'Add a disk to expand this server’s storage.'
+                                )}
                                 action={addButton}
                             />
                         </CardContent>
@@ -183,10 +188,10 @@ const ServerDisksPanel = ({ serverId }: Props) => {
                         <Item variant='muted' size='sm'>
                             <ItemContent className='min-w-0'>
                                 <ItemTitle className='font-mono text-xs'>
-                                    {disk.interface ?? 'Pending'}
+                                    {disk.interface ?? t('Pending')}
                                 </ItemTitle>
                                 <ItemDescription>
-                                    {disk.storageName ?? 'Unknown storage'} ·{' '}
+                                    {disk.storageName ?? t('Unknown storage')} ·{' '}
                                     {formatBytes(disk.size)}
                                 </ItemDescription>
                                 <Badge
@@ -195,7 +200,7 @@ const ServerDisksPanel = ({ serverId }: Props) => {
                                     }
                                     className='w-fit'
                                 >
-                                    {disk.isPrimary ? 'Primary' : 'Data'}
+                                    {disk.isPrimary ? t('Primary') : t('Data')}
                                 </Badge>
                             </ItemContent>
                             {!disk.isPrimary && (

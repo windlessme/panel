@@ -27,7 +27,7 @@ class InviteController
         if ($invite === null) {
             // Unknown, spent and expired are one answer. Telling them apart would confirm that a
             // guessed token once meant something.
-            throw new NotFoundHttpException('This invitation is no longer valid.');
+            throw new NotFoundHttpException(__('This invitation is no longer valid.'));
         }
 
         return response()->json([
@@ -51,7 +51,7 @@ class InviteController
         $invite = $this->invites->resolve($token);
 
         if ($invite === null) {
-            throw new NotFoundHttpException('This invitation is no longer valid.');
+            throw new NotFoundHttpException(__('This invitation is no longer valid.'));
         }
 
         $user = $this->invites->accept($invite, $request->string('password')->toString());

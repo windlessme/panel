@@ -9,7 +9,7 @@ class InvalidAuthenticationMethodException extends BadRequestHttpException imple
 {
     public function __construct()
     {
-        parent::__construct('No valid authentication method provided.');
+        parent::__construct(__('No valid authentication method provided.'));
     }
 
     public function errorCode(): string

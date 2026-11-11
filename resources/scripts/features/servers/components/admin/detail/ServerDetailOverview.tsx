@@ -34,13 +34,13 @@ interface Props {
 }
 
 const LIFECYCLE_LABELS: Record<ServerLifecycle, string> = {
-    [ServerLifecycle.Ready]: 'Ready',
-    [ServerLifecycle.DeferredOsSelection]: 'Awaiting OS selection',
-    [ServerLifecycle.Installing]: 'Installing',
-    [ServerLifecycle.InstallFailed]: 'Install failed',
-    [ServerLifecycle.RestoringBackup]: 'Restoring backup',
-    [ServerLifecycle.Deleting]: 'Deleting',
-    [ServerLifecycle.DeletionFailed]: 'Deletion failed',
+    [ServerLifecycle.Ready]: t('Ready'),
+    [ServerLifecycle.DeferredOsSelection]: t('Awaiting OS selection'),
+    [ServerLifecycle.Installing]: t('Installing'),
+    [ServerLifecycle.InstallFailed]: t('Install failed'),
+    [ServerLifecycle.RestoringBackup]: t('Restoring backup'),
+    [ServerLifecycle.Deleting]: t('Deleting'),
+    [ServerLifecycle.DeletionFailed]: t('Deletion failed'),
 }
 
 const formatBytes = (bytes: number) => {
@@ -78,7 +78,7 @@ const ServerDetailOverview = ({ serverId }: Props) => {
             value:
                 server.bandwidth.limit > 0
                     ? formatBytes(server.bandwidth.limit)
-                    : 'Unlimited',
+                    : t('Unlimited'),
         },
     ]
 
@@ -189,25 +189,27 @@ const ServerDetailOverview = ({ serverId }: Props) => {
                                         unflagServer.mutate(server.uuid, {
                                             onSuccess: () =>
                                                 toast.add({
-                                                    title: 'Flag cleared',
+                                                    title: t('Flag cleared'),
                                                     type: 'success',
                                                 }),
                                             onError: () =>
                                                 toast.add({
-                                                    title: 'Failed to clear the flag',
+                                                    title: t(
+                                                        'Failed to clear the flag'
+                                                    ),
                                                     type: 'error',
                                                 }),
                                         })
                                     }
                                 >
-                                    Clear flag
+                                    {t('Clear flag')}
                                 </Button>
                             )}
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
                                     <Button>
                                         <IconBolt className='size-4' />
-                                        Power
+                                        {t('Power')}
                                     </Button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align='end'>

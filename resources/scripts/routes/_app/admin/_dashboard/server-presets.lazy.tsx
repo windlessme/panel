@@ -129,17 +129,17 @@ const ServerPresetsIndex = () => {
                 emptyState={
                     <SimpleEmptyState
                         icon={IconStack2}
-                        title={'No presets'}
-                        description={
+                        title={t('No presets')}
+                        description={t(
                             'Save a configuration from the server create form and it appears here.'
-                        }
+                        )}
                         action={
                             <Link
                                 className={buttonVariants()}
                                 to={'/admin/servers/create'}
                             >
                                 <IconPlus className={'size-4'} />
-                                Add server
+                                {t('Add server')}
                             </Link>
                         }
                     />

@@ -44,7 +44,7 @@ class ValidHardwareProfile implements ValidationRule
         }
 
         if (! is_array($value)) {
-            $fail('The hardware profile must be an object of Proxmox settings.');
+            $fail(__('The hardware profile must be an object of Proxmox settings.'));
 
             return;
         }
@@ -59,13 +59,13 @@ class ValidHardwareProfile implements ValidationRule
             }
 
             if (in_array($key, self::COMPUTED_KEYS, true) || preg_match(self::COMPUTED_PATTERN, (string) $key)) {
-                $fail("The panel sets `{$key}` itself when the server is built; it cannot be part of the profile.");
+                $fail(__('The panel sets `:key` itself when the server is built; it cannot be part of the profile.', ['key' => $key]));
 
                 continue;
             }
 
             if (! array_key_exists($key, $schema)) {
-                $fail("Proxmox does not accept a `{$key}` setting when creating a guest.");
+                $fail(__('Proxmox does not accept a `:key` setting when creating a guest.', ['key' => $key]));
 
                 continue;
             }
@@ -81,7 +81,7 @@ class ValidHardwareProfile implements ValidationRule
     private function checkSlot(string $key, mixed $value, Closure $fail): void
     {
         if (! is_string($value) || ! preg_match('/^(?:scsi|ide|sata|virtio)\d+$/', $value)) {
-            $fail("`{$key}` must name a disk slot, such as `scsi0` or `ide2`.");
+            $fail(__('`:key` must name a disk slot, such as `scsi0` or `ide2`.', ['key' => $key]));
         }
     }
 
@@ -93,7 +93,7 @@ class ValidHardwareProfile implements ValidationRule
         $enum = $definition['enum'] ?? null;
 
         if (is_array($enum) && ! in_array((string) $value, array_map('strval', $enum), true)) {
-            $fail("`{$key}` must be one of: ".implode(', ', $enum).'.');
+            $fail(__('`:key` must be one of: :values.', ['key' => $key, 'values' => implode(', ', $enum)]));
 
             return;
         }
@@ -103,11 +103,11 @@ class ValidHardwareProfile implements ValidationRule
         // rather than what PHP happens to have decoded it as.
         match ($definition['type'] ?? 'string') {
             'boolean' => in_array($value, [true, false, 0, 1, '0', '1'], true)
-                || $fail("`{$key}` must be true or false."),
+                || $fail(__('`:key` must be true or false.', ['key' => $key])),
             'integer', 'number' => is_numeric($value)
-                || $fail("`{$key}` must be a number."),
+                || $fail(__('`:key` must be a number.', ['key' => $key])),
             default => is_scalar($value)
-                || $fail("`{$key}` must be a single value, not a list."),
+                || $fail(__('`:key` must be a single value, not a list.', ['key' => $key])),
         };
     }
 }

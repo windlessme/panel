@@ -11,12 +11,12 @@ class ConfirmIdentityRequest extends FormRequest
         return [
             'passkey' => ['nullable', 'json', 'bail', function ($attribute, $value, $fail) {
                 if ($this->has('password')) {
-                    $fail('Only one of passkey or password can be provided.');
+                    $fail(__('Only one of passkey or password can be provided.'));
                 }
             }],
             'password' => ['nullable', 'string', 'bail', function ($attribute, $value, $fail) {
                 if ($this->has('passkey')) {
-                    $fail('Only one of passkey or password can be provided.');
+                    $fail(__('Only one of passkey or password can be provided.'));
                 }
             }],
         ];

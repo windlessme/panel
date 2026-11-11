@@ -81,7 +81,7 @@ class ImageVersionController
         // the picker without destroying the history.
         if ($imageVersion->deployments()->exists()) {
             throw new ConflictHttpException(
-                'Servers were built from this version. Retire it instead of deleting it.',
+                __('Servers were built from this version. Retire it instead of deleting it.'),
             );
         }
 

@@ -9,7 +9,7 @@ class AddressNotAvailableException extends ConflictHttpException implements HasE
 {
     public function __construct()
     {
-        parent::__construct('Only an available address can be reserved. Unassign it first if it is in use.');
+        parent::__construct(__('Only an available address can be reserved. Unassign it first if it is in use.'));
     }
 
     public function errorCode(): string

@@ -9,7 +9,7 @@ class CannotShrinkDiskException extends BadRequestHttpException implements HasEr
 {
     public function __construct()
     {
-        parent::__construct('A disk can only be grown, not shrunk.');
+        parent::__construct(__('A disk can only be grown, not shrunk.'));
     }
 
     public function errorCode(): string

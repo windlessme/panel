@@ -19,8 +19,8 @@ const PenaltyActionFields = () => {
                 name={'overagePenaltyAction'}
                 label={t('Action')}
                 items={[
-                    { value: 'throttle', label: 'Throttle to rate' },
-                    { value: 'disconnect', label: 'Disconnect NIC' },
+                    { value: 'throttle', label: t('Throttle to rate') },
+                    { value: 'disconnect', label: t('Disconnect NIC') },
                 ]}
                 description={
                     action === 'disconnect'

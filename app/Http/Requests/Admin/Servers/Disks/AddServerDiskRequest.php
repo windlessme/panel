@@ -38,7 +38,7 @@ class AddServerDiskRequest extends BaseApiRequest
 
                     $free = app(LiveStorageService::class)->freeForConvoy($server->node, $storage);
                     if ($free !== null && (int) $value > $free) {
-                        $fail("The storage \"{$storage->name}\" does not have enough disk space available.");
+                        $fail(__('The storage ":storage" does not have enough disk space available.', ['storage' => $storage->name]));
                     }
                 },
             ],

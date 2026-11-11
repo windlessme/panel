@@ -66,10 +66,10 @@ const AddressesCard = ({ uuid }: Props) => {
                                 {t('All')}
                             </ToggleGroupItem>
                             <ToggleGroupItem value={AddressVersion.IPv4}>
-                                {t('IPv4')}
+                                IPv4
                             </ToggleGroupItem>
                             <ToggleGroupItem value={AddressVersion.IPv6}>
-                                {t('IPv6')}
+                                IPv6
                             </ToggleGroupItem>
                         </ToggleGroup>
                     </CardAction>

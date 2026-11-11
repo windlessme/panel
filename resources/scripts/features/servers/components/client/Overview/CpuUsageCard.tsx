@@ -24,7 +24,7 @@ const CpuUsageCard = () => {
                It used to live in the specifications card, two rows down. */
             context={
                 cores > 0
-                    ? `of ${cores} ${cores === 1 ? 'vCPU' : 'vCPUs'}`
+                    ? t('of {{count}} vCPUs', { count: cores })
                     : undefined
             }
             /* Always present, so the band is part of the card's height from

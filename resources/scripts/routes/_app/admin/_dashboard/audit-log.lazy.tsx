@@ -74,7 +74,7 @@ function AdminAuditLog() {
                         <SelectValue>
                             {(value: string) =>
                                 AREAS.find(option => option.value === value)
-                                    ?.label ?? 'All activity'
+                                    ?.label ?? t('All activity')
                             }
                         </SelectValue>
                     </SelectTrigger>

@@ -60,29 +60,29 @@ export const buildAbilities = (
 /** A compact human summary of a token's granted abilities, for the list. */
 export const summarizeAbilities = (abilities: string[]): string => {
     if (abilities.includes('*')) {
-        return 'Full access'
+        return t('Full access')
     }
 
     if (abilities.length === 0) {
-        return 'No access'
+        return t('No access')
     }
 
     if (abilities.length <= 2) {
         return abilities.join(', ')
     }
 
-    return `${abilities.length} abilities`
+    return t('{{count}} abilities', { count: abilities.length })
 }
 
 /** A deliberately compact summary; the table never renders an entire long allowlist. */
 export const summarizeAllowedNetworks = (networks: string[]): string => {
     if (networks.length === 0) {
-        return 'Unrestricted'
+        return t('Unrestricted')
     }
 
     if (networks.length === 1) {
         return networks[0]
     }
 
-    return `${networks.length} addresses/ranges`
+    return t('{{count}} addresses/ranges', { count: networks.length })
 }

@@ -31,7 +31,7 @@ const TwoFactorCard = ({ userId }: Props) => {
     const { mutate: disable } = useMutation({
         mutationFn: () => disableUserTwoFactor(userId),
         onSuccess: async () => {
-            toast.add({ title: 'Two-factor disabled', type: 'success' })
+            toast.add({ title: t('Two-factor disabled'), type: 'success' })
             await queryClient.invalidateQueries({ queryKey: userQueries.all() })
         },
         onError: () =>
@@ -44,7 +44,14 @@ const TwoFactorCard = ({ userId }: Props) => {
     const handleDisable = async () => {
         const confirmed = await confirm({
             title: t('Disable two-factor?'),
-            description: `${user?.name ?? 'This account'} will sign in with a password alone until they set it up again. Recovery codes are cleared with it unless a passkey remains.`,
+            description: user?.name
+                ? t(
+                      '{{name}} will sign in with a password alone until they set it up again. Recovery codes are cleared with it unless a passkey remains.',
+                      { name: user.name }
+                  )
+                : t(
+                      'This account will sign in with a password alone until they set it up again. Recovery codes are cleared with it unless a passkey remains.'
+                  ),
             confirmText: t('Disable'),
             confirmButton: { variant: 'destructive' },
         })
@@ -54,13 +61,13 @@ const TwoFactorCard = ({ userId }: Props) => {
 
     return (
         <CredentialCard
-            title={'Two-factor'}
+            title={t('Two-factor')}
             description={t('The authenticator app on this account.')}
             icon={IconShieldLock}
             isLoading={isLoading}
             isError={isError}
             onRetry={refetch}
-            emptyTitle={'Two-factor not set up'}
+            emptyTitle={t('Two-factor not set up')}
             emptyDescription={
                 // A passkey is a second factor too, so "signs in with a password alone" would be
                 // untrue of an account that has one.
@@ -75,8 +82,8 @@ const TwoFactorCard = ({ userId }: Props) => {
                               <CredentialRow
                                   key={'authenticator'}
                                   icon={IconShieldLock}
-                                  name={'Authenticator app'}
-                                  revokeLabel={'Disable two-factor'}
+                                  name={t('Authenticator app')}
+                                  revokeLabel={t('Disable two-factor')}
                                   onRevoke={handleDisable}
                                   meta={
                                       <span
@@ -84,8 +91,9 @@ const TwoFactorCard = ({ userId }: Props) => {
                                               'text-muted-foreground text-xs'
                                           }
                                       >
-                                          A one-time code is required at
-                                          sign-in.
+                                          {t(
+                                              'A one-time code is required at sign-in.'
+                                          )}
                                       </span>
                                   }
                               />,

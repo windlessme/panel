@@ -48,7 +48,7 @@ const reported = (item: AnchorEnrollmentQueueItem) => {
     const cpu = (facts.cpu ?? {}) as Record<string, number>
     const parts: string[] = []
 
-    if (cpu.threads) parts.push(`${cpu.threads} threads`)
+    if (cpu.threads) parts.push(t('{{count}} threads', { count: cpu.threads }))
 
     if (typeof facts.memory_bytes === 'number') {
         const memory = byteSize(facts.memory_bytes, { units: 'iec' })
@@ -79,7 +79,7 @@ function EnrollmentQueueIndex() {
             toast.add({
                 title: getApiErrorMessage(
                     e,
-                    'Could not turn this machine away'
+                    t('Could not turn this machine away')
                 ),
                 type: 'error',
             }),
@@ -161,17 +161,17 @@ function EnrollmentQueueIndex() {
                 emptyState={
                     <SimpleEmptyState
                         icon={IconTransform}
-                        title={'No machines waiting'}
-                        description={
+                        title={t('No machines waiting')}
+                        description={t(
                             'Run the install command on a Proxmox host to enroll it.'
-                        }
+                        )}
                         action={
                             <Link
                                 className={buttonVariants()}
                                 to={'/admin/nodes/create'}
                             >
                                 <IconPlus className={'size-4'} />
-                                Enroll a node
+                                {t('Enroll a node')}
                             </Link>
                         }
                     />
@@ -211,7 +211,7 @@ function EnrollmentQueueIndex() {
                         to={'/admin/nodes/create'}
                     >
                         <IconPlus className={'size-4'} />
-                        Enroll a node
+                        {t('Enroll a node')}
                     </Link>
                 }
                 {...tableProps}

@@ -27,7 +27,7 @@ class DenyApiTokenAccess
     public function handle(Request $request, Closure $next): Response
     {
         if ($request->user()?->currentAccessToken() !== null) {
-            throw new AccessDeniedHttpException('This endpoint cannot be accessed with an API token.');
+            throw new AccessDeniedHttpException(__('This endpoint cannot be accessed with an API token.'));
         }
 
         return $next($request);

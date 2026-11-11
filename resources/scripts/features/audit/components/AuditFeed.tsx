@@ -3,6 +3,8 @@ import AuditEntryRow from '@/features/audit/components/AuditEntryRow.tsx'
 import { cn } from '@/utils'
 import { IconHistory } from '@tabler/icons-react'
 
+import { t } from '@/lib/i18n.ts'
+
 import {
     CollectionErrorState,
     SimpleEmptyState,
@@ -35,7 +37,7 @@ const AuditFeed = ({
     page,
     onPageChange,
     showSubject = false,
-    emptyTitle = 'No activity yet',
+    emptyTitle = t('No activity yet'),
     emptyDescription,
 }: Props) => {
     // `isError && !data` rather than `isError`: a background refetch that fails should not throw

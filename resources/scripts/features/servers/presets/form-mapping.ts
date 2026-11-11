@@ -1,6 +1,8 @@
 import type { ServerPresetSettings } from '@/types/server-preset'
 import type { UseFormSetValue } from 'react-hook-form'
 
+import { t } from '@/lib/i18n.ts'
+
 /**
  * The create form's shape as far as presets are concerned. Ids are strings
  * because that is what the pickers bind to; `imageGroupId` exists only to
@@ -156,15 +158,22 @@ export const describePresetSettings = (
 ): string => {
     const parts: string[] = []
 
-    if (settings.cpu != null) parts.push(`${settings.cpu} vCPU`)
+    if (settings.cpu != null)
+        parts.push(t('{{count}} vCPU', { count: settings.cpu }))
     if (settings.memory != null)
-        parts.push(`${Math.round((settings.memory / 1024) * 10) / 10} GiB RAM`)
-    if (settings.disk != null)
-        parts.push(`${Math.round((settings.disk / 1024) * 10) / 10} GiB disk`)
-    if (settings.disks?.length)
         parts.push(
-            `${settings.disks.length} extra ${settings.disks.length === 1 ? 'disk' : 'disks'}`
+            t('{{size}} GiB RAM', {
+                size: Math.round((settings.memory / 1024) * 10) / 10,
+            })
         )
+    if (settings.disk != null)
+        parts.push(
+            t('{{size}} GiB disk', {
+                size: Math.round((settings.disk / 1024) * 10) / 10,
+            })
+        )
+    if (settings.disks?.length)
+        parts.push(t('{{count}} extra disks', { count: settings.disks.length }))
 
-    return parts.length > 0 ? parts.join(' · ') : 'No resource limits saved'
+    return parts.length > 0 ? parts.join(' · ') : t('No resource limits saved')
 }

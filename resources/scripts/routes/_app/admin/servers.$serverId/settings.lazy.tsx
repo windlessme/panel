@@ -225,7 +225,7 @@ function ServerBuildSettings() {
                                 <div className={'border-t pt-4'}>
                                     <OveragePenaltyFields
                                         inheritedFrom={inheritedPenalty}
-                                        inheritedLabel={'node'}
+                                        inheritedLabel={t('node')}
                                     />
                                 </div>
                             </CardContent>

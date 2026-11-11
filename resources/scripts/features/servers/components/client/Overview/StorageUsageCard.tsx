@@ -43,7 +43,7 @@ const StorageUsageCard = () => {
         <StatisticCard
             title={
                 <div className={'flex items-center gap-2'}>
-                    Storage Usage
+                    {t('Storage Usage')}
                     {!isAvailable && !isLoading && (
                         <TooltipProvider>
                             <Tooltip>
@@ -53,7 +53,9 @@ const StorageUsageCard = () => {
                                     />
                                 </TooltipTrigger>
                                 <TooltipContent>
-                                    Guest Agent unavailable. Showing disk limit.
+                                    {t(
+                                        'Guest Agent unavailable. Showing disk limit.'
+                                    )}
                                 </TooltipContent>
                             </Tooltip>
                         </TooltipProvider>
@@ -62,20 +64,22 @@ const StorageUsageCard = () => {
             }
             icon={IconDatabase}
             context={
-                isLoading ? undefined : isAvailable ? (
-                    <>
-                        of {total.value} {total.unit} &#x2022;{' '}
-                        {usedPercent.toFixed(0)}%
-                    </>
-                ) : (
-                    t('Disk limit • guest agent offline')
-                )
+                isLoading
+                    ? undefined
+                    : isAvailable
+                      ? t('of {{limit}} • {{percent}}%', {
+                            limit: `${total.value} ${total.unit}`,
+                            percent: usedPercent.toFixed(0),
+                        })
+                      : t('Disk limit • guest agent offline')
             }
             meter={
                 isAvailable && (
                     <LinearProgressBar
                         value={usedPercent}
-                        aria-label={`${usedPercent.toFixed(2)}% of your storage is used`}
+                        aria-label={t('{{percent}}% of your storage is used', {
+                            percent: usedPercent.toFixed(2),
+                        })}
                     />
                 )
             }

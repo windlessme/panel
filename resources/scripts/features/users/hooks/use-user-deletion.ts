@@ -9,9 +9,6 @@ import { queryClient } from '@/lib/query-client.ts'
 import useConfirmationStore from '@/components/ui/AlertDialog/use-confirmation-store.ts'
 import { toast } from '@/components/ui/Toast'
 
-const countOf = (count: number, noun: string) =>
-    `${count} ${noun}${count === 1 ? '' : 's'}`
-
 interface Options {
     /** Runs after a successful delete — the detail page leaves for the list, the list stays put. */
     onDeleted?: () => void
@@ -58,7 +55,10 @@ const useUserDeletion = ({ onDeleted }: Options = {}) => {
                       'An account cannot delete itself. Another administrator can remove it for you.'
                   )
                 : owns
-                  ? `${countOf(user.serversCount, 'server')} still belong to this account. Transfer or delete ${user.serversCount === 1 ? 'it' : 'them'} first.`
+                  ? t(
+                        '{{count}} servers still belong to this account. Transfer or delete them first.',
+                        { count: user.serversCount }
+                    )
                   : t(
                         'Delete {{name}} ({{email}})? Their API tokens, SSH keys and sessions go with them. This cannot be undone.',
                         { name: user.name, email: user.email }

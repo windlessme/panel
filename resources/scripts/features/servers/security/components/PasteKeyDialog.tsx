@@ -63,7 +63,7 @@ const PasteKeyDialog = ({ open, onOpenChange, onAdd }: Props) => {
                         rows={4}
                         value={value}
                         onChange={e => setValue(e.target.value)}
-                        placeholder={t('ssh-ed25519 AAAA… user@host')}
+                        placeholder={'ssh-ed25519 AAAA… user@host'}
                         className={'font-mono text-xs'}
                     />
                 </ResponsiveDialogBody>
@@ -71,7 +71,7 @@ const PasteKeyDialog = ({ open, onOpenChange, onAdd }: Props) => {
                     <ResponsiveDialogClose
                         render={
                             <Button variant={'outline'} type={'button'}>
-                                Cancel
+                                {t('Cancel')}
                             </Button>
                         }
                     />

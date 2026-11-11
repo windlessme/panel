@@ -28,7 +28,7 @@ const SSHKeysCard = ({ userId }: Props) => {
         question: t('Revoke SSH key?'),
         successTitle: t('SSH key revoked'),
         errorTitle: t('Failed to revoke SSH key'),
-        nameOf: key => `The key “${key.name}”`,
+        nameOf: key => t('The key “{{name}}”', { name: key.name }),
         consequence: t(
             'Any server it was injected into keeps it until the server is rebuilt.'
         ),
@@ -51,7 +51,9 @@ const SSHKeysCard = ({ userId }: Props) => {
                     key={key.id}
                     icon={IconKeyFilled}
                     name={key.name}
-                    revokeLabel={`Revoke SSH key ${key.name}`}
+                    revokeLabel={t('Revoke SSH key {{name}}', {
+                        name: key.name,
+                    })}
                     onRevoke={() => revoke(key)}
                     meta={
                         <>
@@ -68,7 +70,12 @@ const SSHKeysCard = ({ userId }: Props) => {
                                     'text-muted-foreground text-xs whitespace-nowrap'
                                 }
                             >
-                                Added {format(key.createdAt, 'MMMM do, yyyy')}
+                                {t('Added {{date}}', {
+                                    date: format(
+                                        key.createdAt,
+                                        'MMMM do, yyyy'
+                                    ),
+                                })}
                             </span>
                         </>
                     }

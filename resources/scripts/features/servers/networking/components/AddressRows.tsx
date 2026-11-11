@@ -41,7 +41,7 @@ const Value = ({ label, value }: { label: string; value: string | null }) =>
     value ? (
         <CopyValue label={label} value={value} />
     ) : (
-        <span aria-label={t('None')}>{t('&mdash;')}</span>
+        <span aria-label={t('None')}>&mdash;</span>
     )
 
 interface Props {
@@ -160,9 +160,9 @@ const AddressRows = ({ addresses }: Props) => {
                 </dl>
                 {hidden > 0 && (
                     <p className={'tabular-nums'}>
-                        {t('{{length}} of {{length2}}', {
-                            length: shown.length,
-                            length2: addresses.length,
+                        {t('{{shown}} of {{total}}', {
+                            shown: shown.length,
+                            total: addresses.length,
                         })}
                     </p>
                 )}
@@ -179,10 +179,10 @@ const AddressRows = ({ addresses }: Props) => {
             empty={
                 <SimpleEmptyState
                     icon={IconWifiOff}
-                    title={'No IP addresses'}
-                    description={
+                    title={t('No IP addresses')}
+                    description={t(
                         'This server does not have any IP addresses assigned to it.'
-                    }
+                    )}
                 />
             }
         />

@@ -12,14 +12,14 @@ const password = z
     .string()
     .min(
         PASSWORD_MIN_LENGTH,
-        t('Password must be at least {{PASSWORD_MIN_LENGTH}} characters', {
-            PASSWORD_MIN_LENGTH,
+        t('Password must be at least {{min}} characters', {
+            min: PASSWORD_MIN_LENGTH,
         })
     )
     .refine(
         value => new TextEncoder().encode(value).length <= PASSWORD_MAX_BYTES,
-        t('Password must be at most {{PASSWORD_MAX_BYTES}} bytes', {
-            PASSWORD_MAX_BYTES,
+        t('Password must be at most {{max}} bytes', {
+            max: PASSWORD_MAX_BYTES,
         })
     )
 

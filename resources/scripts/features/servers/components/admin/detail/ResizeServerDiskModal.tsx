@@ -82,10 +82,15 @@ const ResizeServerDiskModal = ({ serverId, disk, onOpenChange }: Props) => {
                     </ResponsiveDialogTitle>
                     {disk && (
                         <ResponsiveDialogDescription>
-                            {disk.interface ?? t('This disk')}{' '}
-                            {t('is currently')}
-                            {byteSize(disk.size, { units: 'iec' }).toString()}
-                            {t('. Disks can only grow.')}
+                            {t(
+                                '{{disk}} is currently {{size}}. Disks can only grow.',
+                                {
+                                    disk: disk.interface ?? t('This disk'),
+                                    size: byteSize(disk.size, {
+                                        units: 'iec',
+                                    }).toString(),
+                                }
+                            )}
                         </ResponsiveDialogDescription>
                     )}
                 </ResponsiveDialogHeader>
@@ -103,7 +108,7 @@ const ResizeServerDiskModal = ({ serverId, disk, onOpenChange }: Props) => {
                             <ResponsiveDialogClose
                                 render={
                                     <Button variant={'outline'} type={'button'}>
-                                        Cancel
+                                        {t('Cancel')}
                                     </Button>
                                 }
                             />

@@ -22,10 +22,14 @@ class NodeUnreachableException extends ServiceUnavailableHttpException implement
         // Not `$code`: Exception already declares that property, and redeclaring
         // it readonly is a fatal error.
         private readonly ConnectionErrorCode $connectionError,
-        string $message = 'Convoy could not reach this node.',
+        ?string $message = null,
         ?Throwable $previous = null,
     ) {
-        parent::__construct(retryAfter: null, message: $message, previous: $previous);
+        parent::__construct(
+            retryAfter: null,
+            message: $message ?? __('Convoy could not reach this node.'),
+            previous: $previous,
+        );
     }
 
     public function errorCode(): string

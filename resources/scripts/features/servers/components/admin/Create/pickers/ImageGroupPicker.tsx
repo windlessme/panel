@@ -69,7 +69,7 @@ const ImageGroupPicker = () => {
                     ) : selectedName ? (
                         selectedName
                     ) : (
-                        'Select an operating system'
+                        t('Select an operating system')
                     )}
 
                     <IconFolder className={'ml-auto size-4 opacity-50'} />

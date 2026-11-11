@@ -30,7 +30,7 @@ const PasskeysCard = ({ userId }: Props) => {
         question: t('Revoke passkey?'),
         successTitle: t('Passkey revoked'),
         errorTitle: t('Failed to revoke passkey'),
-        nameOf: passkey => `The passkey “${passkey.name}”`,
+        nameOf: passkey => t('The passkey “{{name}}”', { name: passkey.name }),
         consequence: t(
             'Only the account holder can enrol a replacement, from their own device.'
         ),
@@ -51,7 +51,9 @@ const PasskeysCard = ({ userId }: Props) => {
                     key={passkey.id}
                     icon={IconFingerprint}
                     name={passkey.name}
-                    revokeLabel={`Revoke passkey ${passkey.name}`}
+                    revokeLabel={t('Revoke passkey {{name}}', {
+                        name: passkey.name,
+                    })}
                     onRevoke={() => revoke(passkey)}
                     meta={
                         <span
@@ -59,10 +61,21 @@ const PasskeysCard = ({ userId }: Props) => {
                                 'text-muted-foreground text-xs whitespace-nowrap'
                             }
                         >
-                            Added {format(passkey.createdAt, 'MMMM do, yyyy')}
+                            {t('Added {{date}}', {
+                                date: format(
+                                    passkey.createdAt,
+                                    'MMMM do, yyyy'
+                                ),
+                            })}
+                            {' · '}
                             {passkey.lastUsedAt
-                                ? ` · used ${formatDistanceToNow(passkey.lastUsedAt, { addSuffix: true })}`
-                                : ' · never used'}
+                                ? t('used {{time}}', {
+                                      time: formatDistanceToNow(
+                                          passkey.lastUsedAt,
+                                          { addSuffix: true }
+                                      ),
+                                  })
+                                : t('never used')}
                         </span>
                     }
                 />

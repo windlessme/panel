@@ -146,20 +146,20 @@ export const storageCapacity = (storage: Storage): StorageCapacityView => {
  */
 const BACKEND_LABELS: Record<string, string> = {
     dir: t('Directory'),
-    btrfs: t('Btrfs'),
+    btrfs: 'Btrfs',
     lvm: 'LVM',
     lvmthin: 'LVM-thin',
     zfspool: 'ZFS',
     zfs: t('ZFS over iSCSI'),
     nfs: 'NFS',
     cifs: 'SMB/CIFS',
-    glusterfs: t('GlusterFS'),
+    glusterfs: 'GlusterFS',
     iscsi: 'iSCSI',
     iscsidirect: t('iSCSI (direct)'),
-    cephfs: t('CephFS'),
-    rbd: t('Ceph RBD'),
-    pbs: t('Proxmox Backup Server'),
-    esxi: t('ESXi'),
+    cephfs: 'CephFS',
+    rbd: 'Ceph RBD',
+    pbs: 'Proxmox Backup Server',
+    esxi: 'ESXi',
 }
 
 /**

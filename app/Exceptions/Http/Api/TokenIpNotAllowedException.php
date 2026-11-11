@@ -9,7 +9,7 @@ class TokenIpNotAllowedException extends AccessDeniedHttpException implements Ha
 {
     public function __construct()
     {
-        parent::__construct('This token cannot be used from this IP address.');
+        parent::__construct(__('This token cannot be used from this IP address.'));
     }
 
     public function errorCode(): string

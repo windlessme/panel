@@ -1,6 +1,8 @@
 import { IconAlertTriangle } from '@tabler/icons-react'
 import { ComponentProps } from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 
 import SimpleEmptyState from './SimpleEmptyState.tsx'
@@ -13,8 +15,10 @@ interface Props extends ComponentProps<'div'> {
 
 const CollectionErrorState = ({
     onRetry,
-    title = 'Couldn’t load this content',
-    description = 'Try again. If the problem continues, check your connection.',
+    title = t('Couldn’t load this content'),
+    description = t(
+        'Try again. If the problem continues, check your connection.'
+    ),
     ...props
 }: Props) => (
     <SimpleEmptyState
@@ -25,7 +29,7 @@ const CollectionErrorState = ({
         action={
             onRetry ? (
                 <Button variant={'outline'} onClick={() => onRetry()}>
-                    Try again
+                    {t('Try again')}
                 </Button>
             ) : undefined
         }

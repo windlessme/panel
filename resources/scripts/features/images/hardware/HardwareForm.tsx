@@ -172,10 +172,12 @@ const HardwareField = ({
     const isSet = value !== undefined && value !== null && value !== ''
     const placeholder =
         inherited !== undefined
-            ? `Inherited — ${String(inherited)}`
+            ? t('Inherited — {{value}}', { value: String(inherited) })
             : parameter.default !== undefined
-              ? `Proxmox default — ${String(parameter.default)}`
-              : 'Not set'
+              ? t('Proxmox default — {{value}}', {
+                    value: String(parameter.default),
+                })
+              : t('Not set')
 
     return (
         <div className={'space-y-1.5'}>

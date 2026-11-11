@@ -17,7 +17,7 @@ class ConfigModifiedException extends ConflictHttpException
     public function __construct()
     {
         parent::__construct(
-            'The server configuration was modified since it was last loaded. Please reload and try again.',
+            __('The server configuration was modified since it was last loaded. Please reload and try again.'),
         );
     }
 }

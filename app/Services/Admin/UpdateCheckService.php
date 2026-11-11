@@ -97,19 +97,21 @@ class UpdateCheckService
                 ->get($url);
         } catch (Throwable $exception) {
             throw new UpdateCheckFailedException(
-                "Could not reach {$url}: {$exception->getMessage()}",
+                __('Could not reach :url: :error', ['url' => $url, 'error' => $exception->getMessage()]),
                 $exception,
             );
         }
 
         if (! $response->successful()) {
-            throw new UpdateCheckFailedException("{$url} responded with HTTP {$response->status()}.");
+            throw new UpdateCheckFailedException(
+                __(':url responded with HTTP :status.', ['url' => $url, 'status' => $response->status()]),
+            );
         }
 
         $tag = (string) $response->json('tag_name');
 
         if ($tag === '') {
-            throw new UpdateCheckFailedException("{$url} returned a release without a tag name.");
+            throw new UpdateCheckFailedException(__(':url returned a release without a tag name.', ['url' => $url]));
         }
 
         return [

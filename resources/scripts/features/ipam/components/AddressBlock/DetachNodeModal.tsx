@@ -58,7 +58,9 @@ const DetachNodeModal = ({ mutate, node, open, onOpenChange }: Props) => {
             <ResponsiveDialogContent>
                 <ResponsiveDialogHeader>
                     <ResponsiveDialogTitle>
-                        {t('Detach')} {node?.displayName || t('Node')}
+                        {t('Detach {{name}}', {
+                            name: node?.displayName || t('Node'),
+                        })}
                     </ResponsiveDialogTitle>
                     <ResponsiveDialogDescription>
                         {t(
@@ -68,7 +70,9 @@ const DetachNodeModal = ({ mutate, node, open, onOpenChange }: Props) => {
                 </ResponsiveDialogHeader>
                 <ResponsiveDialogFooter className='mt-4'>
                     <ResponsiveDialogClose
-                        render={<Button variant='outline'>Cancel</Button>}
+                        render={
+                            <Button variant='outline'>{t('Cancel')}</Button>
+                        }
                     />
                     <Button
                         autoFocus

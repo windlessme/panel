@@ -12,7 +12,7 @@ class RequireIdentityConfirmation
     public function handle(Request $request, Closure $next)
     {
         if (! IdentityConfirmation::isConfirmed($request->session())) {
-            throw new AccessDeniedHttpException('Your identity must be confirmed to access this resource.');
+            throw new AccessDeniedHttpException(__('Your identity must be confirmed to access this resource.'));
         }
 
         return $next($request);

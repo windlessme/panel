@@ -26,7 +26,7 @@ class UpdateAuthSettingsRequest extends BaseApiRequest
         // rewriting the authorized key set stays a plain permission check, as before.
         if ($this->input('type') === AuthenticationType::PASSWORD->value
             && ! IdentityConfirmation::isConfirmed($this->session())) {
-            throw new AccessDeniedHttpException('Your identity must be confirmed to set a root password.');
+            throw new AccessDeniedHttpException(__('Your identity must be confirmed to set a root password.'));
         }
 
         return $this->user()->can('updateAuthSettings', $this->parameter('server', Server::class));
@@ -56,7 +56,7 @@ class UpdateAuthSettingsRequest extends BaseApiRequest
                             }
                         }
                     } catch (Exception $e) {
-                        $validator->errors()->add('ssh_keys', 'The SSH key(s) are invalid.');
+                        $validator->errors()->add('ssh_keys', __('The SSH key(s) are invalid.'));
                     }
                 }
             },

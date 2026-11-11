@@ -23,7 +23,7 @@ class UniqueStorageNamePerNode implements ValidationRule
                 $query->where('id', '!=', $this->ignoreStorageId);
             })
             ->exists()) {
-            $fail('The storage name must be unique within the node.');
+            $fail(__('The storage name must be unique within the node.'));
         }
     }
 }

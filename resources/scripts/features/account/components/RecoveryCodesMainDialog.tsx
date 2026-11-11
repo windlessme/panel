@@ -77,10 +77,10 @@ const RecoveryCodesMainDialog = () => {
             <ResponsiveDialogTrigger
                 render={
                     <AuthSetting
-                        title={'Recovery codes'}
-                        description={
+                        title={t('Recovery codes')}
+                        description={t(
                             'One-time codes to sign in if you lose your other methods'
-                        }
+                        )}
                     />
                 }
             />
@@ -108,7 +108,9 @@ const RecoveryCodesMainDialog = () => {
 
                 <ResponsiveDialogFooter>
                     <ResponsiveDialogClose
-                        render={<Button variant={'outline'}>Close</Button>}
+                        render={
+                            <Button variant={'outline'}>{t('Close')}</Button>
+                        }
                     />
                     <Button
                         variant={'outline'}

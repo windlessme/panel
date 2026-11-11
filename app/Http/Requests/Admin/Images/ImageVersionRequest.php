@@ -38,7 +38,7 @@ class ImageVersionRequest extends BaseApiRequest
                 $roles = collect($this->input('disks', []))->pluck('role');
 
                 if ($roles->filter(fn ($role) => $role === ImageDiskRole::SYSTEM->value)->count() !== 1) {
-                    $validator->errors()->add('disks', 'A version needs exactly one system disk.');
+                    $validator->errors()->add('disks', __('A version needs exactly one system disk.'));
                 }
             },
         ];

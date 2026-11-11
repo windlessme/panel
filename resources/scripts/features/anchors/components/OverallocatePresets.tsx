@@ -39,7 +39,7 @@ const OverallocatePresets = ({ name }: { name: string }) => {
 
                 return (
                     <FormItem>
-                        <FormLabel>Oversubscribe memory by</FormLabel>
+                        <FormLabel>{t('Oversubscribe memory by')}</FormLabel>
                         <FormControl>
                             <div className={'flex flex-wrap gap-1.5'}>
                                 {PRESETS.map(preset => (
@@ -66,12 +66,14 @@ const OverallocatePresets = ({ name }: { name: string }) => {
                                     disabled={formState.isSubmitting}
                                     onClick={() => setCustom(true)}
                                 >
-                                    Custom
+                                    {t('Custom')}
                                 </Button>
                                 <Input
                                     type={'number'}
                                     min={0}
-                                    aria-label={'Memory overallocate percent'}
+                                    aria-label={t(
+                                        'Memory overallocate percent'
+                                    )}
                                     className={cn(
                                         'w-24',
                                         !isCustom && 'hidden'

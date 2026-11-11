@@ -111,8 +111,8 @@ const SavePresetDialog = () => {
                             />
                             {settings && (
                                 <p className={'text-muted-foreground text-xs'}>
-                                    {t('Saving: {{describePresetSettings}}', {
-                                        describePresetSettings:
+                                    {t('Saving: {{settings}}', {
+                                        settings:
                                             describePresetSettings(settings),
                                     })}
                                 </p>
@@ -122,7 +122,7 @@ const SavePresetDialog = () => {
                             <ResponsiveDialogClose
                                 render={
                                     <Button variant={'outline'} type={'button'}>
-                                        Cancel
+                                        {t('Cancel')}
                                     </Button>
                                 }
                             />

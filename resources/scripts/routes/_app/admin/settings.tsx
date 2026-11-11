@@ -30,7 +30,7 @@ const nav: SidebarNav = {
     back: { label: t('Admin'), to: '/admin' },
     context: {
         title: t('Settings'),
-        subtitle: 'Panel-wide defaults',
+        subtitle: t('Panel-wide defaults'),
         icon: IconSettings,
     },
     groups: [
@@ -67,7 +67,7 @@ const nav: SidebarNav = {
 }
 
 function SettingsLayout() {
-    useTitle('Settings')
+    useTitle(t('Settings'))
 
     return (
         <AppLayout routes={nav}>

@@ -57,7 +57,7 @@ class ServerPresetRequest extends BaseApiRequest
             // zero cap is a stopped NIC, not an absent one.
             'settings.speed_limit' => ['nullable', 'numeric', 'min:-1', function (string $attribute, mixed $value, Closure $fail) {
                 if ($value > -1 && $value < 1) {
-                    $fail('The speed limit must be at least 1 MB/s, or -1 for uncapped.');
+                    $fail(__('The speed limit must be at least 1 MB/s, or -1 for uncapped.'));
                 }
             }],
             'settings.backup_count' => 'nullable|integer|min:-1',

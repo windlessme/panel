@@ -41,10 +41,10 @@ const StorageSummary = ({
         storage.displayName ? storage.name : null,
         storage.isThin
             ? storage.pveType === 'pbs'
-                ? 'deduplicating'
-                : 'thin'
+                ? t('deduplicating')
+                : t('thin')
             : null,
-        storage.pveShared ? 'shared' : null,
+        storage.pveShared ? t('shared') : null,
     ].filter(Boolean) as string[]
 
     const before = storage.displayName ? [storage.name] : []

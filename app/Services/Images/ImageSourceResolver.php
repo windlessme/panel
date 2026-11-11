@@ -24,7 +24,7 @@ class ImageSourceResolver
     {
         if (! $disk->isHosted()) {
             return $disk->url ?? throw new ConflictHttpException(
-                'This image disk has neither a URL nor an uploaded file.',
+                __('This image disk has neither a URL nor an uploaded file.'),
             );
         }
 
@@ -39,7 +39,7 @@ class ImageSourceResolver
         // old check passed on exactly the disks it was meant to catch.
         if (! $disk_->providesTemporaryUrls()) {
             throw new ConflictHttpException(
-                'The artifacts filesystem cannot produce download links. Set `serve` on the disk, or host the file yourself.',
+                __('The artifacts filesystem cannot produce download links. Set `serve` on the disk, or host the file yourself.'),
             );
         }
 

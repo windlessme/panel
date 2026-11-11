@@ -69,7 +69,7 @@ const schema = z.discriminatedUnion('type', [
 // it opens on arrival, the panel below reports its state and a description
 // would just be narrating that a second time.
 const DESCRIPTIONS: Record<string, string | null> = {
-    code: 'Enter the 6-digit code from your authenticator app.',
+    code: t('Enter the 6-digit code from your authenticator app.'),
     recovery: t('Enter one of your one-time recovery codes.'),
     passkey: null,
 }
@@ -208,9 +208,9 @@ const Authenticator = () => {
                                             >
                                                 <FormControl>
                                                     <InputOTP
-                                                        aria-label={
+                                                        aria-label={t(
                                                             'Authenticator code'
-                                                        }
+                                                        )}
                                                         onChange={e =>
                                                             form.setValue(
                                                                 'code',

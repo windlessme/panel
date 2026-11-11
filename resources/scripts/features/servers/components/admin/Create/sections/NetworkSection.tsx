@@ -57,7 +57,7 @@ const NetworkSection = () => {
     }, [interfaces, selectedInterface, vlanTag, setValue])
 
     const summary = [
-        vlanTag ? `VLAN ${vlanTag}` : 'No VLAN',
+        vlanTag ? t('VLAN {{tag}}', { tag: vlanTag }) : t('No VLAN'),
         `${Number(ipv4) || 0} IPv4`,
         `${Number(ipv6) || 0} IPv6`,
     ].join(' · ')

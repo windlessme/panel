@@ -68,7 +68,7 @@ const NavSearch = ({ nav }: Props) => {
                     <span className='truncate'>{t('Search')}</span>
                 </span>
                 <kbd className='bg-muted text-muted-foreground rounded border px-1.5 py-0.5 text-[0.65rem] leading-none font-medium'>
-                    {t('Ctrl K')}
+                    Ctrl K
                 </kbd>
             </Button>
 

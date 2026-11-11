@@ -18,6 +18,16 @@ interface Props {
     server: App.Data.Server.ServerData
 }
 
+const LIFECYCLE_LABELS: Record<App.Enums.Server.ServerLifecycle, string> = {
+    ready: t('Ready'),
+    deferred_os_selection: t('Awaiting OS selection'),
+    installing: t('Installing'),
+    install_failed: t('Install failed'),
+    restoring_backup: t('Restoring backup'),
+    deleting: t('Deleting'),
+    deletion_failed: t('Deletion failed'),
+}
+
 const ServerCard = ({ server }: Props) => {
     const memory = byteSize(server.memory, { units: 'iec', precision: 0 })
     const disk = byteSize(server.disk, { units: 'iec', precision: 0 })
@@ -72,7 +82,8 @@ const ServerCard = ({ server }: Props) => {
                             variant={'secondary'}
                             className={'shrink-0 capitalize'}
                         >
-                            {server.lifecycle.replace(/_/g, ' ')}
+                            {LIFECYCLE_LABELS[server.lifecycle] ??
+                                server.lifecycle.replace(/_/g, ' ')}
                         </Badge>
                     )}
                     {/* Its own badge rather than a lifecycle value, so a suspended

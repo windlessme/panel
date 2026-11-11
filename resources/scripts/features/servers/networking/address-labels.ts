@@ -1,5 +1,7 @@
 import { Address, AddressVersion } from '@/types/address.ts'
 
+import { t } from '@/lib/i18n.ts'
+
 export const versionLabels: Record<AddressVersion, string> = {
     [AddressVersion.IPv4]: 'IPv4',
     [AddressVersion.IPv6]: 'IPv6',
@@ -11,12 +13,17 @@ export const summarizeAddresses = (addresses: Address[]): string => {
     const ipv6 = addresses.length - ipv4
 
     if (ipv4 > 0 && ipv6 > 0) {
-        return `${addresses.length} addresses · ${ipv4} IPv4 · ${ipv6} IPv6`
+        return t('{{count}} addresses · {{ipv4}} IPv4 · {{ipv6}} IPv6', {
+            count: addresses.length,
+            ipv4,
+            ipv6,
+        })
     }
 
-    return `${addresses.length} ${versionLabels[addresses[0].version]} ${
-        addresses.length === 1 ? 'address' : 'addresses'
-    }`
+    return t('{{count}} {{version}} addresses', {
+        count: addresses.length,
+        version: versionLabels[addresses[0].version],
+    })
 }
 
 export type VersionFilter = AddressVersion | 'all'

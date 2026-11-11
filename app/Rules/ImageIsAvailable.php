@@ -38,7 +38,7 @@ class ImageIsAvailable implements DataAwareRule, ValidationRule
         }
 
         if (is_null($definition->latestVersion())) {
-            $fail('The selected image has no published version to install.');
+            $fail(__('The selected image has no published version to install.'));
 
             return;
         }
@@ -52,7 +52,7 @@ class ImageIsAvailable implements DataAwareRule, ValidationRule
         $node = Node::find($nodeId);
 
         if ($node && is_null($node->importStorage())) {
-            $fail("No storage on {$node->name} accepts disk images. Add `Import` to a storage's content types in Proxmox.");
+            $fail(__('No storage on :node accepts disk images. Add `Import` to a storage\'s content types in Proxmox.', ['node' => $node->name]));
         }
     }
 }

@@ -62,7 +62,7 @@ const AttachedMediaCard = ({ uuid }: Props) => {
         },
         onError: e =>
             toast.add({
-                title: getApiErrorMessage(e, 'Failed to eject the ISO'),
+                title: getApiErrorMessage(e, t('Failed to eject the ISO')),
                 type: 'error',
             }),
     })
@@ -123,7 +123,7 @@ const AttachedMediaCard = ({ uuid }: Props) => {
                                     to={'/servers/$serverUuid/iso-library'}
                                     params={{ serverUuid: uuid }}
                                 >
-                                    Browse ISO library
+                                    {t('Browse ISO library')}
                                 </Link>
                             </Button>
                         }

@@ -30,7 +30,7 @@ const BrandLink = ({ collapsed }: Props) => {
                 )}
             >
                 <span className='text-sidebar-foreground truncate text-sm font-semibold'>
-                    {t('Convoy')}
+                    Convoy
                 </span>
                 {isAdmin ? (
                     <span className='bg-primary/10 text-primary rounded-full px-1.5 py-0.5 text-[0.65rem] font-medium tracking-wide uppercase'>

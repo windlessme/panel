@@ -10,7 +10,7 @@ class IpAddressOrCidr implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         if (! is_string($value) || ! $this->isValid($value)) {
-            $fail('The :attribute field must be a valid IPv4 or IPv6 address or CIDR range.');
+            $fail(__('The :attribute field must be a valid IPv4 or IPv6 address or CIDR range.'));
         }
     }
 

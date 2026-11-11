@@ -40,7 +40,7 @@ class DeleteNetworkInterfaceRequest extends BaseApiRequest
                 if ($isInUse) {
                     $validator->errors()->add(
                         'network_interface',
-                        'This network interface cannot be deleted because it is in use by one or more servers.'
+                        __('This network interface cannot be deleted because it is in use by one or more servers.')
                     );
                 }
             },

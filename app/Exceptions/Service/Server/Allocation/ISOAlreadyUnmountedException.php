@@ -9,7 +9,7 @@ class ISOAlreadyUnmountedException extends BadRequestHttpException implements Ha
 {
     public function __construct()
     {
-        parent::__construct('The requested ISO is already unmounted.');
+        parent::__construct(__('The requested ISO is already unmounted.'));
     }
 
     public function errorCode(): string

@@ -150,7 +150,7 @@ const AssignAddressModal = ({ block, mutate }: Props) => {
             <ResponsiveDialogTrigger
                 render={
                     <Button icon={<IconLink className={'size-4'} />}>
-                        Assign next free
+                        {t('Assign next free')}
                     </Button>
                 }
             />
@@ -173,7 +173,7 @@ const AssignAddressModal = ({ block, mutate }: Props) => {
                             ) : next ? (
                                 <Alert>
                                     <AlertDescription>
-                                        {t('Next free in this block is')}
+                                        {t('Next free in this block is')}{' '}
                                         <span className={'font-mono'}>
                                             {next.ip}
                                         </span>
@@ -215,7 +215,7 @@ const AssignAddressModal = ({ block, mutate }: Props) => {
                             <ResponsiveDialogClose
                                 render={
                                     <Button variant={'outline'} type={'button'}>
-                                        Cancel
+                                        {t('Cancel')}
                                     </Button>
                                 }
                             />

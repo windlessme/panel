@@ -37,7 +37,9 @@ export const Route = createLazyFileRoute('/_app/admin/_dashboard/tokens')({
 })
 
 const formatLastUsed = (value: string | null) =>
-    value ? formatDistanceToNow(new Date(value), { addSuffix: true }) : 'Never'
+    value
+        ? formatDistanceToNow(new Date(value), { addSuffix: true })
+        : translate('Never')
 
 function TokensIndex() {
     const [editingToken, setEditingToken] = useState<ApiKey | null>(null)
@@ -188,14 +190,20 @@ function TokensIndex() {
                                         }
                                     >
                                         {token.lastUsedAt
-                                            ? `Last used ${formatLastUsed(token.lastUsedAt)}`
-                                            : 'Never used'}
+                                            ? translate('Last used {{time}}', {
+                                                  time: formatLastUsed(
+                                                      token.lastUsedAt
+                                                  ),
+                                              })
+                                            : translate('Never used')}
                                     </span>
                                 </div>
                                 <ItemDescription className={'truncate'}>
                                     {token.createdBy?.email
-                                        ? `Created by ${token.createdBy.email}`
-                                        : 'No creator recorded'}
+                                        ? translate('Created by {{email}}', {
+                                              email: token.createdBy.email,
+                                          })
+                                        : translate('No creator recorded')}
                                 </ItemDescription>
                             </ItemContent>
                             <ItemActions>

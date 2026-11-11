@@ -25,10 +25,6 @@ export const Route = createLazyFileRoute('/_app/admin/nodes/$nodeId/ipam')({
     component: NodeIpam,
 })
 
-function pluralize(value: number, singular: string) {
-    return `${value} ${singular}${value === 1 ? '' : 's'}`
-}
-
 function NodeIpam() {
     const { nodeId } = Route.useParams()
     const numericNodeId = Number(nodeId)
@@ -143,23 +139,24 @@ function NodeIpam() {
                                 <ItemDescription
                                     className={'block truncate text-nowrap'}
                                 >
-                                    {group.description || 'No description'}
+                                    {group.description || t('No description')}
                                 </ItemDescription>
                                 <div className={'flex flex-wrap gap-2'}>
                                     <Badge
                                         variant={'secondary'}
                                         className={'w-fit'}
                                     >
-                                        {pluralize(
-                                            group.addressBlocksCount,
-                                            'IP block'
-                                        )}
+                                        {t('{{count}} IP blocks', {
+                                            count: group.addressBlocksCount,
+                                        })}
                                     </Badge>
                                     <Badge
                                         variant={'secondary'}
                                         className={'w-fit'}
                                     >
-                                        {pluralize(group.nodesCount, 'node')}
+                                        {t('{{count}} nodes', {
+                                            count: group.nodesCount,
+                                        })}
                                     </Badge>
                                 </div>
                             </ItemContent>

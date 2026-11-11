@@ -29,8 +29,8 @@ const byteLength = (pwd: string): number => new TextEncoder().encode(pwd).length
 export const evaluatePassword = (pwd: string): PasswordCriterion[] => {
     const criteria: PasswordCriterion[] = [
         {
-            label: t('Uses at least {{PASSWORD_MIN_LENGTH}} characters', {
-                PASSWORD_MIN_LENGTH,
+            label: t('Uses at least {{min}} characters', {
+                min: PASSWORD_MIN_LENGTH,
             }),
             isFulfilled: pwd.length >= PASSWORD_MIN_LENGTH,
         },
@@ -40,8 +40,8 @@ export const evaluatePassword = (pwd: string): PasswordCriterion[] => {
     // up front reads as a target rather than a limit.
     if (byteLength(pwd) > PASSWORD_MAX_BYTES) {
         criteria.push({
-            label: t('Uses at most {{PASSWORD_MAX_BYTES}} bytes', {
-                PASSWORD_MAX_BYTES,
+            label: t('Uses at most {{max}} bytes', {
+                max: PASSWORD_MAX_BYTES,
             }),
             isFulfilled: false,
         })

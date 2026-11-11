@@ -31,7 +31,7 @@ class VlanRequest extends BaseApiRequest
                 if (! $this->networkInterface()->is_vlan_aware) {
                     $validator->errors()->add(
                         'tag',
-                        'The network interface must be marked VLAN-aware before declaring VLANs on it.',
+                        __('The network interface must be marked VLAN-aware before declaring VLANs on it.'),
                     );
                 }
             },

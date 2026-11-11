@@ -100,7 +100,7 @@ const ApiKeysCard = () => {
                             )}
                             action={
                                 <Button onClick={() => setCreateOpen(true)}>
-                                    Create token
+                                    {t('Create token')}
                                 </Button>
                             }
                         />
@@ -120,7 +120,10 @@ const ApiKeysCard = () => {
                 onClose={() => setKeyToRevoke(null)}
                 title={t('Revoke API token')}
                 description={apiKey =>
-                    `Any application using “${apiKey.name}” will immediately lose access. This cannot be undone.`
+                    t(
+                        'Any application using “{{name}}” will immediately lose access. This cannot be undone.',
+                        { name: apiKey.name }
+                    )
                 }
                 confirmText={t('Revoke')}
                 onConfirm={revoke}

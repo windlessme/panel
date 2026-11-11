@@ -74,7 +74,7 @@ const StorageDetail = ({ storageId }: { storageId: number }) => {
             toast.add({ title: done, type: 'success' })
         } catch (error) {
             toast.add({
-                title: getApiErrorMessage(error, 'Could not delete that'),
+                title: getApiErrorMessage(error, t('Could not delete that')),
                 type: 'error',
             })
         } finally {
@@ -124,11 +124,11 @@ const StorageDetail = ({ storageId }: { storageId: number }) => {
                                 </div>
                                 <StatLabel className={'text-xs'}>
                                     {t(
-                                        '{{fmt}} used · {{fmt2}} reserved · {{fmt3}} total',
+                                        '{{used}} used · {{reserved}} reserved · {{total}} total',
                                         {
-                                            fmt: fmt(view.used),
-                                            fmt2: fmt(view.reserved),
-                                            fmt3: fmt(view.total),
+                                            used: fmt(view.used),
+                                            reserved: fmt(view.reserved),
+                                            total: fmt(view.total),
                                         }
                                     )}
                                 </StatLabel>
@@ -217,10 +217,13 @@ const StorageDetail = ({ storageId }: { storageId: number }) => {
                                 )}
                                 onDelete={async row => {
                                     const ok = await confirm({
-                                        title: `Delete ${row.name}?`,
-                                        description:
-                                            'The backup is removed from Proxmox. Restoring from it will no longer be possible.',
-                                        confirmText: 'Delete backup',
+                                        title: t('Delete {{name}}?', {
+                                            name: row.name,
+                                        }),
+                                        description: t(
+                                            'The backup is removed from Proxmox. Restoring from it will no longer be possible.'
+                                        ),
+                                        confirmText: t('Delete backup'),
                                         confirmButton: {
                                             variant: 'destructive',
                                         },
@@ -229,7 +232,7 @@ const StorageDetail = ({ storageId }: { storageId: number }) => {
                                     if (ok) {
                                         void run(
                                             () => deleteBackup(row.routeKey),
-                                            'Backup deleted'
+                                            t('Backup deleted')
                                         )
                                     }
                                 }}
@@ -241,7 +244,7 @@ const StorageDetail = ({ storageId }: { storageId: number }) => {
 
             {storage && storage.sharedWith.length > 0 && (
                 <StatLabel className={'text-xs'}>
-                    {t('Reached from')}
+                    {t('Reached from')}{' '}
                     {storage.sharedWith.map((node, index) => (
                         <span key={node.id}>
                             <Link
@@ -272,7 +275,7 @@ const StorageDetail = ({ storageId }: { storageId: number }) => {
                     if (server) {
                         void run(
                             () => deleteServer(server.routeKey),
-                            'Server deleted'
+                            t('Server deleted')
                         )
                     }
                 }}

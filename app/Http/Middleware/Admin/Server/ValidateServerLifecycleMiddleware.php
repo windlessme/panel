@@ -17,7 +17,7 @@ class ValidateServerLifecycleMiddleware
         $server = $request->route()->parameter('server');
 
         if (! $server instanceof Server) {
-            throw new NotFoundHttpException('Server not found');
+            throw new NotFoundHttpException(__('Server not found'));
         }
 
         if ($server->lifecycle === ServerLifecycle::DELETING || $server->lifecycle === ServerLifecycle::DELETION_FAILED) {

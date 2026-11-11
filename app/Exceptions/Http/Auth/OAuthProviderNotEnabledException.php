@@ -9,7 +9,7 @@ class OAuthProviderNotEnabledException extends NotFoundHttpException implements 
 {
     public function __construct(string $provider)
     {
-        parent::__construct("The \"{$provider}\" single sign-on provider is not enabled.");
+        parent::__construct(__('The ":provider" single sign-on provider is not enabled.', ['provider' => $provider]));
     }
 
     public function errorCode(): string

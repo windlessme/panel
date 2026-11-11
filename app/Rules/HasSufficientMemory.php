@@ -31,7 +31,7 @@ class HasSufficientMemory implements DataAwareRule, ValidationRule
         }
 
         if ($value > $node->memory + ($node->memory * ($node->memory_overallocate / 100))) {
-            $fail('The node does not have enough memory available.');
+            $fail(__('The node does not have enough memory available.'));
         }
     }
 }

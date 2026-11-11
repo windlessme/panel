@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - i18n
     tags:
       - 'v*.*.*'
   pull_request:
@@ -21,7 +22,10 @@ env:
   # workflow failed to parse its own image name before it could push anything.
   # Actions expressions have no lower-casing function, so the literal is the fix,
   # and it is the same name compose.yml and the installer already hardcode.
-  IMAGE_NAME: convoypanel/panel
+  #
+  # Forks publish under their own (already lowercase) repository name, so a
+  # fork's image lands at ghcr.io/<owner>/panel and never collides upstream.
+  IMAGE_NAME: ${{ github.repository == 'ConvoyPanel/panel' && 'convoypanel/panel' || github.repository }}
 
 jobs:
   # Each architecture is built on a runner of that architecture and pushed by
@@ -146,6 +150,7 @@ jobs:
             type=semver,pattern={{major}}
             type=raw,value=latest,enable=${{ startsWith(github.ref, 'refs/tags/v') }}
             type=ref,event=branch
+            type=sha,prefix=sha-,enable=${{ github.repository != 'ConvoyPanel/panel' }}
 
       - uses: docker/login-action@v3
         with:

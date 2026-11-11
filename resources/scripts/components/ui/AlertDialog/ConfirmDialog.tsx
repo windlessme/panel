@@ -1,5 +1,7 @@
 import * as React from 'react'
 
+import { t } from '@/lib/i18n.ts'
+
 import { Button } from '@/components/ui/Button'
 
 import {
@@ -22,8 +24,8 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
         description,
         cancelButton,
         confirmButton,
-        confirmText = 'Confirm',
-        cancelText = 'Cancel',
+        confirmText = t('Confirm'),
+        cancelText = t('Cancel'),
         icon,
         customActions,
         alertDialog,

@@ -158,7 +158,9 @@ function NodesIndex() {
                                     <NodeStatusIndicator node={node} />
                                     <span aria-hidden>·</span>
                                     <span>
-                                        {formatMemory(node.memory)} memory
+                                        {t('{{memory}} memory', {
+                                            memory: formatMemory(node.memory),
+                                        })}
                                     </span>
                                 </ItemDescription>
                             </ItemContent>
@@ -171,7 +173,7 @@ function NodesIndex() {
                 rightActions={
                     <Link className={buttonVariants()} to='/admin/nodes/create'>
                         <IconPlus className={'size-4'} />
-                        Add node
+                        {t('Add node')}
                     </Link>
                 }
                 {...tableProps}

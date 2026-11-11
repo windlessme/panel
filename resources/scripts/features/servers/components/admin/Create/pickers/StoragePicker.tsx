@@ -36,7 +36,7 @@ const StoragePicker = ({
     nodeId,
     requiredContentTypes,
     name = 'storageId',
-    label = 'Storage',
+    label = t('Storage'),
 }: StoragePickerProps) => {
     const { control } = useFormContext()
     const { data: storages, isLoading } = useStorages(nodeId ?? undefined)
@@ -58,9 +58,12 @@ const StoragePicker = ({
                         {storage.displayName} ({storage.name})
                     </span>
                     <span className='text-muted-foreground text-xs'>
-                        {byteSize(free, { units: 'iec' }).toString()}{' '}
-                        {t('free out of')}{' '}
-                        {byteSize(storage.size, { units: 'iec' }).toString()}
+                        {t('{{free}} free out of {{total}}', {
+                            free: byteSize(free, { units: 'iec' }).toString(),
+                            total: byteSize(storage.size, {
+                                units: 'iec',
+                            }).toString(),
+                        })}
                     </span>
                 </div>
             ),
@@ -86,7 +89,9 @@ const StoragePicker = ({
                     >
                         <FormControl>
                             <SelectTrigger className='h-auto! w-full text-left *:data-[slot=select-value]:line-clamp-none!'>
-                                <SelectValue placeholder='Select a storage' />
+                                <SelectValue
+                                    placeholder={t('Select a storage')}
+                                />
                             </SelectTrigger>
                         </FormControl>
                         <SelectContent>
@@ -94,8 +99,10 @@ const StoragePicker = ({
                                 <div className='p-2'>
                                     <SimpleEmptyState
                                         icon={IconDatabase}
-                                        title='No Storages'
-                                        description='There are no storages available for this node.'
+                                        title={t('No Storages')}
+                                        description={t(
+                                            'There are no storages available for this node.'
+                                        )}
                                     />
                                 </div>
                             ) : (

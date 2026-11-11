@@ -30,7 +30,7 @@ class HasSufficientAddresses implements DataAwareRule, ValidationRule
         }
 
         if (! $this->service->hasSufficientAddresses($value, $ipv4Count, $ipv6Count)) {
-            $fail('The selected network interface does not have enough available IP addresses.');
+            $fail(__('The selected network interface does not have enough available IP addresses.'));
         }
     }
 }

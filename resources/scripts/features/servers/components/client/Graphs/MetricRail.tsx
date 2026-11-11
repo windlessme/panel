@@ -112,13 +112,11 @@ const MetricRail = ({
                 {!live && sampledAt && (
                     <span
                         className='text-muted-foreground ml-auto text-[11px] tabular-nums'
-                        title={t('Last recorded {{value}}', {
-                            value: sampledAt.toLocaleString(),
+                        title={t('Last recorded {{date}}', {
+                            date: sampledAt.toLocaleString(),
                         })}
                     >
-                        {t('{{compactAge}} ago', {
-                            compactAge: compactAge(sampledAt),
-                        })}
+                        {t('{{age}} ago', { age: compactAge(sampledAt) })}
                     </span>
                 )}
             </div>
@@ -164,7 +162,7 @@ const MetricRail = ({
                                 />
                             ) : unavailable ? (
                                 <span className='text-muted-foreground ml-auto text-sm font-semibold'>
-                                    {t('&mdash;')}
+                                    &mdash;
                                 </span>
                             ) : (
                                 /* `h-5` is the text-sm line box this stands
@@ -187,7 +185,7 @@ const MetricRail = ({
                             className='text-muted-foreground text-xl font-semibold tracking-tight'
                             title={t('No reading available')}
                         >
-                            {t('&mdash;')}
+                            &mdash;
                         </span>
                     ) : (
                         /* `h-7` is the line box of the figure it stands in

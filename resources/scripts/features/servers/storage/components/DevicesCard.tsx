@@ -148,7 +148,10 @@ const DevicesCard = ({ uuid }: Props) => {
         },
         onError: e =>
             toast.add({
-                title: getApiErrorMessage(e, 'Failed to update the boot order'),
+                title: getApiErrorMessage(
+                    e,
+                    t('Failed to update the boot order')
+                ),
                 type: 'error',
             }),
     })

@@ -33,7 +33,7 @@ class ResizeServerDiskRequest extends BaseApiRequest
 
                     $free = app(LiveStorageService::class)->freeForConvoy($server->node, $disk->storage);
                     if ($free !== null && $delta > $free) {
-                        $fail("The storage \"{$disk->storage->name}\" does not have enough disk space available.");
+                        $fail(__('The storage ":storage" does not have enough disk space available.', ['storage' => $disk->storage->name]));
                     }
                 },
             ],

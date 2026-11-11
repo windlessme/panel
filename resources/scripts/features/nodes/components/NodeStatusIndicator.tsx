@@ -40,11 +40,13 @@ const LABEL: Record<Node['status'], string> = {
  */
 const reasonFor = (node: Node): string => {
     if (node.status === 'online') {
-        return 'Convoy reached this node’s API on its last check.'
+        return t('Convoy reached this node’s API on its last check.')
     }
 
     if (node.status === 'unknown') {
-        return 'Convoy has not checked this node recently. Its scheduled status poll may not be running.'
+        return t(
+            'Convoy has not checked this node recently. Its scheduled status poll may not be running.'
+        )
     }
 
     return connectionErrorCopy(mapConnectionErrorType(node.statusCode ?? ''))

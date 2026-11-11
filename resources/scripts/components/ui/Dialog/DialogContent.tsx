@@ -85,10 +85,8 @@ const DialogContent = ({
     }, [dialogId, frontmostHeight, parentReporter])
 
     const stackStyle = {
-        '--dialog-height': t('{{ownHeight}}px', { ownHeight }),
-        '--frontmost-dialog-height': t('{{frontmostHeight}}px', {
-            frontmostHeight,
-        }),
+        '--dialog-height': `${ownHeight}px`,
+        '--frontmost-dialog-height': `${frontmostHeight}px`,
         ...style,
     } as DialogStackStyle
 

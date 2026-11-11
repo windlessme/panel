@@ -149,11 +149,11 @@ const LIFECYCLE_META: ReadonlyArray<
         string,
     ]
 > = [
-    ['ready', 'Ready', 'bg-emerald-500'],
-    ['installing', 'Installing', 'bg-amber-500'],
-    ['restoring', 'Restoring', 'bg-amber-500'],
-    ['deleting', 'Deleting', 'bg-muted-foreground/60'],
-    ['failed', 'Failed', 'bg-destructive'],
+    ['ready', t('Ready'), 'bg-emerald-500'],
+    ['installing', t('Installing'), 'bg-amber-500'],
+    ['restoring', t('Restoring'), 'bg-amber-500'],
+    ['deleting', t('Deleting'), 'bg-muted-foreground/60'],
+    ['failed', t('Failed'), 'bg-destructive'],
 ]
 
 const StatusRow = ({
@@ -287,16 +287,13 @@ const Dashboard = ({ data }: { data: OverviewData }) => {
                         <CapacityMeter
                             label={t('IP addresses')}
                             figure={`${num(addresses.assigned)} / ${num(addresses.total)}`}
-                            unit='assigned'
+                            unit={t('assigned')}
                             percent={addresses.percent}
                             hasData={addresses.total > 0}
                             emptyText={t('No IP pools yet')}
                             sub={
                                 addresses.total > 0
-                                    ? t('{{num}} pools · {{num2}} available', {
-                                          num: num(addresses.pools),
-                                          num2: num(addresses.available),
-                                      })
+                                    ? `${t('{{count, number}} pools', { count: addresses.pools })} · ${t('{{available}} available', { available: num(addresses.available) })}`
                                     : undefined
                             }
                         />
@@ -314,7 +311,9 @@ const Dashboard = ({ data }: { data: OverviewData }) => {
                             {t('Servers by lifecycle')}
                         </CardTitle>
                         <StatLabel as='span' className='text-xs tabular-nums'>
-                            {t('{{num}} total', { num: num(servers.total) })}
+                            {t('{{total}} total', {
+                                total: num(servers.total),
+                            })}
                         </StatLabel>
                     </CardHeader>
                     <CardContent className='p-5 pt-2'>
@@ -340,7 +339,7 @@ const Dashboard = ({ data }: { data: OverviewData }) => {
                 <Card className='flex flex-col'>
                     <CardHeader className='p-5 pb-2'>
                         <CardTitle className='text-base'>
-                            {t('Backups &amp; ISOs')}
+                            {t('Backups & ISOs')}
                         </CardTitle>
                     </CardHeader>
                     <CardContent className='flex flex-1 flex-col p-5 pt-2'>
@@ -367,8 +366,8 @@ const Dashboard = ({ data }: { data: OverviewData }) => {
                                 <LinearProgressBar
                                     value={successRate}
                                     aria-label={t(
-                                        'Successful backups: {{successRate}}%',
-                                        { successRate }
+                                        'Successful backups: {{percent}}%',
+                                        { percent: successRate }
                                     )}
                                     className='mt-4'
                                 />

@@ -103,7 +103,7 @@ const ISOLibraryCard = ({ uuid }: Props) => {
                                             {iso.name}
                                             {iso.mounted && (
                                                 <Badge variant={'secondary'}>
-                                                    Mounted
+                                                    {t('Mounted')}
                                                 </Badge>
                                             )}
                                         </ItemTitle>
@@ -121,7 +121,9 @@ const ISOLibraryCard = ({ uuid }: Props) => {
                                             disabled={isPending}
                                             onClick={() => toggle(iso)}
                                         >
-                                            {iso.mounted ? 'Unmount' : 'Mount'}
+                                            {iso.mounted
+                                                ? t('Unmount')
+                                                : t('Mount')}
                                         </Button>
                                     </ItemActions>
                                 </Item>

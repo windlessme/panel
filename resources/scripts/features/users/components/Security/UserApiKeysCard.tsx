@@ -21,7 +21,7 @@ interface Props {
 /** `*` is the wildcard the backend stores for full access; spell it out for a reader. */
 const scopeLabel = (abilities: string[]) =>
     abilities.length === 0 || abilities.includes('*')
-        ? 'Full access'
+        ? t('Full access')
         : abilities.join(', ')
 
 const UserApiKeysCard = ({ userId }: Props) => {
@@ -33,7 +33,7 @@ const UserApiKeysCard = ({ userId }: Props) => {
         question: t('Revoke API key?'),
         successTitle: t('API key revoked'),
         errorTitle: t('Failed to revoke API key'),
-        nameOf: key => `The key “${key.name}”`,
+        nameOf: key => t('The key “{{name}}”', { name: key.name }),
         consequence: t('Anything using it will start getting 401s.'),
     })
 
@@ -54,7 +54,9 @@ const UserApiKeysCard = ({ userId }: Props) => {
                     key={key.id}
                     icon={IconKey}
                     name={key.name}
-                    revokeLabel={`Revoke API key ${key.name}`}
+                    revokeLabel={t('Revoke API key {{name}}', {
+                        name: key.name,
+                    })}
                     onRevoke={() => revoke(key)}
                     meta={
                         <>
@@ -70,8 +72,13 @@ const UserApiKeysCard = ({ userId }: Props) => {
                                 }
                             >
                                 {key.lastUsedAt
-                                    ? `Used ${formatDistanceToNow(key.lastUsedAt, { addSuffix: true })}`
-                                    : 'Never used'}
+                                    ? t('Used {{time}}', {
+                                          time: formatDistanceToNow(
+                                              key.lastUsedAt,
+                                              { addSuffix: true }
+                                          ),
+                                      })
+                                    : t('Never used')}
                             </span>
                         </>
                     }

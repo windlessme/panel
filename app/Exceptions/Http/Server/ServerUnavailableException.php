@@ -18,11 +18,11 @@ class ServerUnavailableException extends ConflictHttpException
      */
     public function __construct(Server $server, ?Throwable $previous = null)
     {
-        $message = 'This server is currently unavailable, please try again later.';
+        $message = __('This server is currently unavailable, please try again later.');
         if ($server->isSuspended()) {
-            $message = 'This server is currently suspended and the functionality requested is unavailable.';
+            $message = __('This server is currently suspended and the functionality requested is unavailable.');
         } elseif (! $server->isInstalled()) {
-            $message = 'This server has not yet completed its installation process, please try again later.';
+            $message = __('This server has not yet completed its installation process, please try again later.');
         }
 
         parent::__construct($message, $previous);

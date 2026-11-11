@@ -27,11 +27,18 @@ const RebuildServerPage = () => {
                         : t('Rebuild Server')}
                 </Heading>
                 <p className={'text-muted-foreground mt-1.5 text-sm'}>
-                    {t("Erases the server's")}
                     {server
-                        ? byteSize(server.disk, { units: 'iec' }).toString()
-                        : ''}
-                    {t('disk. Backups, ISOs and network settings are kept.')}
+                        ? t(
+                              "Erases the server's {{size}} disk. Backups, ISOs and network settings are kept.",
+                              {
+                                  size: byteSize(server.disk, {
+                                      units: 'iec',
+                                  }).toString(),
+                              }
+                          )
+                        : t(
+                              "Erases the server's disk. Backups, ISOs and network settings are kept."
+                          )}
                 </p>
             </div>
 

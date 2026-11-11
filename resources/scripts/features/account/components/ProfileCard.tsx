@@ -41,7 +41,7 @@ import UserAvatar from '@/components/ui/UserAvatar.tsx'
  * "the administrator" is and why: the panel knows the switch is off, not what
  * upstream system it was turned off for.
  */
-const MANAGED_NOTE = 'Managed by your administrator.'
+const MANAGED_NOTE = t('Managed by your administrator.')
 
 const ProfileCard = () => {
     const { data: user } = useUser()
@@ -253,7 +253,7 @@ const ProfileCard = () => {
                                                     variant={'outline'}
                                                     type={'button'}
                                                 >
-                                                    Change
+                                                    {t('Change')}
                                                 </Button>
                                             }
                                         />

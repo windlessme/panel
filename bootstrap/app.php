@@ -5,6 +5,7 @@ use App\Http\Middleware\AdminAuthenticate;
 use App\Http\Middleware\EnforceTokenAbilities;
 use App\Http\Middleware\EnforceTokenNetworkRestrictions;
 use App\Http\Middleware\RecordSessionActivity;
+use App\Http\Middleware\SetLocale;
 use App\Http\Middleware\ValidateCsrfToken;
 use App\Support\Api\AccountTokenAbilities;
 use Illuminate\Foundation\Application;
@@ -81,6 +82,12 @@ return Application::configure(basePath: dirname(__DIR__))
         // Track active web sessions (for the account "active sessions" list). Appended to the web
         // group so it runs after the session + auth are resolved; it self-skips token/anon requests.
         $middleware->web(append: RecordSessionActivity::class);
+
+        // Localize responses (validation and exception messages) from the SPA's
+        // Accept-Language header. Group middleware runs before route middleware and
+        // the controller, so every message built afterwards uses this locale.
+        $middleware->web(append: SetLocale::class);
+        $middleware->api(append: SetLocale::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         // Surface a stable, machine-readable `code` for exceptions that opt in
