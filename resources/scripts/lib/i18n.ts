@@ -1,10 +1,9 @@
-import { setDefaultOptions } from 'date-fns'
-import { enUS, zhTW as dateFnsZhTW } from 'date-fns/locale'
-import i18next from 'i18next'
-import { z } from 'zod'
-
 import en from '@/locales/en.json'
 import zhTW from '@/locales/zh-TW.json'
+import { setDefaultOptions } from 'date-fns'
+import { zhTW as dateFnsZhTW, enUS } from 'date-fns/locale'
+import i18next from 'i18next'
+import { z } from 'zod'
 
 // Keys are the English source strings themselves, so `en` only carries plural
 // overrides (`<key>_one`): a missing entry falls back to the key, which is
@@ -63,11 +62,78 @@ document.documentElement.lang = locale
 
 setDefaultOptions({ locale: locale === 'zh-TW' ? dateFnsZhTW : enUS })
 
-if (locale === 'zh-TW') {
-    z.config(z.locales.zhTW())
-}
-
 export const t = i18next.t.bind(i18next)
+
+// Validation messages for schemas that don't pass their own. English keeps
+// zod's defaults; other locales phrase the common cases through the catalog
+// and fall back to zod's bundled locale for the rest.
+if (locale === 'zh-TW') {
+    const fallback = z.locales.zhTW().localeError
+    z.config({
+        localeError: issue => {
+            const size = (value: number | bigint) => Number(value)
+            switch (issue.code) {
+                case 'too_small':
+                    if (issue.origin === 'string')
+                        return size(issue.minimum) <= 1
+                            ? t('This field is required.')
+                            : t('Must be at least {{min}} characters.', {
+                                  min: size(issue.minimum),
+                              })
+                    if (issue.origin === 'array' || issue.origin === 'set')
+                        return t('Select at least {{min}}.', {
+                            min: size(issue.minimum),
+                        })
+                    return issue.inclusive
+                        ? t('Must be at least {{min}}.', {
+                              min: size(issue.minimum),
+                          })
+                        : t('Must be greater than {{min}}.', {
+                              min: size(issue.minimum),
+                          })
+                case 'too_big':
+                    if (issue.origin === 'string')
+                        return t('Must be at most {{max}} characters.', {
+                            max: size(issue.maximum),
+                        })
+                    if (issue.origin === 'array' || issue.origin === 'set')
+                        return t('Select at most {{max}}.', {
+                            max: size(issue.maximum),
+                        })
+                    return issue.inclusive
+                        ? t('Must be at most {{max}}.', {
+                              max: size(issue.maximum),
+                          })
+                        : t('Must be less than {{max}}.', {
+                              max: size(issue.maximum),
+                          })
+                case 'invalid_type':
+                    return issue.input === undefined ||
+                        issue.input === null ||
+                        issue.input === ''
+                        ? t('This field is required.')
+                        : t('Invalid value.')
+                case 'invalid_format':
+                    if (issue.format === 'email')
+                        return t('Enter a valid email address.')
+                    if (issue.format === 'url') return t('Enter a valid URL.')
+                    if (issue.format === 'ipv4')
+                        return t('Enter a valid IPv4 address.')
+                    if (issue.format === 'ipv6')
+                        return t('Enter a valid IPv6 address.')
+                    return t('Invalid format.')
+                case 'invalid_value':
+                    return t('Choose one of the available options.')
+                case 'not_multiple_of':
+                    return t('Must be a multiple of {{divisor}}.', {
+                        divisor: issue.divisor,
+                    })
+                default:
+                    return fallback(issue)
+            }
+        },
+    })
+}
 
 /**
  * Strings are resolved when modules evaluate (column definitions, zod schemas,
