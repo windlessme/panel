@@ -93,7 +93,7 @@ export const deviceOptions = (device: StorageDevice): string[] => {
 
     return [
         device.isEmulatingSSD && 'SSD',
-        device.discardMode === 'on' && t('Discard'),
+        device.discardMode === 'on' && t('Discard', { context: 'disk' }),
         device.isIOThreadEnabled && t('IO thread'),
         device.isIncludedInBackup && t('Backed up'),
         device.isReadonly && t('Read-only'),

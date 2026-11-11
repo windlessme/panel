@@ -756,7 +756,7 @@ const ConsoleView = ({
                         )}
                     >
                         {typing === null
-                            ? t('Type')
+                            ? t('Type', { context: 'verb' })
                             : t('Typing {{count}}', { count: typing })}
                     </KeyButton>
                     {guestClipboard !== '' && (

@@ -35,7 +35,7 @@ const ThemeToggle = ({ variant = 'outline' }: Props) => {
                     {t('Dark')}
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setTheme('system')}>
-                    {t('System')}
+                    {t('System', { context: 'theme' })}
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

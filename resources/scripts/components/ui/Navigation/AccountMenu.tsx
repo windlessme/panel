@@ -28,7 +28,7 @@ import UserAvatar from '@/components/ui/UserAvatar.tsx'
 const themeLabels = {
     light: t('Light'),
     dark: t('Dark'),
-    system: t('System'),
+    system: t('System', { context: 'theme' }),
 } as const
 
 const AccountMenu = () => {

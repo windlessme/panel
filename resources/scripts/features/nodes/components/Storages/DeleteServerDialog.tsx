@@ -90,7 +90,8 @@ const DeleteServerDialog = ({
 
                     <div className={'flex flex-col gap-2'}>
                         <Label htmlFor={'confirm-server-name'}>
-                            {t('Type')} <b>{server?.name}</b> {t('to confirm')}
+                            {t('Type', { context: 'verb' })}{' '}
+                            <b>{server?.name}</b> {t('to confirm')}
                         </Label>
                         <Input
                             id={'confirm-server-name'}
