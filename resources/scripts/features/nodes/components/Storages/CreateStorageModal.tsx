@@ -174,7 +174,7 @@ const CreateStorageModal = () => {
             <ResponsiveDialogTrigger
                 render={
                     <Button>
-                        <IconPlus className={'size-4'} /> Add storage
+                        <IconPlus className={'size-4'} /> {t('Add storage')}
                     </Button>
                 }
             />

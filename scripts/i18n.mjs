@@ -225,6 +225,8 @@ const lintTranslation = (key, value) => {
     )
         issues.push('half-width punctuation next to Chinese')
     if (/[“”]/.test(value)) issues.push('curly quotes, use 「」')
+    if (new RegExp(`[${CJK}] [${CJK}]`).test(value))
+        issues.push('space between Chinese characters')
     if (/\.\.\./.test(value)) issues.push('three dots, use …')
     return issues
 }

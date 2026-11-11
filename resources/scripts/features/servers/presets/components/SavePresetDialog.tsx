@@ -85,7 +85,8 @@ const SavePresetDialog = () => {
             <ResponsiveDialogTrigger
                 render={
                     <Button type={'button'} variant={'outline'} size={'sm'}>
-                        <IconBookmark className={'size-4'} /> Save as preset
+                        <IconBookmark className={'size-4'} />{' '}
+                        {t('Save as preset')}
                     </Button>
                 }
             />

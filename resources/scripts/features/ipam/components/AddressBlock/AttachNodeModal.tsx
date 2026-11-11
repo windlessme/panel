@@ -74,7 +74,7 @@ const AttachNodeModal = ({ mutate }: Props) => {
             <ResponsiveDialogTrigger
                 render={
                     <Button>
-                        <IconPlus className='size-4' /> Attach Node
+                        <IconPlus className='size-4' /> {t('Attach Node')}
                     </Button>
                 }
             />

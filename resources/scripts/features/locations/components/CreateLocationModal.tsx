@@ -70,7 +70,8 @@ const CreateLocationModal = ({ mutate }: Props) => {
                 <ResponsiveDialogTrigger
                     render={
                         <Button>
-                            <IconPlus className={'size-4'} /> Add location
+                            <IconPlus className={'size-4'} />{' '}
+                            {t('Add location')}
                         </Button>
                     }
                 />

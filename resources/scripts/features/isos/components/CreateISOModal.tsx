@@ -117,7 +117,7 @@ const CreateISOModal = () => {
             <ResponsiveDialogTrigger
                 render={
                     <Button>
-                        <IconPlus className={'size-4'} /> Add ISO
+                        <IconPlus className={'size-4'} /> {t('Add ISO')}
                     </Button>
                 }
             />

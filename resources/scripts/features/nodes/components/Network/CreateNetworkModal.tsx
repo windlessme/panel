@@ -85,7 +85,8 @@ const CreateNetworkModal = () => {
             <ResponsiveDialogTrigger
                 render={
                     <Button>
-                        <IconPlus className={'size-4'} /> Add network interface
+                        <IconPlus className={'size-4'} />{' '}
+                        {t('Add network interface')}
                     </Button>
                 }
             />

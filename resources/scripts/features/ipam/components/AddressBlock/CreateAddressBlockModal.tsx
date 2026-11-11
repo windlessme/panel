@@ -87,7 +87,8 @@ const CreateAddressBlockModal = ({ addressBlockGroupId, mutate }: Props) => {
             <ResponsiveDialogTrigger
                 render={
                     <Button>
-                        <IconPlus className={'size-4'} /> Add address block
+                        <IconPlus className={'size-4'} />{' '}
+                        {t('Add address block')}
                     </Button>
                 }
             />

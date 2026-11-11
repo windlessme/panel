@@ -71,7 +71,7 @@ const CreateBlockGroupModal = ({ mutate }: Props) => {
             <ResponsiveDialogTrigger
                 render={
                     <Button>
-                        <IconPlus className={'size-4'} /> Add block group
+                        <IconPlus className={'size-4'} /> {t('Add block group')}
                     </Button>
                 }
             />

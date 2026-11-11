@@ -77,7 +77,7 @@ const CreateImageGroupModal = () => {
             <ResponsiveDialogTrigger
                 render={
                     <Button>
-                        <IconPlus className={'size-4'} /> Add image group
+                        <IconPlus className={'size-4'} /> {t('Add image group')}
                     </Button>
                 }
             />

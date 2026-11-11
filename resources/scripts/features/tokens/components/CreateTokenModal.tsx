@@ -100,7 +100,7 @@ const CreateTokenModal = ({ mutate }: Props) => {
             <ResponsiveDialogTrigger
                 render={
                     <Button>
-                        <IconPlus className={'size-4'} /> Create token
+                        <IconPlus className={'size-4'} /> {t('Create token')}
                     </Button>
                 }
             />
