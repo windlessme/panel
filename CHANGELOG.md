@@ -5,6 +5,12 @@ This file is a running track of new features and fixes to each version of the pa
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project
 follows [Semantic Versioning](https://semver.org) guidelines.
 
+## v4.6.2-zhtw.2
+
+### 修正
+
+- 登入頁的瀏覽器分頁標題改用 `.env` 的 `APP_NAME`（例如「登入 | 你的面板名稱」），不再固定顯示 Convoy。
+
 ## v4.6.2-zhtw.1
 
 台灣繁體中文版，以官方 v4.6.2 為基礎，功能和資料庫結構都和 v4.6.2 相同，沒有新增 migration。

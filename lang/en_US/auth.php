@@ -20,5 +20,5 @@ return [
     'sign_in' => 'Sign in',
     'sign_out' => 'Sign out',
     'sign_in_description' => 'Sign in to your account',
-    'page_title' => 'Login | Convoy',
+    'page_title' => 'Login | :name',
 ];

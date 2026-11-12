@@ -19,6 +19,7 @@ interface ExtendedWindow extends Window {
     }
     SiteConfiguration?: {
         version: string
+        name?: string
     }
 }
 

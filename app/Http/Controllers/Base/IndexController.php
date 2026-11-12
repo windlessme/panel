@@ -24,6 +24,7 @@ class IndexController extends Controller
         return $this->view->make('app', [
             'siteConfiguration' => [
                 'version' => config('app.version'),
+                'name' => config('app.name'),
             ],
         ]);
     }

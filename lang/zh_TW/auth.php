@@ -7,5 +7,5 @@ return [
     'sign_in' => '登入',
     'sign_out' => '登出',
     'sign_in_description' => '登入你的帳號',
-    'page_title' => '登入 | Convoy',
+    'page_title' => '登入 | :name',
 ];

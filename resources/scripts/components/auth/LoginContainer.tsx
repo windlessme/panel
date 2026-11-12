@@ -21,7 +21,11 @@ const LoginContainer = () => {
     const location = useLocation()
 
     useEffect(() => {
-        document.title = tAuth('page_title')
+        // APP_NAME from .env, so a renamed panel keeps its own name in the tab.
+        const name =
+            (window as { SiteConfiguration?: { name?: string } })
+                .SiteConfiguration?.name || 'Convoy'
+        document.title = tAuth('page_title', { name })
     }, [])
 
     const schema = z.object({

@@ -48,3 +48,11 @@ it('keeps English when the browser asks for a language without a catalog', funct
     $response->assertUnprocessable();
     expect($response->json('errors.email.0'))->toBe('The email field is required.');
 });
+
+it('hands the panel name from APP_NAME to the front-end', function () {
+    config(['app.name' => 'My Cloud']);
+
+    $this->get('/auth/login')
+        ->assertOk()
+        ->assertSee('"name":"My Cloud"', false);
+});
