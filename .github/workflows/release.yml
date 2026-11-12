@@ -6,6 +6,9 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    # Creating the release needs write access; forks default GITHUB_TOKEN to read-only.
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
         with:
