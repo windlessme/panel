@@ -8,9 +8,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+
+      # The diff from the upstream release this build is based on (the tag
+      # minus its -zhtw.N suffix), for panels carrying their own changes.
+      - name: Create Patch Against Upstream
+        env:
+          REF: ${{ github.ref }}
+        run: |
+          TAG="${REF#refs/tags/}"
+          BASE="${TAG%%-zhtw*}"
+          git fetch --no-tags https://github.com/ConvoyPanel/panel.git "refs/tags/${BASE}:refs/tags/upstream-base"
+          git diff --binary upstream-base HEAD -- . ':(exclude).github' ':(exclude)CHANGELOG.md' ':(exclude)tests' > zh-tw.patch
 
       - name: Update Embedded Version String
         env:
@@ -55,7 +68,7 @@ jobs:
           )
 
           # Archive files, using * directly outside the array for proper expansion
-          tar --exclude=panel.tar.gz -czf panel.tar.gz * "${files_to_include[@]}"
+          tar --exclude=panel.tar.gz --exclude=zh-tw.patch -czf panel.tar.gz * "${files_to_include[@]}"
 
       - name: Extract Changelog
         id: extract_changelog
@@ -81,3 +94,4 @@ jobs:
           files: |
             panel.tar.gz
             checksum.txt
+            zh-tw.patch
