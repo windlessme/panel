@@ -32,6 +32,7 @@ return [
     'setting_one' => '設定',
     'setting_other' => '設定',
     'search' => '搜尋',
+    'search_placeholder' => '搜尋…',
     'language' => '語言',
     'admin_cp' => '管理後台',
     'exit_admin_cp' => '離開管理後台',

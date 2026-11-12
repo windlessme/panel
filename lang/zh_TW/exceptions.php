@@ -19,7 +19,7 @@ return [
         'sync_hostname_failed' => '伺服器 :uuid 無法同步主機名稱。',
         'no_available_vmid' => '沒有可用的 VMID。',
         'template_inaccessible' => '這個節點無法使用此範本',
-        'no_available_disk_interface' => '虛擬機器上沒有可用的磁碟介面。',
+        'no_available_disk_interface' => '虛擬機上沒有可用的磁碟介面。',
         'iso_already_mounted' => '這個 ISO 已經掛載',
         'iso_already_unmounted' => '這個 ISO 已經卸載。',
     ],
@@ -45,7 +45,7 @@ return [
         'delete_has_nodes' => '這個位置還有節點，無法刪除。',
     ],
     'user' => [
-        'delete_has_servers' => '這位使用者還有伺服器，無法刪除。',
+        'delete_has_servers' => '這個使用者名下還有伺服器，無法刪除。',
     ],
     'address_pool' => [
         'delete_has_nodes' => '這個位址池還分配給節點使用，無法刪除。',

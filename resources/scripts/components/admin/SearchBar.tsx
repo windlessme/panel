@@ -23,7 +23,7 @@ const SearchBar = ({ value, onChange, buttonText, onClick }: Props) => {
                 className='grow'
                 value={value}
                 onChange={onChange}
-                placeholder={`${tStrings('search')}...`}
+                placeholder={tStrings('search_placeholder')}
             />
             <Button
                 className='grid sm:hidden place-items-center'

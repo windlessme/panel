@@ -9,7 +9,7 @@ return [
     'created_modal' => [
         'title' => '已建立權杖',
         'description' => '這是剛建立的 API 權杖。請記下權杖的值，關閉後就不會再顯示。',
-        'button' => '好，我已經複製了',
+        'button' => '好，我記下了',
     ],
     'delete_modal' => [
         'title' => '要刪除 :name 嗎？',

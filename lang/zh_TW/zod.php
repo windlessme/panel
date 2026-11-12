@@ -31,7 +31,7 @@ return [
             'ip_address' => 'IP 位址格式不正確',
             'mac_address' => 'MAC 位址格式不正確',
             'english_keyboard_characters' => '只能輸入英文鍵盤上的字元',
-            'password_requirements' => '至少 8 個字元，且須包含大寫字母、小寫字母、數字和特殊符號各一個',
+            'password_requirements' => '至少 8 個字元，且須包含大寫字母、小寫字母、數字和特殊字元各一個',
         ],
         'too_small' => [
             'array' => [

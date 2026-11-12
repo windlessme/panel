@@ -5,6 +5,25 @@ This file is a running track of new features and fixes to each version of the pa
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project
 follows [Semantic Versioning](https://semver.org) guidelines.
 
+## v4.6.2-zhtw.1
+
+台灣繁體中文版，以官方 v4.6.2 為基礎，功能和資料庫結構都和 v4.6.2 相同，沒有新增 migration。
+
+### 新增
+
+- 介面完整翻譯成台灣繁體中文（`lang/zh_TW`），瀏覽器語言是中文時自動顯示中文。
+- 右上角頭像選單（手機版在選單裡）可以切換「English／繁體中文」，選擇會記在瀏覽器。
+- 表單驗證、登入錯誤、伺服器操作失敗等後端訊息會跟著介面語言回應（依 `Accept-Language`）。
+- `npm run i18n:check`：檢查翻譯缺漏、變數不一致和中國用語。
+
+### 安裝與更新
+
+照官方文件操作，只把下載網址換成
+`https://github.com/windlessme/panel/releases/latest/download/panel.tar.gz`。
+詳細步驟、一次更新多台面板的指令和退回官方版的方式，請看 `docs/i18n.md`。
+
+> 從 v4.6.1 以前的版本升級時，官方 v4.6.2 會把 MySQL 8.0 升到 8.4，無法退回，請先備份。
+
 ## v4.6.2
 
 ### Security

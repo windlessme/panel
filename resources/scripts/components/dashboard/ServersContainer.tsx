@@ -69,7 +69,7 @@ const ServerContainer = () => {
                 }
                 value={query}
                 onChange={e => setQuery(e.currentTarget.value)}
-                placeholder={`${tStrings('search')}...`}
+                placeholder={tStrings('search_placeholder')}
             />
             <div className='pt-6'>
                 {!data ? (

@@ -32,6 +32,7 @@ return [
     'setting_one' => 'Setting',
     'setting_other' => 'Settings',
     'search' => 'Search',
+    'search_placeholder' => 'Search...',
     'language' => 'Language',
     'admin_cp' => 'Admin Control Panel',
     'exit_admin_cp' => 'Exit Admin Control Panel',

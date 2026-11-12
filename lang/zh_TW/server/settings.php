@@ -10,7 +10,7 @@ return [
     ],
     'reinstall' => [
         'title' => '重新安裝伺服器',
-        'description' => '讓伺服器從全新狀態重新開始。',
+        'description' => '讓伺服器回到全新狀態。',
         'start_server_after_installing' => '安裝完成後啟動伺服器',
         'modal' => [
             'title' => '確認重新安裝',
@@ -43,6 +43,6 @@ return [
     ],
     'hardware' => [
         'bandwidth_used' => '已用頻寬',
-        'bandwidth_alloted' => '配置頻寬',
+        'bandwidth_alloted' => '頻寬配額',
     ],
 ];

@@ -34,15 +34,15 @@ return [
         'xtermjs_description' => '效能最好，但不支援所有作業系統。',
         'starting' => '正在啟動終端機',
         'steps' => [
-            'initializing' => '初始化中',
-            'checking_remote_health' => '檢查遠端狀態',
-            'generating_token' => '產生權杖',
-            'connecting' => '連線中',
+            'initializing' => '正在初始化',
+            'checking_remote_health' => '正在檢查遠端狀態',
+            'generating_token' => '正在產生權杖',
+            'connecting' => '正在連線',
         ],
     ],
     'server_config' => [
         'title' => '設定這台伺服器',
-        'description' => '你是管理員！可以按下方按鈕前往這台伺服器的規格設定並進行編輯。',
+        'description' => '你是管理員，可以按下方按鈕編輯這台伺服器的規格設定。',
         'configure_server' => '設定伺服器',
     ],
 ];

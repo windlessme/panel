@@ -21,7 +21,7 @@ return [
         'name_required' => '請填寫名稱。',
         'email_invalid' => '請輸入有效的電子郵件',
         'email_required' => '請填寫電子郵件。',
-        'password_rules' => '至少 8 個字元，且須包含大寫字母、小寫字母、數字和特殊符號各一個',
+        'password_rules' => '至少 8 個字元，且須包含大寫字母、小寫字母、數字和特殊字元各一個',
         'password_required' => '請填寫密碼。',
     ],
 ];

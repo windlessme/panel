@@ -2,7 +2,7 @@
 
 return [
     'create_iso' => '建立 ISO',
-    'iso_library' => 'ISO 庫',
+    'iso_library' => 'ISO 映像檔庫',
     'checksum_algorithm' => '總和檢查碼演算法',
     'checksum' => '總和檢查碼',
     'create_modal' => [
