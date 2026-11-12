@@ -17,7 +17,7 @@ class ValidateServerStatusMiddleware
         $server = $request->route()->parameter('server');
 
         if (! $server instanceof Server) {
-            throw new NotFoundHttpException('Server not found');
+            throw new NotFoundHttpException(__('exceptions.server.not_found'));
         }
 
         if ($server->status === Status::DELETING->value || $server->status === Status::DELETION_FAILED->value) {

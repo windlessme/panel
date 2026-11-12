@@ -43,7 +43,7 @@ class UpdateAuthSettingsRequest extends BaseApiRequest
                         }
                     }
                 } catch (Exception $e) {
-                    $validator->errors()->add('ssh_keys', 'The SSH key(s) are invalid.');
+                    $validator->errors()->add('ssh_keys', __('validation.ssh_keys_invalid'));
                 }
             }
         });

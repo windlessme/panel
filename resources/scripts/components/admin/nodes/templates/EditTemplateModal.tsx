@@ -1,5 +1,6 @@
 import useFlash from '@/util/useFlash'
 import { FormikProvider, useFormik } from 'formik'
+import { useTranslation } from 'react-i18next'
 import * as yup from 'yup'
 
 import {
@@ -25,6 +26,8 @@ interface Props {
 }
 
 const EditTemplateModal = ({ open, onClose, template, group }: Props) => {
+    const { t } = useTranslation('admin.nodes.templates')
+    const { t: tStrings } = useTranslation('strings')
     const { clearFlashes, clearAndAddHttpError } = useFlash()
     const { data: node } = useNodeSWR()
     const { mutate } = useTemplateGroupsSWR(node.id)
@@ -39,13 +42,13 @@ const EditTemplateModal = ({ open, onClose, template, group }: Props) => {
         validationSchema: yup.object({
             name: yup
                 .string()
-                .required('Specify a name')
-                .max(40, 'Please limit up to 40 characters'),
+                .required(t('validation.name_required'))
+                .max(40, t('validation.name_max', { max: 40 })),
             vmid: yup
                 .number()
-                .required('Specify a VMID')
-                .min(100, 'VMID must be greater than 100')
-                .max(999999999, 'VMID must be less than 999999999'),
+                .required(t('validation.vmid_required'))
+                .min(100, t('validation.vmid_min', { min: 100 }))
+                .max(999999999, t('validation.vmid_max', { max: 999999999 })),
             hidden: yup.boolean(),
         }),
         onSubmit: async ({ vmid, ...values }, { setSubmitting }) => {
@@ -133,7 +136,11 @@ const EditTemplateModal = ({ open, onClose, template, group }: Props) => {
     return (
         <Modal open={open} onClose={handleClose}>
             <Modal.Header>
-                <Modal.Title>{template ? 'Edit' : 'New'} Template</Modal.Title>
+                <Modal.Title>
+                    {template
+                        ? t('template_modal.edit_title')
+                        : t('template_modal.new_title')}
+                </Modal.Title>
             </Modal.Header>
 
             <FormikProvider value={form}>
@@ -143,20 +150,23 @@ const EditTemplateModal = ({ open, onClose, template, group }: Props) => {
                             className='mb-5'
                             byKey={'admin:node:template-group:templates.edit'}
                         />
-                        <TextInputFormik name='name' label='Display Name' />
+                        <TextInputFormik
+                            name='name'
+                            label={tStrings('display_name')}
+                        />
                         <TextInputFormik name='vmid' label='VMID' />
                         <CheckboxFormik
                             className='mt-3'
                             name='hidden'
-                            label='Hidden'
+                            label={tStrings('hidden')}
                         />
                     </Modal.Body>
                     <Modal.Actions>
                         <Modal.Action type='button' onClick={handleClose}>
-                            Cancel
+                            {tStrings('cancel')}
                         </Modal.Action>
                         <Modal.Action type='submit' loading={form.isSubmitting}>
-                            {template ? 'Update' : 'Create'}
+                            {template ? tStrings('update') : tStrings('create')}
                         </Modal.Action>
                     </Modal.Actions>
                 </form>

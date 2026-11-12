@@ -110,9 +110,9 @@ const ServerDetailsBlock = () => {
         return { used, total, percentage }
     }, [server])
 
-    const cpuGraph = useChartTickLabel('CPU', 100, '%', 2)
+    const cpuGraph = useChartTickLabel(tStrings('cpu'), 100, '%', 2)
     const memoryGraph = useChartTickLabel(
-        'Memory',
+        tStrings('memory'),
         memory.total.size,
         memory.total.unit,
         2
@@ -173,7 +173,7 @@ const ServerDetailsBlock = () => {
                                 {Math.floor(uptime.time)}
                             </p>
                             <p className='text-sm font-semibold description mb-[0.3rem]'>
-                                {uptime.unit}
+                                {t(`uptime_units.${uptime.unit}`)}
                             </p>
                         </div>
                     </div>

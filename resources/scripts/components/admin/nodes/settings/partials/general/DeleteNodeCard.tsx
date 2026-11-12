@@ -1,5 +1,6 @@
 import { useFlashKey } from '@/util/useFlash'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
 import deleteNode from '@/api/admin/nodes/deleteNode'
@@ -12,6 +13,8 @@ import MessageBox from '@/components/elements/MessageBox'
 
 
 const DeleteNodeCard = () => {
+    const { t } = useTranslation('admin.nodes.index')
+    const { t: tStrings } = useTranslation('strings')
     const { data: node } = useNodeSWR()
     const { clearFlashes, clearAndAddHttpError } = useFlashKey(
         `admin.nodes.${node.id}.settings.general.delete`
@@ -35,21 +38,19 @@ const DeleteNodeCard = () => {
     return (
         <FormCard className='w-full border-error'>
             <FormCard.Body>
-                <FormCard.Title>Delete Node</FormCard.Title>
+                <FormCard.Title>{t('delete_node.title')}</FormCard.Title>
                 <div className='space-y-3 mt-3'>
                     <FlashMessageRender
                         byKey={`admin.nodes.${node.id}.settings.general.delete`}
                     />
 
                     <p className='description-small my-3'>
-                        The node will be permanently deleted from Convoy. This
-                        action is irreversible and can not be undone.
+                        {t('delete_node.description')}
                     </p>
 
                     {node.serversCount > 0 && (
-                        <MessageBox title='Error' type='error'>
-                            You cannot delete a node that has servers assigned
-                            to it.
+                        <MessageBox title={tStrings('error')} type='error'>
+                            {t('delete_node.has_servers_error')}
                         </MessageBox>
                     )}
                 </div>
@@ -64,7 +65,7 @@ const DeleteNodeCard = () => {
                     color='danger'
                     size='sm'
                 >
-                    Delete
+                    {tStrings('delete')}
                 </Button>
             </FormCard.Footer>
         </FormCard>

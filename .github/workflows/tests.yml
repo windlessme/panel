@@ -4,6 +4,7 @@ on:
     branches:
       - 'main'
       - '3.0-develop'
+      - 'i18n-v4'
   pull_request:
 jobs:
   tests:
@@ -26,6 +27,9 @@ jobs:
 
       - name: Build frontend assets
         run: docker compose -f docker-compose.ci.yml exec workspace npm run build
+
+      - name: Check translations
+        run: docker compose -f docker-compose.ci.yml exec workspace node scripts/i18n.mjs check
 
       - name: Run database migrations
         run: docker compose -f docker-compose.ci.yml exec workspace php artisan migrate

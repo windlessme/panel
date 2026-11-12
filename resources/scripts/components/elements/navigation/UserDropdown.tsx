@@ -45,11 +45,12 @@ const UserDropdown = ({ logout }: Props) => {
                     {(Object.keys(locales) as Locale[]).map(code => (
                         <Menu.Item
                             key={code}
-                            lang={locales[code].html}
                             onClick={() => setLocale(code)}
                         >
                             {code === locale ? '✓ ' : ''}
-                            {locales[code].label}
+                            <span lang={locales[code].html}>
+                                {locales[code].label}
+                            </span>
                         </Menu.Item>
                     ))}
                     <Menu.Divider />

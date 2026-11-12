@@ -1,5 +1,6 @@
 import { ServerContext } from '@/state/server'
 import usePagination from '@/util/usePagination'
+import { useTranslation } from 'react-i18next'
 import useSWR from 'swr'
 
 import getBackups from '@/api/server/backups/getBackups'
@@ -14,6 +15,8 @@ import CreateBackupButton from '@/components/servers/backups/CreateBackupButton'
 
 
 const BackupsContainer = () => {
+    const { t } = useTranslation('server.backups')
+    const { t: tStrings } = useTranslation('strings')
     const uuid = ServerContext.useStoreState(state => state.server.data!.uuid)
 
     const [page, setPage] = usePagination()
@@ -25,7 +28,10 @@ const BackupsContainer = () => {
     )
 
     return (
-        <ServerContentBlock showFlashKey='backups' title='Backups'>
+        <ServerContentBlock
+            showFlashKey='backups'
+            title={tStrings('backup_other')}
+        >
             <CreateBackupButton
                 backupCount={data?.backupCount}
                 swr={{ mutate }}
@@ -33,7 +39,7 @@ const BackupsContainer = () => {
             {!data ? (
                 <Spinner />
             ) : data.backupCount === 0 ? (
-                <p className='text-sm text-center'>There are no backups</p>
+                <p className='text-sm text-center'>{t('empty_state')}</p>
             ) : (
                 <Pagination data={data} onPageSelect={setPage}>
                     {({ items }) => (

@@ -2,6 +2,7 @@ import { useFlashKey } from '@/util/useFlash'
 import usePagination from '@/util/usePagination'
 import { FormikProvider, useFormik } from 'formik'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import * as yup from 'yup'
 
 import createToken from '@/api/admin/tokens/createToken'
@@ -17,6 +18,8 @@ import PlainTextTokenModal from '@/components/admin/tokens/PlainTextTokenModal'
 
 
 const CreateTokenButton = () => {
+    const { t } = useTranslation('admin.tokens')
+    const { t: tStrings } = useTranslation('strings')
     const [open, setOpen] = useState(false)
     const [page] = usePagination()
     const { clearFlashes, clearAndAddHttpError } = useFlashKey(
@@ -32,8 +35,8 @@ const CreateTokenButton = () => {
         validationSchema: yup.object({
             name: yup
                 .string()
-                .max(191, 'Do not exceed 191 characters')
-                .required('A name is required.'),
+                .max(191, t('validation.name_max', { max: 191 }))
+                .required(t('validation.name_required')),
         }),
         onSubmit: async values => {
             clearFlashes()
@@ -67,12 +70,12 @@ const CreateTokenButton = () => {
     return (
         <div className='flex justify-end items-center mb-3'>
             <Button onClick={() => setOpen(true)} variant='filled'>
-                New Token
+                {t('new_token')}
             </Button>
             <PlainTextTokenModal value={token} onClose={() => setToken(null)} />
             <Modal open={open} onClose={handleClose}>
                 <Modal.Header>
-                    <Modal.Title>Create a Token</Modal.Title>
+                    <Modal.Title>{t('create_modal.title')}</Modal.Title>
                 </Modal.Header>
 
                 <FormikProvider value={form}>
@@ -82,17 +85,20 @@ const CreateTokenButton = () => {
                                 className='mb-5'
                                 byKey={'admin:tokens.create'}
                             />
-                            <TextInputFormik name={'name'} label={'Name'} />
+                            <TextInputFormik
+                                name={'name'}
+                                label={tStrings('name')}
+                            />
                         </Modal.Body>
                         <Modal.Actions>
                             <Modal.Action type='button' onClick={handleClose}>
-                                Cancel
+                                {tStrings('cancel')}
                             </Modal.Action>
                             <Modal.Action
                                 type='submit'
                                 loading={form.isSubmitting}
                             >
-                                Create
+                                {tStrings('create')}
                             </Modal.Action>
                         </Modal.Actions>
                     </form>

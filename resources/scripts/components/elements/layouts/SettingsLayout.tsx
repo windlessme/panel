@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 import { ChevronLeftIcon } from '@heroicons/react/20/solid'
 import { useViewportSize } from '@mantine/hooks'
 import { ComponentType, Fragment, ReactNode, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
     Link,
     Outlet,
@@ -55,6 +56,7 @@ const SettingsLayout = ({
     contentBlock: ContentBlock,
     routes,
 }: Props) => {
+    const { t: tStrings } = useTranslation('strings')
     const matches = useMatches()
     const { width } = useViewportSize()
     const isIndex = useMatch(indexPattern)
@@ -102,7 +104,7 @@ const SettingsLayout = ({
                                 )}
                             >
                                 <ChevronLeftIcon className='w-5 h-5' />
-                                <span>Settings</span>
+                                <span>{tStrings('setting_other')}</span>
                             </ReturnLink>
                         ) : null}
                         <div className='space-y-8'>

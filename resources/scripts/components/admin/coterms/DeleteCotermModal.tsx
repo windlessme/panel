@@ -19,6 +19,7 @@ interface Props {
 }
 
 const DeleteCotermModal = ({ coterm, onClose, mutate }: Props) => {
+    const { t } = useTranslation('admin.coterms')
     const { t: tStrings } = useTranslation('strings')
     const { clearFlashes, clearAndAddHttpError } = useFlashKey(
         `admin.coterms.${coterm?.id}.delete`
@@ -58,7 +59,9 @@ const DeleteCotermModal = ({ coterm, onClose, mutate }: Props) => {
     return (
         <Modal open={Boolean(coterm)} onClose={onClose}>
             <Modal.Header>
-                <Modal.Title>Delete {coterm?.name}?</Modal.Title>
+                <Modal.Title>
+                    {t('delete_modal.title', { name: coterm?.name })}
+                </Modal.Title>
             </Modal.Header>
 
             <form onSubmit={submit}>
@@ -70,8 +73,7 @@ const DeleteCotermModal = ({ coterm, onClose, mutate }: Props) => {
                                 type={'error'}
                                 title={tStrings('error') ?? 'Error'}
                             >
-                                Cannot delete an instance of Coterm with nodes
-                                attached to it.
+                                {t('delete_modal.nodes_attached_error')}
                             </MessageBox>
                         ) : null
                     ) : null}
@@ -80,8 +82,7 @@ const DeleteCotermModal = ({ coterm, onClose, mutate }: Props) => {
                         byKey={`admin.coterms.${coterm?.id}.delete`}
                     />
                     <Modal.Description>
-                        Are you sure you want to delete this instance of Coterm?
-                        This action is irreversible.
+                        {t('delete_modal.description')}
                     </Modal.Description>
                 </Modal.Body>
 

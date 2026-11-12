@@ -16,6 +16,7 @@ interface Props {
 
 const CotermNodesMultiSelectForm = ({ disabled, loading }: Props) => {
     const { t } = useTranslation('admin.addressPools.index')
+    const { t: tCoterms } = useTranslation('admin.coterms')
     const { t: tStrings } = useTranslation('strings')
     const { watch } = useFormContext()
     const nodeIds: string[] = watch('nodeIds')
@@ -68,7 +69,7 @@ const CotermNodesMultiSelectForm = ({ disabled, loading }: Props) => {
             searchValue={query}
             onSearchChange={val => setQuery(val)}
             loading={isValidating || isLoading || loading}
-            label={'Attached Nodes'}
+            label={tCoterms('attached_nodes')}
             nothingFound={t('nodes_nothing_found')}
             name={'nodeIds'}
             disabled={disabled}

@@ -1,6 +1,7 @@
 import { lazyLoad, query } from '@/routers/helpers'
 import { Route } from '@/routers/router'
 import { lazy, useContext, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Outlet } from 'react-router-dom'
 
 import getUser from '@/api/admin/users/getUser'
@@ -75,18 +76,19 @@ export const routes: Route[] = [
     },
 ]
 
-const visibleRoutes = [
-    {
-        name: 'Settings',
-        path: '/admin/users/:id/settings',
-    },
-    {
-        name: 'Servers',
-        path: '/admin/users/:id/servers',
-    },
-]
-
 const AdminUserRouter = () => {
+    const { t: tStrings } = useTranslation('strings')
+    const visibleRoutes = [
+        {
+            name: tStrings('setting_other'),
+            path: '/admin/users/:id/settings',
+        },
+        {
+            name: tStrings('server_other'),
+            path: '/admin/users/:id/servers',
+        },
+    ]
+
     const { setRoutes, setBreadcrumb } = useContext(NavigationBarContext)
     const { data: user } = useUserSWR()
 

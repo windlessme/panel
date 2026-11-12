@@ -127,7 +127,7 @@ const NodeInformationCard = () => {
                             />
                             <CheckboxForm
                                 name={'verifyTls'}
-                                label='Verify TLS Certificate'
+                                label={tIndex('verify_tls')}
                                 className={'relative'}
                             />
                             <TextInputForm

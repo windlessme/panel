@@ -1,4 +1,5 @@
 import { Action, action } from 'easy-peasy'
+import { t } from 'i18next'
 
 import { httpErrorToHuman } from '@/api/http'
 
@@ -32,7 +33,11 @@ const flashes: FlashStore = {
     }),
 
     addError: action((state, payload) => {
-        state.items.push({ type: 'error', title: 'Error', ...payload })
+        state.items.push({
+            type: 'error',
+            title: t('error', { ns: 'strings' }),
+            ...payload,
+        })
     }),
 
     clearAndAddHttpError: action((state, payload) => {
@@ -44,7 +49,7 @@ const flashes: FlashStore = {
             state.items = [
                 {
                     type: 'error',
-                    title: 'Error',
+                    title: t('error', { ns: 'strings' }),
                     key: payload.key,
                     message: httpErrorToHuman(payload.error),
                 },

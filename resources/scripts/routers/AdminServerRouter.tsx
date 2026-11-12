@@ -102,6 +102,7 @@ const AdminServerRouter = () => {
         actions => actions.clearServerState
     )
     const { t: tStrings } = useTranslation('strings')
+    const { t } = useTranslation('admin.servers.status')
 
     const visibleRoutes = [
         {
@@ -156,13 +157,13 @@ const AdminServerRouter = () => {
                             icon={ExclamationCircleIcon}
                             message={
                                 server.status === 'deleting'
-                                    ? "This server is being deleted. If you think this is an error, click below to make the server accessible. Clicking the button will not stop the server from being deleted if it's in progress"
-                                    : 'This server failed to delete. if you think this is an error, click below to make the server accessible. The server MAY not be in a usable state.'
+                                    ? t('deleting.description')
+                                    : t('deletion_failed.description')
                             }
                             title={
                                 server.status === 'deleting'
-                                    ? 'Deleting'
-                                    : 'Failed to Delete'
+                                    ? t('deleting.title')
+                                    : t('deletion_failed.title')
                             }
                         >
                             <RestoreAccessButton />

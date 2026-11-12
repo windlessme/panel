@@ -2,6 +2,7 @@ import { useFlashKey } from '@/util/useFlash'
 import usePagination from '@/util/usePagination'
 import { formatDistanceToNow } from 'date-fns'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
 import deleteToken from '@/api/admin/tokens/deleteToken'
@@ -22,40 +23,42 @@ import Table, {
 import CreateTokenButton from '@/components/admin/tokens/CreateTokenButton'
 
 
-const columns: ColumnArray<Token> = [
-    {
-        accessor: 'name',
-        header: 'Name',
-    },
-    {
-        accessor: 'user',
-        header: 'Owner',
-        cell: ({ value }) => (
-            <Link
-                to={`/admin/users/${value.id}/settings`}
-                className='link text-foreground'
-            >
-                {value.email}
-            </Link>
-        ),
-    },
-    {
-        accessor: 'lastUsedAt',
-        header: 'Last Used At',
-        cell: ({ value }) =>
-            value
-                ? formatDistanceToNow(value, {
-                      includeSeconds: true,
-                      addSuffix: true,
-                  })
-                : null,
-    },
-]
-
 const TokensContainer = () => {
+    const { t } = useTranslation('admin.tokens')
+    const { t: tStrings } = useTranslation('strings')
     const [page, setPage] = usePagination()
     const { data, mutate } = useTokensSWR({ page })
     const { clearFlashes, clearAndAddHttpError } = useFlashKey('admin:tokens')
+
+    const columns: ColumnArray<Token> = [
+        {
+            accessor: 'name',
+            header: tStrings('name'),
+        },
+        {
+            accessor: 'user',
+            header: tStrings('owner'),
+            cell: ({ value }) => (
+                <Link
+                    to={`/admin/users/${value.id}/settings`}
+                    className='link text-foreground'
+                >
+                    {value.email}
+                </Link>
+            ),
+        },
+        {
+            accessor: 'lastUsedAt',
+            header: t('last_used_at'),
+            cell: ({ value }) =>
+                value
+                    ? formatDistanceToNow(value, {
+                          includeSeconds: true,
+                          addSuffix: true,
+                      })
+                    : null,
+        },
+    ]
 
     const rowActions = ({ row: token }: RowActionsProps<Token>) => {
         const [open, setOpen] = useState(false)
@@ -85,28 +88,28 @@ const TokensContainer = () => {
             <>
                 <Modal open={open} onClose={() => setOpen(false)}>
                     <Modal.Header>
-                        <Modal.Title>Delete {token.name}?</Modal.Title>
+                        <Modal.Title>
+                            {t('delete_modal.title', { name: token.name })}
+                        </Modal.Title>
                     </Modal.Header>
 
                     <Modal.Body>
                         <Modal.Description>
-                            Are you sure you want to delete this token?
-                            Subsequent requests to the API relying on this token
-                            will immediately fail.
+                            {t('delete_modal.description')}
                         </Modal.Description>
                     </Modal.Body>
                     <Modal.Actions>
                         <Modal.Action onClick={() => setOpen(false)}>
-                            Cancel
+                            {tStrings('cancel')}
                         </Modal.Action>
                         <Modal.Action onClick={handleDelete}>
-                            Delete
+                            {tStrings('delete')}
                         </Modal.Action>
                     </Modal.Actions>
                 </Modal>
                 <Actions>
                     <Menu.Item color='red' onClick={() => setOpen(true)}>
-                        Delete
+                        {tStrings('delete')}
                     </Menu.Item>
                 </Actions>
             </>
@@ -115,7 +118,10 @@ const TokensContainer = () => {
 
     return (
         <div className='bg-background min-h-screen'>
-            <PageContentBlock title='Tokens' showFlashKey='admin:tokens'>
+            <PageContentBlock
+                title={tStrings('token_other')}
+                showFlashKey='admin:tokens'
+            >
                 <CreateTokenButton />
                 {!data ? (
                     <Spinner />

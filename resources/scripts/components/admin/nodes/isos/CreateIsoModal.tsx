@@ -182,7 +182,7 @@ const CreateIsoModal = ({ open, onClose, mutate }: Props) => {
     }
 
     const checksumAlgorithms = [
-        { value: 'none', label: 'None' },
+        { value: 'none', label: tStrings('none') },
         { value: 'md5', label: 'MD5' },
         { value: 'sha1', label: 'SHA1' },
         { value: 'sha224', label: 'SHA224' },

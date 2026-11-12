@@ -1,10 +1,14 @@
+import { useTranslation } from 'react-i18next'
+
 import PageContentBlock from '@/components/elements/PageContentBlock'
 
 import ServersContainer from '@/components/dashboard/ServersContainer'
 
 const DashboardContainer = () => {
+    const { t } = useTranslation('dashboard.index')
+
     return (
-        <PageContentBlock title='Dashboard' showFlashKey='dashboard'>
+        <PageContentBlock title={t('title')} showFlashKey='dashboard'>
             {/*<EntityGroup>*/}
             {/*    <Entity>*/}
             {/*        <EntityField title='Backup 1' width={'80%'} />*/}

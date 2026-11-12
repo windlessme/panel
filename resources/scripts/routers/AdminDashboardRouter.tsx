@@ -76,17 +76,21 @@ export const routes: Route[] = [
     },
 ]
 
-export const AdminBanner = () => (
-    <div className='bg-foreground py-1'>
-        <ContentContainer>
-            <Link to='/'>
-                <p className='text-background text-xs font-medium uppercase tracking-wide'>
-                    Exit Administration
-                </p>
-            </Link>
-        </ContentContainer>
-    </div>
-)
+export const AdminBanner = () => {
+    const { t: tStrings } = useTranslation('strings')
+
+    return (
+        <div className='bg-foreground py-1'>
+            <ContentContainer>
+                <Link to='/'>
+                    <p className='text-background text-xs font-medium uppercase tracking-wide'>
+                        {tStrings('exit_administration')}
+                    </p>
+                </Link>
+            </ContentContainer>
+        </div>
+    )
+}
 
 const AdminDashboardRouter = () => {
     const { setRoutes } = useContext(NavigationBarContext)
@@ -121,7 +125,7 @@ const AdminDashboardRouter = () => {
             path: '/admin/users',
         },
         {
-            name: 'Coterms',
+            name: tStrings('coterm_other'),
             path: '/admin/coterms',
         },
         {

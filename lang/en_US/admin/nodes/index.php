@@ -7,8 +7,10 @@ return [
     ],
 
     'location_group' => 'Location Group',
+    'no_locations_found' => 'No locations found',
     'pve_name' => 'Node Name In Proxmox',
     'override_creds' => 'Override credentials',
+    'verify_tls' => 'Verify TLS Certificate',
     'creds_warning' => 'Please disable privilege separation and grant root privileges.',
     'token_id' => 'Token ID',
     'secret' => 'Secret',

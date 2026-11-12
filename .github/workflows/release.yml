@@ -18,6 +18,9 @@ jobs:
         run: |
           sed -i "s/    'version' => 'canary',/    'version' => '${REF:11}',/" config/app.php
 
+      - name: Check Translations
+        run: node scripts/i18n.mjs check
+
       - name: Build Assets
         run: |
           npm install

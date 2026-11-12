@@ -97,7 +97,7 @@ const NodesContainer = () => {
                 <Menu.Item
                     onClick={() => navigator.clipboard.writeText(node.id)}
                 >
-                    Copy ID
+                    {tStrings('copy_id')}
                 </Menu.Item>
                 <Menu.Divider />
                 <Menu.Item

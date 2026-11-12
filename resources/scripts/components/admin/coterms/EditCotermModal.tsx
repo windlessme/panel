@@ -26,6 +26,7 @@ interface Props {
 }
 
 const EditCotermModal = ({coterm, onClose, mutate}: Props) => {
+    const {t} = useTranslation('admin.coterms')
     const {t: tStrings} = useTranslation('strings')
     const {clearFlashes, clearAndAddHttpError} = useFlashKey(
             `admin.coterms.${coterm?.id}.update`
@@ -101,7 +102,9 @@ const EditCotermModal = ({coterm, onClose, mutate}: Props) => {
     return (
             <Modal open={Boolean(coterm)} onClose={handleClose}>
                 <Modal.Header>
-                    <Modal.Title>Edit {coterm?.name}</Modal.Title>
+                    <Modal.Title>
+                        {t('edit_modal.title', { name: coterm?.name })}
+                    </Modal.Title>
                 </Modal.Header>
 
                 <FormProvider {...form}>
@@ -119,7 +122,7 @@ const EditCotermModal = ({coterm, onClose, mutate}: Props) => {
                                 />
                                 <CheckboxForm
                                         name={'isTlsEnabled'}
-                                        label={'Is TLS Enabled?'}
+                                        label={t('is_tls_enabled')}
                                 />
                             </div>
                             <TextInputForm name='port' label={tStrings('port')}/>

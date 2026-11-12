@@ -26,6 +26,7 @@ interface Props {
 }
 
 const CreateCotermModal = ({ open, onClose, mutate }: Props) => {
+    const { t } = useTranslation('admin.coterms')
     const { t: tStrings } = useTranslation('strings')
     const { clearFlashes, clearAndAddHttpError } =
         useFlashKey(`admin.coterms.create`)
@@ -85,7 +86,7 @@ const CreateCotermModal = ({ open, onClose, mutate }: Props) => {
             <CotermTokenModal value={cotermToken} onClose={handleClose} />
             <Modal open={open} onClose={handleClose}>
                 <Modal.Header>
-                    <Modal.Title>Create Instance</Modal.Title>
+                    <Modal.Title>{t('create_modal.title')}</Modal.Title>
                 </Modal.Header>
 
                 <FormProvider {...form}>
@@ -106,7 +107,7 @@ const CreateCotermModal = ({ open, onClose, mutate }: Props) => {
                                 />
                                 <CheckboxForm
                                     name={'isTlsEnabled'}
-                                    label={'Is TLS Enabled?'}
+                                    label={t('is_tls_enabled')}
                                 />
                             </div>
                             <TextInputForm

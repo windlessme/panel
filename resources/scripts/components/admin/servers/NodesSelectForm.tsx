@@ -1,6 +1,7 @@
 import { useDebouncedValue } from '@mantine/hooks'
 import { useState } from 'react'
 import { useFormContext } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 
 import useNodesSWR from '@/api/admin/nodes/useNodesSWR'
 
@@ -12,6 +13,8 @@ interface Props {
 }
 
 const NodesSelectForm = ({ disabled }: Props) => {
+    const { t } = useTranslation('admin.servers.index')
+    const { t: tStrings } = useTranslation('strings')
     const { watch } = useFormContext()
     const nodeId: string = watch('nodeId')
     const [query, setQuery] = useState(nodeId)
@@ -29,13 +32,13 @@ const NodesSelectForm = ({ disabled }: Props) => {
 
     return (
         <SelectForm
-            label={'Node'}
+            label={tStrings('node')}
             data={nodes}
             searchable
             searchValue={query}
             onSearchChange={query => setQuery(query)}
             loading={isValidating || isLoading}
-            nothingFound={'No nodes found'}
+            nothingFound={t('no_nodes_found')}
             name={'nodeId'}
             disabled={disabled}
         />

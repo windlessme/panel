@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'title' => 'Server Settings',
     'ip_allocation' => [
         'empty_state' => 'There are no addresses associated with this server.',
     ],
@@ -20,12 +21,17 @@ return [
         'title' => 'Mountable ISOs',
         'empty' => 'There are no ISOs',
     ],
+    'templates' => [
+        'no_groups_found' => 'No groups found',
+        'no_templates_found' => 'No templates found',
+    ],
     'device_config' => [
         'title' => 'Device Configuration',
         'current' => 'Current Boot Order (the highest will be used first)',
         'unused' => 'Unused Devices',
         'unused_empty' => 'There are no unused devices.',
         'no_boot_device_warning' => 'No boot device has been configured. Your VM will not start.',
+        'drag_handle' => 'Drag button icon',
     ],
     'nameservers' => [
         'title' => 'Nameservers',

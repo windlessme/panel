@@ -30,6 +30,8 @@ return [
             'password' => 'Must contain 8 characters, one uppercase, one lowercase, one number and one special case character',
             'ip_address' => 'Invalid IP address',
             'mac_address' => 'Invalid MAC address',
+            'english_keyboard_characters' => 'Invalid English keyboard characters',
+            'password_requirements' => 'Must contain 8 characters, 1 uppercase, 1 lowercase, 1 number and 1 special character',
         ],
         'too_small' => [
             'array' => [

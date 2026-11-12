@@ -50,7 +50,7 @@ class StoreIsoRequest extends BaseApiRequest
                 $iso = app(IsoService::class)->getIso($node, $this->input('file_name'));
 
                 if (is_null($iso)) {
-                    $validator->errors()->add('file_name', 'This ISO doesn\'t exist.');
+                    $validator->errors()->add('file_name', __('validation.iso_not_found'));
                 }
             };
         }

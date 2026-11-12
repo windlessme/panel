@@ -12,7 +12,7 @@ class AddressInUseException extends DisplayException
     public function __construct(int $addressId)
     {
         parent::__construct(
-            sprintf('Address %d is currently in use by another server.', $addressId),
+            __('exceptions.address.in_use', ['id' => $addressId]),
         );
     }
 }

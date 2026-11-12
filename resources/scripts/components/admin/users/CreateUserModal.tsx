@@ -1,6 +1,7 @@
 import { useFlashKey } from '@/util/useFlash'
 import usePagination from '@/util/usePagination'
 import { FormikProvider, useFormik } from 'formik'
+import { useTranslation } from 'react-i18next'
 import * as yup from 'yup'
 
 import createUser from '@/api/admin/users/createUser'
@@ -20,6 +21,8 @@ interface Props {
 }
 
 const CreateUserButton = ({ open, onClose }: Props) => {
+    const { t } = useTranslation('admin.users')
+    const { t: tStrings } = useTranslation('strings')
     const [page] = usePagination()
     const { clearFlashes, clearAndAddHttpError } =
         useFlashKey('admin:users.create')
@@ -35,19 +38,19 @@ const CreateUserButton = ({ open, onClose }: Props) => {
         validationSchema: yup.object({
             name: yup
                 .string()
-                .max(191, 'Do not exceed 191 characters')
-                .required('A name is required.'),
+                .max(191, t('validation.name_max', { max: 191 }))
+                .required(t('validation.name_required')),
             email: yup
                 .string()
-                .email('Enter a valid email address')
-                .required('An email address is required.'),
+                .email(t('validation.email_invalid'))
+                .required(t('validation.email_required')),
             password: yup
                 .string()
                 .matches(
                     /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-                    'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'
+                    t('validation.password_rules')
                 )
-                .required('A password is required.'),
+                .required(t('validation.password_required')),
             rootAdmin: yup.boolean(),
         }),
         onSubmit: async values => {
@@ -81,7 +84,7 @@ const CreateUserButton = ({ open, onClose }: Props) => {
         <>
             <Modal open={open} onClose={handleClose}>
                 <Modal.Header>
-                    <Modal.Title>Create a User</Modal.Title>
+                    <Modal.Title>{t('create_modal.title')}</Modal.Title>
                 </Modal.Header>
 
                 <FormikProvider value={form}>
@@ -91,34 +94,42 @@ const CreateUserButton = ({ open, onClose }: Props) => {
                                 className='mb-5'
                                 byKey={'admin:users.create'}
                             />
-                            <TextInputFormik name={'name'} label={'Name'} />
-                            <TextInputFormik name={'email'} label={'Email'} />
+                            <TextInputFormik
+                                name={'name'}
+                                label={tStrings('name')}
+                            />
+                            <TextInputFormik
+                                name={'email'}
+                                label={tStrings('email')}
+                            />
                             <TextInputFormik
                                 name={'password'}
-                                label={'Password'}
+                                label={tStrings('password')}
                                 type={'password'}
                             />
                             <CheckboxFormik
                                 name={'rootAdmin'}
-                                label={'Administrator'}
+                                label={tStrings('administrator')}
                                 className={'mt-3 relative'}
                             />
                             {form.values.rootAdmin && (
-                                <MessageBox type={'warning'} title={'Warning'}>
-                                    You are giving this user administrator
-                                    privileges
+                                <MessageBox
+                                    type={'warning'}
+                                    title={tStrings('warning')}
+                                >
+                                    {t('create_modal.is_admin_warning')}
                                 </MessageBox>
                             )}
                         </Modal.Body>
                         <Modal.Actions>
                             <Modal.Action type='button' onClick={handleClose}>
-                                Cancel
+                                {tStrings('cancel')}
                             </Modal.Action>
                             <Modal.Action
                                 type='submit'
                                 loading={form.isSubmitting}
                             >
-                                Create
+                                {tStrings('create')}
                             </Modal.Action>
                         </Modal.Actions>
                     </form>

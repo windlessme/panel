@@ -74,7 +74,7 @@ const ServersTable = ({ query, className, nodeId, userId }: Props) => {
                 <Menu.Item
                     onClick={() => navigator.clipboard.writeText(server.uuid)}
                 >
-                    Copy ID
+                    {tStrings('copy_id')}
                 </Menu.Item>
             </Actions>
         )

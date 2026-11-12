@@ -1,8 +1,12 @@
+import { t } from 'i18next'
 import * as yup from 'yup'
 
 yup.addMethod(yup.string, 'englishKeyboardCharacters', function () {
     return this.matches(/^[A-Za-z0-9!@#$%^&*()_+\-=[\]{}|;':",.\/<>?\\ ]*$/, {
-        message: 'Invalid English keyboard characters',
+        message: () =>
+            t('errors.invalid_string.english_keyboard_characters', {
+                ns: 'zod',
+            }),
         excludeEmptyString: true,
     })
 })
@@ -11,8 +15,10 @@ yup.addMethod(yup.string, 'passwordRequirements', function () {
     return this.matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
         {
-            message:
-                'Must contain 8 characters, 1 uppercase, 1 lowercase, 1 number and 1 special character',
+            message: () =>
+                t('errors.invalid_string.password_requirements', {
+                    ns: 'zod',
+                }),
             excludeEmptyString: true,
         }
     )
@@ -21,7 +27,7 @@ yup.addMethod(yup.string, 'passwordRequirements', function () {
 yup.addMethod(yup.string, 'ipAddress', function () {
     return this.test({
         name: 'ipAddress',
-        message: 'Invalid IP address',
+        message: () => t('errors.invalid_string.ip_address', { ns: 'zod' }),
         test: value => {
             const ipv4Regex = /^(\d{1,3}\.){3}\d{1,3}$/
             const ipv6Regex = /^([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4}$/
@@ -37,7 +43,7 @@ yup.addMethod(yup.string, 'ipAddress', function () {
 yup.addMethod(yup.string, 'hostname', function () {
     return this.test({
         name: 'hostname',
-        message: 'Invalid hostname',
+        message: () => t('errors.invalid_string.hostname', { ns: 'zod' }),
         test: value => {
             const hostnameRegex =
                 /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/

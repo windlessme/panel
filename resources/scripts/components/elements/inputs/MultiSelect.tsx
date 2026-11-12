@@ -2,6 +2,7 @@ import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import { MultiSelect as MantineMultiSelect } from '@mantine/core'
 import { ComponentProps, forwardRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import tw from 'twin.macro'
 
 import ErrorMessage from '@/components/elements/ErrorMessage'
@@ -44,15 +45,19 @@ export interface MultiSelectProps
 }
 
 const MultiSelect = forwardRef<HTMLInputElement, MultiSelectProps>(
-    ({ loading, nothingFound, error, ...props }, ref) => (
-        <StyledMultiSelect
-            error={error ? <ErrorMessage>{error}</ErrorMessage> : undefined}
-            nothingFound={loading ? 'Loading...' : nothingFound}
-            rightSection={loading && <LoadingDots size={4} />}
-            ref={ref}
-            {...props}
-        />
-    )
+    ({ loading, nothingFound, error, ...props }, ref) => {
+        const { t: tStrings } = useTranslation('strings')
+
+        return (
+            <StyledMultiSelect
+                error={error ? <ErrorMessage>{error}</ErrorMessage> : undefined}
+                nothingFound={loading ? tStrings('loading') : nothingFound}
+                rightSection={loading && <LoadingDots size={4} />}
+                ref={ref}
+                {...props}
+            />
+        )
+    }
 )
 
 export default MultiSelect

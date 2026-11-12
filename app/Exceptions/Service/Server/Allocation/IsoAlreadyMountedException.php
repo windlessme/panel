@@ -8,6 +8,6 @@ class IsoAlreadyMountedException extends DisplayException
 {
     public function __construct()
     {
-        parent::__construct('The requested ISO is already mounted');
+        parent::__construct(__('exceptions.server.iso_already_mounted'));
     }
 }

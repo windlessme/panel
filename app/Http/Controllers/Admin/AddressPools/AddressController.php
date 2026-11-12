@@ -91,7 +91,7 @@ class AddressController extends ApiController
                     $this->networkService->syncSettings($address->server);
                 } catch (ProxmoxConnectionException) {
                     throw new ServiceUnavailableHttpException(
-                        message: "Server {$address->server->uuid} failed to sync network settings.",
+                        message: __('exceptions.server.sync_network_failed', ['uuid' => $address->server->uuid]),
                     );
                 }
             }
@@ -127,15 +127,17 @@ class AddressController extends ApiController
             } catch (ProxmoxConnectionException) {
                 if ($oldLinkedServer && !$address->server) {
                     throw new ServiceUnavailableHttpException(
-                        message: "Server {$oldLinkedServer->uuid} failed to sync network settings.",
+                        message: __('exceptions.server.sync_network_failed', ['uuid' => $oldLinkedServer->uuid]),
                     );
                 } elseif (!$oldLinkedServer && $address->server) {
                     throw new ServiceUnavailableHttpException(
-                        message: "Server {$address->server->uuid} failed to sync network settings.",
+                        message: __('exceptions.server.sync_network_failed', ['uuid' => $address->server->uuid]),
                     );
                 } elseif ($oldLinkedServer && $address->server) {
                     throw new ServiceUnavailableHttpException(
-                        message: "Servers {$oldLinkedServer->uuid} and {$address->server->uuid} failed to sync network settings.",
+                        message: __('exceptions.server.sync_network_failed_both', [
+                            'old_uuid' => $oldLinkedServer->uuid, 'new_uuid' => $address->server->uuid,
+                        ]),
                     );
                 }
             }
@@ -157,7 +159,7 @@ class AddressController extends ApiController
                     $this->networkService->syncSettings($address->server);
                 } catch (ProxmoxConnectionException) {
                     throw new ServiceUnavailableHttpException(
-                        message: "Server {$address->server->uuid} failed to sync network settings.",
+                        message: __('exceptions.server.sync_network_failed', ['uuid' => $address->server->uuid]),
                     );
                 }
             }

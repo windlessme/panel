@@ -25,11 +25,11 @@ class AuthenticateServerAccess
         $server = $request->route()->parameter('server');
 
         if (! $server instanceof Server) {
-            throw new NotFoundHttpException('Server not found');
+            throw new NotFoundHttpException(__('exceptions.server.not_found'));
         }
 
         if ($user->id !== $server->user_id && ! $user->root_admin) {
-            throw new NotFoundHttpException('Server not found');
+            throw new NotFoundHttpException(__('exceptions.server.not_found'));
         }
 
         try {

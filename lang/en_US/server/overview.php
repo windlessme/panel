@@ -21,6 +21,12 @@ return [
         'shutting_down' => 'Shutting Down',
     ],
     'uptime' => 'Uptime',
+    'uptime_units' => [
+        'seconds' => 'seconds',
+        'minutes' => 'minutes',
+        'hours' => 'hours',
+        'days' => 'days',
+    ],
     'poll_status_error' => 'Failed to poll server status. Retrying in 5 seconds...',
 
     'terminal' => [
@@ -28,6 +34,13 @@ return [
         'description' => 'Remotely manage your server from the web.',
         'novnc_description' => 'Best for compatibility but lacks features and performance.',
         'xtermjs_description' => 'Best for performance but doesn\'t work for every operating system.',
+        'starting' => 'Starting Terminal',
+        'steps' => [
+            'initializing' => 'Initializing',
+            'checking_remote_health' => 'Checking remote health',
+            'generating_token' => 'Generating token',
+            'connecting' => 'Connecting',
+        ],
     ],
 
     'server_config' => [

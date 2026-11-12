@@ -2,6 +2,7 @@ import { ServerContext } from '@/state/server'
 import { useFlashKey } from '@/util/useFlash'
 import { Loader } from '@mantine/core'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 
 import createConsoleSession, {
@@ -12,16 +13,17 @@ import ServerContentBlock from '@/components/servers/ServerContentBlock'
 
 
 const ServerTerminalContainer = () => {
+    const { t } = useTranslation('server.overview')
     const [params] = useSearchParams()
     const uuid = ServerContext.useStoreState(state => state.server.data!.uuid)
     const { clearFlashes, clearAndAddHttpError } = useFlashKey(
         `servers.${uuid}.console`
     )
-    const [message, setMessage] = useState('Initializing')
+    const [message, setMessage] = useState(t('terminal.steps.initializing'))
     const messages = [
-        'Checking remote health',
-        'Generating token',
-        'Connecting',
+        t('terminal.steps.checking_remote_health'),
+        t('terminal.steps.generating_token'),
+        t('terminal.steps.connecting'),
     ]
 
     useEffect(() => {
@@ -64,12 +66,12 @@ const ServerTerminalContainer = () => {
 
     return (
         <ServerContentBlock
-            title='Terminal'
+            title={t('terminal.title')}
             showFlashKey={`servers.${uuid}.console`}
         >
             <div className='grid place-items-center w-full mt-20'>
                 <div className='flex flex-col items-center'>
-                    <h6 className='h6'>Starting Terminal</h6>
+                    <h6 className='h6'>{t('terminal.starting')}</h6>
                     <p className='description-small'>{message}</p>
                     <Loader className='mt-3' size='lg' />
                 </div>

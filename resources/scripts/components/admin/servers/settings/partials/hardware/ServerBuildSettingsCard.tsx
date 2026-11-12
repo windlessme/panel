@@ -133,12 +133,12 @@ const ServerBuildSettingsCard = () => {
                             <TextInputForm
                                 name='snapshotLimit'
                                 label={tIndex('snapshot_limit')}
-                                placeholder={'Leave blank for no limit'}
+                                placeholder={tIndex('limit_placeholder')}
                             />
                             <TextInputForm
                                 name='backupLimit'
                                 label={tIndex('backup_limit')}
-                                placeholder={'Leave blank for no limit'}
+                                placeholder={tIndex('limit_placeholder')}
                             />
                             <TextInputForm
                                 name='bandwidthLimit'

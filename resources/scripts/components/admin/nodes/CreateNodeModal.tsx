@@ -123,7 +123,7 @@ const CreateNodeModal = ({ open, onClose }: Props) => {
                         <TextInputForm name='cluster' label={t('pve_name')} />
                         <MessageBox
                             className='mt-3'
-                            title='Warning'
+                            title={tStrings('warning')}
                             type='warning'
                         >
                             {t('creds_warning')}
@@ -138,7 +138,7 @@ const CreateNodeModal = ({ open, onClose }: Props) => {
                         <TextInputForm name='fqdn' label={tStrings('fqdn')} />
                         <CheckboxForm
                             name={'verifyTls'}
-                            label='Verify TLS Certificate'
+                            label={t('verify_tls')}
                             className={'mt-3 relative'}
                         />
                         <TextInputForm name='port' label={tStrings('port')} />

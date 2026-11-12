@@ -61,7 +61,7 @@ class IsoService
     {
         if (is_null($iso->completed_at)) {
             throw new BadRequestHttpException(
-                'This ISO cannot be deleted at this time: not completed.',
+                __('exceptions.iso.delete_not_completed'),
             );
         }
 

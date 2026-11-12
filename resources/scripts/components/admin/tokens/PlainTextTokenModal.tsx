@@ -1,4 +1,5 @@
 import { Code } from '@mantine/core'
+import { useTranslation } from 'react-i18next'
 
 import { Token } from '@/api/admin/tokens/getTokens'
 
@@ -10,17 +11,17 @@ interface Props {
 }
 
 const PlainTextTokenModal = ({ value, onClose }: Props) => {
+    const { t } = useTranslation('admin.tokens')
+
     return (
         <Modal open={Boolean(value)} onClose={onClose}>
             <Modal.Header>
-                <Modal.Title>Token Created</Modal.Title>
+                <Modal.Title>{t('created_modal.title')}</Modal.Title>
             </Modal.Header>
 
             <Modal.Body>
                 <Modal.Description>
-                    Here is your newly created API token. Please take note of
-                    the token's value as this is the only and last time you will
-                    see it.
+                    {t('created_modal.description')}
                 </Modal.Description>
 
                 <Code className={'!mt-3'} block color={'blue'}>
@@ -28,7 +29,9 @@ const PlainTextTokenModal = ({ value, onClose }: Props) => {
                 </Code>
             </Modal.Body>
             <Modal.Actions>
-                <Modal.Action onClick={onClose}>Okay, I got it</Modal.Action>
+                <Modal.Action onClick={onClose}>
+                    {t('created_modal.button')}
+                </Modal.Action>
             </Modal.Actions>
         </Modal>
     )

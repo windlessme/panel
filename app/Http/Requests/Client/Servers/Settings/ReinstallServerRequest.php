@@ -41,7 +41,7 @@ class ReinstallServerRequest extends BaseApiRequest
             $server = $this->parameter('server', Server::class);
 
             if ($server->node_id !== $template->group->node_id) {
-                $validator->errors()->add('template_uuid', 'The selected template is invalid.');
+                $validator->errors()->add('template_uuid', __('validation.template_invalid'));
             }
         });
     }

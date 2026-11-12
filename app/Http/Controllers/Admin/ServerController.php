@@ -92,7 +92,7 @@ class ServerController extends ApiController
                     $this->cloudinitService->updateHostname($server, $request->hostname);
                 } catch (ProxmoxConnectionException) {
                     throw new ServiceUnavailableHttpException(
-                        message: "Server {$server->uuid} failed to sync hostname.",
+                        message: __('exceptions.server.sync_hostname_failed', ['uuid' => $server->uuid]),
                     );
                 }
             }

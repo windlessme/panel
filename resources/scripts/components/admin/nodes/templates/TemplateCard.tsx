@@ -2,6 +2,7 @@ import { classNames } from '@/util/helpers'
 import useFlash from '@/util/useFlash'
 import { EyeSlashIcon } from '@heroicons/react/20/solid'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import {
     Template,
@@ -27,6 +28,8 @@ interface Props {
 }
 
 const TemplateCard = ({ template, group, className }: Props) => {
+    const { t } = useTranslation('admin.nodes.templates')
+    const { t: tStrings } = useTranslation('strings')
     const [showEditModal, setShowEditModal] = useState(false)
     const { data: node } = useNodeSWR()
     const { mutate } = useTemplateGroupsSWR(node.id)
@@ -94,13 +97,13 @@ const TemplateCard = ({ template, group, className }: Props) => {
                             </p>
                             {template.hidden && (
                                 <EyeSlashIcon
-                                    title='hidden'
+                                    title={tStrings('hidden')}
                                     className='h-4 w-4 text-foreground'
                                 />
                             )}
                         </div>
                         <p className='description-small !text-xs'>
-                            vmid: {template.vmid}
+                            {t('vmid_value', { vmid: template.vmid })}
                         </p>
                     </div>
                     <Menu width={200}>
@@ -113,14 +116,14 @@ const TemplateCard = ({ template, group, className }: Props) => {
                                     navigator.clipboard.writeText(template.uuid)
                                 }
                             >
-                                Copy ID
+                                {tStrings('copy_id')}
                             </Menu.Item>
                             <Menu.Item onClick={() => setShowEditModal(true)}>
-                                Edit
+                                {tStrings('edit')}
                             </Menu.Item>
                             <Menu.Divider />
                             <Menu.Item color='red' onClick={handleDelete}>
-                                Delete
+                                {tStrings('delete')}
                             </Menu.Item>
                         </Menu.Dropdown>
                     </Menu>

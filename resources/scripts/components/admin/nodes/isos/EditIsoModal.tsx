@@ -1,5 +1,6 @@
 import useFlash from '@/util/useFlash'
 import { FormikProvider, useFormik } from 'formik'
+import { useTranslation } from 'react-i18next'
 import * as yup from 'yup'
 
 import { ISO, IsoResponse } from '@/api/admin/nodes/isos/getIsos'
@@ -20,6 +21,8 @@ interface Props {
 }
 
 const EditIsoModal = ({ open, onClose, iso }: Props) => {
+    const { t } = useTranslation('admin.nodes.isos')
+    const { t: tStrings } = useTranslation('strings')
     const { data: node } = useNodeSWR()
     const { clearFlashes, clearAndAddHttpError } = useFlash()
     const { mutate } = useIsosSWR({ nodeId: node.id })
@@ -31,7 +34,7 @@ const EditIsoModal = ({ open, onClose, iso }: Props) => {
             hidden: iso.hidden,
         },
         validationSchema: yup.object().shape({
-            name: yup.string().required('Name is required.'),
+            name: yup.string().required(t('edit_modal.name_required')),
             hidden: yup.boolean(),
         }),
         onSubmit: ({ name, hidden }, { setSubmitting }) => {
@@ -70,7 +73,7 @@ const EditIsoModal = ({ open, onClose, iso }: Props) => {
     return (
         <Modal open={open} onClose={handleClose}>
             <Modal.Header>
-                <Modal.Title>Update ISO</Modal.Title>
+                <Modal.Title>{t('edit_modal.title')}</Modal.Title>
             </Modal.Header>
 
             <FormikProvider value={form}>
@@ -80,20 +83,20 @@ const EditIsoModal = ({ open, onClose, iso }: Props) => {
                             className='mb-5'
                             byKey={'admin:node:iso.update'}
                         />
-                        <TextInputFormik name='name' label='Display Name' />
+                        <TextInputFormik name='name' label={tStrings('display_name')} />
                         <CheckboxFormik
                             className='mt-3'
                             name='hidden'
-                            label='Hidden'
+                            label={tStrings('hidden')}
                         />
                     </Modal.Body>
 
                     <Modal.Actions>
                         <Modal.Action type='button' onClick={handleClose}>
-                            Cancel
+                            {tStrings('cancel')}
                         </Modal.Action>
                         <Modal.Action type='submit' loading={form.isSubmitting}>
-                            Update
+                            {tStrings('update')}
                         </Modal.Action>
                     </Modal.Actions>
                 </form>

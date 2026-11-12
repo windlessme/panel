@@ -1,6 +1,7 @@
 import { useDebouncedValue } from '@mantine/hooks'
 import { useMemo, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 
 import useAddressesSWR from '@/api/admin/nodes/addresses/useAddressesSWR'
 
@@ -13,6 +14,8 @@ interface Props {
 }
 
 const AddressesMultiSelectForm = ({ disabled, nodeId: propNodeId }: Props) => {
+    const { t } = useTranslation('admin.servers.index')
+    const { t: tStrings } = useTranslation('strings')
     const { watch } = useFormContext()
     const addressIds: string[] = watch('addressIds')
     const formNodeId: string = watch('nodeId')
@@ -62,8 +65,8 @@ const AddressesMultiSelectForm = ({ disabled, nodeId: propNodeId }: Props) => {
             searchValue={query}
             onSearchChange={val => setQuery(val)}
             loading={isValidating || isLoading}
-            label={'Addresses'}
-            nothingFound='No addresses found'
+            label={tStrings('address_other')}
+            nothingFound={t('no_addresses_found')}
             name={'addressIds'}
             disabled={disabled}
         />

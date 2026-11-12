@@ -81,7 +81,7 @@ class AddressPoolController extends ApiController
 
         if ($addressPool->nodes_count > 0) {
             throw new AccessDeniedHttpException(
-                'This address pool cannot be deleted while still allocated to nodes.',
+                __('exceptions.address_pool.delete_has_nodes'),
             );
         }
 

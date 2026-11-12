@@ -41,7 +41,7 @@ class UpdateBuildRequest extends BaseApiRequest
                 if ($address->server_id !== null && $address->server_id !== $server->id) {
                     $validator->errors()->add(
                         'address_ids',
-                        'One or more of the selected addresses are already in use',
+                        __('validation.addresses_in_use'),
                     );
                     break;
                 }
@@ -56,11 +56,11 @@ class UpdateBuildRequest extends BaseApiRequest
             $memory = intval($this->input('memory'));
             $disk = intval($this->input('disk'));
             if ($memory > $nodeMemoryLimit || $memory < 0) {
-                $validator->errors()->add('memory', 'The memory value exceeds the node\'s limit.');
+                $validator->errors()->add('memory', __('validation.memory_exceeds_node_limit'));
             }
 
             if ($disk > $nodeDiskLimit || $disk < 0) {
-                $validator->errors()->add('disk', 'The disk value exceeds the node\'s limit.');
+                $validator->errors()->add('disk', __('validation.disk_exceeds_node_limit'));
             }
         });
     }

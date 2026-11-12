@@ -1,5 +1,6 @@
 import { useFlashKey } from '@/util/useFlash'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
 import deleteUser from '@/api/admin/users/deleteUser'
@@ -12,6 +13,8 @@ import MessageBox from '@/components/elements/MessageBox'
 
 
 const DeleteUserContainer = () => {
+    const { t } = useTranslation('admin.users')
+    const { t: tStrings } = useTranslation('strings')
     const { data: user } = useUserSWR()
     const [loading, setLoading] = useState(false)
     const { clearFlashes, clearAndAddHttpError } = useFlashKey(
@@ -35,17 +38,16 @@ const DeleteUserContainer = () => {
     return (
         <FormCard className='w-full border-error'>
             <FormCard.Body>
-                <FormCard.Title>Delete User</FormCard.Title>
+                <FormCard.Title>{t('delete_user.title')}</FormCard.Title>
                 <div className='space-y-3 mt-3'>
                     <FlashMessageRender byKey='admin:user:settings:delete' />
 
                     <p className='description-small !text-foreground'>
-                        The user and its associated data will be deleted
+                        {t('delete_user.description')}
                     </p>
                     {user.serversCount > 0 ? (
-                        <MessageBox title='Error' type='error'>
-                            This user cannot be deleted with servers still
-                            associated with it.
+                        <MessageBox title={tStrings('error')} type='error'>
+                            {t('delete_user.has_servers_error')}
                         </MessageBox>
                     ) : null}
                 </div>
@@ -59,7 +61,7 @@ const DeleteUserContainer = () => {
                     color='danger'
                     size='sm'
                 >
-                    Delete
+                    {tStrings('delete')}
                 </Button>
             </FormCard.Footer>
         </FormCard>

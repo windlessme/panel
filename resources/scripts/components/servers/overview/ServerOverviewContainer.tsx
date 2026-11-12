@@ -1,4 +1,5 @@
 import { useStoreState } from '@/state'
+import { useTranslation } from 'react-i18next'
 
 import ServerContentBlock from '@/components/servers/ServerContentBlock'
 import ServerAdminBlock from '@/components/servers/overview/ServerAdminBlock'
@@ -10,8 +11,10 @@ import ServerTerminalBlock from '@/components/servers/overview/ServerTerminalBlo
 
 const ServerOverviewContainer = () => {
     const rootAdmin = useStoreState(state => state.user.data!.rootAdmin)
+    const { t: tStrings } = useTranslation('strings')
+
     return (
-        <ServerContentBlock title='Overview'>
+        <ServerContentBlock title={tStrings('overview')}>
             <ServerPowerBlock />
             <div className='grid grid-cols-10 gap-6'>
                 <ServerDetailsBlock />

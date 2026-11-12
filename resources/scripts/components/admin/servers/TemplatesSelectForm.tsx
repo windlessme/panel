@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 
 import useTemplateGroupsSWR from '@/api/admin/nodes/templateGroups/useTemplateGroupsSWR'
 
@@ -12,6 +13,8 @@ interface Props {
 }
 
 const TemplatesSelectForm = ({ disabled }: Props) => {
+    const { t } = useTranslation('admin.servers.index')
+    const { t: tStrings } = useTranslation('strings')
     const { setValue, watch } = useFormContext()
     const nodeId: number | null = watch('nodeId', null)
     const { data, mutate, isValidating, isLoading } = useTemplateGroupsSWR(
@@ -45,21 +48,21 @@ const TemplatesSelectForm = ({ disabled }: Props) => {
     return (
         <>
             <Select
-                label={'Template Group'}
+                label={tStrings('template_group')}
                 data={templateGroups}
                 searchable
                 value={groupUuid}
                 onChange={handleGroupsOnChange}
                 loading={isValidating || isLoading}
-                nothingFound={'No groups found'}
+                nothingFound={t('no_groups_found')}
                 disabled={disabled}
             />
             <SelectForm
                 data={templates}
                 name={'templateUuid'}
-                label={'Template'}
+                label={tStrings('template')}
                 searchable
-                nothingFound={'No templates found'}
+                nothingFound={t('no_templates_found')}
                 disabled={groupUuid === '' || disabled}
             />
         </>

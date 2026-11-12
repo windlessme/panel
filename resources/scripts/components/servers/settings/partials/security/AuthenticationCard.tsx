@@ -111,11 +111,14 @@ const AuthenticationCard = () => {
                                 <TextInputForm
                                     type='password'
                                     name='password'
-                                    label='Password'
+                                    label={tStrings('password')}
                                 />
                             )}
                             {type === 'ssh_keys' && (
-                                <TextareaForm name='sshKeys' label='SSH Keys' />
+                                <TextareaForm
+                                    name='sshKeys'
+                                    label={tStrings('ssh_key_other')}
+                                />
                             )}
                         </div>
                     </FormCard.Body>

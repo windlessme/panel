@@ -55,7 +55,7 @@ const HardwareDetailsCard = () => {
                         </div>
 
                         <dl>
-                            <Dt>IP Addresses</Dt>
+                            <Dt>{tStrings('ip_addresses')}</Dt>
                             {addresses.length === 0 ? (
                                 <Dd>{t('ip_allocation.empty_state')}</Dd>
                             ) : (

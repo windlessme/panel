@@ -1,5 +1,6 @@
 import useFlash from '@/util/useFlash'
 import { FormikProvider, useFormik } from 'formik'
+import { useTranslation } from 'react-i18next'
 import * as yup from 'yup'
 
 import createTemplateGroup from '@/api/admin/nodes/templateGroups/createTemplateGroup'
@@ -21,6 +22,8 @@ interface Props {
 }
 
 const EditTemplateGroupModal = ({ open, onClose, group }: Props) => {
+    const { t } = useTranslation('admin.nodes.templates')
+    const { t: tStrings } = useTranslation('strings')
     const { clearFlashes, clearAndAddHttpError } = useFlash()
     const { data: node } = useNodeSWR()
     const { mutate } = useTemplateGroupsSWR(node.id)
@@ -34,8 +37,8 @@ const EditTemplateGroupModal = ({ open, onClose, group }: Props) => {
         validationSchema: yup.object({
             name: yup
                 .string()
-                .required('Specify a name')
-                .max(40, 'Please limit up to 40 characters'),
+                .required(t('validation.name_required'))
+                .max(40, t('validation.name_max', { max: 40 })),
             hidden: yup.boolean(),
         }),
         onSubmit: (values, { setSubmitting }) => {
@@ -102,7 +105,9 @@ const EditTemplateGroupModal = ({ open, onClose, group }: Props) => {
         <Modal open={open} onClose={handleClose}>
             <Modal.Header>
                 <Modal.Title>
-                    {group ? 'Edit' : 'New'} Template Group
+                    {group
+                        ? t('template_group_modal.edit_title')
+                        : t('template_group_modal.new_title')}
                 </Modal.Title>
             </Modal.Header>
 
@@ -113,19 +118,22 @@ const EditTemplateGroupModal = ({ open, onClose, group }: Props) => {
                             className='mb-5'
                             byKey={'admin:node:template-groups.edit'}
                         />
-                        <TextInputFormik name='name' label='Display Name' />
+                        <TextInputFormik
+                            name='name'
+                            label={tStrings('display_name')}
+                        />
                         <CheckboxFormik
                             className='mt-3'
                             name='hidden'
-                            label='Hidden'
+                            label={tStrings('hidden')}
                         />
                     </Modal.Body>
                     <Modal.Actions>
                         <Modal.Action type='button' onClick={handleClose}>
-                            Cancel
+                            {tStrings('cancel')}
                         </Modal.Action>
                         <Modal.Action type='submit' loading={form.isSubmitting}>
-                            {group ? 'Update' : 'Create'}
+                            {group ? tStrings('update') : tStrings('create')}
                         </Modal.Action>
                     </Modal.Actions>
                 </form>

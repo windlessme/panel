@@ -36,10 +36,9 @@ class BackupCreationService
                 $server->id, $period,
             );
             if ($previous->count() >= $limit) {
-                $message = sprintf(
-                    'Only %d backups may be generated within a %d second span of time.', $limit,
-                    $period,
-                );
+                $message = __('exceptions.backup.throttled', [
+                    'limit' => $limit, 'period' => $period,
+                ]);
 
                 throw new TooManyRequestsHttpException(
                     CarbonImmutable::now()->diffInSeconds(

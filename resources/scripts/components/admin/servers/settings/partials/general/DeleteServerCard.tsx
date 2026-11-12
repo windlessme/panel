@@ -76,7 +76,10 @@ const DeleteServerCard = () => {
                                     {t('deletion.description')}
                                 </p>
                                 {server.status === 'deleting' && (
-                                    <MessageBox title='Warning' type='warning'>
+                                    <MessageBox
+                                        title={tStrings('warning')}
+                                        type='warning'
+                                    >
                                         {t('deletion.deleting_status')}
                                     </MessageBox>
                                 )}

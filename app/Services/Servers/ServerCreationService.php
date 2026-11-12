@@ -37,7 +37,7 @@ class ServerCreationService
         if ($template) {
             if ($template->group->node_id !== intval(Arr::get($data, 'node_id'))) {
                 throw new InvalidTemplateException(
-                    'This template is inaccessible to the specified node',
+                    __('exceptions.server.template_inaccessible'),
                 );
             }
         }

@@ -146,7 +146,10 @@ const BootOrderCard = () => {
                     </h5>
                     <div className='flex flex-col space-y-3 mt-3 mb-5'>
                         {data?.bootOrder.length === 0 && (
-                            <MessageBox title='Warning' type='warning'>
+                            <MessageBox
+                                title={tStrings('warning')}
+                                type='warning'
+                            >
                                 {t('device_config.no_boot_device_warning')}
                             </MessageBox>
                         )}
@@ -235,45 +238,49 @@ const StaticDiskRow = ({ disk, action }: DiskRowProps) => (
     </div>
 )
 
-const DraggableDiskRow = ({ disk, action }: DiskRowProps) => (
-    <SortableItem
-        handle
-        className='select-none flex items-center space-x-3 p-2 border border-accent-200 sm:dark:hover:border-foreground dark:active:border-foreground dark:shadow-none dark:hover:shadow-none bg-background shadow-light hover:shadow-lg rounded'
-        id={disk.interface}
-    >
-        {({ attributes, listeners }: ChildrenPropsWithHandle) => (
-            <>
-                <button
-                    className='bg-transparent touch-none p-1'
-                    {...attributes}
-                    {...listeners}
-                >
-                    <img
-                        src={DragVerticalIcon}
-                        className='h-6 w-6 dark:invert'
-                        alt='Drag button icon'
-                    />
-                </button>
-                <div className='flex justify-between w-full items-center'>
-                    <div className={'flex flex-col'}>
-                        <div className={'flex space-x-3'}>
-                            <span className='text-foreground'>
-                                {getName(disk)}
+const DraggableDiskRow = ({ disk, action }: DiskRowProps) => {
+    const { t } = useTranslation('server.settings')
+
+    return (
+        <SortableItem
+            handle
+            className='select-none flex items-center space-x-3 p-2 border border-accent-200 sm:dark:hover:border-foreground dark:active:border-foreground dark:shadow-none dark:hover:shadow-none bg-background shadow-light hover:shadow-lg rounded'
+            id={disk.interface}
+        >
+            {({ attributes, listeners }: ChildrenPropsWithHandle) => (
+                <>
+                    <button
+                        className='bg-transparent touch-none p-1'
+                        {...attributes}
+                        {...listeners}
+                    >
+                        <img
+                            src={DragVerticalIcon}
+                            className='h-6 w-6 dark:invert'
+                            alt={t('device_config.drag_handle')}
+                        />
+                    </button>
+                    <div className='flex justify-between w-full items-center'>
+                        <div className={'flex flex-col'}>
+                            <div className={'flex space-x-3'}>
+                                <span className='text-foreground'>
+                                    {getName(disk)}
+                                </span>
+                                {getBadge(disk)}
+                            </div>
+
+                            <span className='description-small'>
+                                {getDescription(disk)}
                             </span>
-                            {getBadge(disk)}
                         </div>
 
-                        <span className='description-small'>
-                            {getDescription(disk)}
-                        </span>
+                        {action}
                     </div>
-
-                    {action}
-                </div>
-            </>
-        )}
-    </SortableItem>
-)
+                </>
+            )}
+        </SortableItem>
+    )
+}
 
 const getName = (disk: Disk) => {
     if (disk.isPrimaryDisk) {

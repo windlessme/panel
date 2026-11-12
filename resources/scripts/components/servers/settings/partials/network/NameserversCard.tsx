@@ -19,6 +19,7 @@ import TextInputForm from '@/components/elements/forms/TextInputForm'
 
 
 const NameserversCard = () => {
+    const { t } = useTranslation('server.settings')
     const { t: tStrings } = useTranslation('strings')
     const server = ServerContext.useStoreState(state => state.server.data!)
 
@@ -99,9 +100,9 @@ const NameserversCard = () => {
                                                 form.formState.isSubmitting
                                             }
                                             name={`nameservers.${index}.value`}
-                                            label={`${tStrings('nameserver', {
-                                                count: 1,
-                                            })} ${index + 1}`}
+                                            label={t('nameservers.nameserver', {
+                                                index: index + 1,
+                                            })}
                                             rightSection={
                                                 <button
                                                     type='button'

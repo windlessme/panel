@@ -14,11 +14,11 @@ class ServerStatusConflictException extends ConflictHttpException
      */
     public function __construct(Server $server, Throwable $previous = null)
     {
-        $message = 'This server is currently in an unsupported status, please try again later.';
+        $message = __('exceptions.server.status_conflict.unsupported');
         if ($server->isSuspended()) {
-            $message = 'This server is currently suspended and the functionality requested is unavailable.';
+            $message = __('exceptions.server.status_conflict.suspended');
         } elseif (! $server->isInstalled()) {
-            $message = 'This server has not yet completed its installation process, please try again later.';
+            $message = __('exceptions.server.status_conflict.installing');
         }
 
         parent::__construct($message, $previous);

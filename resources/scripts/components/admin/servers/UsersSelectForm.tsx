@@ -1,6 +1,7 @@
 import { useDebouncedValue } from '@mantine/hooks'
 import { useMemo, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 
 import useUsersSWR from '@/api/admin/users/useUsersSWR'
 
@@ -9,6 +10,8 @@ import SelectForm from '@/components/elements/forms/SelectForm'
 
 
 const UsersSelectForm = () => {
+    const { t } = useTranslation('admin.servers.index')
+    const { t: tStrings } = useTranslation('strings')
     const { setValue, watch } = useFormContext()
     const userId: string = watch('userId')
     const [query, setQuery] = useState(userId)
@@ -28,13 +31,13 @@ const UsersSelectForm = () => {
 
     return (
         <SelectForm
-            label={'User'}
+            label={tStrings('user')}
             data={users}
             searchable
             searchValue={query}
             onSearchChange={val => setQuery(val)}
             loading={isValidating || isLoading}
-            nothingFound={'No users found'}
+            nothingFound={t('no_users_found')}
             name={'userId'}
             itemComponent={DescriptiveItemComponent}
         />

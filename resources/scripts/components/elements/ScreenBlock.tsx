@@ -1,6 +1,7 @@
 import { ExclamationCircleIcon, LinkIcon } from '@heroicons/react/24/outline'
 import { Button } from '@mantine/core'
 import { ComponentType, ReactNode } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import PageContentBlock from '@/components/elements/PageContentBlock'
 
@@ -41,6 +42,8 @@ const ScreenBlock = ({
     full,
     children,
 }: ScreenBlockProps) => {
+    const { t: tStrings } = useTranslation('strings')
+
     return (
         <PageContentBlock
             className={`${
@@ -69,7 +72,7 @@ const ScreenBlock = ({
                                 onRetry ? onRetry() : onBack ? onBack() : null
                             }
                         >
-                            {onBack ? 'Go Back' : 'Retry'}
+                            {onBack ? tStrings('go_back') : tStrings('retry')}
                         </Button>
                     </div>
                 )}
@@ -85,31 +88,36 @@ type ErrorMessageProps = (
     title?: string
 }
 
-export const ErrorMessage = ({ title, ...props }: ErrorMessageProps) => (
-    <ScreenBlock
-        title={title || 'Something went wrong'}
-        center
-        icon={ExclamationCircleIcon}
-        {...props}
-    />
-)
+export const ErrorMessage = ({ title, ...props }: ErrorMessageProps) => {
+    const { t: tStrings } = useTranslation('strings')
+
+    return (
+        <ScreenBlock
+            title={title || tStrings('something_went_wrong')}
+            center
+            icon={ExclamationCircleIcon}
+            {...props}
+        />
+    )
+}
 
 export const NotFound = ({
     title,
     message,
     onBack,
     full,
-}: Partial<Pick<BaseProps, 'title' | 'message' | 'onBack' | 'full'>>) => (
-    <ScreenBlock
-        title={title || '404'}
-        message={
-            message ||
-            "The link is either broken or doesn't exist on the server."
-        }
-        icon={LinkIcon}
-        full={full}
-        onBack={onBack}
-    />
-)
+}: Partial<Pick<BaseProps, 'title' | 'message' | 'onBack' | 'full'>>) => {
+    const { t: tStrings } = useTranslation('strings')
+
+    return (
+        <ScreenBlock
+            title={title || '404'}
+            message={message || tStrings('not_found_description')}
+            icon={LinkIcon}
+            full={full}
+            onBack={onBack}
+        />
+    )
+}
 
 export default ScreenBlock

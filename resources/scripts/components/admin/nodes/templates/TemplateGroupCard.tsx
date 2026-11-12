@@ -21,6 +21,7 @@ import { SortableContext, arrayMove } from '@dnd-kit/sortable'
 import { EyeSlashIcon } from '@heroicons/react/20/solid'
 import { updateNotification } from '@mantine/notifications'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import deleteTemplateGroup from '@/api/admin/nodes/templateGroups/deleteTemplateGroup'
 import {
@@ -49,6 +50,9 @@ interface Props {
 }
 
 const TemplateGroupCard = ({ group, className }: Props) => {
+    const { t } = useTranslation('admin.nodes.templates')
+    const { t: tStrings } = useTranslation('strings')
+    const { t: tIndex } = useTranslation('admin.nodes.index')
     const [showEditModal, setShowEditModal] = useState(false)
     const [showCreateModal, setShowCreateModal] = useState(false)
     const { data: node } = useNodeSWR()
@@ -82,7 +86,7 @@ const TemplateGroupCard = ({ group, className }: Props) => {
         notify({
             id: 'admin:node:template-group:templates.reorder',
             loading: true,
-            message: 'Saving changes...',
+            message: t('saving_changes'),
             autoClose: false,
             disallowClose: true,
         })
@@ -91,7 +95,7 @@ const TemplateGroupCard = ({ group, className }: Props) => {
             .then(() => {
                 updateNotification({
                     id: 'admin:node:template-group:templates.reorder',
-                    message: 'Saved order',
+                    message: t('saved_order'),
                     autoClose: 1000,
                 })
             })
@@ -198,7 +202,7 @@ const TemplateGroupCard = ({ group, className }: Props) => {
                             </p>
                             {group.hidden && (
                                 <EyeSlashIcon
-                                    title='hidden'
+                                    title={tStrings('hidden')}
                                     className='h-4 w-4 text-foreground'
                                 />
                             )}
@@ -208,7 +212,7 @@ const TemplateGroupCard = ({ group, className }: Props) => {
                                 <img
                                     src={Dots}
                                     className='w-4 h-4 min-w-[1rem] dark:invert cursor-pointer'
-                                    alt='3 vertical dots meant for activating a menu'
+                                    alt={t('menu_alt')}
                                 />
                             </Menu.Target>
                             <Menu.Dropdown>
@@ -219,16 +223,16 @@ const TemplateGroupCard = ({ group, className }: Props) => {
                                         )
                                     }
                                 >
-                                    Copy ID
+                                    {tStrings('copy_id')}
                                 </Menu.Item>
                                 <Menu.Item
                                     onClick={() => setShowEditModal(true)}
                                 >
-                                    Edit
+                                    {tStrings('edit')}
                                 </Menu.Item>
                                 <Menu.Divider />
                                 <Menu.Item color='red' onClick={handleDelete}>
-                                    Delete
+                                    {tStrings('delete')}
                                 </Menu.Item>
                             </Menu.Dropdown>
                         </Menu>
@@ -271,7 +275,7 @@ const TemplateGroupCard = ({ group, className }: Props) => {
                                     onClick={() => setShowCreateModal(true)}
                                     className='text-sm bg-transparent active:bg-accent-200 sm:hover:bg-accent-100 transition-colors text-foreground border border-accent-400 border-dashed rounded py-2'
                                 >
-                                    New Template
+                                    {tIndex('new_template')}
                                 </button>
                             ) : null}
                         </div>

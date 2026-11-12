@@ -49,7 +49,7 @@ class UpdateAddressPoolRequest extends BaseApiRequest
                         ->exists();
 
                     if ($isAddressesAllocated) {
-                        $validator->errors()->add('node_ids', 'Cannot detach nodes with servers using addresses from this pool.');
+                        $validator->errors()->add('node_ids', __('validation.address_pool_nodes_in_use'));
                     }
                 }
             },

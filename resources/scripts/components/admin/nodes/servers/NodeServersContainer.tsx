@@ -1,5 +1,6 @@
 import { useDebouncedValue } from '@mantine/hooks'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import useNodeSWR from '@/api/admin/nodes/useNodeSWR'
 
@@ -10,6 +11,8 @@ import ServersTable from '@/components/admin/servers/ServersTable'
 
 
 const NodeServersContainer = () => {
+    const { t } = useTranslation('admin.servers.index')
+    const { t: tStrings } = useTranslation('strings')
     const [query, setQuery] = useState('')
     const [debouncedQuery] = useDebouncedValue(query, 200)
     const [open, setOpen] = useState(false)
@@ -22,11 +25,14 @@ const NodeServersContainer = () => {
                 onClose={() => setOpen(false)}
                 nodeId={node.id}
             />
-            <NodeContentBlock title='Servers' showFlashKey='admin:node:servers'>
+            <NodeContentBlock
+                title={tStrings('server_other')}
+                showFlashKey='admin:node:servers'
+            >
                 <SearchBar
                     value={query}
                     onChange={e => setQuery(e.target.value)}
-                    buttonText='New Server'
+                    buttonText={t('new_server')}
                     onClick={() => setOpen(true)}
                 />
                 <ServersTable query={debouncedQuery} nodeId={node.id} />

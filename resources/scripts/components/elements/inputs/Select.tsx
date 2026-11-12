@@ -5,6 +5,7 @@ import {
     SelectProps as MantineSelectProps,
 } from '@mantine/core'
 import { ComponentPropsWithoutRef, forwardRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import tw from 'twin.macro'
 
 import ErrorMessage from '@/components/elements/ErrorMessage'
@@ -69,28 +70,36 @@ const StyledSelectItem = styled.div`
 `
 
 const SelectItem = forwardRef<HTMLDivElement, SelectItemProps>(
-    ({ label, className, ...props }, ref) => (
-        <StyledSelectItem ref={ref} {...props}>
-            <span>{label}</span>
-            <CheckIcon
-                className='h-4 w-4 text-foreground select-item-icon'
-                title='checked'
-            />
-        </StyledSelectItem>
-    )
+    ({ label, className, ...props }, ref) => {
+        const { t: tStrings } = useTranslation('strings')
+
+        return (
+            <StyledSelectItem ref={ref} {...props}>
+                <span>{label}</span>
+                <CheckIcon
+                    className='h-4 w-4 text-foreground select-item-icon'
+                    title={tStrings('checked')}
+                />
+            </StyledSelectItem>
+        )
+    }
 )
 
 const Select = forwardRef<HTMLInputElement, SelectProps>(
-    ({ loading, nothingFound, rightSection, error, ...props }, ref) => (
-        <StyledSelect
-            error={error ? <ErrorMessage>{error}</ErrorMessage> : undefined}
-            nothingFound={loading ? 'Loading...' : nothingFound}
-            rightSection={loading ? <LoadingDots size={4} /> : rightSection}
-            itemComponent={SelectItem}
-            ref={ref}
-            {...props}
-        />
-    )
+    ({ loading, nothingFound, rightSection, error, ...props }, ref) => {
+        const { t: tStrings } = useTranslation('strings')
+
+        return (
+            <StyledSelect
+                error={error ? <ErrorMessage>{error}</ErrorMessage> : undefined}
+                nothingFound={loading ? tStrings('loading') : nothingFound}
+                rightSection={loading ? <LoadingDots size={4} /> : rightSection}
+                itemComponent={SelectItem}
+                ref={ref}
+                {...props}
+            />
+        )
+    }
 )
 
 export default Select

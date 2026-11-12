@@ -55,7 +55,7 @@ class StoreServerRequest extends BaseApiRequest
                     if ($address->server_id !== null) {
                         $validator->errors()->add(
                             'limits.address_ids',
-                            'One or more of the selected addresses are already in use',
+                            __('validation.addresses_in_use'),
                         );
                         break;
                     }
@@ -73,13 +73,13 @@ class StoreServerRequest extends BaseApiRequest
 
             if ($memory > $nodeMemoryLimit || $memory < 0) {
                 $validator->errors()->add(
-                    'limits.memory', 'The memory value exceeds the node\'s limit.',
+                    'limits.memory', __('validation.memory_exceeds_node_limit'),
                 );
             }
 
             if ($disk > $nodeDiskLimit || $disk < 0) {
                 $validator->errors()->add(
-                    'limits.disk', 'The disk value exceeds the node\'s limit.',
+                    'limits.disk', __('validation.disk_exceeds_node_limit'),
                 );
             }
         });

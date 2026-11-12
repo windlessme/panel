@@ -9,7 +9,7 @@ class NoAvailableDiskInterfaceException extends DisplayException
     public function __construct()
     {
         parent::__construct(
-            'There is no available disk interface on the virtual machine to satisfy the request.',
+            __('exceptions.server.no_available_disk_interface'),
         );
     }
 }

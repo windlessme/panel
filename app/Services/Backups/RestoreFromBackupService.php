@@ -26,20 +26,20 @@ class RestoreFromBackupService
     {
         if (!is_null($server->status)) {
             throw new BadRequestHttpException(
-                'This server is not currently in a state that allows for a backup to be restored.',
+                __('exceptions.backup.restore_invalid_status'),
             );
         }
 
         $stateData = $this->serverRepository->setServer($server)->getState();
         if ($stateData->state !== State::STOPPED) {
             throw new BadRequestHttpException(
-                'The server needs to be stopped before a backup can be restored.',
+                __('exceptions.backup.restore_server_running'),
             );
         }
 
         if (!$backup->successful && is_null($backup->completed_at)) {
             throw new BadRequestHttpException(
-                'This backup cannot be restored at this time: not completed or failed.',
+                __('exceptions.backup.restore_not_completed'),
             );
         }
 

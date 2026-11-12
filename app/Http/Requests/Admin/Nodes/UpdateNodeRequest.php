@@ -34,13 +34,13 @@ class UpdateNodeRequest extends BaseApiRequest
 
             if ($memory < $node->memory_allocated) {
                 $validator->errors()->add(
-                    'memory', 'The memory value is lower than what\'s allocated.',
+                    'memory', __('validation.memory_below_allocated'),
                 );
             }
 
             if ($disk < $node->disk_allocated) {
                 $validator->errors()->add(
-                    'disk', 'The disk value is lower than what\'s allocated.',
+                    'disk', __('validation.disk_below_allocated'),
                 );
             }
         });

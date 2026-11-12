@@ -27,6 +27,7 @@ import EditCotermModal from '@/components/admin/coterms/EditCotermModal'
 
 
 const CotermContainer = () => {
+    const { t } = useTranslation('admin.coterms')
     const { t: tStrings } = useTranslation('strings')
     const [isCreating, setIsCreating] = useState(false)
     const [cotermToEdit, setCotermToEdit] = useState<Coterm | null>(null)
@@ -69,12 +70,12 @@ const CotermContainer = () => {
                 <div className='grid place-items-center'>
                     {value ? (
                         <LockClosedIcon
-                            title='hidden'
+                            title={tStrings('hidden')}
                             className='h-5 w-5 text-foreground'
                         />
                     ) : (
                         <LockOpenIcon
-                            title='hidden'
+                            title={tStrings('hidden')}
                             className='h-5 w-5 text-error'
                         />
                     )}
@@ -95,7 +96,7 @@ const CotermContainer = () => {
                     {tStrings('edit')}
                 </Menu.Item>
                 <Menu.Item onClick={() => setCotermToReset(coterm)}>
-                    Reset
+                    {t('reset')}
                 </Menu.Item>
                 <Menu.Divider />
                 <Menu.Item
@@ -115,7 +116,7 @@ const CotermContainer = () => {
 
     return (
         <div className='bg-background min-h-screen'>
-            <PageContentBlock title={'Coterm Instances'}>
+            <PageContentBlock title={t('title')}>
                 <CreateCotermModal
                     open={isCreating}
                     onClose={() => setIsCreating(false)}
@@ -144,7 +145,7 @@ const CotermContainer = () => {
                 <SearchBar
                     value={query}
                     onChange={e => setQuery(e.target.value)}
-                    buttonText={'Create Instance'}
+                    buttonText={t('create_instance')}
                     onClick={() => setIsCreating(true)}
                 />
 

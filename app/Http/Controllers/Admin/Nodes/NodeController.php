@@ -65,7 +65,7 @@ class NodeController extends ApiController
 
         if ($node->servers_count > 0) {
             throw new AccessDeniedHttpException(
-                'This node cannot be deleted with servers still associated.',
+                __('exceptions.node.delete_has_servers'),
             );
         }
 

@@ -1,5 +1,6 @@
 import usePagination from '@/util/usePagination'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
 import useAddressesSWR from '@/api/admin/nodes/addresses/useAddressesSWR'
@@ -20,49 +21,50 @@ import NodeContentBlock from '@/components/admin/nodes/NodeContentBlock'
 import DeleteAddressModal from '@/components/admin/nodes/addresses/DeleteAddressModal'
 
 
-const columns: ColumnArray<Address> = [
-    {
-        accessor: 'address',
-        header: 'Address',
-    },
-    {
-        accessor: 'cidr',
-        header: 'CIDR',
-    },
-    {
-        accessor: 'gateway',
-        header: 'Gateway',
-    },
-    {
-        accessor: 'macAddress',
-        header: 'MAC Address',
-    },
-    {
-        accessor: 'type',
-        header: 'Type',
-    },
-    {
-        accessor: 'server',
-        header: 'Server',
-        cell: ({ value }) =>
-            value ? (
-                <Link
-                    to={`/admin/servers/${value.id}`}
-                    className='link text-foreground'
-                >
-                    {value.hostname}
-                </Link>
-            ) : null,
-    },
-]
-
 const NodeAddressesContainer = () => {
+    const { t: tStrings } = useTranslation('strings')
     const { data: node } = useNodeSWR()
     const [page, setPage] = usePagination()
     const { mutate, data } = useAddressesSWR(node.id, {
         page,
         include: ['server'],
     })
+
+    const columns: ColumnArray<Address> = [
+        {
+            accessor: 'address',
+            header: tStrings('address_one'),
+        },
+        {
+            accessor: 'cidr',
+            header: tStrings('cidr'),
+        },
+        {
+            accessor: 'gateway',
+            header: tStrings('gateway'),
+        },
+        {
+            accessor: 'macAddress',
+            header: tStrings('mac_address'),
+        },
+        {
+            accessor: 'type',
+            header: tStrings('type'),
+        },
+        {
+            accessor: 'server',
+            header: tStrings('server'),
+            cell: ({ value }) =>
+                value ? (
+                    <Link
+                        to={`/admin/servers/${value.id}`}
+                        className='link text-foreground'
+                    >
+                        {value.hostname}
+                    </Link>
+                ) : null,
+        },
+    ]
 
     const rowActions = ({ row }: RowActionsProps<Address>) => {
         const [showEditModal, setShowEditModal] = useState(false)
@@ -82,14 +84,14 @@ const NodeAddressesContainer = () => {
                 />
                 <Actions>
                     <Menu.Item onClick={() => setShowEditModal(true)}>
-                        Edit
+                        {tStrings('edit')}
                     </Menu.Item>
                     <Menu.Divider />
                     <Menu.Item
                         color='red'
                         onClick={() => setShowDeleteModal(true)}
                     >
-                        Delete
+                        {tStrings('delete')}
                     </Menu.Item>
                 </Actions>
             </>
@@ -98,7 +100,7 @@ const NodeAddressesContainer = () => {
 
     return (
         <div className='bg-background min-h-screen'>
-            <NodeContentBlock title='Addresses'>
+            <NodeContentBlock title={tStrings('address_other')}>
                 {!data ? (
                     <Spinner />
                 ) : (

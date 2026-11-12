@@ -29,62 +29,63 @@ import CreateIsoModal from '@/components/admin/nodes/isos/CreateIsoModal'
 import EditIsoModal from '@/components/admin/nodes/isos/EditIsoModal'
 
 
-const columns: ColumnArray<ISO> = [
-    {
-        accessor: 'name',
-        header: 'Name',
-        cell: ({ value, row }) => (
-            <div className='flex space-x-3 items-center'>
-                <span>{value}</span>
-                {row.completedAt === undefined ? (
-                    <Loader size='sm' />
-                ) : !row.isSuccessful ? (
-                    <ExclamationCircleIcon className='h-5 w-5 text-error' />
-                ) : null}
-            </div>
-        ),
-    },
-    {
-        accessor: 'uuid',
-        header: 'UUID',
-    },
-    {
-        accessor: 'fileName',
-        header: 'File Name',
-    },
-    {
-        accessor: 'hidden',
-        header: 'Visibility',
-        cell: ({ value }) => (
-            <div className='grid place-items-center'>
-                {value ? (
-                    <EyeSlashIcon
-                        title='hidden'
-                        className='h-5 w-5 text-foreground'
-                    />
-                ) : (
-                    <EyeIcon
-                        title='visible'
-                        className='h-5 w-5 text-foreground'
-                    />
-                )}
-            </div>
-        ),
-        align: 'center',
-    },
-    {
-        accessor: 'size',
-        header: 'Size',
-        cell: ({ value }) => bytesToString(value),
-    },
-]
-
 const IsosContainer = () => {
     const { data: node } = useNodeSWR()
     const [page, setPage] = usePagination()
     const { data, mutate } = useIsosSWR({ nodeId: node.id })
     const [showCreateModal, setShowCreateModal] = useState(false)
     const { t } = useTranslation('admin.nodes.isos')
+    const { t: tStrings } = useTranslation('strings')
+
+    const columns: ColumnArray<ISO> = [
+        {
+            accessor: 'name',
+            header: tStrings('name'),
+            cell: ({ value, row }) => (
+                <div className='flex space-x-3 items-center'>
+                    <span>{value}</span>
+                    {row.completedAt === undefined ? (
+                        <Loader size='sm' />
+                    ) : !row.isSuccessful ? (
+                        <ExclamationCircleIcon className='h-5 w-5 text-error' />
+                    ) : null}
+                </div>
+            ),
+        },
+        {
+            accessor: 'uuid',
+            header: 'UUID',
+        },
+        {
+            accessor: 'fileName',
+            header: tStrings('file_name'),
+        },
+        {
+            accessor: 'hidden',
+            header: tStrings('visibility'),
+            cell: ({ value }) => (
+                <div className='grid place-items-center'>
+                    {value ? (
+                        <EyeSlashIcon
+                            title={tStrings('hidden')}
+                            className='h-5 w-5 text-foreground'
+                        />
+                    ) : (
+                        <EyeIcon
+                            title={tStrings('visible')}
+                            className='h-5 w-5 text-foreground'
+                        />
+                    )}
+                </div>
+            ),
+            align: 'center',
+        },
+        {
+            accessor: 'size',
+            header: tStrings('size'),
+            cell: ({ value }) => bytesToString(value),
+        },
+    ]
 
     const rowActions = ({ row: iso }: RowActionsProps<ISO>) => {
         const [open, setOpen] = useState(false)
@@ -111,10 +112,12 @@ const IsosContainer = () => {
                     iso={iso}
                 />
                 <Actions>
-                    <Menu.Item onClick={() => setOpen(true)}>Edit</Menu.Item>
+                    <Menu.Item onClick={() => setOpen(true)}>
+                        {tStrings('edit')}
+                    </Menu.Item>
                     <Menu.Divider />
                     <Menu.Item color='red' onClick={handleDelete}>
-                        Delete
+                        {tStrings('delete')}
                     </Menu.Item>
                 </Actions>
             </>
@@ -123,7 +126,7 @@ const IsosContainer = () => {
 
     return (
         <div className='bg-background min-h-screen'>
-            <NodeContentBlock title='ISO Library'>
+            <NodeContentBlock title={t('iso_library')}>
                 <CreateIsoModal
                     open={showCreateModal}
                     onClose={() => setShowCreateModal(false)}

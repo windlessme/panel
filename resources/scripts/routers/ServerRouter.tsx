@@ -125,6 +125,7 @@ export const routes: Route[] = [
 
 const ServerRouter = () => {
     const { t: tStrings } = useTranslation('strings')
+    const { t } = useTranslation('server.status')
     const matches = useMatches()
     const id = matches[0].params.id
     const [error, setError] = useState<string>()
@@ -174,8 +175,8 @@ const ServerRouter = () => {
                     <ScreenBlock
                         center
                         icon={NoSymbolIcon}
-                        message='This server is suspended. Contact your provider or system administrator for help.'
-                        title='Suspended'
+                        message={t('suspended.description')}
+                        title={t('suspended.title')}
                     />
                 )
             case 'installing':
@@ -183,8 +184,8 @@ const ServerRouter = () => {
                     <ScreenBlock
                         center
                         icon={ArrowPathIcon}
-                        message='Your server is being installed. This can take from 1-15 minutes.'
-                        title='Installing'
+                        message={t('installing.description')}
+                        title={t('installing.title')}
                     />
                 )
             case 'restoring_backup':
@@ -192,8 +193,8 @@ const ServerRouter = () => {
                     <ScreenBlock
                         center
                         icon={ArrowPathIcon}
-                        message='Your server is being restored from a backup. This can take from 1-15 minutes.'
-                        title='Restoring Backup'
+                        message={t('restoring_backup.description')}
+                        title={t('restoring_backup.title')}
                     />
                 )
             case 'restoring_snapshot':
@@ -201,8 +202,8 @@ const ServerRouter = () => {
                     <ScreenBlock
                         center
                         icon={ArrowPathIcon}
-                        message='Your server is being restored from a snapshot. This can take from 1-15 minutes.'
-                        title='Restoring Snapshot'
+                        message={t('restoring_snapshot.description')}
+                        title={t('restoring_snapshot.title')}
                     />
                 )
             case 'install_failed':
@@ -210,8 +211,8 @@ const ServerRouter = () => {
                     <ScreenBlock
                         center
                         icon={ExclamationCircleIcon}
-                        message='Your server failed to install. Please contact your administrator.'
-                        title='Install failed'
+                        message={t('install_failed.description')}
+                        title={t('install_failed.title')}
                     />
                 )
             case null:
@@ -221,8 +222,8 @@ const ServerRouter = () => {
                     <ScreenBlock
                         center
                         icon={ExclamationCircleIcon}
-                        message='Your server is in an unusable state. Please contact your administrator.'
-                        title='Unusable'
+                        message={t('unusable.description')}
+                        title={t('unusable.title')}
                     />
                 )
         }

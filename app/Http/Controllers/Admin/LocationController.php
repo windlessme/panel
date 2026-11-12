@@ -51,7 +51,7 @@ class LocationController extends ApiController
         // @phpstan-ignore-next-line
         if ($location->nodes_count > 0) {
             throw new BadRequestHttpException(
-                'The location cannot be deleted with nodes still associated.',
+                __('exceptions.location.delete_has_nodes'),
             );
         }
 

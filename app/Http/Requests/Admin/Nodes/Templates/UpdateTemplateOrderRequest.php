@@ -25,7 +25,7 @@ class UpdateTemplateOrderRequest extends FormRequest
         // validate if each order id is unique in the array
         $validator->after(function ($validator) {
             if (count($this->order) !== count(array_unique($this->order))) {
-                $validator->errors()->add('order', 'Duplicate order id');
+                $validator->errors()->add('order', __('validation.duplicate_order_id'));
             }
         });
     }

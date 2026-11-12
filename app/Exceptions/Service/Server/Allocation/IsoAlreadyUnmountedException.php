@@ -8,6 +8,6 @@ class IsoAlreadyUnmountedException extends DisplayException
 {
     public function __construct()
     {
-        parent::__construct('The requested ISO is already unmounted.');
+        parent::__construct(__('exceptions.server.iso_already_unmounted'));
     }
 }

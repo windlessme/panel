@@ -1,6 +1,7 @@
 import { useDebouncedValue } from '@mantine/hooks'
 import { useField } from 'formik'
 import { useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import useNodeSWR from '@/api/admin/nodes/useNodeSWR'
 import useServersSWR from '@/api/admin/servers/useServersSWR'
@@ -10,6 +11,8 @@ import SelectFormik from '@/components/elements/formik/SelectFormik'
 
 
 const ServersSelectFormik = () => {
+    const { t: tAddresses } = useTranslation('admin.addressPools.addresses')
+    const { t: tServers } = useTranslation('admin.servers.index')
     const [{ value }] = useField('serverId')
     const [query, setQuery] = useState(value as string)
 
@@ -36,13 +39,13 @@ const ServersSelectFormik = () => {
 
     return (
         <SelectFormik
-            label='Assigned Server'
+            label={tAddresses('assigned_server')}
             data={servers}
             searchable
             searchValue={query}
             onSearchChange={val => setQuery(val)}
             itemComponent={DescriptiveItemComponent}
-            nothingFound='No servers found'
+            nothingFound={tServers('no_server_found')}
             loading={isLoading || isValidating}
             clearable
             name='serverId'

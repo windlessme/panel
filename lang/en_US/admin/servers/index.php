@@ -2,6 +2,8 @@
 
 return [
     'create_server' => 'Create Server',
+    'new_server' => 'New Server',
+    'restore_access' => 'Restore Access',
     'backup_limit' => 'Backup Limit',
     'bandwidth_limit' => 'Bandwidth Limit',
     'bandwidth_usage' => 'Bandwidth Usage',
@@ -32,4 +34,10 @@ return [
         'dont_purge' => 'Do not purge VM and related files',
     ],
     'no_servers_found_one' => 'No servers found',
+    'no_server_found' => 'No servers found',
+    'no_addresses_found' => 'No addresses found',
+    'no_nodes_found' => 'No nodes found',
+    'no_groups_found' => 'No groups found',
+    'no_templates_found' => 'No templates found',
+    'no_users_found' => 'No users found',
 ];

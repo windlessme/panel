@@ -120,7 +120,7 @@ const CreateBackupButton = ({ swr: { mutate }, backupCount }: Props) => {
 
                             <TextInputForm
                                 name='name'
-                                placeholder='Name'
+                                placeholder={tStrings('name')}
                                 label={tStrings('name')}
                             />
 

@@ -15,7 +15,7 @@ class CotermPolicy
         $coterm->loadCount(['nodes']);
 
         if ($coterm->nodes_count > 0) {
-            $this->deny('Cannot delete an instance of Coterm with nodes attached to it.');
+            $this->deny(__('exceptions.coterm.delete_has_nodes'));
         }
 
         return true;

@@ -14,6 +14,7 @@ import { restrictToWindowEdges } from '@dnd-kit/modifiers'
 import { SortableContext, arrayMove } from '@dnd-kit/sortable'
 import { updateNotification } from '@mantine/notifications'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import { TemplateGroup } from '@/api/admin/nodes/templateGroups/getTemplateGroups'
 import reorderTemplateGroups from '@/api/admin/nodes/templateGroups/reorderTemplateGroups'
@@ -29,6 +30,9 @@ import EditTemplateGroupModal from '@/components/admin/nodes/templates/EditTempl
 import TemplateGroupCard from '@/components/admin/nodes/templates/TemplateGroupCard'
 
 const NodeTemplatesContainer = () => {
+    const { t } = useTranslation('admin.nodes.templates')
+    const { t: tIndex } = useTranslation('admin.nodes.index')
+    const { t: tStrings } = useTranslation('strings')
     const { data: node } = useNodeSWR()
     const { data, mutate } = useTemplatesGroupSWR(node.id, [])
     const notify = useNotify()
@@ -50,7 +54,7 @@ const NodeTemplatesContainer = () => {
         notify({
             id: 'admin:node:template-groups.reorder',
             loading: true,
-            message: 'Saving changes...',
+            message: t('saving_changes'),
             autoClose: false,
             disallowClose: true,
         })
@@ -59,7 +63,7 @@ const NodeTemplatesContainer = () => {
             .then(() => {
                 updateNotification({
                     id: 'admin:node:template-groups.reorder',
-                    message: 'Saved order',
+                    message: t('saved_order'),
                     autoClose: 1000,
                 })
             })
@@ -100,7 +104,7 @@ const NodeTemplatesContainer = () => {
 
     return (
         <NodeContentBlock
-            title='Templates'
+            title={tStrings('template_other')}
             showFlashKey='admin:node:template-groups'
         >
             <EditTemplateGroupModal
@@ -113,7 +117,7 @@ const NodeTemplatesContainer = () => {
                     disabled={data!.length >= 50}
                     variant='filled'
                 >
-                    New Template Group
+                    {tIndex('new_template_group')}
                 </Button>
             </div>
             {!data ? (
@@ -148,7 +152,7 @@ const NodeTemplatesContainer = () => {
                             onClick={() => setShowCreateModal(true)}
                             className='text-center border border-accent-400 border-dashed bg-transparent active:bg-accent-200 sm:hover:bg-accent-200 hover:text-foreground transition-colors rounded p-12'
                         >
-                            New Template Group
+                            {tIndex('new_template_group')}
                         </button>
                     )}
                 </div>

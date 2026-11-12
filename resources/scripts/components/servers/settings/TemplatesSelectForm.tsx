@@ -1,6 +1,7 @@
 import { ServerContext } from '@/state/server'
 import { useMemo, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 
 import useTemplateGroupsSWR from '@/api/server/settings/useTemplateGroupsSWR'
 
@@ -13,6 +14,8 @@ interface Props {
 }
 
 const TemplatesSelectForm = ({ disabled }: Props) => {
+    const { t } = useTranslation('server.settings')
+    const { t: tStrings } = useTranslation('strings')
     const uuid = ServerContext.useStoreState(state => state.server.data!.uuid)
     const { setValue } = useFormContext()
     const { data, mutate, isValidating, isLoading } = useTemplateGroupsSWR(uuid)
@@ -42,21 +45,21 @@ const TemplatesSelectForm = ({ disabled }: Props) => {
     return (
         <>
             <Select
-                label={'Template Group'}
+                label={tStrings('template_group')}
                 data={templateGroups}
                 searchable
                 value={groupUuid}
                 onChange={handleGroupsOnChange}
                 loading={isValidating || isLoading}
-                nothingFound={'No groups found'}
+                nothingFound={t('templates.no_groups_found')}
                 disabled={disabled}
             />
             <SelectForm
                 data={templates}
                 name={'templateUuid'}
-                label={'Template'}
+                label={tStrings('template')}
                 searchable
-                nothingFound={'No templates found'}
+                nothingFound={t('templates.no_templates_found')}
                 disabled={groupUuid === '' || disabled}
             />
         </>

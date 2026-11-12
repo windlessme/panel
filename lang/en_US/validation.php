@@ -146,6 +146,16 @@ return [
     'uuid' => 'The :attribute must be a valid UUID.',
     'address_range_order' => 'The ending address must be greater than or equal to the starting address.',
     'address_range_too_large' => 'The address range contains :count addresses, which exceeds the maximum of :maximum. Use a smaller range.',
+    'addresses_in_use' => 'One or more of the selected addresses are already in use',
+    'memory_exceeds_node_limit' => 'The memory value exceeds the node\'s limit.',
+    'disk_exceeds_node_limit' => 'The disk value exceeds the node\'s limit.',
+    'memory_below_allocated' => 'The memory value is lower than what\'s allocated.',
+    'disk_below_allocated' => 'The disk value is lower than what\'s allocated.',
+    'template_invalid' => 'The selected template is invalid.',
+    'ssh_keys_invalid' => 'The SSH key(s) are invalid.',
+    'duplicate_order_id' => 'Duplicate order id',
+    'iso_not_found' => 'This ISO doesn\'t exist.',
+    'address_pool_nodes_in_use' => 'Cannot detach nodes with servers using addresses from this pool.',
 
     /*
     |--------------------------------------------------------------------------

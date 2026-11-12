@@ -2,6 +2,8 @@
     "private": true,
     "scripts": {
         "build": "vite build",
+        "i18n:check": "node scripts/i18n.mjs check",
+        "i18n:todo": "node scripts/i18n.mjs todo",
         "dev": "vite --host 0.0.0.0",
         "tc": "tsc --noEmit --project ./"
     },

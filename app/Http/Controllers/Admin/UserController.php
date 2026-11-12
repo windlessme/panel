@@ -90,7 +90,7 @@ class UserController extends ApiController
 
         if ($user->servers_count > 0) {
             throw new BadRequestHttpException(
-                'The user cannot be deleted with servers still associated.',
+                __('exceptions.user.delete_has_servers'),
             );
         }
 

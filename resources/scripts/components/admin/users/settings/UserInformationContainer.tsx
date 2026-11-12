@@ -1,5 +1,6 @@
 import { useFlashKey } from '@/util/useFlash'
 import { FormikProvider, useFormik } from 'formik'
+import { useTranslation } from 'react-i18next'
 import * as yup from 'yup'
 
 import updateUser from '@/api/admin/users/updateUser'
@@ -13,6 +14,8 @@ import TextInputFormik from '@/components/elements/formik/TextInputFormik'
 
 
 const UserInformationContainer = () => {
+    const { t } = useTranslation('admin.users')
+    const { t: tStrings } = useTranslation('strings')
     const { data: user, mutate } = useUserSWR()
     const { clearFlashes, clearAndAddHttpError } = useFlashKey(
         'admin:user:settings:general'
@@ -29,17 +32,17 @@ const UserInformationContainer = () => {
         validationSchema: yup.object({
             name: yup
                 .string()
-                .max(191, 'Do not exceed 191 characters')
-                .required('A name is required.'),
+                .max(191, t('validation.name_max', { max: 191 }))
+                .required(t('validation.name_required')),
             email: yup
                 .string()
-                .email('Enter a valid email address')
-                .required('An email address is required.'),
+                .email(t('validation.email_invalid'))
+                .required(t('validation.email_required')),
             password: yup
                 .string()
                 .matches(
                     /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-                    'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'
+                    t('validation.password_rules')
                 )
                 .optional(),
             rootAdmin: yup.boolean(),
@@ -64,19 +67,25 @@ const UserInformationContainer = () => {
             <FormikProvider value={form}>
                 <form onSubmit={form.handleSubmit}>
                     <FormCard.Body>
-                        <FormCard.Title>User Information</FormCard.Title>
+                        <FormCard.Title>{t('user_info.title')}</FormCard.Title>
                         <div className='space-y-3 mt-3'>
                             <FlashMessageRender byKey='admin:user:settings:general' />
-                            <TextInputFormik name='name' label='Name' />
-                            <TextInputFormik name='email' label='Email' />
+                            <TextInputFormik
+                                name='name'
+                                label={tStrings('name')}
+                            />
+                            <TextInputFormik
+                                name='email'
+                                label={tStrings('email')}
+                            />
                             <TextInputFormik
                                 name='password'
-                                label='Password'
-                                placeholder={'Override password'}
+                                label={tStrings('password')}
+                                placeholder={t('user_info.override_pass')}
                             />
                             <CheckboxFormik
                                 name={'rootAdmin'}
-                                label={'Administrator'}
+                                label={tStrings('administrator')}
                                 className={'mt-3'}
                             />
                         </div>
@@ -90,7 +99,7 @@ const UserInformationContainer = () => {
                             color='success'
                             size='sm'
                         >
-                            Save
+                            {tStrings('save')}
                         </Button>
                     </FormCard.Footer>
                 </form>

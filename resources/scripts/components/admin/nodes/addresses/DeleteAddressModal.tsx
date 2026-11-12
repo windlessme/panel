@@ -1,6 +1,7 @@
 import { useFlashKey } from '@/util/useFlash'
 import usePagination from '@/util/usePagination'
 import { FormikProvider, useFormik } from 'formik'
+import { useTranslation } from 'react-i18next'
 
 import deleteAddress from '@/api/admin/addressPools/addresses/deleteAddress'
 import useAddressesSWR from '@/api/admin/nodes/addresses/useAddressesSWR'
@@ -18,6 +19,8 @@ interface Props {
 }
 
 const DeleteAddressModal = ({open, onClose, address}: Props) => {
+    const {t} = useTranslation('admin.nodes.addresses')
+    const {t: tStrings} = useTranslation('strings')
     const {data: node} = useNodeSWR()
     const {clearFlashes, clearAndAddHttpError} = useFlashKey(
             `admin.nodes.${node.id}.addresses.${address.id}.delete`
@@ -54,7 +57,7 @@ const DeleteAddressModal = ({open, onClose, address}: Props) => {
     return (
             <Modal open={open} onClose={onClose}>
                 <Modal.Header>
-                    <Modal.Title>Delete Address</Modal.Title>
+                    <Modal.Title>{t('delete_modal.title')}</Modal.Title>
                 </Modal.Header>
                 <FormikProvider value={form}>
                     <form onSubmit={form.handleSubmit}>
@@ -65,16 +68,15 @@ const DeleteAddressModal = ({open, onClose, address}: Props) => {
                             />
 
                             <Modal.Description>
-                                Are you sure you want to delete this address? This
-                                action cannot be undone.
+                                {t('delete_modal.description')}
                             </Modal.Description>
                         </Modal.Body>
                         <Modal.Actions>
                             <Modal.Action type='button' onClick={onClose}>
-                                Cancel
+                                {tStrings('cancel')}
                             </Modal.Action>
                             <Modal.Action type='submit' loading={form.isSubmitting}>
-                                Delete
+                                {tStrings('delete')}
                             </Modal.Action>
                         </Modal.Actions>
                     </form>
