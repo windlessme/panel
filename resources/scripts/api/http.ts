@@ -24,6 +24,7 @@ SOFTWARE.
 */
 import {completeNavigationProgress, resetNavigationProgress, startNavigationProgress} from '@mantine/nprogress';
 import axios, {AxiosInstance} from 'axios';
+import { locale } from '@/lib/i18n';
 
 
 const http: AxiosInstance = axios.create({
@@ -31,6 +32,8 @@ const http: AxiosInstance = axios.create({
     headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
+        // Lets the backend answer validation and error messages in the UI language.
+        'Accept-Language': locale.replace('_', '-'),
     },
 })
 

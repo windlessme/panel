@@ -6,6 +6,7 @@ use Convoy\Http\Middleware\Authenticate;
 use Convoy\Http\Middleware\EncryptCookies;
 use Convoy\Http\Middleware\PreventRequestsDuringMaintenance;
 use Convoy\Http\Middleware\RedirectIfAuthenticated;
+use Convoy\Http\Middleware\SetLocale;
 use Convoy\Http\Middleware\TrimStrings;
 use Convoy\Http\Middleware\TrustProxies;
 use Convoy\Http\Middleware\VerifyCsrfToken;
@@ -57,10 +58,12 @@ class Kernel extends HttpKernel
             StartSession::class,
             ShareErrorsFromSession::class,
             VerifyCsrfToken::class,
+            SetLocale::class,
             SubstituteBindings::class,
         ],
 
         'api' => [
+            SetLocale::class,
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             // \Illuminate\Routing\Middleware\ThrottleRequests::class . ':api',
             SubstituteBindings::class,

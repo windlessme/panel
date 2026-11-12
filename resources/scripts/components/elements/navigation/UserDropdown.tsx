@@ -1,3 +1,4 @@
+import { Locale, locale, locales, setLocale } from '@/lib/i18n'
 import { useStoreState } from '@/state'
 import { getInitials } from '@/util/helpers'
 import { Avatar } from '@mantine/core'
@@ -38,6 +39,20 @@ const UserDropdown = ({ logout }: Props) => {
                             <Menu.Divider />
                         </>
                     )}
+                    <p className='px-2 pt-1 pb-1.5 text-xs text-accent-400'>
+                        {tStrings('language')}
+                    </p>
+                    {(Object.keys(locales) as Locale[]).map(code => (
+                        <Menu.Item
+                            key={code}
+                            lang={locales[code].html}
+                            onClick={() => setLocale(code)}
+                        >
+                            {code === locale ? '✓ ' : ''}
+                            {locales[code].label}
+                        </Menu.Item>
+                    ))}
+                    <Menu.Divider />
                     <Menu.Item color='red' onClick={logout}>
                         {tAuth('sign_out')}
                     </Menu.Item>
